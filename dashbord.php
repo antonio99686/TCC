@@ -134,10 +134,14 @@ session_start();
 
                 <section class="">
                     <p class="d-flex justify-content-center align-items-center">
-                        <span class="me-3"></span>
-                        <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
+                        <span class="me-3">
+                            Email:
+                            
 
-                        </button>
+                        </span>
+                       <!-- <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
+
+                        </button>-->
                     </p>
                 </section>
 
