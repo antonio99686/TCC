@@ -14,11 +14,11 @@
 </head>
 
 <body>
-    <section class="vh-100" style="background-color: #9A616D;">
+    <section class="vh-100" style="background-color:rgb(161, 161, 161);">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-10">
-                    <div class="card" style="border-radius: 1rem;">
+                    <div class="card" style="border-radius: 0%;">
                         <div class="row g-0">
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
                                 <img src="img/icno.jpg"
@@ -38,14 +38,14 @@
 
                                         <div class="form-outline mb-4">
                                             <input type="text" name="CPF"
-                                                class="form-control form-control-lg" >
-                                            <label class="form-label" for="form2Example17">CPF</label>
+                                                class="form-control form-control-lg" placeholder="CPF">
+                                       
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <input type="password" name="senha"
-                                                class="form-control form-control-lg" >
-                                            <label class="form-label" for="form2Example27">Senha</label>
+                                                class="form-control form-control-lg" placeholder="SENHA" >
+                                           
                                         </div>
 
                                       
