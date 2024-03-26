@@ -31,12 +31,12 @@ session_start();
     $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_assoc($resultado);
-    echo "<a href='index.php' class='btn btn-danger'>Sair</a>";
+ 
     ?>
  <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: #808080;">
   <div class="container">
-    <a class="navbar-brand" href="#">Sentinela da Fronteira</a>
+    <a class="navbar-brand" href="dashbord.php">Sentinela da Fronteira</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -102,9 +102,8 @@ session_start();
 <!-- Page Content -->
 <section class="py-5">
   <div class="container">
-    <h1 class="fw-light">Full Page Image Slider</h1>
-    <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images
-      in this snippet are from <a href="#">Unsplash</a>, taken by <a href="#">Joanna Kosinska</a>!</p>
+    <h1 class="fw-light">Bem-vindo!</h1>
+    <p class="lead"> <?php $dados['nome'] ?></p>
   </div>
 </section>
 
