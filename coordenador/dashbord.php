@@ -96,7 +96,7 @@ session_start();
             <h3 class="card__heading"> Pagamentos Realizados </h3>
           </div>
         </a>
-        <a class="card" href="agenda/index.php">
+        <a class="card" href="../calen/index.php">
           <div class="card__background"
             style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitU-PVqEDxdQechVNbSX4tQL09DoAPQjnr9hdDgItFrHfmqohOlvJrroneorrHFzRJwjxNeQox7wMBfYFERrJsMg6AnhYVIx__YvBxIu0xwODsL0fn9GgFWXzqrV5na3fgg66G34lh4rs/s1600/CIMG0108.JPG)">
           </div>
