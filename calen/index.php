@@ -63,19 +63,19 @@
           </div>
           <div class="add-event-body">
             <div class="add-event-input">
-              <input type="text" placeholder="Event Name" class="event-name" />
+              <input type="text" placeholder="Nome do evento" class="event-name" />
             </div>
             <div class="add-event-input">
               <input
                 type="text"
-                placeholder="Event Time From"
+                placeholder="Hora do evento a partir de"
                 class="event-time-from"
               />
             </div>
             <div class="add-event-input">
               <input
                 type="text"
-                placeholder="Event Time To"
+                placeholder="Hora do evento até"
                 class="event-time-to"
               />
             </div>
