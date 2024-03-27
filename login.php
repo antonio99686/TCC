@@ -13,7 +13,7 @@ $sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND  senha = '{$senha}'";
 //FROM usuario
 //LEFT JOIN coordanador
 //ON c.coordenador = d.dancarino";
-
+$result = $mysqli->query("SELECT * FROM categoria");
 
 $resultado = mysqli_query($conexao,$sql);
 $dados = mysqli_fetch_assoc($resultado);
@@ -28,6 +28,9 @@ if($qtd > 0 ){
     $_SESSION['id_usuario'] = $dados['id_usuario'];
     if ($dados['coordenador'] == '1'){
     header ('Location: coordenador/dashbord.php');
+ }
+    if ($dados['pais'] == '3'){
+    header ('Location: pais/dashbord.php');
  }
 else {
    header ('Location: dashbord.php');

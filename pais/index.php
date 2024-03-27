@@ -24,8 +24,8 @@ session_start();
 
 
     <?php
-    include ("conexao.php");
-    $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
+    include ("../conexao.php");
+    $sql = "SELECT * FROM pais ";
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_assoc($resultado);
 
@@ -34,7 +34,7 @@ session_start();
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
         <div class="container">
             <a class="navbar-brand" >
-                <img src="img/icno.jpg"  class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
+                <img src="../img/icno.jpg"  class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@ session_start();
                         <a class="nav-link" href="dashbord.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">perfil</a>
+                        <a class="nav-link" href="perfil.php">Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Services</a>
@@ -70,7 +70,7 @@ session_start();
             <p class="lead">
                 <?php echo $dados['nome'] ?>
             </p>
-            <img src="img/ <?php echo $dados['imagem']?>" height="150px" width="150px" >
+            <img src="../img/icno.jpg" height="200px" width="200px" >
         </div>
     </section>
     <div class="infor">
@@ -80,26 +80,12 @@ session_start();
         echo"Nome: "; echo $dados['nome'] ?>
         <br>
         <?php 
-        echo"E-mail: "; echo $dados['email'] ?>
+        echo"Filho(a): "; echo $dados['nom_dan'] ?>
         <br>
         <?php 
-        echo"Matrícula: "; echo $dados['usuario'] ?>
+        echo"CPF: "; echo $dados['cpf'] ?>
         <br>
-        <?php 
-        echo"Nascimento: "; echo $dados['datas'] ?>
-        <br>
-        <?php
-        echo"Enderço: ";  echo $dados['endereco'] ?>
-        <br>
-        <?php 
-        echo"Responsável: "; echo $dados['responsavel'] ?>
-        <br>
-        <?php 
-        echo"Data de Entrada: "; echo $dados['data_entrada'] ?>
-        <br>
-        <?php 
-        echo"Telefone Responsavel: "; echo $dados['tele_respon'] ?>
-        <br>
+       
     </div>
 
 
@@ -142,15 +128,7 @@ session_start();
                         <h3 class="card__heading"> Vestimentas</h3>
                     </div>
                     </li>
-                    <a class="card" href="participantes/index.php">
-                        <div class="card__background"
-                            style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjBg2Sx6qaB7z73rXl3TaDr9jnqt7V7sV6M7WHoM__eA_qXn7mTIYqiFjNHN4MHCs6rOEpxOY7orHTvckT6wxUba77D-6gFjQYhOkh0pgzZFvXEDr7IXjfF0BWVPm55OZpE-18JusWEWjK/s1600/PAR.JPG)">
-                        </div>
-                        <div class="card__content">
-                            <p class="card__category">Participantes</p>
-                            <h3 class="card__heading"> Participantes</h3>
-                        </div>
-                    </a>
+                    
                     <div>
 
 
