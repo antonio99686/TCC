@@ -26,179 +26,182 @@ session_start();
     <div class="container-fluid">
       <a class="navbar-brand"> Sentinela da Fronteira</a>
       <?php
-      include("../conexao.php");
+      include ("../conexao.php");
       $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
       $resultado = mysqli_query($conexao, $sql);
       $dados = mysqli_fetch_assoc($resultado);
       echo $_SESSION["nome"];
       echo "<a href='../dashbord.php' class='btn btn-danger'>Volta</a>";
-
-/* tabela  */
-      if ($dados['genero'] === "M") {
-
-        ?>
-        <table class="ui celled structured table">
-          <thead>
-            <tr>
-              <th rowspan="2"></th>
-
-
-
-
-            </tr>
-            <tr>
-              <th>Entregue</th>
-              <th>Pedente</th>
-              <th> </th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bombacha</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-
-              <td>Camisa</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Colete</td>
-              <td class="right aligned"></td>
-              <td></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Espora</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Guaiaca</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>lenço</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Chapéu </td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-
-
-
-
-
-      <?php } else { ?>
-
-
-        <table class="ui celled structured table">
-          <thead>
-            <tr>
-              <th rowspan="2"></th>
-
-
-
-
-            </tr>
-            <tr>
-              <th>Entregue</th>
-              <th>Devolvido</th>
-              <th>Pendente</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Brinco</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-
-              <td>Lenço de Mão</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Flor</td>
-              <td class="right aligned"></td>
-              <td></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Vestido</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-
-          </tbody>
-        </table>
-
-
-
-
-
-      <?php } ?>
-
-
-
-
-
-
-
+      ?>
     </div>
+  </nav>
+  <?php
+  /* tabela  */
+  if ($dados['genero'] === "M") {
+
+    ?>
+    <table class="ui celled structured table">
+      <thead>
+        <tr>
+          <th rowspan="2"></th>
+
+
+
+
+        </tr>
+        <tr>
+          <th>Entregue</th>
+          <th>Pedente</th>
+          <th> </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bombacha</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+
+          <td>Camisa</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Colete</td>
+          <td class="right aligned"></td>
+          <td></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Espora</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Guaiaca</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>lenço</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Chapéu </td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+  <?php } else { ?>
+
+
+    <table class="ui celled structured table">
+      <thead>
+        <tr>
+          <th rowspan="2"></th>
+
+
+
+
+        </tr>
+        <tr>
+          <th>Entregue</th>
+          <th>Devolvido</th>
+          <th>Pendente</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Brinco</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+
+          <td>Lenço de Mão</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Flor</td>
+          <td class="right aligned"></td>
+          <td></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Vestido</td>
+          <td class="right aligned"></td>
+          <td class="center aligned">
+
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+
+
+
+  <?php } ?>
+
+
+
+
+
+
+
+  </div>
 
   </nav>
 

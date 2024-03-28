@@ -9,10 +9,10 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/dashbord.css">
+    <link rel="stylesheet" href="css/perfil.css">
 
-    <link rel="shortcut icon" href="img/img/icon.png">
-    <title>sistema</title>
+    <link rel="shortcut icon" href="../img/img/icon.png">
+    <title>Sentinela da fronteira</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -22,144 +22,158 @@ session_start();
 
 <body>
 
-    <nav class="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand"> Sentinela da Fronteira</a>
-            <?php
-            include ("../conexao.php");
-            $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
-            $resultado = mysqli_query($conexao, $sql);
-            $dados = mysqli_fetch_assoc($resultado);
-           // https://www.w3schools.com/howto/img_avatar.png
-            ?>
-            <div class="cor">
-                <?php
-                echo "" . $_SESSION["nome"];
-                ?>
-            </div>
-            <?php
-            echo "<a href='dashbord.php' class='btn btn-danger'>Voltar</a>";
-            ?>
-        </div>
-    </nav>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/perfil.css">
+    <?php
+    include ("conexao.php");
+    $sql = "SELECT * FROM coordenador ";
+    $resultado = mysqli_query($conexao, $sql);
+    $dados = mysqli_fetch_assoc($resultado);
 
-
-
-
-
-
-    <div class='banner'>
-        <img class='image-banner' src='../img/bandeira.jpg'></img>
-    </div>
-
-
-
-    <div class='profile-images'>
-        <div class='user-stuff'>
-            <div class="bottom-right">
-                <img src='<?php echo $dados['imagem']?>' width="150px" height="150px"></img>
-                
-            </div>
-
-            <div class="bottom-right"> <img class='image-3'
-                    src='https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.emojidex.com%2Femoji%2Fseal%2Fgreen_circle.png%3F1524351848&f=1'></img>
-            </div>
-        </div>
-    </div>
-
-    <div class='container'>
-    </div>
-
-    <div class='about'>
-        <h2 class='pro-info'>Dados</h2>
-        <hr>
-        <div class="pos">
-            <ul>
-                <li>
-                    <h4 class='user-heading-for-profile-info'>Nome:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['nome']; ?>
-                </span>
-
-                <li>
-                    <h4 class='user-heading-for-profile-info'>Matricula:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['usuario']; ?>
-                </span>
-
-                <li>
-                    <h4 class='user-heading-for-profile-info'>E-mail:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['email']; ?>
-                </span>
-
-                <li>
-                    <h4 class='user-heading-for-profile-info'>CPF:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['CPF']; ?>
-                </span>
-                <li>
-                    <h4 class='user-heading-for-profile-info'>RG:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['RG']; ?>
-                </span>
-                <li>
-                    <h4 class='user-heading-for-profile-info'>Categoria:</h4>
-                </li>
-                <span class='user-span-info'>
-                    <?php echo $dados['tipo']; ?>
-                </span>
-
-                <div class="pos1">
-
-                    <li>
-                        <h4 class='user-heading-for-profile-info'>Contato:</h4>
-                    </li>
-                    <span class='user-span-info'>
-                        <?php echo $dados['telefone']; ?>
-                    </span>
-                    <li>
-                        <h4 class='user-heading-for-profile-info'>Endereço:</h4>
-                    </li>
-                    <span class='user-span-info'>
-                        <?php echo $dados['endereco']; ?>
-                    </span>
-                    <li>
-                        <h4 class='user-heading-for-profile-info'>Responsavel:</h4>
-                    </li>
-                    <span class='user-span-info'>
-                        <?php echo $dados['responsavel']; ?>
-                    </span>
-                    <li>
-                        <h4 class='user-heading-for-profile-info'>Data de Entrada:</h4>
-                    </li>
-                    <span class='user-span-info'>
-                        <?php echo $dados['data_entrada']; ?>
-                    </span>
-                    <li>
-                        <h4 class='user-heading-for-profile-info'>Telefone do Responsavel:</h4>
-                    </li>
-                    <span class='user-span-info'>
-                        <?php echo $dados['tele_respon']; ?>
-                    </span>
+    ?>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
+        <div class="container">
+            <a class="navbar-brand">
+                <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="dashbord.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="formcads.php">Cadastrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="roupa.php">Roupa</a>
+                        </li>
+                    </ul>
                 </div>
         </div>
+        <?php echo "<a href='dashbord.php' class='btn btn-danger'>Voltar</a>"; ?>
+    </nav>
 
-        </ul>
+    <div id="perfil">
+
+        <!-- Capa do Perfil -->
+        <div class="header">
+            
+          
+        </div>
+
+        <!-- Avatar do Utilizador -->
+        <div class="avatar">
+        </div>
+
+        <!-- Opções de Conta -->
+        <div class="opperfil">
+            <center>
+                <!-- Botão "Editar Perfil" -->
+                <button class="mui-btn mui-btn--primary">
+                    <div class="text">ALTERAR FOTO</div>
+                </button>
+                <!-- Botão "Alterar Password" -->
+                <button class="mui-btn mui-btn--primary">
+                    <div class="text">DADOS</div>
+                </button>
+            </center>
+        </div>
+
+        <!-- Título do Perfil -->
+        <div class="tituloperfil">
+            <!-- Nome do Utilizador -->
+            <h1>
+                <?php echo $dados["nome"] ?>
+            </h1>
+            <div class="bigbriefing">
+                <!-- Briefing do Candidato -->
+                <p>
+                    <b>Idade:</b><?php echo $dados["idade"]; echo" anos";?> <b>|</b>
+                    <b>Município:</b><?php echo $dados["nacionalidade"] ?> <b>|</b>
+                    <b>Função: </b><?php echo $dados["funcao"] ?>
+                </p>
+            </div>
+          
+        </div><br />
+
+        <div class="infocandidato">
+            <form class="mui-form">
+
+                <h1 class="title-2">Sobre o Coordenador</h1>
+
+                <div class="mui-textfield mui-textfield--float-label">
+                    <textarea
+                        placeholder="Apresente-se à comunidade com um pequeno texto a falar um pouco mais sobre si."></textarea>
+                </div>
+
+
+
+
+                <button class="mui-btn mui-btn--raised">Alterar a Password</button>
+                <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary">Guardar Alterações</button>
+            </form>
+        </div>
+
+        <br /><br />
+
     </div>
 
 
 
 
+    <!-- Footer -->
 
-
+    </section>
 
     </div>
+
+    <section class="">
+
+        <footer class="text-center text-white" style="background-color: #2d3548;">
+
+            <div class="container p-4 pb-0">
+
+                <section class="">
+                    <p class="d-flex justify-content-center align-items-center">
+                        <span class="me-3">
+                            <a href="https://www.instagram.com/ptgsentinelaoficial/">
+                                <img src="../img/img/instagram.png" height="20px" width="20px"></a>
+
+                            <a
+                                href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR">
+                                <img src="../img/img/facebook.png" height="20px" width="20px"></a>
+
+
+                        </span>
+
+                        <!-- <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
+
+                        </button>-->
+                    </p>
+
+                </section>
+
+            </div>
+
+
+
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                Sentinela da Fronteira
+
+            </div>
+
+        </footer>
+
+    </section>
+
+
+</body>
+
+</html>

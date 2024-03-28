@@ -34,7 +34,8 @@ session_start();
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
         <div class="container">
             <a class="navbar-brand">
-                <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
+                <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da
+                Fronteira
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -42,30 +43,19 @@ session_start();
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="dashbord.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
+
                     </ul>
                 </div>
+                <?php echo "<a href='dashboard.php' class='btn btn-danger'>Voltar</a>"; ?>
         </div>
-        <?php echo "<a href='dashbord.php' class='btn btn-danger'>Voltar</a>"; ?>
     </nav>
 
     <div id="perfil">
 
         <!-- Capa do Perfil -->
         <div class="header">
-            
-          
+
+
         </div>
 
         <!-- Avatar do Utilizador -->
@@ -95,22 +85,26 @@ session_start();
             <div class="bigbriefing">
                 <!-- Briefing do Candidato -->
                 <p>
-                    <b>Idade:</b><?php echo $dados["idade"]; echo" anos";?> <b>|</b>
-                    <b>Distrito:</b><?php echo $dados["nacionalidade"] ?> <b>|</b>
-                    <b>Função: </b><?php echo $dados["funcao"] ?>
+                    <b>Idade:</b>
+                    <?php echo $dados["idade"];
+                    echo " anos"; ?> <b>|</b>
+                    <b>Município:</b>
+                    <?php echo $dados["nacionalidade"] ?> <b>|</b>
+                    <b>Função: </b>
+                    <?php echo $dados["funcao"] ?>
                 </p>
             </div>
-          
+
         </div><br />
 
         <div class="infocandidato">
             <form class="mui-form">
 
-                <h1 class="title-2">Sobre o Pais</h1>
+                <h1 class="title-2">Sobre o Responsável</h1>
 
                 <div class="mui-textfield mui-textfield--float-label">
                     <textarea
-                        placeholder="Apresente-se à comunidade com um pequeno texto a falar um pouco mais sobre si."></textarea>
+                        placeholder="Apresente-se à invernada com um pequeno texto a falar um pouco mais sobre si."></textarea>
                 </div>
 
 

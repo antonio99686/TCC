@@ -13,7 +13,7 @@
     <div class="container">
        
         <div class="form">
-        <form action="../cadastrar/cadastrar.php" method="POST" enctype="multipart/form-data">
+        <form action="../cadastrar/cadastrarP.php" method="POST" enctype="multipart/form-data">
                 <div class="form-header">
                     <div class="title">
                         <h1>Cadastre o Responsável </h1>
@@ -28,6 +28,11 @@
                     </div>
 
                     <div class="input-box">
+                        <label >Nome do Filho(a)</label>
+                        <input  type="text" name="nome"  required>
+                    </div>
+
+                    <div class="input-box">
                         <label >Senha</label>
                         <input  type="password" name="senha"  required>
                     </div>
@@ -37,8 +42,8 @@
                     </div>
 
                     <div class="input-box">
-                        <label >Celular</label>
-                        <input  type="tel" name="telefone" required>
+                        <label >telefone</label>
+                        <input  type="text" name="telefone" required>
                     </div>
 
 
@@ -48,9 +53,20 @@
                     </div>
                    
                     <div class="input-box">
-                        <label >Telefone</label>
-                        <input  type="tel" name="telefone"  required>
+                        <label >Idade</label>
+                        <input  type="text" name="idade"  required>
                     </div>
+
+                    <div class="input-box">
+                        <label >Municipio</label>
+                        <input  type="text" name="nas"  required>
+                    </div>
+                    <div class="input-box">
+                        <label >Função</label>
+                        <input  type="text" name="funcao"  required>
+                    </div>
+
+                    <input  type="file" name="arquivo" >
                  
                   
                     

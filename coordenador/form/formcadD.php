@@ -13,7 +13,7 @@
     <div class="container">
        
         <div class="form">
-        <form action="../cadastrar/cadastrar.php" method="POST" enctype="multipart/form-data">
+        <form action="../cadastrar/cadastrarD.php" method="POST" enctype="multipart/form-data">
                 <div class="form-header">
                     <div class="title">
                         <h1>Cadastre o Dançarino </h1>
@@ -75,7 +75,7 @@
                         <input  type="tel" name="tele_respo"  required>
                     </div>
                     
-                    b
+                    
                     <div class="input-box">
                         <label>Genero:</label>
                         <select name="genero">

@@ -45,7 +45,7 @@ session_start();
                         <a class="nav-link" href="dashbord.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">perfil</a>
+                        <a class="nav-link" href="perfil.php">Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Services</a>
@@ -86,7 +86,7 @@ session_start();
         echo"Matrícula: "; echo $dados['usuario'] ?>
         <br>
         <?php 
-        echo"Nascimento: "; echo $dados['datas'] ?>
+        echo"Data de Nascimento: "; echo $dados['datas'] ?>
         <br>
         <?php
         echo"Enderço: ";  echo $dados['endereco'] ?>
@@ -115,7 +115,7 @@ session_start();
 
         <section class="hero-section">
             <div class="card-grid">
-                <a class="card" href="pagamentos/index.php">
+                <a class="card" href="pagamento/index.php">
                     <div class="card__background"
                         style="background-image: url(https://www.gruporecovery.com/wp-content/uploads/2023/09/MicrosoftTeams-image-1.png)">
                     </div>

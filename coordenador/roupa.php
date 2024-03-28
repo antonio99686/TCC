@@ -11,7 +11,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/dashbord.css">
 
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -24,8 +24,8 @@ session_start();
 
 
     <?php
-    include ("../conexao.php");
-    $sql = "SELECT * FROM pais ";
+    include ("conexao.php");
+    $sql = "SELECT * FROM coordenador;";
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_assoc($resultado);
 
@@ -48,15 +48,15 @@ session_start();
                         <a class="nav-link" href="perfil.php">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="formcads.php">Cadastrar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="roupa.php">Roupa</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <?php echo "<a href='index.php' class='btn btn-danger'>Sair</a>"; ?>
+        <?php echo "<a href='dashbord.php' class='btn btn-danger'>Voltar</a>"; ?>
     </nav>
 
 
@@ -66,77 +66,68 @@ session_start();
             <br>
             <br>
             <br>
-            <h1 class="fw-light">Bem-vindo(a)</h1>
+            <h1 class="fw-light">Olá,<?php echo $dados['nome'] ?> </h1>
             <p class="lead">
-                <?php echo $dados['nome'] ?>
+            
             </p>
-            <img src="../img/icno.jpg" height="200px" width="200px" >
+            <h2><b> Status das Roupa</b></h2>
         </div>
     </section>
-    <div class="infor">
-        <h2> DADOS</h2>
-        
-        <?php
-        echo"Nome: "; echo $dados['nome'] ?>
-        <br>
-        <?php 
-        echo"Filho(a): "; echo $dados['nom_dan'] ?>
-        <br>
-        <?php 
-        echo"CPF: "; echo $dados['cpf'] ?>
-        <br>
-       
-    </div>
-
-
-
-
-
-
-
-
-
+    
     <div class="cardss">
 
 
-        <section class="hero-section">
-            <div class="card-grid">
-                <a class="card" href="pagamentos/index.php">
-                    <div class="card__background"
-                        style="background-image: url(https://www.gruporecovery.com/wp-content/uploads/2023/09/MicrosoftTeams-image-1.png)">
-                    </div>
-                    <div class="card__content">
-                        <p class="card__category">Pagamentos</p>
-                        <h3 class="card__heading"> Pagamentos Realizados </h3>
-                    </div>
-                </a>
-                <a class="card" href="calen/index.php">
-                    <div class="card__background"
-                        style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitU-PVqEDxdQechVNbSX4tQL09DoAPQjnr9hdDgItFrHfmqohOlvJrroneorrHFzRJwjxNeQox7wMBfYFERrJsMg6AnhYVIx__YvBxIu0xwODsL0fn9GgFWXzqrV5na3fgg66G34lh4rs/s1600/CIMG0108.JPG)">
-                    </div>
-                    <div class="card__content">
-                        <p class="card__category">Reuniões</p>
-                        <h3 class="card__heading"> Reuniões Marcadas</h3>
-                    </div>
-                </a>
-                <a class="card" href="acessorios/index.php">
-                    <div class="card__background"
-                        style="background-image: url(https://www.dancastipicas.com/wp-content/uploads/2018/11/dan%C3%A7as-t%C3%ADpicas-da-regi%C3%A3o-sul-do-brasil-600x381.jpg)">
-                    </div>
-                    <div class="card__content">
-                        <p class="card__category">Roupas</p>
-                        <h3 class="card__heading"> Vestimentas</h3>
-                    </div>
-                    </li>
-                    
-                    <div>
+    <?php
+// Conectar ao BD
+include("conexao.php");
 
+// Seleciona todos os dados da tabela lista
+$sql = "SELECT * FROM usuario";
+
+// Executa o Select
+$resultado = mysqli_query($conexao,$sql);
+
+//Lista os itens
+echo '<div class="table">
+  <table>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Pedente</th>
+      <th scope="col">consumado</th>
+    
+
+    </tr>';
+
+while ($dados = mysqli_fetch_assoc($resultado)) {
+      echo '<tr>';
+      echo "<td>" .  $dados['nome']         .  "</td>";
+      echo '</tr>';
+     echo "<td><a href='formedit.php?" . "&nome=".$dados['nome']."'>";
+     echo "<td><a href='exclui.php?" . "&nome=".$dados['nome']."'>";
+
+}
+echo '</table>
+</div>';
+?>
+        
+
+
+        
+    </section>
+    
+</div>
+<!-- Footer -->
+
+
+
+
+
+
+    
 
                         <!-- Footer -->
 
-        </section>
-
-    </div>
+        
 
     <section class="">
 
@@ -148,10 +139,10 @@ session_start();
                     <p class="d-flex justify-content-center align-items-center">
                         <span class="me-3">
                         <a href="https://www.instagram.com/ptgsentinelaoficial/" >
-                        <img src="img/img/instagram.png" height="20px" width="20px"></a>
+                        <img src="../img/img/instagram.png" height="20px" width="20px"></a>
 
                         <a href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR"> 
-                     <img src="img/img/facebook.png" height="20px" width="20px"></a>
+                     <img src="../img/img/facebook.png" height="20px" width="20px"></a>
 
 
                         </span>

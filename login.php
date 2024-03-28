@@ -9,12 +9,6 @@ $CPF =  $_POST['CPF'];
 $senha = $_POST['senha'];
 $sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND  senha = '{$senha}'";
 
-//$sql1 = "SELECT categoria
-//FROM usuario
-//LEFT JOIN coordanador
-//ON c.coordenador = d.dancarino";
-$result = $mysqli->query("SELECT * FROM categoria");
-
 $resultado = mysqli_query($conexao,$sql);
 $dados = mysqli_fetch_assoc($resultado);
 
@@ -37,5 +31,5 @@ else {
 }
 }
 
- ?>
+ ?>   
  

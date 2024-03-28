@@ -13,7 +13,7 @@
     <div class="container">
        
         <div class="form">
-        <form action="../cadastrar/cadastrar.php" method="POST" enctype="multipart/form-data">
+        <form action="../cadastrar/cadastrarC.php" method="POST" enctype="multipart/form-data">
                 <div class="form-header">
                     <div class="title">
                         <h1>Cadastre o Coordenador</h1>
@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="input-box">
-                        <label >Celular</label>
-                        <input  type="tel" name="telefone" required>
+                        <label >Telefone</label>
+                        <input  type="text" name="telefone" required>
                     </div>
 
                     <div class="input-box">
@@ -54,10 +54,7 @@
                         <label >RG</label>
                         <input  type="text" name="RG"  required>
                     </div>
-                    <div class="input-box">
-                        <label >Telefone</label>
-                        <input  type="tel" name="telefone"  required>
-                    </div>
+                   
                     <div class="input-box">
                         <label >Endereço</label>
                         <input  type="text" name="endereco"  required>
@@ -67,8 +64,21 @@
                         <label >Data de Entrada</label>
                         <input  type="date" name="inicio"  required>
                     </div>
-                    
-                    
+
+                    <div class="input-box">
+                        <label >Função</label>
+                        <input  type="text" name="funcao"  required>
+                    </div>
+
+                    <div class="input-box">
+                        <label >Idade</label>
+                        <input  type="text" name="idade"  required>
+                    </div>
+
+                    <div class="input-box">
+                        <label >Municipio</label>
+                        <input  type="text" name="nas"  required>
+                    </div>
                     
                     <div class="input-box">
                         <label>Genero:</label>
