@@ -42,7 +42,7 @@ const eventsArr = [];
 getEvents();
 console.log(eventsArr);
 
-//função para adicionar dias em dias com dia de aula e data anterior, próxima data no mês anterior e dias do próximo mês e ativo hoje
+//função para adicionar dias em dias com dia de ensaio e data anterior, próxima data no mês anterior e dias do próximo mês e ativo hoje
 function initCalendar() {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
