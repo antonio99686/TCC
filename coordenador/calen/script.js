@@ -402,7 +402,7 @@ addEventSubmit.addEventListener("click", () => {
 });
 
 //função para excluir evento quando clicado no evento
-eventsContainer.addEventListener("", (e) => {
+eventsContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("event")) {
     if (confirm("Tem certeza de que deseja excluir este evento?")) {
       const eventTitle = e.target.children[0].children[1].innerHTML;
