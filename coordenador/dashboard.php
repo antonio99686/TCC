@@ -70,7 +70,7 @@ session_start();
             <p class="lead">
                 <?php echo $dados['nome'] ?>
             </p>
-            <img src="img/ <?php echo $dados['imagem']?>" height="150px" width="150px" >
+            <img src="img/<?php echo $dados['imagem']?>" height="150px" width="150px" >
         </div>
     </section>
     <div class="infor">

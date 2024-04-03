@@ -13,6 +13,8 @@ session_start();
 
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -33,6 +35,7 @@ session_start();
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
         <div class="container">
+            
             <a class="navbar-brand" >
                 <img src="img/icno.jpg"  class="imgs" height="50px" width="50px"> Sentinela da Fronteira
 
@@ -50,7 +53,7 @@ session_start();
             <p class="lead">
                 <?php echo $dados['nome'] ?>
             </p>
-            <img src="img/ <?php echo $dados['imagem']?>" height="150px" width="150px" >
+            <img src="img/<?php echo $dados['imagem']?>" height="190px" width="150px" >
         </div>
     </section>
     <div class="infor">
@@ -140,7 +143,7 @@ session_start();
 
     </div>
 
-    <section class="">
+
 
         <footer class="text-center text-white" style="background-color: #2d3548;">
 
@@ -176,7 +179,7 @@ session_start();
 
         </footer>
 
-    </section>
+    
 
 
 </body>

@@ -253,15 +253,15 @@ function updateEvents(date) {
 }
 
 //função para adicionar evento
-addEventBtn.addEventListener("click", () => {
+addEventBtn.addEventListener("", () => {
   addEventWrapper.classList.toggle("active");
 });
 
-addEventCloseBtn.addEventListener("click", () => {
+addEventCloseBtn.addEventListener("", () => {
   addEventWrapper.classList.remove("active");
 });
 
-document.addEventListener("click", (e) => {
+document.addEventListener("", (e) => {
   if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
     addEventWrapper.classList.remove("active");
   }

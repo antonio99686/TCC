@@ -1,28 +1,28 @@
 <?php
 session_start();
-// Incluindo o arquivo de conexão com o banco de dados
+if(empty($_POST) or (empty($_POST['CPF']) or (empty($_POST['senha'])))) {
+   echo"<script>location.href='index.php';</script>";
+}
 include('conexao.php');
 
+$CPF =  $_POST['CPF'];
+$senha = $_POST['senha'];
+$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND  senha = '{$senha}'";
 
+$resultado = mysqli_query($conexao,$sql);
+$dados = mysqli_fetch_assoc($resultado);
 
-// Processamento do formulário de login
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['CPF'];
-    $password = $_POST['senha'];
+$res = $conexao->query($sql) or die($conexao->error);
+$row = $res->fetch_object();
+$qtd = $res->num_rows;
 
-    // Consulta ao banco de dados
-    $sql = "SELECT * FROM usuario WHERE CPF='$username' AND senha='$password'";
-    $result = mysqli_query($conexao, $sql);
-
-    if (mysqli_num_rows($result) == 1) {
-        // Login bem-sucedido, redirecionar para a página principal
-        $_SESSION['username'] = $username;
-        header("location: dashboard.php");
-    } else {
-        // Login falhou, exibir mensagem de erro
-        echo "Nome de usuário ou senha incorretos.";
+if($qtd > 0 ){
+    $_SESSION['CPF'] = $CPF;
+    $_SESSION['nome'] = $row->nome;
+    $_SESSION['id_usuario'] = $dados['id_usuario'];
+    if($dados['CPF']){
+        header ('Location: dashboard.php');
     }
-}
+ }
 
-mysqli_close($conn);
-?>
+ ?>
