@@ -11,7 +11,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/dashbord.css">
     <link rel="stylesheet" href="css/navbar.css">
-
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">

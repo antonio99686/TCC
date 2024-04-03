@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="in.css">
+    <link rel="stylesheet" href="../../css/navbar.css">
+    <link rel="shortcut icon" href="../../img/img/calendario.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -16,6 +23,36 @@
     <title>Calendário</title>
   </head>
   <body>
+  <nav class="menu-lateral">
+
+<div class="btn-expandir">
+    <i class="bi bi-list" id="btn-exp"></i>
+</div>
+<!--btn-expandir-->
+
+<ul>
+    <li class="item-menu ativo">
+        <a href="../dashboard.php">
+            <span class="icon"><i class="bi bi-house-door"></i></span>
+            <span class="txt-link"></span>
+        </a>
+    </li>
+
+    <li class="item-menu">
+        <a href="#">
+            <span class="icon"><i class="bi bi-gear"></i></span>
+            <span class="txt-link"></span>
+        </a>
+    </li>
+    <li class="item-menu">
+        <a href="#">
+            <span class="icon"><i class="bi bi-person-circle"></i></span>
+            <span class="txt-link"></span>
+        </a>
+    </li>
+</ul>
+
+</nav><!--menu-lateral-->
     <div class="container">
       <div class="left">
         <div class="calendar">
@@ -85,5 +122,6 @@
 
    
     <script src="script.js"></script>
+    <script src="../../java/dash.js"></script>
   </body>
 </html>

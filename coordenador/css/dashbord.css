@@ -16,7 +16,7 @@
   position: relative;
  }
 
-:root{
+ :root{
   --background-dark: #2d3548;
   --text-light: rgba(255,255,255,0.6);
   --text-lighter: rgba(255,255,255,0.9);
@@ -41,7 +41,7 @@
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: var(--spacing-l);
   grid-row-gap: var(--spacing-l);
-  max-width: var(--width-container);
+  max-width: 900px;
   width: 100%;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .card{
-  list-style: none;
+left: 5%;
   position: relative;
 }
 
@@ -72,15 +72,12 @@
 .card__background{
   background-size: cover;
   background-position: center;
-  border-radius: 0%;
   bottom: 0;
-  filter: brightness(0.75) saturate(1.2) contrast(0.85);
   left: 0;
   position: absolute;
   right: 0;
   top: 0;
   transform-origin: center;
-  trsnsform: scale(1) translateZ(0);
   transition: 
     filter 200ms linear,
     transform 200ms linear;
@@ -116,14 +113,5 @@
   word-spacing: 100vw;
 }
          
-.carousel-item {
-  height: 100vh;
-  min-height: 350px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 
   
