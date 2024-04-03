@@ -25,7 +25,7 @@ session_start();
 
     <?php
     include ("conexao.php");
-    $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
+    $sql = "SELECT * FROM usuario WHERE id_usuario " ;
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_assoc($resultado);
 
@@ -34,28 +34,8 @@ session_start();
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
         <div class="container">
             <a class="navbar-brand" >
-                <img src="img/icno.jpg"  class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="dashbord.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                <img src="img/icno.jpg"  class="imgs" height="50px" width="50px"> Sentinela da Fronteira
+
         <?php echo "<a href='index.php' class='btn btn-danger'>Sair</a>"; ?>
     </nav>
 

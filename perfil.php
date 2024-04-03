@@ -43,7 +43,7 @@ session_start();
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="dashbord.php">Home</a>
+                            <a class="nav-link" href="dashboard.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">perfil</a>

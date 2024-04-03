@@ -54,7 +54,7 @@ session_start();
                 </ul>
             </div>
         </div>
-        <?php echo "<a href='../login.php' class='btn btn-danger'>Sair</a>"; ?>
+        <?php echo "<a href='../index.php' class='btn btn-danger'>Sair</a>"; ?>
     </nav>
 
 
