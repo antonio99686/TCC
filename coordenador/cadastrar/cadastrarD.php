@@ -37,7 +37,7 @@ if (isset($_FILES['file'])) {
 
        
         //cadastramento no banco
-        "INSERT INTO usuario(
+        $sql = "INSERT INTO usuario(
                  nome, email,
                   datas, CPF, 
                   RG, senha, 
@@ -57,6 +57,12 @@ if (isset($_FILES['file'])) {
                 '$tele_respon','$idade')";
 
         // Executar o comando SQL
+        if (mysqli_query($conexao, $sql)) { 
+                header('Location: ../dashboard.php');
+        } else {
+                echo "Falha ao cadastrar pessoa.";
+        }
+
 
         }
 
