@@ -75,10 +75,7 @@
                         <input  type="text" name="idade"  required>
                     </div>
 
-                    <div class="input-box">
-                        <label >Municipio</label>
-                        <input  type="text" name="nas"  required>
-                    </div>
+                    
                     
                     <div class="input-box">
                         <label>Genero:</label>

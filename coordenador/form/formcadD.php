@@ -37,11 +37,6 @@
                     </div>
 
                     <div class="input-box">
-                        <label >Celular</label>
-                        <input  type="tel" name="telefone" required>
-                    </div>
-
-                    <div class="input-box">
                         <label >Data de Nascimento</label>
                         <input  type="date" name="nascimento"  required>
                     </div>
@@ -56,15 +51,15 @@
                     </div>
                     <div class="input-box">
                         <label >Telefone</label>
-                        <input  type="tel" name="telefone"  required>
+                        <input  type="text" name="telefone"  required>
                     </div>
                     <div class="input-box">
                         <label >Endereço</label>
                         <input  type="text" name="endereco"  required>
                     </div>
                     <div class="input-box">
-                        <label >responsável</label>
-                        <input  type="text" name="resp"  required>
+                        <label >Responsável</label>
+                        <input  type="text" name="responsavel"  required>
                     </div>
                     <div class="input-box">
                         <label >Data de Entrada</label>
@@ -72,7 +67,11 @@
                     </div>
                     <div class="input-box">
                         <label >Telefone do responsável</label>
-                        <input  type="tel" name="tele_respo"  required>
+                        <input  type="text" name="tele_respo"  required>
+                    </div>
+                    <div class="input-box">
+                        <label >Idade</label>
+                        <input  type="text" name="idade"  required>
                     </div>
                     
                     

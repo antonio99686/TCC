@@ -97,7 +97,7 @@ session_start();
             <p class="lead">
                 <?php echo $dados['nome'] ?>
             </p>
-            <img src="img/antonionMong.png" height="190px" width="150px">
+            <img src="img/<?php $dados['imagem']?>" height="190px" width="150px">
         </div>
     </section>
     <div class="infor">

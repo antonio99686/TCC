@@ -6,18 +6,18 @@ include ('../conexao.php');
 
 //dados do formulario
 $nome = $_POST['usuario'];
-$senha = $_POST['senha'];
 $email = $_POST['email'];
+$senha = $_POST['senha'];
+$telefone = $_POST['telefone'];
+$nascimento = $_POST['nascimento'];
 $CPF = $_POST['cpf'];
 $RG = $_POST['RG'];
-$telefone = $_POST['telefone'];
 $endereco = $_POST['endereco'];
-$data_entrada = $_POST['inicio'];
-$nascimento = $_POST['nascimento'];
-$genero = $_POST['genero'];
+$inicio = $_POST['inicio'];
 $funcao = $_POST['funcao'];
 $idade = $_POST['idade'];
-$nacionalidade = $_POST['nas'];
+$genero = $_POST['genero'];
+
 if (isset($_FILES['arquivo'])) {
 
         //define o nome do arquivo
@@ -32,30 +32,29 @@ if (isset($_FILES['arquivo'])) {
 
         //cadastramento no banco
         $sql = "INSERT INTO coordenador( 
-              nome, email,
-               senha, CPF,
-               nascimento,imagem,
-               idade,nacionalidade,
-               funcao,RG,
-                telefone,data_entrada,
-                endereco,genero) 
+                nome, email, 
+                senha, CPF,
+                 nascimento, imagem,
+                  idade, RG, 
+                  telefone,data_entrada,
+                    endereco,genero,funcao)
         VALUES
          ('$nome','$email',
          '$senha','$CPF',
-         '$nascimento','$novo_nome',
-         '$idade','$nacionalidade',
-         '$funcao','$RG',
-         '$telefone','$data_entrada',
-         '$endereco','$genero')";
+         '$nascimento','',
+         '$novo_nome','$idade',
+         '$RG','$telefone',
+         '$inicio','$endereco',
+         '$genero','$funcao')";
 
         // Executar o comando SQL
-        if (mysqli_query($conexao, $sql)) {
-                echo "pessoa cadastrada com sucesso!";
+        if (mysqli_query($conexao, $sql)) { 
                 header('Location: ../dashbord.php');
         } else {
                 echo "Falha ao cadastrar pessoa.";
         }
 
 }
+
 
 ?>
