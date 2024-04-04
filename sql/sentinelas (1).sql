@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 26-Mar-2024 às 12:56
+-- Tempo de geração: 04-Abr-2024 às 04:57
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -75,19 +75,20 @@ CREATE TABLE IF NOT EXISTS `acessorios_masc` (
 
 DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
-  `id_categoria` int NOT NULL AUTO_INCREMENT,
-  `coordenador` int NOT NULL,
-  `dancarino` int NOT NULL,
-  `pais` int NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_categoria` int NOT NULL,
+  `funcao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id_categoria`) USING BTREE,
+  UNIQUE KEY `funcao` (`funcao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `categoria`
 --
 
-INSERT INTO `categoria` (`id_categoria`, `coordenador`, `dancarino`, `pais`) VALUES
-(0, 1, 2, 3);
+INSERT INTO `categoria` (`id_categoria`, `funcao`) VALUES
+(2, 'coordenador '),
+(1, 'dancarino '),
+(3, 'pais');
 
 -- --------------------------------------------------------
 
@@ -102,10 +103,24 @@ CREATE TABLE IF NOT EXISTS `coordenador` (
   `email` varchar(255) NOT NULL,
   `senha` char(16) NOT NULL,
   `CPF` char(11) NOT NULL,
-  `coordenador` int NOT NULL,
-  PRIMARY KEY (`id_coor`),
-  KEY `coordenador` (`coordenador`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nascimento` date NOT NULL,
+  `imagem` varchar(255) NOT NULL,
+  `idade` varchar(2) NOT NULL,
+  `funcao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `RG` char(10) NOT NULL,
+  `telefone` char(11) NOT NULL,
+  `data_entrada` date NOT NULL,
+  `endereco` varchar(255) NOT NULL,
+  `genero` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_coor`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `coordenador`
+--
+
+INSERT INTO `coordenador` (`id_coor`, `nome`, `email`, `senha`, `CPF`, `nascimento`, `imagem`, `idade`, `funcao`, `RG`, `telefone`, `data_entrada`, `endereco`, `genero`) VALUES
+(4, 'Jean de Souza', 'Jean@gmail.com', '123', '12345678900', '2014-04-01', '', '50', 'uruguaiana', '0000000000', '55999999999', '2014-04-30', 'cohab 2', 'M');
 
 -- --------------------------------------------------------
 
@@ -133,14 +148,26 @@ CREATE TABLE IF NOT EXISTS `genero` (
 
 DROP TABLE IF EXISTS `pais`;
 CREATE TABLE IF NOT EXISTS `pais` (
-  `nome` int NOT NULL,
-  `nom_dan` int NOT NULL,
-  `senha` varchar(16) NOT NULL,
-  `cpf` char(11) NOT NULL,
   `id_pais` int NOT NULL AUTO_INCREMENT,
-  `pais` int NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `nom_dan` varchar(255) NOT NULL,
+  `senha` varchar(16) NOT NULL,
+  `CPF` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `idade` varchar(2) NOT NULL,
+  `nacionalidade` varchar(255) NOT NULL,
+  `funcao` varchar(255) NOT NULL,
+  `telefone` varchar(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `imagem` varchar(255) NOT NULL,
   PRIMARY KEY (`id_pais`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `pais`
+--
+
+INSERT INTO `pais` (`id_pais`, `nome`, `nom_dan`, `senha`, `CPF`, `idade`, `nacionalidade`, `funcao`, `telefone`, `email`, `imagem`) VALUES
+(3, 'Raqual Mattes Monegelo', 'Luce Terezinha Mattes Mongelo', '123', '80610420020', '48', 'Uruguaiana', 'Mãe', '55999982163', 'Raquelmattes88@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -153,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `datas` varchar(255) DEFAULT NULL,
+  `datas` date DEFAULT NULL,
   `CPF` varchar(255) DEFAULT NULL,
   `RG` varchar(255) DEFAULT NULL,
   `senha` varchar(255) DEFAULT NULL,
@@ -166,19 +193,16 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `responsavel` varchar(255) NOT NULL,
   `data_entrada` date NOT NULL,
   `tele_respon` varchar(255) NOT NULL,
-  `dancarino` int NOT NULL,
+  `idade` varchar(2) NOT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `nome`, `email`, `datas`, `CPF`, `RG`, `senha`, `tipo`, `telefone`, `usuario`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `dancarino`) VALUES
-(6, 'Antonio Carlos Mattes Mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '10/08/2006', '05500840029', '2108268794', '123', 'juvenil', '55996860344', '2184', 'Antnio_Mattes.png', 'M', '', '', '0000-00-00', '', 0),
-(7, 'Luce Mattes Mongelo', 'lucemattes2@gmail.com', '21/12/2009', '05500866095', '1234567890', '123', 'mirim', '5599302422', '2058', 'luce mattes.png', 'F', '', '', '0000-00-00', '', 0),
-(8, 'Larissa da Silva Alvez', 'larissa@gmail.com', '25/05/2006', '80610420020', '1234567890', '123', 'juvenil', '55996860344', '9729', 'IMG_20221015_203904_511.png', 'F', '', '', '0000-00-00', '', 0),
-(9, 'Raquel Mattes Mongelo', 'raquelmattes88@gmail.com', '1975-09-12', '80610420000', '2108268794', '123', 'adulto', '55999982163', '6195', 'download.jfif', 'F', '', '', '0000-00-00', '', 0);
+INSERT INTO `usuario` (`id_usuario`, `nome`, `email`, `datas`, `CPF`, `RG`, `senha`, `tipo`, `telefone`, `usuario`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`) VALUES
+(17, 'Antonio Carlos Mattes Mongelo', 'antoniomattes72@gmail.com', '2006-08-10', '05500840029', '2108268794', '123', 'adulto', '5596860344', '2022324018', '', 'M', 'cohab 2', 'Raquel Mattes Mongelo', '2022-10-06', '55999982163', '17');
 
 --
 -- Restrições para despejos de tabelas
