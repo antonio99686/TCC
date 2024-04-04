@@ -3,51 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sistema de Caixa</title>
     <!-- Adicionando Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            padding-top: 50px;
-        }
-    </style>
+   
 </head>
 <body>
 
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="background-color: ;">
+<!-- header -->
+<header class="navbar navbar-expand-lg navbar-light bg-light top" style="background-color: ;">
         <div class="container">
-            <a class="navbar-brand" >
-                <img src="../img/icno.jpg"  class="imgs" height="50px" width="50px"><a href=""></a> Sentinela da Fronteira
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="dashbord.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="perfil.php">Perfil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            <a class="navbar-brand">
+                <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"> Sentinela da Fronteira
+                <?php echo "<a href='index.php' class='btn btn-danger'>Sair</a>"; ?>
+    </header>
+
+    <nav class="menu-lateral">
+
+        <div class="btn-expandir">
+            <i class="bi bi-list" id="btn-exp"></i>
         </div>
-        <?php echo "<a href='../dashbord.php' class='btn btn-danger'>Sair</a>"; ?>
-    </nav>
+        <!--btn-expandir-->
+
+        <ul>
+            <li class="item-menu ativo">
+                <a href="../dashboard.php">
+                    <span class="icon"><i class="bi bi-house-door"></i></span>
+                    <span class="txt-link">Home</span>
+                </a>
+            </li>
+           
+            <li class="item-menu">
+                <a href="../calen/index.php">
+                    <span class="icon"><i class="bi bi-calendar3"></i></span>
+                    <span class="txt-link">Agenda</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-gear"></i></span>
+                    <span class="txt-link">Configurações</span>
+                </a>
+            </li>
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-person-circle"></i></span>
+                    <span class="txt-link">Conta</span>
+                </a>
+            </li>
+        </ul>
+
+    </nav><!--menu-lateral-->
+
 
 
 
@@ -150,7 +169,7 @@
         </footer>
 
     </section>
-
+    <script src="../java/dash.js"></script>
 
 </body>
 </html>

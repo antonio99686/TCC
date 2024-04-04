@@ -13,6 +13,7 @@ session_start();
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
+       <!-- Adicionando Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" media="screen"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
@@ -35,7 +36,7 @@ session_start();
     $dados = mysqli_fetch_assoc($resultado);
 
     ?>
-    <!-- Navigation -->
+    <!-- header -->
     <header class="navbar navbar-expand-lg navbar-light bg-light top" style="background-color: ;">
         <div class="container">
             <a class="navbar-brand">
@@ -96,7 +97,7 @@ session_start();
             <p class="lead">
                 <?php echo $dados['nome'] ?>
             </p>
-            <img src="img/<?php echo $dados['imagem'] ?>" height="190px" width="150px">
+            <img src="img/antonionMong.png" height="190px" width="150px">
         </div>
     </section>
     <div class="infor">

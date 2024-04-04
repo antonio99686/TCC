@@ -53,19 +53,14 @@ session_start();
 
         <ul>
             <li class="item-menu ativo">
-                <a href="#">
+                <a href="../dashboard.php">
                     <span class="icon"><i class="bi bi-house-door"></i></span>
                     <span class="txt-link">Home</span>
                 </a>
             </li>
+            
             <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-columns-gap"></i></span>
-                    <span class="txt-link">Dashboard</span>
-                </a>
-            </li>
-            <li class="item-menu">
-                <a href="calen/index.php">
+                <a href="../calen/index.php">
                     <span class="icon"><i class="bi bi-calendar3"></i></span>
                     <span class="txt-link">Agenda</span>
                 </a>
@@ -102,9 +97,10 @@ session_start();
                     <?php
                     if($dados['genero'] = 'M'){
                         
+
                     }else {
 
-                        
+
                     }
 
                     ?>

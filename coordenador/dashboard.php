@@ -37,7 +37,7 @@ session_start();
         <div class="container">
             <a class="navbar-brand">
                 <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"> Sentinela da Fronteira
-                <?php echo "<a href='index.php' class='btn btn-danger'>Sair</a>"; ?>
+                <?php echo "<a href='../index.php' class='btn btn-danger'>Sair</a>"; ?>
     </header>
 
     <nav class="menu-lateral">
@@ -55,9 +55,9 @@ session_start();
                 </a>
             </li>
             <li class="item-menu">
-                <a href="#">
-                    <span class="icon"><i class="bi bi-columns-gap"></i></span>
-                    <span class="txt-link">Dashboard</span>
+                <a href="form">
+                    <span class="icon"><i class="bi bi-clipboard"></i></span>
+                    <span class="txt-link">Cadastrar</span>
                 </a>
             </li>
             <li class="item-menu">
