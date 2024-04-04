@@ -44,7 +44,7 @@ if (isset($_FILES['arquivo'])) {
         // Executar o comando SQL
         if (mysqli_query($conexao, $sql)) {
                 echo "pessoa cadastrada com sucesso!";
-                header('Location: ../dashbord.php');
+                header('Location: ../dashboard.php');
         } else {
                 echo "Falha ao cadastrar pessoa.";
         }

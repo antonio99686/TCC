@@ -30,7 +30,7 @@ if (isset($_FILES['file'])) {
         $novo_nome = $_FILES['arquivo']['name'];
 
         //define a pasta para onde enviaremos o arquivo
-        $diretorio = "img/";
+        $diretorio = "../../img/";
 
         //faz o upload, movendo o arquivo para a pasta especificada
         move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $novo_nome);
@@ -57,13 +57,9 @@ if (isset($_FILES['file'])) {
                 '$tele_respon','$idade')";
 
         // Executar o comando SQL
-        if (mysqli_query($conexao, $sql)) {
-                echo "pessoa cadastrada com sucesso!";
-                header('Location: ../dashboard.php');
-        } else {
-                echo "Falha ao cadastrar pessoa.";
+
         }
 
-}
+
 
 ?>

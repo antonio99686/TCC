@@ -41,7 +41,7 @@ if (isset($_FILES['arquivo'])) {
         VALUES
          ('$nome','$email',
          '$senha','$CPF',
-         '$nascimento','',
+         '$nascimento',
          '$novo_nome','$idade',
          '$RG','$telefone',
          '$inicio','$endereco',
@@ -49,7 +49,7 @@ if (isset($_FILES['arquivo'])) {
 
         // Executar o comando SQL
         if (mysqli_query($conexao, $sql)) { 
-                header('Location: ../dashbord.php');
+                header('Location: ../dashboard.php');
         } else {
                 echo "Falha ao cadastrar pessoa.";
         }
