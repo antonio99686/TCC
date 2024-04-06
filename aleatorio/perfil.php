@@ -25,7 +25,7 @@ session_start();
 
     <?php
     include ("conexao.php");
-    $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
+    $sql = "SELECT * FROM usuario WHERE id_usuario  " ;
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_assoc($resultado);
 

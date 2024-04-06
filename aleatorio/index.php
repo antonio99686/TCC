@@ -39,3 +39,22 @@
 		<label for="t-error" class="toast-icon icon-error"></label>
 	</div>
 </div>
+
+<script>
+document.getElementById('mensagem-sucesso').onclick = function(){
+  swal('Boa!', 'Deu tudo certo!', 'success')
+};
+
+document.getElementById('mensagem-erro').onclick = function(){
+  swal('Oh no...', 'Algo deu errado!', 'error')
+};
+
+</script>
+
+<button id="mensagem-sucesso">
+  Exibir mensagem de sucesso
+</button>
+
+<button id="mensagem-erro">
+  Exibir mensagem de erro
+</button>

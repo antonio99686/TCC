@@ -1,15 +1,15 @@
 <?php
 
 // Conecta ao banco de dados
-include('../conexao.php');
+include ('../conexao.php');
 
 // Verifica se os dados do formulário foram recebidos corretamente
 if(isset($_POST['usuario'], $_POST['email'], 
-$_POST['senha'], $_POST['telefone'], 
-$_POST['nascimento'], $_POST['cpf'],
- $_POST['RG'], $_POST['endereco'], 
- $_POST['inicio'], $_POST['funcao'],
-  $_POST['idade'], $_POST['genero'])) {
+        $_POST['senha'], $_POST['telefone'], 
+        $_POST['nascimento'], $_POST['cpf'],
+        $_POST['RG'], $_POST['endereco'], 
+        $_POST['inicio'], $_POST['funcao'], 
+        $_POST['idade'], $_POST['genero'])) {
 
     // Dados do formulário
     $nome = $_POST['usuario'];
@@ -37,31 +37,32 @@ $_POST['nascimento'], $_POST['cpf'],
 
             // Faz o upload, movendo o arquivo para a pasta especificada
             if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $novo_nome)) {
-                // Comando SQL para inserção
-                $sql = "INSERT INTO coordenador (
-                            nome, email, 
-                            senha, CPF, 
-                            nascimento, imagem,
-                             idade, RG, telefone, 
-                             data_entrada, endereco,
-                              genero, funcao
-                        ) VALUES (
-                            '$nome', '$email',
-                             '$senha', '$CPF',
-                              '$nascimento', '$novo_nome', '$idade',
-                               '$RG', '$telefone', '$inicio', 
-                               '$endereco', '$genero', '$funcao'
-                        )";
-
+                // Cadastramento no banco
+                $sql = "UPDATE coordenador SET 
+                nome=$nome, email=$email,
+                 senha=$senha, CPF=$CPF,
+                  nascimento=$nascimento, imagem=$novo_nome,
+                   idade=$idade, funcao=$funcao,
+                    RG=$RG, telefone=$telefone,
+                     data_entrada=$inicio, endereco=$endereco,
+                      genero=$genero WHERE id_coor=$id_coor";
+                $stmt = mysqli_prepare($conexao, $sql);
+                mysqli_stmt_bind_param($stmt, "ssssssissssssi", $nome, $email,
+                 $senha, $CPF, $nascimento, 
+                 $novo_nome, $idade, 
+                 $funcao, $RG, $telefone,
+                  $inicio, $endereco, $genero,
+                   $id_coor);
+                
                 // Executa o comando SQL
-                if (mysqli_query($conexao, $sql)) { 
-                    echo "<script>alert('Pessoa cadastrada com sucesso!'); window.location.href='../dashboard.php';</script>";
-                    exit();
+                if (mysqli_stmt_execute($stmt)) { 
+                    echo "<script>alert('Arquivo enviado com sucesso!');</script>";
+                    header('Location: ../dashboard.php');
                 } else {
                     echo "<script>alert('Falha ao cadastrar pessoa.');</script>";
                 }
             } else {
-                echo "<script>alert('Erro ao fazer upload do arquivo.');</script>";
+                echo "<script>alert('Erro ao mover o arquivo.');</script>";
             }
         } else {
             echo "<script>alert('Erro durante o upload do arquivo.');</script>";
@@ -72,5 +73,4 @@ $_POST['nascimento'], $_POST['cpf'],
 } else {
     echo "<script>alert('Dados do formulário incompletos.');</script>";
 }
-
 ?>

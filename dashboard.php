@@ -1,11 +1,41 @@
 <?php
 session_start();
+include("conexao.php");
 
+// Verifica se o usuário não está logado
+if (!empty ($_SESSION['id_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: login.php");
+    exit();
+}
+
+
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário
+
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $id_usuario;
+var_dump($sql);
+
+$resultado = mysqli_query($conexao, $sql);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
+$dados = mysqli_fetch_assoc($resultado);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
+    <!-- código do cabeçalho  -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,16 +58,7 @@ session_start();
 
 <body>
 
-
-    <?php
-    include ("conexao.php");
-    $sql = "SELECT * FROM usuario WHERE id_usuario ";
-    $resultado = mysqli_query($conexao, $sql);
-    $dados = mysqli_fetch_assoc($resultado);
-
-    ?>
-    <!-- header -->
-    <header class="navbar navbar-expand-lg navbar-light bg-light top" style="background-color: ;">
+<header class="navbar navbar-expand-lg navbar-light bg-light top" style="background-color: ;">
         <div class="container">
             <a class="navbar-brand">
                 <img src="img/icno.jpg" class="imgs" height="50px" width="50px"> Sentinela da Fronteira
@@ -87,7 +108,7 @@ session_start();
     </nav><!--menu-lateral-->
 
 
-    <!-- Page Content -->
+    <!-- Seção para exibir os dados do usuário -->
     <section class="py-5">
         <div class="container">
             <br>
@@ -95,58 +116,28 @@ session_start();
             <br>
             <h1 class="fw-light">Bem-vindo(a)</h1>
             <p class="lead">
-                <?php echo $dados['nome'] ?>
+                <?php echo $dados['nome']; ?>
             </p>
-            <img src="img/<?php $dados['imagem']?>" height="190px" width="150px">
+            <img src="img/<?php echo $dados['imagem']; ?>" height="190px" width="150px">
         </div>
     </section>
+
+    <!-- Seção para exibir informações do usuário -->
     <div class="infor">
         <h2> DADOS</h2>
 
         <?php
-        echo "Nome: ";
-        echo $dados['nome'] ?>
-        <br>
-        <?php
-        echo "E-mail: ";
-        echo $dados['email'] ?>
-        <br>
-        <?php
-        echo "Matrícula: ";
-        echo $dados['usuario'] ?>
-        <br>
-        <?php
-        echo "Data de Nascimento: ";
-        echo $dados['datas'] ?>
-        <br>
-        <?php
-        echo "Enderço: ";
-        echo $dados['endereco'] ?>
-        <br>
-        <?php
-        echo "Responsável: ";
-        echo $dados['responsavel'] ?>
-        <br>
-        <?php
-        echo "Data de Entrada: ";
-        echo $dados['data_entrada'] ?>
-        <br>
-        <?php
-        echo "Telefone Responsavel: ";
-        echo $dados['tele_respon'] ?>
-        <br>
+        echo "Nome: " . $dados['nome'] . "<br>";
+        echo "E-mail: " . $dados['email'] . "<br>";
+        echo "Matrícula: " . $dados['usuario'] . "<br>";
+        echo "Data de Nascimento: " . $dados['datas'] . "<br>";
+        echo "Endereço: " . $dados['endereco'] . "<br>";
+        echo "Responsável: " . $dados['responsavel'] . "<br>";
+        echo "Data de Entrada: " . $dados['data_entrada'] . "<br>";
+        echo "Telefone Responsável: " . $dados['tele_respon'] . "<br>";
+        ?>
+
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
     <section class="hero-section">
         <div class="card-grid">
@@ -193,52 +184,45 @@ session_start();
 
     </section>
 
-
-
-
-
     <footer class="text-center text-white" style="background-color: #2d3548;">
 
-        <div class="container p-4 pb-0">
+<div class="container p-4 pb-0">
 
-            <section class="">
-                <p class="d-flex justify-content-center align-items-center">
-                    <span class="me-3">
-                        <a href="https://www.instagram.com/ptgsentinelaoficial/">
-                            <img src="img/img/instagram.png" height="20px" width="20px"></a>
+    <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+            <span class="me-3">
+                <a href="https://www.instagram.com/ptgsentinelaoficial/">
+                    <img src="img/img/instagram.png" height="20px" width="20px"></a>
 
-                        <a
-                            href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR">
-                            <img src="img/img/facebook.png" height="20px" width="20px"></a>
-
-
-                    </span>
-
-                    <!-- <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
-
-                        </button>-->
-                </p>
-
-            </section>
-
-        </div>
+                <a
+                    href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR">
+                    <img src="img/img/facebook.png" height="20px" width="20px"></a>
 
 
+            </span>
 
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            Sentinela da Fronteira
+            <!-- <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
 
-        </div>
+                </button>-->
+        </p>
 
-    </footer>
+    </section>
+
+</div>
 
 
 
-    <script src="java/dash.js"></script>
+<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    Sentinela da Fronteira
+
+</div>
+
+</footer>
+
+
+
+<script src="java/dash.js"></script>
+
 </body>
 
 </html>
-
-
-
-

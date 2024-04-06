@@ -38,13 +38,13 @@
 
                                         <div class="form-outline mb-4">
                                             <input type="text" name="CPF"
-                                                class="form-control form-control-lg" placeholder="CPF">
+                                                class="form-control form-control-lg" placeholder="CPF" required>
                                        
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <input type="password" name="senha"
-                                                class="form-control form-control-lg" placeholder="SENHA" >
+                                                class="form-control form-control-lg" placeholder="SENHA" required>
                                            
                                         </div>
 

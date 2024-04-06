@@ -4,22 +4,23 @@
 include('../conexao.php');
 
 // Verifica se os dados do formulário foram recebidos corretamente
-if(isset($_POST['usuario'], $_POST['nome'],
-        $_POST['senha'], $_POST['email'],
-        $_POST['telefone'], $_POST['cpf'],
-        $_POST['idade'], $_POST['nas'],
-        $_POST['funcao'])) {
+if(isset($_POST['id_pais'], $_POST['usuario'],
+        $_POST['nome'], $_POST['senha'], 
+        $_POST['email'], $_POST['telefone'], 
+        $_POST['cpf'], $_POST['idade'], 
+        $_POST['nas'], $_POST['funcao'])) {
 
     // Dados do formulário
-    $nome = $_POST['usuario'];
-    $nom_dan = $_POST['nome'];
-    $senha = $_POST['senha'];
-    $email = $_POST['email'];
-    $telefone = $_POST['telefone'];
-    $CPF = $_POST['cpf'];
-    $idade = $_POST['idade'];
-    $nacionalidade = $_POST['nas'];
-    $funcao = $_POST['funcao'];
+    $id = $_POST['id_pais'];
+    $nome =  $_POST['usuario'];
+    $nom_dan =  $_POST['nome'];
+    $senha =  $_POST['senha'];
+    $email =  $_POST['email'];
+    $telefone =  $_POST['telefone'];
+    $CPF =  $_POST['cpf'];
+    $idade =  $_POST['idade'];
+    $nacionalidade =  $_POST['nas'];
+    $funcao =  $_POST['funcao'];
 
     // Verifica se um arquivo foi enviado
     if (isset($_FILES['arquivo'])) {
@@ -33,28 +34,23 @@ if(isset($_POST['usuario'], $_POST['nome'],
 
             // Faz o upload, movendo o arquivo para a pasta especificada
             if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $novo_nome)) {
-                // Comando SQL para inserção
-                $sql = "INSERT INTO pais (
-                            nome, nom_dan,
-                             senha, cpf,
-                              idade, nacionalidade,
-                               funcao, telefone,
-                                email, imagem
-                        ) VALUES (
-                            '$nome', '$nom_dan', 
-                            '$senha', '$CPF', 
-                            '$idade', '$nacionalidade',
-                             '$funcao', '$telefone',
-                              '$email', '$novo_nome'
-                        )";
+                // Comando SQL para atualização
+                $sql = "UPDATE pais SET 
+                            nome='$nome', nom_dan='$nom_dan',
+                             senha='$senha', cpf='$CPF', 
+                             idade='$idade', nacionalidade='$nacionalidade', 
+                             funcao='$funcao', telefone='$telefone', 
+                             email='$email', imagem='$novo_nome'
+                        WHERE
+                            id_pais='$id'";
 
                 // Executa o comando SQL
                 if (mysqli_query($conexao, $sql)) { 
-                    echo "<script>alert('Pessoa cadastrada com sucesso!');</script>";
+                    echo "<script>alert('Pessoa atualizada com sucesso!');</script>";
                     header('Location: ../dashboard.php');
                     exit();
                 } else {
-                    echo "<script>alert('Falha ao cadastrar pessoa.');</script>";
+                    echo "<script>alert('Falha ao atualizar pessoa.');</script>";
                 }
             } else {
                 echo "<script>alert('Erro ao mover o arquivo.');</script>";

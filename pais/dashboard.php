@@ -41,7 +41,7 @@ session_start();
         <div class="container">
             <a class="navbar-brand">
                 <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"> Sentinela da Fronteira
-                <?php echo "<a href='index.php' class='btn btn-danger'>Sair</a>"; ?>
+                <?php echo "<a href='../index.php' class='btn btn-danger'>Sair</a>"; ?>
     </header>
 
     <nav class="menu-lateral">
