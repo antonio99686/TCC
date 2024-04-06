@@ -5,95 +5,121 @@ $sql = "SELECT * FROM coordenador";
 $resultado = mysqli_query($conexao, $sql);
 $dados = mysqli_fetch_assoc($resultado);
 ?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/dashbord.css">
-    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="shortcut icon" href="../img/img/icon.png">
     <title>Sentinela da fronteira</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+    <!-- ======= Styles ====== -->
+
+    <link rel="stylesheet" href="css/dashbord.css">
+
+   
 </head>
 
-<body>  
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                    <span class="icon">
+                            <ion-icon name="##"></ion-icon>
+                        </span>
+                        <span class="title"> Sentinela da Fronteira </span>
+                    </a>
+                </li>
 
-  
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
 
-    <header class="navbar navbar-expand-lg navbar-light bg-light top" style="background-color: ;">
-        <div class="container">
-            <a class="navbar-brand">
-                <img src="../img/icno.jpg" class="imgs" height="50px" width="50px"> Sentinela da Fronteira
-                <?php echo "<a href='../index.php' class='btn btn-danger'>Sair</a>"; ?>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Customers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </header>
 
-    <nav class="menu-lateral">
-    <div class="btn-expandir">
-        <i class="bi bi-list" id="btn-exp"></i>
-    </div>
-    <!--btn-expandir-->
+        <!-- ========================= Principal ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
 
-    <ul>
-        <li class="item-menu ativo">
-            <a href="#">
-                <span class="icon"><i class="bi bi-house-door"></i></span>
-                <span class="txt-link">Home</span>
-            </a>
-        </li>
-        <li class="item-menu">
-            <a href="#">
-                <span class="icon"><i class="bi bi-clipboard"></i></span>
-                <span class="txt-link">Cadastrar</span>
-            </a>
-            <!-- Submenu -->
-            <ul class="submenu">
-            <li><a href="form/formcadD.php">Dançarino</a></li>
-            <li><a href="form/formcadC.php">Coordenador</a></li>
-            <li><a href="form/formcadP.php">Responsavel</a></li>
-            </ul>
-        </li>
-        <li class="item-menu">
-            <a href="#">
-                <span class="icon"><i class="bi bi-pencil-square"></i></span>
-                <span class="txt-link">Editar</span>
-            </a>
-            <!-- Submenu -->
-            <ul class="submenu">
-                <li><a href="formedit/formeditD.php">Dançarino</a></li>
-                <li><a href="formedit/formeditC.php">Coordenador</a></li>
-                <li><a href="formedit/formeditP.php">Responsavel</a></li>
-            </ul>
-        </li>
-        <li class="item-menu">
-            <a href="calen/index.php">
-                <span class="icon"><i class="bi bi-calendar3"></i></span>
-                <span class="txt-link">Agenda</span>
-            </a>
-        </li>
-        <li class="item-menu">
-            <a href="#">
-                <span class="icon"><i class="bi bi-person-circle"></i></span>
-                <span class="txt-link">Conta</span>
-            </a>
-            <!-- Submenu -->
-           
-        </li>
-    </ul>
-</nav><!--menu-lateral-->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
 
+                <div class="user">
+                    <img src="imgs/customer01.jpg" alt="">
+                </div>
+            </div>
 
-    <!-- Page Content -->
+           <!-- Conteúdo da página -->
     <section class="py-5">
         <div class="container">
             <br>
@@ -106,7 +132,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <img src="img/<?php echo $dados['imagem']?>" height="150px" width="150px" >
         </div>
     </section>
-    
+
     <div class="infor">
         <h2> DADOS</h2>
         <?php
@@ -154,7 +180,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <div class="cardss">
         <section class="hero-section">
             <div class="card-grid">
-                <a class="card" href="pagamentos/index.php">
+                <a class="card" href="../pagamento">
                     <div class="card__background"
                         style="background-image: url(https://www.gruporecovery.com/wp-content/uploads/2023/09/MicrosoftTeams-image-1.png)">
                     </div>
@@ -193,7 +219,7 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
         </section>
     </div>
-
+    
     <section class="">
         <footer class="text-center text-white" style="background-color: #2d3548;">
             <div class="container p-4 pb-0">
@@ -215,6 +241,14 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
         </footer>
     </section>
-    <script src="../java/dash.js"></script>
+         
+           
+    <!-- =========== Scripts =========  -->
+    <script src="../java    /main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>
