@@ -1,10 +1,33 @@
-<?php
+    <?php
 session_start();
 include("conexao.php");
-$sql = "SELECT * FROM coordenador";
+
+// Verifica se o usuário está logado
+if (isset($_SESSION['id_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
+    exit();
+}
+
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário
+$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
+?> 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,55 +121,26 @@ $dados = mysqli_fetch_assoc($resultado);
             <br>
             <h1 class="fw-light">Bem-vindo(a)</h1>
             <p class="lead">
-                <?php echo $dados['nome'] ?>
+                <?php echo $_SESSION['nome'] ?>
             </p>
-            <img src="img/<?php echo $dados['imagem']?>" height="150px" width="150px" >
+            <img src="../img/<?php echo $_SESSION['imagem']?>" height="180px" width="160px" >
         </div>
     </section>
 
     <div class="infor">
-        <h2> DADOS</h2>
-        <?php
-        echo "Nome: "; 
-        echo $dados['nome'] 
+    <?php
+        echo "Nome: " . $_SESSION['nome'] . "<br>";
+        echo "E-mail: " . $_SESSION['email'] . "<br>";
+        echo "Matrícula: " . $_SESSION['CPF'] . "<br>";
+        echo "Data de Nascimento: " . $_SESSION['datas'] . "<br>";
+        echo "Endereço: " . $_SESSION['endereco'] . "<br>";
+        echo "Idade: " . $_SESSION['idade'] . "<br>";
+        echo "Responsável: " . $_SESSION['RG'] . "<br>";
+        echo "Data de Entrada: " . $_SESSION['data_entrada'] . "<br>";
+        echo "Telefone Responsável: " . $_SESSION['endereco'] . "<br>";
         ?>
-        <br>
-        <?php 
-        echo "E-mail: "; 
-        echo $dados['email'] 
-        ?>
-        <br>
-        <?php 
-        echo "CPF: "; 
-        echo $dados['CPF'] 
-        ?>
-        <br>
-        <?php 
-        echo "Nascimento: "; 
-        echo $dados['nascimento'] 
-        ?>
-        <br>
-        <?php 
-        echo "Idade: "; 
-        echo $dados['idade'] 
-        ?>
-        <br>
-        <?php 
-        echo "RG: "; 
-        echo $dados['RG'] 
-        ?>
-        <br>
-        <?php 
-        echo "Data de Entrada: "; 
-        echo $dados['data_entrada'] 
-        ?>
-        <br>
-        <?php 
-        echo "Endereço: "; 
-        echo $dados['endereco'] 
-        ?>
-        <br>
     </div>
+    
 
     <div class="cardss">
         <section class="hero-section">
@@ -191,27 +185,39 @@ $dados = mysqli_fetch_assoc($resultado);
         </section>
     </div>
     
-    <section class="">
-        <footer class="text-center text-white" style="background-color: #2d3548;">
-            <div class="container p-4 pb-0">
-                <section class="">
-                    <p class="d-flex justify-content-center align-items-center">
-                        <span class="me-3">
-                            <a href="https://www.instagram.com/ptgsentinelaoficial/" >
-                                <img src="../img/img/instagram.png" height="20px" width="20px">
-                            </a>
-                            <a href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR"> 
-                                <img src="../img/img/facebook.png" height="20px" width="20px">
-                            </a>
-                        </span>
-                    </p>
-                </section>
-            </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                Sentinela da Fronteira
-            </div>
-        </footer>
-    </section>
+     
+    <footer class="footer">
+     <div class="containeres">
+      <div class="row">
+        <div class="footer-col">
+          <h4>Telefone</h4>
+          <ul>
+          <li><a href="#">(55) 000000000</a></li>
+          <li><a href="#">(55) 0000-0000</a></li>
+           
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>E-mail</h4>
+          <ul>
+            <li><a href="#">SentineladaFronteira@gmail.com</a></li>
+            
+          </ul>
+        </div>
+       
+        <div class="footer-col">
+          <h4>Siga-nos</h4>
+          <div class="social-links">
+          <a href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR"> 
+          <ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="https://www.instagram.com/ptgsentinelaoficial/" >
+                <ion-icon name="logo-instagram"></ion-icon></a>
+            
+          </div>
+        </div>
+      </div>
+     </div>
+  </footer>
          
            
     <!-- =========== Scripts =========  -->
