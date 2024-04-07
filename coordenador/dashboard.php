@@ -45,56 +45,29 @@ $dados = mysqli_fetch_assoc($resultado);
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="form/index.php">
                         <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
+                        <ion-icon name="pencil-outline"></ion-icon>
                         </span>
-                        <span class="title">Customers</span>
+                        <span class="title">Cadastrar</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#">
                         <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        <ion-icon name="calendar-outline"></ion-icon>
                         </span>
-                        <span class="title">Messages</span>
+                        <span class="title">Calendario</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
-                        </span>
-                        <span class="title">Help</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Settings</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
+                    <a href="logout.php">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
-                        <span class="title">Sign Out</span>
+                        <span class="title">Sair</span>
                     </a>
                 </li>
             </ul>
@@ -109,19 +82,17 @@ $dados = mysqli_fetch_assoc($resultado);
 
                 <div class="search">
                     <label>
-                        <input type="text" placeholder="Search here">
+                        <input type="text" placeholder="Pesquisar">
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
 
-                <div class="user">
-                    <img src="imgs/customer01.jpg" alt="">
-                </div>
+                
             </div>
 
            <!-- Conteúdo da página -->
     <section class="py-5">
-        <div class="container">
+        <div class="containerrr">
             <br>
             <br>
             <br>

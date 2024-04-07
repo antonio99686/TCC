@@ -2,16 +2,23 @@
 
 
 // Verifique se o formulário foi enviado e se os campos CPF e senha estão preenchidos
-if (empty($_POST) or empty($_POST['CPF']) or empty($_POST['senha'])) {
+if (empty($_POST['CPF']) or empty($_POST['senha'])) { // <-- MODIFICADA
    echo "<script>alert('Por favor, preencha todos os campos.'); location.href='index.php';</script>";
     exit; // Termina o script se as informações não estiverem completas
-}
+}   
 
 include('conexao.php');
 $CPF = $_POST['CPF'];
 $senha = $_POST['senha'];
 
 
+// Unificar as tabelas de usuário no sistema tendo um campo para o status (comum, coordenador, pais)
+// Nivel
+// 1 - coordenador
+// 2 - pai
+// 3 - comum
+
+// um switch aqui vai facilitar a consulta para definir para onde ele será enviado
 
 // Consulta SQL para verificar o usuário nas tabelas 'usuario', 'coordenador' e 'pais'
 $sql_usuarios = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND senha = '{$senha}'";
@@ -47,8 +54,7 @@ if (mysqli_num_rows($resultado_usuarios) > 0) {
     exit;
 } else {
     // Usuário não encontrado em nenhuma tabela
-    echo "<script>alert('CPF ou SENHA incorretos.');</script>";
+    echo "<script>alert('CPF ou senha incorretos.');</script>";
     echo "<script>location.href='index.php';</script>";
     exit;
 }
-?>

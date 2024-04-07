@@ -1,3 +1,12 @@
+
+<?php
+session_start();
+include("conexao.php");
+$sql = "SELECT * FROM usuario";
+$resultado = mysqli_query($conexao, $sql);
+$dados = mysqli_fetch_assoc($resultado);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,7 +113,7 @@
                 </div>
 
                 <div class="user">
-                    <img src="imgs/customer01.jpg" alt="">
+                    <img src="../img/<?php $dados['imagem']?>" alt="">
                 </div>
             </div>
 
@@ -242,7 +251,7 @@
                     <table>
                         <tr>
                             <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer02.jpg" alt=""></div>
+                                <div class="imgBx"><img src="../img/<?php $dados['imagem']?>"></div>
                             </td>
                             <td>
                                 <h4>David <br> <span>Italy</span></h4>

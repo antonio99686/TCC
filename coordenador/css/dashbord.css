@@ -15,9 +15,10 @@ body {
   overflow-x: hidden;
 }
 
-.container {
+.containerrr {
   position: relative;
   width: 100%;
+  left: 10%;
 }
 
 .infor{
