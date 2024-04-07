@@ -33,6 +33,7 @@ if($qtd > 0 ){
     $_SESSION['funcao']= $dados['funcao'];
     $_SESSION['responsavel']= $dados['responsavel'];
     $_SESSION['data_entrada']= $dados['data_entrada'];
+    $_SESSION['genero']= $dados['genero'];
     $_SESSION['tele_respon']= $dados['tele_respon'];
     $_SESSION['telefone']= $dados['telefone'];
     $_SESSION['imagem']= $dados['imagem'];

@@ -1,221 +1,250 @@
 <?php
+
 session_start();
+include ("conexao.php");
 
+// Verifica se o usuário está logado
+if (isset($_SESSION['id_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
+    exit();
+}
 
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário
+$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$resultado = mysqli_query($conexao, $sql);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
+$dados = mysqli_fetch_assoc($resultado);
 ?>
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="shortcut icon" href="../img/logo.png">
-  <title>sistema</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="##"></ion-icon>
+                        </span>
+                        <span class="title"> Sentinela da Fronteira </span>
+                    </a>
+                </li>
 
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand"> Sentinela da Fronteira</a>
-      <?php
-      include ("../conexao.php");
-      $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
-      $resultado = mysqli_query($conexao, $sql);
-      $dados = mysqli_fetch_assoc($resultado);
-      echo $_SESSION["nome"];
-      echo "<a href='../dashbord.php' class='btn btn-danger'>Volta</a>";
-      ?>
-    </div>
-  </nav>
-  <?php
-  /* tabela  */
-  if ($dados['genero'] === "M") {
-
-    ?>
-    <table class="ui celled structured table">
-      <thead>
-        <tr>
-          <th rowspan="2"></th>
+                <li>
+                    <a href="../dashboard.php">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
 
 
+            </ul>
+        </div>
+
+        <!-- ========================= Principal ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="../../../img/<?php echo $_SESSION['imagem'] ?>" alt="">
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="numbers"></div>
+                        <div class="cardName"> </div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name=""></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"></div>
+                        <div class="cardName"></div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name=""></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"></div>
+                        <div class="cardName"></div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name=""></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"></div>
+                        <div class="cardName"></div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name=""></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================Lista de detalhes do pedido ================= -->
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Vestimentas</h2>
+
+                    </div>
+                    <?php
+                    /* tabela  */
+                    if ($dados['genero'] === "M") {
+
+                        ?>
+                        <table>
+                            <thead>
+                                <tr>
+
+                                    <td>Nome</td>
 
 
-        </tr>
-        <tr>
-          <th>Entregue</th>
-          <th>Pedente</th>
-          <th> </th>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
 
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Bombacha</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Bombacha
+                                    </td>
+                                    <td><span class="status delivered">Entregue</span></td>
+                                </tr>
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
+                                <tr>
+                                    <td>
+                                        Camisa
+                                    </td>
 
-          <td>Camisa</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                                    <td><span class="status pending">Pendente</span></td>
+                                </tr>
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Colete</td>
-          <td class="right aligned"></td>
-          <td></td>
-          <td class="center aligned">
+                                <tr>
+                                    <td>
+                                    Cinto (ou guaiaca) 
+                                    </td>
 
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Espora</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                                    <td><span class="status return">Retornar</span></td>
+                                </tr>
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Guaiaca</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                                <tr>
+                                    <td>
+                                        Chapéu 
+                                    </td>
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>lenço</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    Lenço  
+                                    </td>
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Chapéu </td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
+                                
 
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php } else { ?>
 
+                    <tr>
+                                    <td>
+                                    Brinco  
+                                    </td>
 
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    Lenço de Mão  
+                                    </td>
 
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    Flor  
+                                    </td>
 
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    Vestido  
+                                    </td>
 
-  <?php } else { ?>
-
-
-    <table class="ui celled structured table">
-      <thead>
-        <tr>
-          <th rowspan="2"></th>
-
-
-
-
-        </tr>
-        <tr>
-          <th>Entregue</th>
-          <th>Devolvido</th>
-          <th>Pendente</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Brinco</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
-
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-
-          <td>Lenço de Mão</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
-
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Flor</td>
-          <td class="right aligned"></td>
-          <td></td>
-          <td class="center aligned">
-
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Vestido</td>
-          <td class="right aligned"></td>
-          <td class="center aligned">
-
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-
-      </tbody>
-    </table>
-
-
-
-
-
-  <?php } ?>
-
-
-
-
-
-
-
-  </div>
-
-  </nav>
-
-
-</html>
-
-
-
-
+                                    <td><span class="status inProgress">Em andamento</span></td>
+                                </tr>
 
 
 
 
 
+
+
+
+                <?php } ?>
+
+
+                <!-- =========== Scripts =========  -->
+                <script src="js/main.js"></script>
+
+                <!-- ====== ionicons ======= -->
+                <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+                <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

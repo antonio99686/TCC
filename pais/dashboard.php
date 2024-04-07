@@ -38,8 +38,8 @@ $dados = mysqli_fetch_assoc($resultado);
     <link rel="shortcut icon" href="../img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- ======= Styles ====== -->
-
-    <link rel="stylesheet" href="../css/dashbord.css">
+    <link rel="stylesheet" href="css/dashbord.css">
+    <link rel="stylesheet" href="css/janela.css">
 
 
 </head>
@@ -78,16 +78,23 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
-                <li>
-                    <a href="logout.php">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sair</span>
-                    </a>
-                </li>
+                <span class="icon">
+                    <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
+                    </span>
             </ul>
         </div>
+
+        
+        <div id="modal-container" class="modal-container">
+        <div class="modal">
+            <button class="fechar" id="fechar">X</button>
+            <h1><?php echo $_SESSION['nome'] ?></h1>
+            <p> Você é realmente deseja sair</p>
+            <p> <a href="logout.php"><img src="../img/img/correto.png" height="40px" width="40px"> </a></p> 
+            <p> <a href="dashboard.php"><img src="../img/img/cruz.png" height="40px" width="40px"> </a></p>
+
+        </div>
+    </div>
 
         <!-- ========================= Principal ==================== -->
         <div class="main">
@@ -96,12 +103,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Pesquisar">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </label>
-                </div>
+                
 
 
             </div>
@@ -216,6 +218,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <!-- =========== Scripts =========  -->
             <script src="../java/main.js"></script>
+            <script src="../java/script.js"></script>
 
             <!-- ====== ionicons ======= -->
             <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -1,11 +1,31 @@
-
 <?php
+
 session_start();
 include("conexao.php");
-$sql = "SELECT * FROM usuario";
+
+// Verifica se o usuário está logado
+if (isset($_SESSION['id_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
+    exit();
+}
+
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário
+$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +34,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento</title>
+    <title>Participantes</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -60,41 +80,11 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
-                        </span>
-                        <span class="title">Help</span>
-                    </a>
-                </li>
+               
+                
+                
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
-                        </span>
-                        <span class="title">Settings</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign Out</span>
-                    </a>
-                </li>
+                
             </ul>
         </div>
 
@@ -113,7 +103,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div>
 
                 <div class="user">
-                    <img src="../img/<?php $dados['imagem']?>" alt="">
+                    <img src="../img/antonionMong.png" alt="">
                 </div>
             </div>
 
@@ -121,40 +111,40 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="cardBox">
                 <div class="card">
                     <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Visualizações diárias</div>
+                        <div class="numbers"></div>
+                        <div class="cardName"> </div>
                     </div>
 
                     <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
+                        <ion-icon name=""></ion-icon>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Vendas</div>
+                        <div class="numbers"></div>
+                        <div class="cardName"></div>
                     </div>
 
                     <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
+                        <ion-icon name=""></ion-icon>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Comentários</div>
+                        <div class="numbers"></div>
+                        <div class="cardName"></div>
                     </div>
 
                     <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
+                        <ion-icon name=""></ion-icon>
                     </div>
                 </div>
 
                 <div class="card">
                     <div>
-                        <div class="numbers">$7,842</div>
+                        <div class="numbers"></div>
                         <div class="cardName">Ganho</div>
                     </div>
 
@@ -168,7 +158,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="details">
                 <div class="recentOrders">
                     <div class="cardHeader">
-                        <h2>pedidos recentes</h2>
+                        <h2>Pagamento</h2>
                         <a href="#" class="btn">Ver tudo</a>
                     </div>
 
@@ -184,147 +174,38 @@ $dados = mysqli_fetch_assoc($resultado);
 
                         <tbody>
                             <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><span class="status delivered">Entregue</span></td>
                             </tr>
 
                             <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><span class="status pending">Pendente</span></td>
                             </tr>
 
                             <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><span class="status return">Retornar</span></td>
                             </tr>
 
                             <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><span class="status inProgress">Em andamento</span></td>
                             </tr>
 
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- ================= novos clientes ================ -->
-                <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>Clientes recentes</h2>
-                    </div>
-
-                    <table>
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="../img/<?php $dados['imagem']?>"></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+              
 
     <!-- =========== Scripts =========  -->
     <script src="js/main.js"></script>
