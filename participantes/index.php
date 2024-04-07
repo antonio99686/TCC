@@ -55,7 +55,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </li>
 
                 <li>
-                    <a href="dashboard.php">
+                    <a href="#">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
