@@ -38,6 +38,8 @@ $dados = mysqli_fetch_assoc($resultado);
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="../../css/janela.css">
     <link rel="stylesheet" href="formulario/css/index.css">
+    <link rel="stylesheet" type="text/css" href="formulario/css/style.css">
+    <link rel="stylesheet" type="text/css" href="formulario/css/reset.css">
 
 
 </head>
@@ -117,32 +119,27 @@ $dados = mysqli_fetch_assoc($resultado);
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
                     </p>
-                    <img src="../../../img/<?php echo $_SESSION['imagem'] ?>" height="150px" width="150px">
+                    
                 </div>
             </section>
 
-            <div class="card_meio">
-                <div class="card verde">
-                    <a href="../form/formCad.php">
-                        <h2>Cadastro</h2>
-                        <p>Cadastre o Usuário </p>
-                    </a>
-                </div>
-                <div class="card azul">
-                    <a href="../form/lista.php">
-                        <h2>Editar</h2>
-                        <p>Edite o Usuário</p>
-                    </a>
-                </div>
-                <div class="card vermelho">
-                    <a href="../form/formExcluir.php">
-                        <h2>Excluir</h2>
-                        <p>Exclui o Usuário</p>
-                    </a>
-                </div>
-                
+            <div class="form_grupo">
 
-            </div>
+<label for="status" class="text">Categoria</label>
+<select name="status" class="dropdown" required>
+
+    <option selected disabled class="form_select_option" value="">Selecione</option>
+    <option value="1" class="form_select_option">Dançarino</option>
+    <option value="2" class="form_select_option">Coordenador </option>
+    <option value="3" class="form_select_option">Responsável</option>
+
+
+</select>
+
+<button type="submit" name="Submit" class="submit_btn">Cadastrar</button>
+</div>
+
+        
 
 
 

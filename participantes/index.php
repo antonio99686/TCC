@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include("conexao.php");
+include("../conexao.php");
 
 // Verifica se o usuário está logado
 if (isset($_SESSION['id_usuario'])) {
@@ -36,7 +36,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Participantes</title>
     <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/janela.css">
 </head>
 
@@ -140,27 +140,9 @@ $dados = mysqli_fetch_assoc($resultado);
                     </div>
                 </div>
 
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName"></div>
-                    </div>
+                
 
-                    <div class="iconBx">
-                        <ion-icon name=""></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName">Ganho</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
+                
             </div>
 
             <!-- ================Lista de detalhes do pedido ================= -->

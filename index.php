@@ -34,7 +34,7 @@
                                     </div>
                                     
                                     
-                                    <form action="login.php" method="POST">
+                                    <form action="login.php" method="POST"  >
 
                                         <div class="form-outline mb-4">
                                             <input type="text" name="CPF"

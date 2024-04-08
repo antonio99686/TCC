@@ -24,13 +24,12 @@ if($qtd > 0 ){
     $_SESSION['id_usuario'] = $id_usuario;
     $_SESSION['nome'] = $dados['nome'];
     $_SESSION['email'] = $dados['email'];
-    $_SESSION['usuario'] = $dados['usuario'];
+    $_SESSION['matricula'] = $dados['matricula'];
     $_SESSION['nom_dan'] = $dados['nom_dan'];
     $_SESSION['usuario'] = $dados['usuario'];
     $_SESSION['RG'] = $dados['RG'];
     $_SESSION['datas']= $dados['datas'];
     $_SESSION['endereco']= $dados['endereco'];
-    $_SESSION['funcao']= $dados['funcao'];
     $_SESSION['responsavel']= $dados['responsavel'];
     $_SESSION['data_entrada']= $dados['data_entrada'];
     $_SESSION['categoria']= $dados['categoria'];
@@ -39,8 +38,8 @@ if($qtd > 0 ){
     $_SESSION['telefone']= $dados['telefone'];
     $_SESSION['imagem']= $dados['imagem'];
     $_SESSION['idade']= $dados['idade'];
-    $_SESSION['status'] = $row->status;
-    switch ($dados['status']) {
+    $_SESSION['statuss'] = $row->status;
+    switch ($dados['statuss']) {
       case '1':
          echo "<script>alert('Seja bem-vindo, " . $dados['nome'] . "'); location.href='dashboard.php';</script>";
          break;
