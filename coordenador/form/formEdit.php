@@ -53,38 +53,36 @@
 
                             <div class="form_grupo">
                                 <label for="nome" class="form_label">Nome</label>
-                                <input type="text" name="nome" class="form_input" id="nome" placeholder="Nome" required>
+                                <input type="text" name="nome" class="form_input" id="nome" placeholder="Nome"
+                                     required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="e-mail" class="form_label">Email</label>
-                                <input type="email" name="email" class="form_input" id="email"
-                                    placeholder="seuemail@email.com" required>
+                                <input type="email" name="email" class="form_input" id="email" placeholder="seuemail@email.com"  required>
+    
                             </div>
 
                             <div class="form_grupo">
                                 <label for="senha" class="form_label">Senha</label>
                                 <input type="password" name="senha" class="form_input" id="senha"
-                                    placeholder="minimo 8 caracteres" required>
+                                    placeholder="mínimo 8 caracteres"  required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="datanascimento" class="form_label">Data de Nascimento</label>
                                 <input type="date" name="datas" class="form_input" id="datanascimento"
-                                    placeholder="Data de Nascimento" required>
+                                    placeholder="Data de Nascimento"  required>
                             </div>
 
                             <div class="form_grupo">
 
                                 <label for="status" class="text">Categoria</label>
                                 <select name="status" class="dropdown" required>
-
                                     <option selected disabled class="form_select_option" value="">Selecione</option>
-                                    <option value="1" class="form_select_option">Dançarino</option>
-                                    <option value="2" class="form_select_option">Coordenador </option>
-                                    <option value="3" class="form_select_option">Responsável</option>
-
-
+                                    <option value="1" class="form_select_option" >Dançarino</option>
+                                    <option value="2" class="form_select_option" >Coordenador</option>
+                                    <option value="3" class="form_select_option" >Responsável</option>
                                 </select>
 
                             </div>
@@ -99,19 +97,19 @@
                             <div class="form_grupo">
                                 <label for="RG" class="form_label">RG</label>
                                 <input type="text" name="RG" class="form_input" id="RG" placeholder="00000000000"
-                                    required>
+                                  required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="Categoria" class="form_label">Nivel</label>
                                 <input type="text" name="categoria" class="form_input" id="Categoria"
-                                    placeholder="adulto,juvenil,mirim" required>
+                                    placeholder="adulto, juvenil, mirim"  required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="Telefone" class="form_label">Telefone</label>
                                 <input type="text" name="telefone" class="form_input" id="Telefone"
-                                    placeholder="(00)0000-00000" required>
+                                    placeholder="(00)0000-00000"  required>
                             </div>
 
 
@@ -119,7 +117,7 @@
                             <div class="form_grupo">
                                 <label for="endereco" class="form_label">Endereço</label>
                                 <input type="text" name="endereco" class="form_input" id="endereco" placeholder=""
-                                    required>
+                                     required>
                             </div>
 
                             <div class="form_grupo">
@@ -131,23 +129,25 @@
                             <div class="form_grupo">
                                 <label for="data_entrada" class="form_label">Data de Entrada</label>
                                 <input type="date" name="data_entrada" class="form_input" id="data_entrada"
-                                    placeholder="" required>
+                                    placeholder=""  required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="tele_respon" class="form_label">Telefone do Responsável</label>
                                 <input type="text" name="tele_respon" class="form_input" id="tele_respon"
-                                    placeholder="(00)0000-00000">
+                                    placeholder="(00)0000-00000" >
                             </div>
 
                             <div class="form_grupo">
                                 <label for="idade" class="form_label">Idade</label>
-                                <input type="text" name="idade" class="form_input" id="idade" placeholder="" required>
+                                <input type="text" name="idade" class="form_input" id="idade" placeholder=""
+                                    required>
                             </div>
 
                             <div class="form_grupo">
                                 <label for="nom_dan" class="form_label">Nome do Dançarino</label>
-                                <input type="text" name="nom_dan" class="form_input" id="nom_dan" placeholder="">
+                                <input type="text" name="nom_dan" class="form_input" id="nom_dan" placeholder=""
+                                    >
                             </div>
 
 
@@ -156,12 +156,9 @@
 
                                 <label for="genero" class="text">Sexo</label>
                                 <select name="genero" class="dropdown" required>
-
-                                    <option selected disabled class="form_select_option" value="" required>Selecione</option>
-                                    <option value="M" class="form_select_option">Masculino</option>
-                                    <option value="F" class="form_select_option">Feminino </option>
-                                  
-
+                                    <option selected disabled class="form_select_option" value="">Selecione</option>
+                                    <option value="M" class="form_select_option" >Masculino</option>
+                                    <option value="F" class="form_select_option">Feminino</option>
                                 </select>
 
                             </div>

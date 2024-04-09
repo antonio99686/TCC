@@ -117,7 +117,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
                     </p>
-                    <img src="../../../img/<?php echo $_SESSION['imagem'] ?>" height="150px" width="150px">
+                    <img src="../../img/<?php echo $_SESSION['imagem'] ?>" height="150px" width="150px">
                 </div>
             </section>
 

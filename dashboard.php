@@ -78,7 +78,12 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
-                
+                .modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adiciona sombra */
+}
               
                     <span class="icon">
                     <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>

@@ -115,17 +115,18 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <br>
                     <br>
-                    <h1 class="fw-light">Bem-vindo(a), ao menu de Cadastrar</h1>
+                    <h1 class="fw-light">Bem-vindo(a), ao menu de Listar</h1>
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
                     </p>
                     
                 </div>
             </section>
+            <form class="form" action="lista.php" method="GET" enctype="multipart/form-data">
 
             <div class="form_grupo">
 
-<label for="status" class="text">Categoria</label>
+<label class="text">Categoria</label>
 <select name="status" class="dropdown" required>
 
     <option selected disabled class="form_select_option" value="">Selecione</option>
@@ -138,9 +139,60 @@ $dados = mysqli_fetch_assoc($resultado);
 
 <button type="submit" name="Submit" class="submit_btn">Cadastrar</button>
 </div>
+            </form>
+        <?php
+        $status = $_GET["status"];
+            switch ($status) {
+    case 1:
+        echo '<div class="table">
+        <table>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">CPF</th>
+            
+            
+           
+      
+          </tr>';
 
-        
+        while ($dados = mysqli_fetch_assoc($resultado)) {
+            echo '<tr>';
+            echo "<td>" . $dados['id_usuario'] . "</td>";
+            echo "<td>" . $dados['nome'] . "</td>";
+            echo "<td>" . $dados['email'] . "</td>";
+            echo "<td>" . $dados['CPF'] . "</td>";
 
+
+
+
+            echo "<td><a href='formedit.php?id_usuario=" . $dados['id_usuario'] .
+            "&nome=" . $dados['nome'] .
+            "&email=" . $dados['email'] .
+            "&CPF=" . $dados['CPF'] . "'>" . "<img src='formulario/img/lapis.png' width='20' height='20'></a></td>";
+
+        echo "<td><a href='formExcluir.php?id_usuario=" . $dados['id_usuario'] .
+            "&nome=" . $dados['nome'] .
+            "&email=" . $dados['email'] .
+            "&CPF=" . $dados['CPF'] . "'>" . "<img src='formulario/img/lixeira.png' width='20' height='20'></a></td>";
+    }
+        echo '</table>
+      </div>';
+        break;
+    case 2:
+      
+        break;
+    case 3:
+       
+        break;
+
+    default:
+        # code...
+        break;
+}
+
+?>
 
 
             <footer class="footer">

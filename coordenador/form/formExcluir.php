@@ -1,174 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include("conexao.php");
 
- <head>
-	
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="Loop Nerd" content="Create one that collects user data and sends it to another page." />
-    <meta name="description" content="This tutorial shows you how to create a simple HTML form using CSS3. The form will collect information from users and send them to a new web page."/>
-    <meta name="keywords" content="Html, Css, Jquery, Wordpress, Free Sites, Wordpress Theme, Responsive Site"/>
-    <meta name="author" content="Loop Nerd" />
-    <meta name="URL" content="https://www.loopnerd.com.br/artigos/css3/formulario-de-cadastro-html-css-pronto"/>
-    <meta http-equiv="content-language" content="pt-br" />
-    <meta name="robots" content="index, follow"/>
-    
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-    <![endif]-->       
+$id = $_GET['id_usuario'];
 
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/fonts-icones.css">
-    <link rel="shortcut icon" href="https://www.loopnerd.com.br/wp-content/themes/loopnerd/img/favicon.png"/>
+$sql = "SELECT * FROM usuario WHERE id_usuario = $id";
+$resultado = mysqli_query($conexao, $sql);
+$escolhas = mysqli_fetch_assoc($resultado);
 
-	<title>HTML CSS Ready Registration Form - Html Css</title>
- 
- </head>
+$sql = "DELETE FROM usuario WHERE id_usuario = $id";
+mysqli_query($conexao, $sql);
 
-<body>
-    
-<header class="main_header container">        
-    <div class="content">
-    
-        <div class="main_header_logo">
-            <img src="img/logo.png" alt="logo.png" title="Loop Nerd"/>
-        </div>
-    
-    </div>
-</header>
+// script para exibir o alerta
+echo '<script>alert("Excluído com sucesso!");</script>';
 
-<main class="main_content container">
-
-        
-    <section class="section-seu-codigo container">
-        
-        <div class="content">
-                        
-            <div class="box-artigo">
-                
-               
-                <!--Inícia Formulário-->
-
-                    <div class="container_form">
-            
-                            <h1>Formulário de Cadastro</h1>
-
-                            <form class="form" action="#" method="post">
-                                
-                                <div class="form_grupo">
-                                    <label for="nome" class="form_label">Nome</label>
-                                    <input type="text" name="nome" class="form_input" id="nome" placeholder="Nome" required>
-                                </div>
-                                
-                                <div class="form_grupo">
-                                    <label for="e-mail" class="form_label">Email</label>
-                                    <input type="email" name="email" class="form_input" id="email" placeholder="seuemail@email.com" required>
-                                </div>
-                                
-                                <div class="form_grupo">
-                                    <label for="datanascimento" class="form_label">Data de Nascimento</label>
-                                    <input type="date" name="datanascimento" class="form_input" id="datanascimento" placeholder="Data de Nascimento" required>
-                                </div>        
-
-                                <div class="form_grupo">
-                                    
-                                    <label for="estadocivil" class="text">Estado civil</label>
-                                    <select name="estadocivil" class="dropdown" required>
-                                        
-                                        <option selected disabled class="form_select_option" value="">Selecione</option>
-                                        <option value="Solteiro" class="form_select_option">Solteiro(a)</option>
-                                        <option value="Casado" class="form_select_option">Casado(a) </option>
-                                        <option value="Divorciado" class="form_select_option">Divorciado(a)</option>                    
-                                        <option value="Viúvo" class="form_select_option">Viúvo(a)</option>                    
-                                    
-                                    </select>
-
-                                </div>
-
-                                <div class="form_grupo">
-
-                                    <span class="legenda">Sexo:</span>
-                                    
-                                    <div class="radio-btn">
-                                        <input type="radio" class="form_new_input" id="masculino" name="sexo" value="Masculino">
-                                        <label for="masculino" class="radio_label form_label"> <span class="radio_new_btn"></span> Masculino</label>
-                                    </div>
-
-                                    <div class="radio-btn">
-                                        <input type="radio" class="form_new_input" id="feminino" name="sexo" value="Feminino">
-                                        <label for="feminino" class="radio_label form_label"> <span class="radio_new_btn"></span> Feminino</label>
-                                    </div>
-
-                                </div>
-                              
-
-                                <div class="form_grupo">
-
-                                    <span class="legenda">Você quer aprender o que ?</span>
-
-                                    <div class="check-btn">
-                                        <input type="checkbox" class="form_new_input" id="html5" name="aprender" value="html5">
-                                        <label for="html5" class="form_label check_label"> <span class="check_new_btn"></span> Html5</label>
-                                    </div>
-
-                                    <div class="check-btn">
-                                        <input type="checkbox" class="form_new_input" id="css3" name="aprender" value="css3">
-                                        <label for="css3" class="form_label check_label"><span class="check_new_btn"></span> Css3</label>
-                                    </div>
-
-                                    <div class="check-btn">
-                                        <input type="checkbox" class="form_new_input" id="jquery" name="aprender" value="jquery">
-                                        <label for="jquery" class="form_label check_label"><span class="check_new_btn"></span> jQuery</label>
-                                    </div>
-
-                                    <div class="check-btn">
-                                        <input type="checkbox" class="form_new_input" id="wordpress" name="aprender" value="wordpress">
-                                        <label for="wordpress" class="form_label check_label"><span class="check_new_btn"></span> WordPress</label>
-                                    </div>
-                                    
-
-                                    <div class="form_message">
-                                        
-                                        <label for="message" class="form_message_label"> Digite aqui sua sua mensagem:</label>
-                                        <textarea name="mensagem" id="message" cols="30" rows="3" class="form_input message_input" required></textarea>
-
-                                    </div>
-
-                                    <div class="submit">
-
-                                      <input type="hidden" name="acao" value="enviar">
-                                      <button type="submit" name="Submit" class="submit_btn" >Cadastrar</button>
-                                    
-                                    </div>
-                            </form>
-
-                    </div><!--container_form-->
-
-                <!--Finaliza Formulário-->
-
-
-            </div><!--Box Artigo-->
-
-
-        <div class="clear"></div>
-        </div>
-    </section><!--FECHA BOX HTML-->
-
-
-</main>
-
-<footer class="main_footer container">
-    <div class="main_footer_copy">
-
-        <p class="m-b-footer"> Loop Nerd - 2021, todos os direitos reservados.</p> 
-        <p class="by"><i class="icon icon-heart-3"></i> Desenvolvido por: loopnerd.com.br</p>
-    
-    </div>
-</footer>
-
-<script src="js/jquery.js"></script>
-<script src="js/script.js"></script>
-                    
-</body>
-</html>
+// Redireciona para a página de lista
+header('Location: lista.php');
+?>
+  <!-- =======INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `matricula`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`) VALUES
+(1, 1, 'Antonio Carlos Mattes Mongelo', 'antoniomattes72@gmail.com', '2006-08-10', '05500840029', '2108268794', 'juvenil', '123', '5596860344', '2022324018', 'antonionMong.png', 'M', 'cohab 2', 'Raquel Mattes Mongelo', '2022-10-06', '55999982163', '17', ''),
+(2, 3, 'Raquel Mattes Mongelo', 'Raquelmattes88@gmail.com', '1975-09-12', '80610420020', '1234567890', 'adulto', '123', '55999982163', '2022324058', 'raquel.jpg', 'F', 'cohab 2', 'proprio', '2034-04-12', '', '48', 'Luce Terezinha Mattes Mongelo'),
+(3, 2, 'Jean de Souza', 'jean@gmail.com', '1974-05-31', '12345678900', '1234567980', 'adulto', '123', '5596441634', '2022325874', 'jean.png', 'M', 'cohab 2', 'proprio', '2022-10-05', '', '50', '');
+COMMIT; ====== -->

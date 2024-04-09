@@ -171,7 +171,7 @@
 
                             <div class="form_grupo">
                                 <label for="arquivo" class="form_label">Imagem</label>
-                                <input type="file" name="arquivo" class="form_input" id="arquivo" placeholder="">
+                                <input type="file" name="imagem" class="form_input" id="arquivo" placeholder="">
                             </div>
 
 
