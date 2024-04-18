@@ -1,10 +1,9 @@
 <?php
-
 session_start();
-include ("../conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION)) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -14,7 +13,7 @@ if (isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
@@ -25,7 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,23 +62,9 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Customers</span>
-                    </a>
-                </li>
+              
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
-                        </span>
-                        <span class="title">Messages</span>
-                    </a>
-                </li>
+              
 
                 <span class="icon">
                     <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
@@ -129,7 +114,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </div>
                     <h3>Adulto</h3>
                     <?php 
-                   // while ( $_SESSION['categoria'] = 'adulto') {
+                 //   while ( $_SESSION['categoria'] = 'adulto') {
                      
                    // } ?>
                     <h3>Juvenil</h3>

@@ -1,10 +1,9 @@
 <?php
-
 session_start();
-include ("conexao.php");
+include("../conexao.php");
 
 // Verifica se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION)) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -14,7 +13,7 @@ if (isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
@@ -25,8 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
-
+?> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,7 +79,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div>
 
                 <div class="user">
-                    <img src="../../../img/<?php echo $_SESSION['imagem'] ?>" alt="">
+                    <img src="../../../img/<?php echo $dados['imagem'] ?>" alt="">
                 </div>
             </div>
 

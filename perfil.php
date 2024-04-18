@@ -36,15 +36,15 @@ $dados = mysqli_fetch_assoc($resultado);
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="../../css/janela.css">
-    <link rel="stylesheet" href="formulario/css/index.css">
+    <link rel="stylesheet" href="css/janela.css">
+    <link rel="stylesheet" href="css/dashbord.css">
 
    
 </head>
 
-<body >
+<body>
     <!-- =============== Navigation ================ -->
-    <div class="container" >
+    <div class="container">
         <div class="navigation">
             <ul>
                 <li>
@@ -57,7 +57,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </li>
 
                 <li>
-                    <a href="../Dashboard.php">
+                    <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -67,16 +67,9 @@ $dados = mysqli_fetch_assoc($resultado);
 
         
 
+              
                 <li>
-                    <a href="form/index.php">
-                        <span class="icon">
-                        <ion-icon name="pencil-outline"></ion-icon>
-                        </span>
-                        <span class="title">Cadastro</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="calen/index.php">
+                    <a href="perfil.php">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
@@ -97,8 +90,8 @@ $dados = mysqli_fetch_assoc($resultado);
             <button class="fechar" id="fechar">X</button>
             <h1><?php echo $_SESSION['nome'] ?></h1>
             <p> Você é realmente deseja sair</p>
-            <p> <a href="../logout.php"><img src="formulario/img/correto.png" height="40px" width="40px"> </a></p> 
-            <p> <a href="index.php"><img src="formulario/img/cruz.png" height="40px" width="40px"> </a></p>
+            <p> <a href="logout.php"><img src="img/img/correto.png" height="40px" width="40px"> </a></p> 
+            <p> <a href="dashboard.php"><img src="img/img/cruz.png" height="40px" width="40px"> </a></p>
 
         </div>
     </div>
@@ -114,7 +107,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             </div>
             <div class="user">
-                <img src="../../img/<?php echo $dados['imagem']?>" alt="">
+                <img src="img/<?php echo $dados['imagem']?>" >
             </div>
 
            <!-- Conteúdo da página -->
@@ -123,7 +116,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <br>
             <br>
             <br>
-            <h1 class="fw-light">Menu</h1>
+            <h1 class="fw-light">Perfil</h1>
             <p class="lead">
                 <?php echo $_SESSION['nome'] ?>
             </p>
@@ -131,32 +124,15 @@ $dados = mysqli_fetch_assoc($resultado);
         </div>
     </section>
 
-    <div class="corpo1">        
-     <a href="formCad.php">  
-         <div class="cardsss verde">
-          <h2>Cadastro </h2></a>
-          <p>Cadastre o Usuário  </p>
-        </div>       
-        <div class="cardsss azul">
-        <a href="lista.php">  
-             <h2>Editar</h2></a>
-          <p>Edite o Usuário</p>
-        </div>
-        
-        
-    </div>
+     
 
-       
-        
-       
-           
-    
+  
     
          
            
     <!-- =========== Scripts =========  -->
-    <script src="../../java/main.js"></script>
-    <script src="../../java/script.js"></script>
+    <script src="java/main.js"></script>
+    <script src="java/script.js"></script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

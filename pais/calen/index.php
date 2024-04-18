@@ -23,36 +23,7 @@
     <title>Calendário</title>
   </head>
   <body>
-  <nav class="menu-lateral">
-
-<div class="btn-expandir">
-    <i class="bi bi-list" id="btn-exp"></i>
-</div>
-<!--btn-expandir-->
-
-<ul>
-    <li class="item-menu ativo">
-        <a href="../dashboard.php">
-            <span class="icon"><i class="bi bi-house-door"></i></span>
-            <span class="txt-link"></span>
-        </a>
-    </li>
-
-    <li class="item-menu">
-        <a href="#">
-            <span class="icon"><i class="bi bi-gear"></i></span>
-            <span class="txt-link"></span>
-        </a>
-    </li>
-    <li class="item-menu">
-        <a href="#">
-            <span class="icon"><i class="bi bi-person-circle"></i></span>
-            <span class="txt-link"></span>
-        </a>
-    </li>
-</ul>
-
-</nav><!--menu-lateral-->
+  
     <div class="container">
       <div class="left">
         <div class="calendar">

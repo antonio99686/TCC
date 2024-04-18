@@ -1,9 +1,9 @@
-    <?php
+<?php
 session_start();
 include("conexao.php");
 
 // Verifica se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION)) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -13,7 +13,7 @@ if (isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
@@ -26,8 +26,6 @@ if (!$resultado) {
 $dados = mysqli_fetch_assoc($resultado);
 ?> 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +33,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="css/janela.css">
@@ -67,25 +65,27 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
+        
+
                 <li>
                     <a href="form/index.php">
                         <span class="icon">
                         <ion-icon name="pencil-outline"></ion-icon>
                         </span>
-                        <span class="title">Cadastrar</span>
+                        <span class="title">Cadastro</span>
                     </a>
                 </li>
-
                 <li>
-                    <a href="#">
+                    <a href="perfil.php">
                         <span class="icon">
-                        <ion-icon name="calendar-outline"></ion-icon>
+                        <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-                        <span class="title">Calendario</span>
+                        <span class="title">Perfil</span>
                     </a>
                 </li>
-
-                <span class="icon">
+                
+              
+                    <span class="icon">
                     <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
                     </span>
             
@@ -102,6 +102,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
         </div>
     </div>
+
         <!-- ========================= Principal ==================== -->
         <div class="main">
             <div class="topbar">
@@ -109,14 +110,11 @@ $dados = mysqli_fetch_assoc($resultado);
                     <ion-icon name="menu-outline"></ion-icon>
                 </div>
 
-                <div class="search">
-                    <label>
-                        <input type="text" placeholder="Pesquisar">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </label>
-                </div>
+               
 
-                
+            </div>
+            <div class="user">
+                <img src="../img/<?php echo $dados['imagem']?>" alt="">
             </div>
 
            <!-- Conteúdo da página -->
@@ -129,31 +127,18 @@ $dados = mysqli_fetch_assoc($resultado);
             <p class="lead">
                 <?php echo $_SESSION['nome'] ?>
             </p>
-            <img src="../img/<?php echo $_SESSION['imagem']?>" height="180px" width="160px" >
+            
         </div>
     </section>
 
-    <div class="infor">
-    <?php
-        echo "Nome: " . $_SESSION['nome'] . "<br>";
-        echo "E-mail: " . $_SESSION['email'] . "<br>";
-        echo "Matrícula: " . $_SESSION['CPF'] . "<br>";
-        echo "Data de Nascimento: " . $_SESSION['datas'] . "<br>";
-        echo "Endereço: " . $_SESSION['endereco'] . "<br>";
-        echo "Idade: " . $_SESSION['idade'] . "<br>";
-        echo "Responsável: " . $_SESSION['RG'] . "<br>";
-        echo "Data de Entrada: " . $_SESSION['data_entrada'] . "<br>";
-        echo "Telefone Responsável: " . $_SESSION['endereco'] . "<br>";
-        ?>
-    </div>
-    
+     
 
     <div class="cardss">
         <section class="hero-section">
             <div class="card-grid">
                 <a class="card" href="../pagamento">
                     <div class="card__background"
-                        style="background-image: url(https://www.gruporecovery.com/wp-content/uploads/2023/09/MicrosoftTeams-image-1.png)">
+                        style="background-image: url(https://controlefinanceiro.granatum.com.br/wp-content/uploads/2022/09/header-boleto.png)">
                     </div>
                     <div class="card__content">
                         <p class="card__category">Pagamentos</p>
@@ -178,7 +163,7 @@ $dados = mysqli_fetch_assoc($resultado);
                         <h3 class="card__heading"> Vestimentas</h3>
                     </div>
                 </a>
-                <a class="card" href="participantes/index.php">
+                <a class="card" href="../participantes/index.php">
                     <div class="card__background"
                         style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjBg2Sx6qaB7z73rXl3TaDr9jnqt7V7sV6M7WHoM__eA_qXn7mTIYqiFjNHN4MHCs6rOEpxOY7orHTvckT6wxUba77D-6gFjQYhOkh0pgzZFvXEDr7IXjfF0BWVPm55OZpE-18JusWEWjK/s1600/PAR.JPG)">
                     </div>
@@ -191,39 +176,7 @@ $dados = mysqli_fetch_assoc($resultado);
         </section>
     </div>
     
-     
-    <footer class="footer">
-     <div class="containeres">
-      <div class="row">
-        <div class="footer-col">
-          <h4>Telefone</h4>
-          <ul>
-          <li><a href="#">(55) 000000000</a></li>
-          <li><a href="#">(55) 0000-0000</a></li>
-           
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>E-mail</h4>
-          <ul>
-            <li><a href="#">SentineladaFronteira@gmail.com</a></li>
-            
-          </ul>
-        </div>
-       
-        <div class="footer-col">
-          <h4>Siga-nos</h4>
-          <div class="social-links">
-          <a href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR"> 
-          <ion-icon name="logo-facebook"></ion-icon></a>
-                <a href="https://www.instagram.com/ptgsentinelaoficial/" >
-                <ion-icon name="logo-instagram"></ion-icon></a>
-            
-          </div>
-        </div>
-      </div>
-     </div>
-  </footer>
+    
          
            
     <!-- =========== Scripts =========  -->

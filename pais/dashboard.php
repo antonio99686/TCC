@@ -1,10 +1,9 @@
 <?php
-
 session_start();
-include ("../conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION)) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -14,7 +13,7 @@ if (isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
@@ -25,8 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
-
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,25 +114,25 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <h1 class="fw-light">Bem-vindo(a)</h1>
                     <p class="lead">
-                        <?php echo $_SESSION['nome'] ?>
+                        <?php echo $dados['nome'] ?>
                     </p>
-                    <img src="../img/<?php echo $_SESSION['imagem'] ?>" height="150px" width="150px">
+                    <img src="../img/<?php echo $dados['imagem'] ?>" height="150px" width="150px">
                 </div>
             </section>
 
             <div class="infor">
                 <?php
-                echo "Nome: " . $_SESSION['nome'] . "<br>";
-                echo "Filho(a): " . $_SESSION['nom_dan'] . "<br>";
-                echo "Idade: " . $_SESSION['idade'] . "<br>";
-                echo "E-mail: " . $_SESSION['email'] . "<br>";
-                echo "CPF: " . $_SESSION['CPF'] . "<br>";
-                echo "RG: " . $_SESSION['RG'] . "<br>";
-                echo "Data de Nascimento: " . $_SESSION['datas'] . "<br>";
-                echo "Endereço: " . $_SESSION['endereco'] . "<br>";
-                echo "Telefone: " . $_SESSION['telefone'] . "<br>";
-                echo "Data de Entrada: " . $_SESSION['data_entrada'] . "<br>";
-                echo "Função: " . $_SESSION['funcao'] . "<br>";
+                echo "Nome: " . $dados['nome'] . "<br>";
+                echo "Filho(a): " . $dados['nom_dan'] . "<br>";
+                echo "Idade: " . $dados['idade'] . "<br>";
+                echo "E-mail: " . $dados['email'] . "<br>";
+                echo "CPF: " . $dados['CPF'] . "<br>";
+                echo "RG: " . $dados['RG'] . "<br>";
+                echo "Data de Nascimento: " . $dados['datas'] . "<br>";
+                echo "Endereço: " . $dados['endereco'] . "<br>";
+                echo "Telefone: " . $dados['telefone'] . "<br>";
+                echo "Data de Entrada: " . $dados['data_entrada'] . "<br>";
+             
                 ?>
             </div>
 

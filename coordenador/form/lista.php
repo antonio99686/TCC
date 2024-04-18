@@ -1,9 +1,9 @@
 <?php
 session_start();
-include ("../conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
-if (isset($_SESSION['id_usuario'])) {
+if (!isset($_SESSION)) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -13,7 +13,7 @@ if (isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
@@ -24,7 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +59,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </li>
 
                 <li>
-                    <a href="../dashboard.php">
+                    <a href="../Dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
@@ -67,23 +67,25 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
 
+        
+
                 <li>
-                    <a href="#">
+                    <a href="index.php">
                         <span class="icon">
-                            <ion-icon name="pencil-outline"></ion-icon>
+                        <ion-icon name="pencil-outline"></ion-icon>
                         </span>
-                        <span class="title">Cadastrar</span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="form/index.php">
+                        <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                        </span>
+                        <span class="title">Perfil</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="calendar-outline"></ion-icon>
-                        </span>
-                        <span class="title">Calendario</span>
-                    </a>
-                </li>
 
                 <span class="icon">
                     <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
@@ -102,7 +104,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div id="modal-container" class="modal-container">
         <div class="modal">
             <button class="fechar" id="fechar">X</button>
-            <h1><?php echo $_SESSION['nome'] ?></h1>
+            <h1><?php echo $dados['nome'] ?></h1>
             <p> Você é realmente deseja sair</p>
             <p> <a href="../logout.php"><img src="../../img/img/correto.png" height="40px" width="40px"> </a></p> 
             <p> <a href="dashboard.php"><img src="../../img/img/cruz.png" height="40px" width="40px"> </a></p>
@@ -117,12 +119,12 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <h1 class="fw-light">Bem-vindo(a), ao menu de Listar</h1>
                     <p class="lead">
-                        <?php echo $_SESSION['nome'] ?>
+                        <?php echo $dados['nome'] ?>
                     </p>
                     
                 </div>
             </section>
-            <form class="form" action="lista.php" method="GET" enctype="multipart/form-data">
+            <form class="form" action="lista.php" method="POST" enctype="multipart/form-data">
 
             <div class="form_grupo">
 
@@ -137,11 +139,11 @@ $dados = mysqli_fetch_assoc($resultado);
 
 </select>
 
-<button type="submit" name="Submit" class="submit_btn">Cadastrar</button>
+<button type="submit" name="Submit" class="submit_btn">Select</Select></button>
 </div>
             </form>
         <?php
-        $status = $_GET["status"];
+        $status = $_POST["status"];
             switch ($status) {
     case 1:
         echo '<div class="table">
@@ -168,11 +170,13 @@ $dados = mysqli_fetch_assoc($resultado);
 
 
             echo "<td><a href='formedit.php?id_usuario=" . $dados['id_usuario'] .
+            "&id_usuario=" . $dados['id_usuario'] .
             "&nome=" . $dados['nome'] .
             "&email=" . $dados['email'] .
             "&CPF=" . $dados['CPF'] . "'>" . "<img src='formulario/img/lapis.png' width='20' height='20'></a></td>";
 
         echo "<td><a href='formExcluir.php?id_usuario=" . $dados['id_usuario'] .
+            "&id_usuario=" . $dados['id_usuario'] .
             "&nome=" . $dados['nome'] .
             "&email=" . $dados['email'] .
             "&CPF=" . $dados['CPF'] . "'>" . "<img src='formulario/img/lixeira.png' width='20' height='20'></a></td>";
@@ -195,39 +199,7 @@ $dados = mysqli_fetch_assoc($resultado);
 ?>
 
 
-            <footer class="footer">
-     <div class="containeres">
-      <div class="row">
-        <div class="footer-col">
-          <h4>Telefone</h4>
-          <ul>
-          <li><a href="#">(55) 000000000</a></li>
-          <li><a href="#">(55) 0000-0000</a></li>
-           
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>E-mail</h4>
-          <ul>
-            <li><a href="#">SentineladaFronteira@gmail.com</a></li>
-            
-          </ul>
-        </div>
-       
-        <div class="footer-col">
-          <h4>Siga-nos</h4>
-          <div class="social-links">
-          <a href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR"> 
-          <ion-icon name="logo-facebook"></ion-icon></a>
-                <a href="https://www.instagram.com/ptgsentinelaoficial/" >
-                <ion-icon name="logo-instagram"></ion-icon></a>
-            
-          </div>
-        </div>
-      </div>
-     </div>
-  </footer>
-         
+        
 
 
             <!-- =========== Scripts =========  -->

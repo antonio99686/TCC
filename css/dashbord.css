@@ -313,13 +313,13 @@ ul{
 }
 
 /*responsive*/
-@media(max-width: 767px){
+@media screen  and(max-width: 767px){
   .footer-col{
     width: 50%;
     margin-bottom: 30px;
 }
 }
-@media(max-width: 574px){
+@media screen  and(max-width: 574px){
   .footer-col{
     width: 100%;
 }
@@ -389,8 +389,10 @@ ul{
 
 .user {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+  left: 92.5%;
+  margin-top: 0%;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
@@ -407,7 +409,7 @@ ul{
 
 
 /* ====================== Design Responsivo ========================== */
-@media (max-width: 991px) {
+@media screen  and (max-width: 991px) {
   .navigation {
     left: -300px;
   }
@@ -427,7 +429,7 @@ ul{
   }
 }
 
-@media (max-width: 768px) {
+@media screen  and (max-width: 768px) {
   .details {
     grid-template-columns: 1fr;
   }
@@ -439,7 +441,7 @@ ul{
   }
 }
 
-@media (max-width: 480px) {
+@media screen  and (max-width: 480px) {
   .cardBox {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -468,13 +470,13 @@ ul{
     left: initial;
   }
 }
-@media(min-width: 540px){
+@media screen  and(min-width: 540px){
   .card-grid{
     grid-template-columns: repeat(2, 1fr); 
   }
 }
 
-@media(min-width: 960px){
+@media screen  and (min-width: 960px){
   .card-grid{
     grid-template-columns: repeat(4, 1fr); 
   }
