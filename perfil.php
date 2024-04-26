@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
+include ("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION)) {
@@ -24,7 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,106 +35,131 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
-    <!-- ======= Styles ====== -->
+    <!-- Styles -->
     <link rel="stylesheet" href="css/janela.css">
     <link rel="stylesheet" href="css/dashbord.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-   
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
-<body>
-    <!-- =============== Navigation ================ -->
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="#">
+<body style="background-color:rgb(161, 161, 161);">
+    <!-- Navigation -->
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#">
                     <span class="icon">
-                            <ion-icon name="##"></ion-icon>
-                        </span>
-                        <span class="title"> Sentinela da Fronteira </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="dashboard.php">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
-                        </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-        
-
-              
-                <li>
-                    <a href="perfil.php">
-                        <span class="icon">
-                        <ion-icon name="person-circle-outline"></ion-icon>
-                        </span>
-                        <span class="title">Perfil</span>
-                    </a>
-                </li>
-                
-              
-                    <span class="icon">
-                    <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
+                        <ion-icon name="##"></ion-icon>
                     </span>
+                    <span class="title"> Sentinela da Fronteira </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="Dashboard.php">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+
             
-            </ul>
-        </div>
+            <li>
+                <a href="perfil.php">
+                    <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                    <span class="title">Perfil</span>
+                </a>
+            </li>
+            <li>
+                <a onclick="confirmLogout()">
+                    <span class="icon">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="title">Sair</span>
+                </a>
+            </li>
 
-        <div id="modal-container" class="modal-container">
+        </ul>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-container" class="modal-container">
         <div class="modal">
-            <button class="fechar" id="fechar">X</button>
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você é realmente deseja sair</p>
-            <p> <a href="logout.php"><img src="img/img/correto.png" height="40px" width="40px"> </a></p> 
-            <p> <a href="dashboard.php"><img src="img/img/cruz.png" height="40px" width="40px"> </a></p>
-
+            
+            <p> Você realmente deseja sair?</p>
+            <button onclick="confirmLogout()">Sair</button>
+            <button onclick="cancelLogout()">Cancelar</button>
         </div>
     </div>
 
-        <!-- ========================= Principal ==================== -->
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </div>
-
-               
-
+    <!-- Main Content -->
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
             </div>
-            <div class="user">
-                <img src="img/<?php echo $dados['imagem']?>" >
-            </div>
-
-           <!-- Conteúdo da página -->
-    <section class="py-5">
-        <div class="containerrr">
-            <br>
-            <br>
-            <br>
-            <h1 class="fw-light">Perfil</h1>
-            <p class="lead">
-                <?php echo $_SESSION['nome'] ?>
-            </p>
-            
         </div>
-    </section>
+        <div class="user">
+            <img src="img/<?php echo $dados['imagem'] ?>" alt="">
+        </div>
 
-     
+        <!-- Conteúdo da página -->
+        <section class="py-5">
+            <div class="container">
+                <div class="nome">
+                    <br>
+                    <br>
+                    <br>
+                    <h1 class="fw-light">Perfil</h1>
+                    <p class="lead">
+                        <?php echo $_SESSION['nome'] ?>
 
-  
-    
-         
-           
-    <!-- =========== Scripts =========  -->
-    <script src="java/main.js"></script>
-    <script src="java/script.js"></script>
+                    </p>
+                </div>
+            </div>
+        </section>
 
-    <!-- ====== ionicons ======= -->
+        
+
+    <!-- Scripts -->
+    <script src="javascript/main.js"></script>
+    <script src="javascript/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: '<?php echo $_SESSION['nome'] ?>',
+                text: "Você realmente deseja sair?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'logout.php';
+                }
+            });
+        }
+
+        function cancelLogout() {
+            Swal.fire({
+                title: 'Operação cancelada',
+                text: 'Você permanecerá na página atual',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
+
+    <!-- ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

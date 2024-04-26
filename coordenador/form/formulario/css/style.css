@@ -29,7 +29,40 @@
     padding:1em;
 
 }
-
+/* Estilo para o grupo */
+.form_grupo {
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para o rótulo */
+  .form_label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333; /* Cor do texto */
+    font-weight: bold;
+  }
+  
+  /* Estilo para o input de arquivo */
+  .form_input {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ccc; /* Cor da borda */
+    border-radius: 5px;
+    box-sizing: border-box; /* Para garantir que o padding não altere a largura total */
+  }
+  
+  /* Estilo para quando o input está focado */
+  .form_input:focus {
+    outline: none; /* Remove a borda de foco padrão */
+    border-color: #007bff; /* Cor da borda quando focado */
+  }
+  
+  /* Estilo para o hover do rótulo */
+  .form_label:hover {
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    color: #007bff; /* Cor do texto no hover */
+  }
+  
 .container_form h1 {
     
     font-family:'open_sansregular';

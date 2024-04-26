@@ -1,147 +1,48 @@
-
 <?php
-session_start();
 
+if ($status = 1) {
 
-?>
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="shortcut icon" href="../img/logo.png">
-  <title>Sentinela da Fronteira</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-    crossorigin="anonymous"></script>
-</head>
-
-<body>
-
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand"> Sentinela da Fronteira</a>
-      <?php
-      include("../conexao.php");
-      $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION["id_usuario"];
-      $resultado = mysqli_query($conexao, $sql);
-      $dados = mysqli_fetch_assoc($resultado);
-      echo $_SESSION["nome"];
-      echo "<a href='../dashbord.php' class='btn btn-danger'>Volta</a>";
-      ?>
-</nav>
-
-
-<div class="container mt-5">
-        <h2 class="text-center mb-4">Formulário de Roupas</h2>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">Roupa</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-<?php
-/* tabela  */
-      if ($dados['genero'] === "M") {
-
-        ?>
+echo '
+<div class="table">
+    <table>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">CPF</th>
         
-      <?php } else { ?>
+        </tr>';
 
+while ($dados2 = mysqli_fetch_assoc($resultado2)) {
 
-        <table class="ui celled structured table">
-          <thead>
-            <tr>
-              <th rowspan="2"></th>
+    echo '<tr>';
+    echo "<td>" . $dados2['id_usuario'] . "</td>";
+    echo "<td>" . $dados2['nome'] . "</td>";
+    echo "<td>" . $dados2['email'] . "</td>";
+    echo "<td>" . $dados2['CPF'] . "</td>";
+    echo "<td>
+            <a href='formedit.php?id_usuario=" . $dados2['id_usuario'] .
+        "&nome=" . $dados2['nome'] .
+        "&email=" . $dados2['email'] .
+        "&CPF=" . $dados2['CPF'] . "'>
+                <img src='formulario/img/lapis.png' width='20' height='20' alt='Editar'>
+            </a>
+            <a href='formExcluir.php?id_usuario=" . $dados2['id_usuario'] .
+        "&nome=" . $dados2['nome'] .
+        "&email=" . $dados2['email'] .
+        "&CPF=" . $dados2['CPF'] . "'>
+                <img src='formulario/img/lixeira.png' width='20' height='20' alt='Excluir'>
+            </a>
+        </td>";
+    echo '</tr>';
+}
 
-
-
-
-            </tr>
-            <tr>
-              <th>Entregue</th>
-              <th>Devolvido</th>
-              <th>Pendente</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Brinco</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-
-              <td>Lenço de Mão</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Flor</td>
-              <td class="right aligned"></td>
-              <td></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Vestido</td>
-              <td class="right aligned"></td>
-              <td class="center aligned">
-
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-
-          </tbody>
-        </table>
-
-
-
-
-
-      <?php } ?>
-
-
-
-
-
-
-
-    </div>
-
-  </nav>
-
-
-</html>
-
-
-
-
-
-
-
-
-
-</body>
-
-</html>
+echo '
+    </table>
+</div>';}
+?>
+<!-- =======INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `matricula`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`) VALUES
+(1, 1, 'Antonio Carlos Mattes Mongelo', 'antoniomattes72@gmail.com', '2006-08-10', '05500840029', '2108268794', 'juvenil', '123', '5596860344', '2022324018', 'antonionMong.png', 'M', 'cohab 2', 'Raquel Mattes Mongelo', '2022-10-06', '55999982163', '17', ''),
+(2, 3, 'Raquel Mattes Mongelo', 'Raquelmattes88@gmail.com', '1975-09-12', '80610420020', '1234567890', 'adulto', '123', '55999982163', '2022324058', 'raquel.jpg', 'F', 'cohab 2', 'proprio', '2034-04-12', '', '48', 'Luce Terezinha Mattes Mongelo'),
+(3, 2, 'Jean de Souza', 'jean@gmail.com', '1974-05-31', '12345678900', '1234567980', 'adulto', '123', '5596441634', '2022325874', 'jean.png', 'M', 'cohab 2', 'proprio', '2022-10-05', '', '50', '');
+COMMIT; ====== -->

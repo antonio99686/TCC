@@ -1,3 +1,33 @@
+<?php
+session_start();
+include ("conexao.php");
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION)) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
+    exit();
+}
+
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário
+$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
+$resultado = mysqli_query($conexao, $sql);
+
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
+$dados = mysqli_fetch_assoc($resultado);
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -23,7 +53,11 @@
     <title>Calendário</title>
   </head>
   <body>
-  
+  <div class="user">
+                <img src="../../img/<?php echo $dados['imagem']?>" alt="">
+            </div>
+
+            <div class="btns"> Voltar  </div>
     <div class="container">
       <div class="left">
         <div class="calendar">

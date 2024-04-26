@@ -36,14 +36,15 @@ $dados = mysqli_fetch_assoc($resultado);
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/janela.css">
     <link rel="stylesheet" href="css/dashbord.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- sweetalert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
-<body>
+<body style="background-color:rgb(161, 161, 161);">
     <!-- Navigation -->
     <div class="navigation">
         <ul>
@@ -57,7 +58,7 @@ $dados = mysqli_fetch_assoc($resultado);
             </li>
 
             <li>
-                <a href="#">
+                <a href="Dashboard.php">
                     <span class="icon">
                         <ion-icon name="home-outline"></ion-icon>
                     </span>
@@ -65,14 +66,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
             </li>
 
-            <li>
-                <a href="form/index.php">
-                    <span class="icon">
-                        <ion-icon name="pencil-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cadastro</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="perfil.php">
                     <span class="icon">
@@ -81,7 +75,6 @@ $dados = mysqli_fetch_assoc($resultado);
                     <span class="title">Perfil</span>
                 </a>
             </li>
-
             <li>
                 <a onclick="confirmLogout()">
                     <span class="icon">
@@ -97,7 +90,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <!-- Modal -->
     <div id="modal-container" class="modal-container">
         <div class="modal">
-            <h1><?php echo $_SESSION['nome'] ?></h1>
+            
             <p> Você realmente deseja sair?</p>
             <button onclick="confirmLogout()">Sair</button>
             <button onclick="cancelLogout()">Cancelar</button>
@@ -122,7 +115,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <br>
                     <br>
-                    <h1 class="fw-light">Bem-vindo(a)</h1>
+                    <h1 class="fw-light">Perfil</h1>
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
 
@@ -131,54 +124,11 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
         </section>
 
-        <div class="cardss">
-            <!-- Seção de Cards -->
-            <section class="hero-section">
-                <div class="card-grid">
-                    <a class="card" href="../pagamento">
-                        <div class="card__background"
-                            style="background-image: url(https://controlefinanceiro.granatum.com.br/wp-content/uploads/2022/09/header-boleto.png)">
-                        </div>
-                        <div class="card__content">
-                            <p class="card__category">Pagamentos</p>
-                            <h3 class="card__heading"> Pagamentos Realizados </h3>
-                        </div>
-                    </a>
-                    <a class="card" href="calen/index.php">
-                        <div class="card__background"
-                            style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitU-PVqEDxdQechVNbSX4tQL09DoAPQjnr9hdDgItFrHfmqohOlvJrroneorrHFzRJwjxNeQox7wMBfYFERrJsMg6AnhYVIx__YvBxIu0xwODsL0fn9GgFWXzqrV5na3fgg66G34lh4rs/s1600/CIMG0108.JPG)">
-                        </div>
-                        <div class="card__content">
-                            <p class="card__category">Reuniões</p>
-                            <h3 class="card__heading"> Reuniões Marcadas</h3>
-                        </div>
-                    </a>
-                    <a class="card" href="acessorios/index.php">
-                        <div class="card__background"
-                            style="background-image: url(https://www.dancastipicas.com/wp-content/uploads/2018/11/dan%C3%A7as-t%C3%ADpicas-da-regi%C3%A3o-sul-do-brasil-600x381.jpg)">
-                        </div>
-                        <div class="card__content">
-                            <p class="card__category">Roupas</p>
-                            <h3 class="card__heading"> Vestimentas</h3>
-                        </div>
-                    </a>
-                    <a class="card" href="participante/index.php">
-                        <div class="card__background"
-                            style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjBg2Sx6qaB7z73rXl3TaDr9jnqt7V7sV6M7WHoM__eA_qXn7mTIYqiFjNHN4MHCs6rOEpxOY7orHTvckT6wxUba77D-6gFjQYhOkh0pgzZFvXEDr7IXjfF0BWVPm55OZpE-18JusWEWjK/s1600/PAR.JPG)">
-                        </div>
-                        <div class="card__content">
-                            <p class="card__category">Participantes</p>
-                            <h3 class="card__heading"> Participantes</h3>
-                        </div>
-                    </a>
-                </div>
-            </section>
-        </div>
-    </div>
+        
 
     <!-- Scripts -->
-    <script src="../JavaScript/main.js"></script>
-    <script src="../JavaScript/script.js"></script>
+    <script src="javascript/main.js"></script>
+    <script src="javascript/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>

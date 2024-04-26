@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
+include ("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION)) {
@@ -24,7 +24,7 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,194 +33,177 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
-    <!-- ======= Styles ====== -->
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/dashbord.css">
-    <link rel="stylesheet" href="css/janela.css">
-
-
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
 <body>
-    <!-- =============== Navigation ================ -->
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="##"></ion-icon>
-                        </span>
-                        <span class="title"> Sentinela da Fronteira </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
-                        </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-
-
-                <li>
-                    <a href="calen/index.php">
-                        <span class="icon">
-                            <ion-icon name="calendar-outline"></ion-icon>
-                        </span>
-                        <span class="title">Calendario</span>
-                    </a>
-                </li>
-
-                <span class="icon">
-                    <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
+    <!-- Navigation -->
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="##"></ion-icon>
                     </span>
-            </ul>
-        </div>
+                    <span class="title"> Sentinela da Fronteira </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
 
         
-        <div id="modal-container" class="modal-container">
-        <div class="modal">
-            <button class="fechar" id="fechar">X</button>
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você é realmente deseja sair</p>
-            <p> <a href="logout.php"><img src="../img/img/correto.png" height="40px" width="40px"> </a></p> 
-            <p> <a href="dashboard.php"><img src="../img/img/cruz.png" height="40px" width="40px"> </a></p>
+            <li>
+                <a href="perfil.php">
+                    <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                    <span class="title">Perfil</span>
+                </a>
+            </li>
 
+            <li>
+                <a onclick="confirmLogout()">
+                    <span class="icon">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="title">Sair</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-container" class="modal-container">
+        <div class="modal">
+            <h1><?php echo $_SESSION['nome'] ?></h1>
+            <p> Você realmente deseja sair?</p>
+            <button onclick="confirmLogout()">Sair</button>
+            <button onclick="cancelLogout()">Cancelar</button>
         </div>
     </div>
 
-        <!-- ========================= Principal ==================== -->
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
-                </div>
-
-                
-
-
+    <!-- Main Content -->
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
             </div>
+        </div>
+        <div class="user">
+            <img src="../img/<?php echo $dados['imagem'] ?>" alt="">
+        </div>
 
-            <!-- Conteúdo da página -->
-            <section class="py-5">
-                <div class="containerrr">
+        <!-- Conteúdo da página -->
+        <section class="py-5">
+            <div class="container">
+                <div class="nome">
                     <br>
                     <br>
                     <br>
                     <h1 class="fw-light">Bem-vindo(a)</h1>
                     <p class="lead">
-                        <?php echo $dados['nome'] ?>
+                        <?php echo $_SESSION['nome'] ?>
+
                     </p>
-                    <img src="../img/<?php echo $dados['imagem'] ?>" height="150px" width="150px">
+                </div>
+            </div>
+        </section>
+
+        <div class="cardss">
+            <!-- Seção de Cards -->
+            <section class="hero-section">
+                <div class="card-grid">
+                    <a class="card" href="pagamento">
+                        <div class="card__background"
+                            style="background-image: url(https://controlefinanceiro.granatum.com.br/wp-content/uploads/2022/09/header-boleto.png)">
+                        </div>
+                        <div class="card__content">
+                            <p class="card__category">Pagamentos</p>
+                            <h3 class="card__heading"> Pagamentos Realizados </h3>
+                        </div>
+                    </a>
+                    <a class="card" href="calen/index.php">
+                        <div class="card__background"
+                            style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitU-PVqEDxdQechVNbSX4tQL09DoAPQjnr9hdDgItFrHfmqohOlvJrroneorrHFzRJwjxNeQox7wMBfYFERrJsMg6AnhYVIx__YvBxIu0xwODsL0fn9GgFWXzqrV5na3fgg66G34lh4rs/s1600/CIMG0108.JPG)">
+                        </div>
+                        <div class="card__content">
+                            <p class="card__category">Reuniões</p>
+                            <h3 class="card__heading"> Reuniões Marcadas</h3>
+                        </div>
+                    </a>
+                    <a class="card" href="acessorios/index.php">
+                        <div class="card__background"
+                            style="background-image: url(https://www.dancastipicas.com/wp-content/uploads/2018/11/dan%C3%A7as-t%C3%ADpicas-da-regi%C3%A3o-sul-do-brasil-600x381.jpg)">
+                        </div>
+                        <div class="card__content">
+                            <p class="card__category">Roupas</p>
+                            <h3 class="card__heading"> Vestimentas</h3>
+                        </div>
+                    </a>
+                    <a class="card" href="participantes/index.php">
+                        <div class="card__background"
+                            style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjBg2Sx6qaB7z73rXl3TaDr9jnqt7V7sV6M7WHoM__eA_qXn7mTIYqiFjNHN4MHCs6rOEpxOY7orHTvckT6wxUba77D-6gFjQYhOkh0pgzZFvXEDr7IXjfF0BWVPm55OZpE-18JusWEWjK/s1600/PAR.JPG)">
+                        </div>
+                        <div class="card__content">
+                            <p class="card__category">Participantes</p>
+                            <h3 class="card__heading"> Participantes</h3>
+                        </div>
+                    </a>
                 </div>
             </section>
+        </div>
+    </div>
 
-            <div class="infor">
-                <?php
-                echo "Nome: " . $dados['nome'] . "<br>";
-                echo "Filho(a): " . $dados['nom_dan'] . "<br>";
-                echo "Idade: " . $dados['idade'] . "<br>";
-                echo "E-mail: " . $dados['email'] . "<br>";
-                echo "CPF: " . $dados['CPF'] . "<br>";
-                echo "RG: " . $dados['RG'] . "<br>";
-                echo "Data de Nascimento: " . $dados['datas'] . "<br>";
-                echo "Endereço: " . $dados['endereco'] . "<br>";
-                echo "Telefone: " . $dados['telefone'] . "<br>";
-                echo "Data de Entrada: " . $dados['data_entrada'] . "<br>";
-             
-                ?>
-            </div>
+    <!-- Scripts -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../    JavaScript/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-            <div class="cardss">
-                <section class="hero-section">
-                    <div class="card-grid">
-                        <a class="card" href="pagamento">
-                            <div class="card__background"
-                                style="background-image: url(https://www.gruporecovery.com/wp-content/uploads/2023/09/MicrosoftTeams-image-1.png)">
-                            </div>
-                            <div class="card__content">
-                                <p class="card__category">Pagamentos</p>
-                                <h3 class="card__heading"> Pagamentos Realizados </h3>
-                            </div>
-                        </a>
-                        <a class="card" href="calen/index.php">
-                            <div class="card__background"
-                                style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitU-PVqEDxdQechVNbSX4tQL09DoAPQjnr9hdDgItFrHfmqohOlvJrroneorrHFzRJwjxNeQox7wMBfYFERrJsMg6AnhYVIx__YvBxIu0xwODsL0fn9GgFWXzqrV5na3fgg66G34lh4rs/s1600/CIMG0108.JPG)">
-                            </div>
-                            <div class="card__content">
-                                <p class="card__category">Reuniões</p>
-                                <h3 class="card__heading"> Reuniões Marcadas</h3>
-                            </div>
-                        </a>
-                        <a class="card" href="acessorios/index.php">
-                            <div class="card__background"
-                                style="background-image: url(https://www.dancastipicas.com/wp-content/uploads/2018/11/dan%C3%A7as-t%C3%ADpicas-da-regi%C3%A3o-sul-do-brasil-600x381.jpg)">
-                            </div>
-                            <div class="card__content">
-                                <p class="card__category">Roupas</p>
-                                <h3 class="card__heading"> Vestimentas</h3>
-                            </div>
-                        </a>
-                        <a class="card" href="participantes/index.php">
-                            <div class="card__background"
-                                style="background-image: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjBg2Sx6qaB7z73rXl3TaDr9jnqt7V7sV6M7WHoM__eA_qXn7mTIYqiFjNHN4MHCs6rOEpxOY7orHTvckT6wxUba77D-6gFjQYhOkh0pgzZFvXEDr7IXjfF0BWVPm55OZpE-18JusWEWjK/s1600/PAR.JPG)">
-                            </div>
-                            <div class="card__content">
-                                <p class="card__category">Participantes</p>
-                                <h3 class="card__heading"> Participantes</h3>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-            </div>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: '<?php echo $_SESSION['nome'] ?>',
+                text: "Você realmente deseja sair?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'logout.php';
+                }
+            });
+        }
 
-            <footer class="footer">
-                <div class="containeres">
-                    <div class="row">
-                        <div class="footer-col">
-                            <h4>Telefone</h4>
-                            <ul>
-                                <li><a href="#">(55) 000000000</a></li>
-                                <li><a href="#">(55) 0000-0000</a></li>
+        function cancelLogout() {
+            Swal.fire({
+                title: 'Operação cancelada',
+                text: 'Você permanecerá na página atual',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
 
-                            </ul>
-                        </div>
-                        <div class="footer-col">
-                            <h4>E-mail</h4>
-                            <ul>
-                                <li><a href="#">SentineladaFronteira@gmail.com</a></li>
-
-                            </ul>
-                        </div>
-
-                        <div class="footer-col">
-                            <h4>Siga-nos</h4>
-                            <div class="social-links">
-                                <a
-                                    href="https://www.facebook.com/pages/Piquete%20Sentinela%20Da%20Fronteira/843171032373964/photos/?locale=pt_BR">
-                                    <ion-icon name="logo-facebook"></ion-icon></a>
-                                <a href="https://www.instagram.com/ptgsentinelaoficial/">
-                                    <ion-icon name="logo-instagram"></ion-icon></a>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-
-
-            <!-- =========== Scripts =========  -->
-            <script src="../java/main.js"></script>
-            <script src="../java/script.js"></script>
-
-            <!-- ====== ionicons ======= -->
-            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

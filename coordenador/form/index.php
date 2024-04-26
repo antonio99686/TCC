@@ -36,15 +36,17 @@ $dados = mysqli_fetch_assoc($resultado);
     <link rel="shortcut icon" href="img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="../../css/janela.css">
+    <link rel="stylesheet" href="formulario/css/janela.css">
     <link rel="stylesheet" href="formulario/css/index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-   
+     <!-- sweetalert2 -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
 <body >
     <!-- =============== Navigation ================ -->
-    <div class="container" >
+   
         <div class="navigation">
             <ul>
                 <li>
@@ -76,32 +78,38 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </li>
                 <li>
-                    <a href="calen/index.php">
+                    <a href="../perfil.php">
                         <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
                         <span class="title">Perfil</span>
                     </a>
                 </li>
-                
-              
+                <li>
+                <a onclick="confirmLogout()">
                     <span class="icon">
-                    <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
+                    <ion-icon name="log-out-outline"></ion-icon>
                     </span>
-            
+                    <span class="title">Sair</span>
+                </a>
+            </li>
+
+                
+                
+                
+
             </ul>
         </div>
 
-        <div id="modal-container" class="modal-container">
-        <div class="modal">
-            <button class="fechar" id="fechar">X</button>
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você é realmente deseja sair</p>
-            <p> <a href="../logout.php"><img src="formulario/img/correto.png" height="40px" width="40px"> </a></p> 
-            <p> <a href="index.php"><img src="formulario/img/cruz.png" height="40px" width="40px"> </a></p>
-
-        </div>
-    </div>
+         <!-- Modal -->
+         <div id="modal-container" class="modal-container">
+                <div class="modal">
+                    <h1><?php echo $_SESSION['nome'] ?></h1>
+                    <p> Você realmente deseja sair?</p>
+                    <button onclick="confirmLogout()">Sair</button>
+                    <button onclick="cancelLogout()">Cancelar</button>
+                </div>
+            </div>
 
         <!-- ========================= Principal ==================== -->
         <div class="main">
@@ -146,17 +154,39 @@ $dados = mysqli_fetch_assoc($resultado);
         
     </div>
 
-       
-        
-       
-           
-    
-    
-         
            
     <!-- =========== Scripts =========  -->
-    <script src="../../java/main.js"></script>
-    <script src="../../java/script.js"></script>
+    <script src="../../JavaScript/main.js"></script>
+    <script src="../../JavaScript/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    function confirmLogout() {
+        Swal.fire({
+            title: '<?php echo $_SESSION['nome'] ?>',
+            text: "Você realmente deseja sair?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '../logout.php';
+            }
+        });
+    }
+
+    function cancelLogout() {
+        Swal.fire({
+            title: 'Operação cancelada',
+            text: 'Você permanecerá na página atual',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
+    }
+</script>
 
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
