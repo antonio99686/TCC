@@ -14,11 +14,7 @@
 
 }
 
-img {
-  position: relative;
-  margin-top: 5%;
 
-}
 
 body {
   min-height: 100vh;
@@ -42,6 +38,13 @@ p {
   position: relative;
   left: 6.5%;
 
+}
+
+img {
+  position: relative;
+  height: 245px;
+  margin-top: 2%;
+  background-color: #56595c;
 }
 
 :root {
@@ -79,7 +82,7 @@ p {
 }
 
 .cardss {
-  margin-top: 10%;
+  margin-top: -5%;
   position: relative;
 }
 
@@ -321,7 +324,7 @@ p {
   margin-top: 0%;
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
+
 }
 
 .user img {

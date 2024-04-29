@@ -114,7 +114,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <br>
                     <br>
-                    <h1 class="fw-light">Bem-vindo(a)</h1>
+                    <h1 class="fw-light">Integrantes </h1>
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
 
@@ -136,7 +136,7 @@ if ($result->num_rows > 0) {
                    <th>Nome</th>
                    <th>Data de Nascimento</th>
                    <th>Matricula</th>
-                   <th>Imagem</th>
+                   <th>Usuário</th>
                    </tr>
                    </thead>
                    <tbody>';
@@ -159,9 +159,7 @@ if ($result->num_rows > 0) {
         echo '</tr>';
     }
 
-    echo '
-            </table>
-        </div>';
+  
 }
 else {
 echo 'Nenhum resultado encontrado para essa categoria.';

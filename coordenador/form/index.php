@@ -70,7 +70,7 @@ $dados = mysqli_fetch_assoc($resultado);
         
 
                 <li>
-                    <a href="form/index.php">
+                    <a href="index.php">
                         <span class="icon">
                         <ion-icon name="pencil-outline"></ion-icon>
                         </span>

@@ -9,16 +9,7 @@
   box-sizing: border-box;
 }
 
-.lead {
-  font-size: larger;
 
-}
-
-img {
-  position: relative;
-  margin-top: 5%;
-
-}
 
 body {
   min-height: 100vh;
@@ -27,8 +18,8 @@ body {
 
 .nome {
   position: relative;
-  width: 100%;
   left: 10%;
+
 }
 
 
@@ -78,10 +69,6 @@ p {
   width: 100%;
 }
 
-.cardss {
-  margin-top: 10%;
-  position: relative;
-}
 
 .card {
   left: 5%;
@@ -332,6 +319,14 @@ p {
   height: 100%;
   object-fit: cover;
 }
+/*
+img {
+  width: 300px;
+  height: 300px;
+  margin-top: 1%;
+}
+*/
+
 
 
 /* ====================== Design Responsivo ========================== */

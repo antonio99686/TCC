@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION)) {
@@ -33,12 +33,11 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/janela.css">
-    <link rel="stylesheet" href="css/dashbord.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/dashbord.css">
     <!-- sweetalert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
@@ -73,6 +72,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <span class="title">Cadastro</span>
                 </a>
             </li>
+
             <li>
                 <a href="perfil.php">
                     <span class="icon">
@@ -85,7 +85,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <li>
                 <a onclick="confirmLogout()">
                     <span class="icon">
-                    <ion-icon name="log-out-outline"></ion-icon>
+                        <ion-icon name="log-out-outline"></ion-icon>
                     </span>
                     <span class="title">Sair</span>
                 </a>
@@ -93,6 +93,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
         </ul>
     </div>
+
 
     <!-- Modal -->
     <div id="modal-container" class="modal-container">
@@ -114,7 +115,34 @@ $dados = mysqli_fetch_assoc($resultado);
         <div class="user">
             <img src="../img/<?php echo $dados['imagem'] ?>" alt="">
         </div>
-
+<!--
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="../img/" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Próximo</span>
+            </a>
+        </div>
+        -->
         <!-- Conteúdo da página -->
         <section class="py-5">
             <div class="container">
@@ -135,7 +163,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <!-- Seção de Cards -->
             <section class="hero-section">
                 <div class="card-grid">
-                    <a class="card" href="../pagamento">
+                    <a class="card" href="pagamento">
                         <div class="card__background"
                             style="background-image: url(https://controlefinanceiro.granatum.com.br/wp-content/uploads/2022/09/header-boleto.png)">
                         </div>
@@ -210,8 +238,14 @@ $dados = mysqli_fetch_assoc($resultado);
     </script>
 
     <!-- ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

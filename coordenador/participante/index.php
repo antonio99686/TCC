@@ -33,7 +33,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -121,7 +121,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <br>
                     <br>
-                    <h1 class="fw-light">Bem-vindo(a)</h1>
+                    <h1 class="fw-light">Participantes  </h1>
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
 
@@ -174,12 +174,13 @@ if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
             echo "<td>" . $row['data_entrada'] . "</td>";
             echo "<td>" . $row['matricula'] . "</td>";
             echo "<td>
-                        <a href='formedit.php?id_usuario=" . $row['id_usuario'] .
+                        <a href='../PDF/index.php?id_usuario=" . $row['id_usuario'] .
                 "&nome=" . $row['nome'] .
                 "&email=" . $row['email'] .
                 "&CPF=" . $row['CPF'] .
                 "&data_entrada=" . $row['data_entrada'] .
-                "&mattricula=" . $row['matricula'] . "'>
+                "&mattricula=" . $row['matricula'] . "'> 
+                <img src='img/pdf.png' width='20' height='20' alt='PDF'>
                             
                         </a>
                         <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] .

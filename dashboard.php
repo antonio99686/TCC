@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION)) {
@@ -64,7 +64,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
             </li>
 
-        
+
             <li>
                 <a href="perfil.php">
                     <span class="icon">
@@ -77,7 +77,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <li>
                 <a onclick="confirmLogout()">
                     <span class="icon">
-                    <ion-icon name="log-out-outline"></ion-icon>
+                        <ion-icon name="log-out-outline"></ion-icon>
                     </span>
                     <span class="title">Sair</span>
                 </a>
@@ -85,6 +85,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
         </ul>
     </div>
+
 
     <!-- Modal -->
     <div id="modal-container" class="modal-container">
@@ -103,10 +104,39 @@ $dados = mysqli_fetch_assoc($resultado);
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
         </div>
-        <div class="user">
-            <img src="img/<?php echo $dados['imagem'] ?>" alt="">
-        </div>
+        <div class="user" onclick="document.getElementById('fileInput').click();">
+    <img src="img/<?php echo $dados['imagem'] ?>" alt="">
+    <input type="file" id="fileInput" style="display: none;" onchange="updateProfilePicture(this)">
+</div>
 
+       <!--
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="../img/" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Próximo</span>
+            </a>
+        </div>
+        -->
         <!-- Conteúdo da página -->
         <section class="py-5">
             <div class="container">
@@ -202,8 +232,14 @@ $dados = mysqli_fetch_assoc($resultado);
     </script>
 
     <!-- ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module"
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule
+        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

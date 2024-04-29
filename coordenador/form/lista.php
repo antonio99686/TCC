@@ -33,7 +33,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <title>Sentinela da fronteira</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="formulario/css/index.css">
@@ -123,7 +123,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 <br>
                 <br>
                 <br>
-                <h1 class="fw-light">Bem-vindo(a), ao menu de Listar</h1>
+                <h1 class="fw-light">Edição</h1>
                 <p class="lead">
                     <?php echo $dados['nome'] ?>
                 </p>

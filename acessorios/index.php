@@ -122,7 +122,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <br>
                     <br>
                     <br>
-                    <h1 class="fw-light">Bem-vindo(a)</h1>
+                    <h1 class="fw-light">Vestimentas</h1>
                     <p class="lead">
                         <?php echo $_SESSION['nome'] ?>
                     </p>
