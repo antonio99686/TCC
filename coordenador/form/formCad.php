@@ -41,11 +41,12 @@
 
                     <!--Inícia Formulário-->
 
+                    
                     <div class="container_form">
 
                         <h1>Formulário de Cadastro do Usuário </h1>
 
-                        <form class="form" action="codigo/cadastrar.php" method="GET" enctype="multipart/form-data">
+                        <form class="form" action="codigo/cadastrar.php" method="POST" enctype="multipart/form-data">
 
                             <div class="form_grupo">
                                 <label for="nome" class="form_label">Nome</label>
@@ -180,7 +181,7 @@
 
                     </div><!--container_form-->
 
-                    <!--Finaliza Formulário-->
+                
 
 
                 </div><!--Box Artigo-->

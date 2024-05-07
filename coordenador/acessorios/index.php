@@ -1,4 +1,5 @@
 <?php
+//=================\ INICIA A SESSÃO E LOGA NO BD /=================\\
 session_start();
 include("conexao.php");
 
@@ -9,8 +10,7 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-// Obtém o ID do usuário da sessão
-$id_usuario = $_SESSION['id_usuario'];
+//=================\ DADOS DO USUÁRIO LOGADO /=================\\
 
 // Consulta SQL para obter os dados do usuário
 $sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
@@ -25,23 +25,14 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-// Consulta SQL para obter a lista de usuários com status 1
-$sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
-$resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
+//=================\ SELECIONA USUÁRIO NA LISTA /=================\\
 
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado_usuarios) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-    exit();
-}
+if ($_GET) {
 
-// Verifica se o formulário foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['usuario_selecionado'])) {
-    $id_usuario_selecionado = $_POST['usuario_selecionado'];
+    $id_usuario_selecionado = $_GET['usuario_selecionado'];
 
     // Consulta SQL para obter as roupas do usuário selecionado
-    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado";
-    $resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
+    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
 
     // Verifica se a consulta foi bem-sucedida
     if (!$resultado_roupas_usuario) {
@@ -50,18 +41,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['usuario_selecionado'])
     }
 }
 
-// Verifica se o formulário para atualização de status de devolução foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_usuario']) && isset($_POST['status_devolucao'])) {
-    $id_usuario = $_POST['id_usuario'];
+//=================\ ATUALIZA A LISTA DE ITENS /=================\\
+
+if ($_POST) {
+
+    $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
     $status_devolucao = $_POST['status_devolucao'];
 
-    // Atualiza o status de devolução das roupas do usuário
-    $sql_update_status = "UPDATE roupas SET status_devolucao = '$status_devolucao' WHERE id_usuario = $id_usuario";
-    $resultado_update = mysqli_query($conexao, $sql_update_status);
+    // Consulta SQL para obter as roupas do usuário selecionado
+    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
 
-    if ($resultado_update) {
-        // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
-        echo "<script>
+    // Atualiza o status de devolução das roupas do usuário
+    while ($r = mysqli_fetch_assoc($resultado_roupas_usuario)) {
+        if (empty($status_devolucao)) {
+            mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado");
+        } else {
+            if (in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 0) {
+                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 1 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
+            }
+            if (!in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 1) {
+                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
+            }
+        }
+    }
+
+    // Obtém a lista atualizada para exibição na tela
+    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado";
+    $resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
+
+    // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
+    echo "<script>
                 Swal.fire({
                     icon: 'success',
                     title: 'Sucesso!',
@@ -70,9 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_usuario']) && isset
                     timer: 1500
                 });
               </script>";
-    } else {
-        echo "Erro ao atualizar o status de devolução: " . mysqli_error($conexao);
-    }
 }
 ?>
 
@@ -166,7 +172,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_usuario']) && isset
             <img src="../../img/<?php echo $dados['imagem'] ?>" alt="">
         </div>
 
-
         <section class="py-5">
             <div class="container">
                 <div class="nome">
@@ -183,53 +188,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_usuario']) && isset
         </section>
 
 
-        <form method="post" action="">
-        <div class="form-group">
-            <label for="usuario_selecionado">Selecione o usuário:</label>
-            <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
-                <?php
-                // Exibe as opções de usuários
-                while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
-                    echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary btn-sm">Selecionar</button>
-    </form>
+        <form method="GET" action="index.php">
+            <div class="form-group">
+                <label for="usuario_selecionado">Selecione o usuário:</label>
+                <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
+                    <?php
 
-    <?php if (isset($resultado_roupas_usuario)): ?>
-        <!-- Exibição de Roupas do Usuário Selecionado -->
-        <h2>Roupas do Usuário Selecionado</h2>
-        <form method="post" action="">
-            <input type="hidden" name="id_usuario" value="<?php echo $id_usuario_selecionado; ?>">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Roupa</th>
-                        <th>Status Devolução</th> <!-- Adicionando cabeçalho para o status de devolução -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
-                        <tr>
-                            <td><?php echo $row['nome']; ?></td>
-                            <td>
-                                <select class="form-control" name="status_devolucao_<?php echo $row['id']; ?>">
-                                    <option value="pendente">Pendente</option>
-                                    <option value="entregue">Entregue</option>
-                                </select>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-            <button type="submit" class="btn btn-primary btn-sm">Salvar Status</button>
+                    // Consulta SQL para obter a lista de usuários com status 1
+                    $sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
+                    $resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
+
+                    // Verifica se a consulta foi bem-sucedida
+                    if (!$resultado_usuarios) {
+                        echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+                        exit();
+                    }
+
+                    // Exibe as opções de usuários
+                    while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
+                        if ($id_usuario_selecionado == $row['id_usuario'])
+                            echo "<option value='" . $row['id_usuario'] . "' selected>" . $row['nome'] . "</option>";
+                        else
+                            echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Selecionar</button>
         </form>
-    <?php endif; ?>
-                    
 
-
+        <?php if (isset($resultado_roupas_usuario)) : ?>
+            <!-- Exibição de Roupas do Usuário Selecionado -->
+            <h2>Roupas do Usuário Selecionado</h2>
+            <form method="post" action="">
+                <input type="hidden" name="id_usuario_selecionado" value="<?php echo $id_usuario_selecionado; ?>">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Roupa</th>
+                            <th>Status</th> <!-- Adicionando cabeçalho para o status de devolução -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
+                            <tr>
+                                <td><?php echo $row['nome']; ?></td>
+                                <td>
+                                    <?php
+                                    if ($row['status_devolucao'] == 0)
+                                        echo '<input class="form-check-input" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '"> <label class="form-check-label"> Pendente </label>';
+                                    else
+                                        echo '<input class="form-check-input" class="form-control" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '" checked> <label class="form-check-label" for="flexCheckDefault"> Entregue </label>';
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary btn-sm">Salvar Status</button>
+            </form>
+        <?php endif; ?>
 
         <script src="../../JavaScript/main.js"></script>
         <script src="../../JavaScript/script.js"></script>
@@ -258,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_usuario']) && isset
                     title: 'Operação cancelada',
                     text: 'Você permanecerá na página atual',
                     icon: 'info',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'OK' 
                 });
             }
         </script>

@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("conexao.php");
+include ("conexao.php");
 
 // Verifica se o usuário está logado
-if (!isset($_SESSION)) {
+if (!isset($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -24,7 +24,11 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-?> 
+
+ // Consulta SQL para obter todos os pagamentos
+ $sql = "SELECT * FROM pagamentos";
+ $resultado = mysqli_query($conexao, $sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,195 +37,172 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Participantes</title>
-    <!-- ======= Styles ====== -->
+    <link rel="shortcut icon" href="../img/img/icon.png">
+    <title>Sentinela da Fronteira</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/janela.css">
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
 <body>
-    <!-- =============== Navigation ================ -->
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="#">
+    <!-- Navigation -->
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#">
                     <span class="icon">
-                            <ion-icon name="##"></ion-icon>
-                        </span>
-                        <span class="title"> Sentinela da Fronteira </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="../dashboard.php">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
-                        </span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Customers</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
-                        </span>
-                        <span class="title">Messages</span>
-                    </a>
-                </li>
-
-                <span class="icon">
-                    <div onclick="openModal()" class="btn"> <ion-icon name="log-out-outline"></ion-icon></div>
+                    
                     </span>
-                
-                
+                    <span class="title">Sentinela da Fronteira</span>
+                </a>
+            </li>
 
-                
-            </ul>
-        </div>
+            <li>
+                <a href="../Dashboard.php">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
 
+            <li>
+                <a href="../perfil.php">
+                    <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                    <span class="title">Perfil</span>
+                </a>
+            </li>
 
-        <div id="modal-container" class="modal-container">
+            <li>
+                <a onclick="confirmLogout()">
+                    <span class="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="title">Sair</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-container" class="modal-container">
         <div class="modal">
-            <button class="fechar" id="fechar">X</button>
             <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você é realmente deseja sair</p>
-            <p> <a href="../logout.php"><img src="../img/img/correto.png" height="40px" width="40px"> </a></p> 
-            <p> <a href="index.php"><img src="../img/img/cruz.png" height="40px" width="40px"> </a></p>
-
+            <p>Você realmente deseja sair?</p>
+            <button onclick="confirmLogout()">Sair</button>
+            <button onclick="cancelLogout()">Cancelar</button>
         </div>
     </div>
-        <!-- ========================= Principal ==================== -->
-        <div class="main">
-            <div class="topbar">
-                <div class="toggle">
-                    <ion-icon name="menu-outline"></ion-icon>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="user" onclick="document.getElementById('fileInput').click();">
+            <img src="../img/<?php echo $dados['imagem'] ?>" alt="">
+            <input type="file" id="fileInput" style="display: none;" onchange="updateProfilePicture(this)">
+        </div>
+
+        <!-- Cards -->
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 1</div>
                 </div>
-
-               
-
-                <div class="user">
-                    <img src="../img/antonionMong.png" alt="">
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
                 </div>
             </div>
 
-            <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName"> </div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name=""></ion-icon>
-                    </div>
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 2</div>
                 </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName"></div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name=""></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName"></div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name=""></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers"></div>
-                        <div class="cardName">Ganho</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
                 </div>
             </div>
 
-            <!-- ================Lista de detalhes do pedido ================= -->
-            <div class="details">
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Pagamento</h2>
-                        <a href="#" class="btn">Ver tudo</a>
-                    </div>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Nome</td>
-                                <td>Preço</td>
-                                <td>Pagamento</td>
-                                <td>Status</td>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><span class="status delivered">Entregue</span></td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><span class="status pending">Pendente</span></td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><span class="status return">Retornar</span></td>
-                            </tr>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><span class="status inProgress">Em andamento</span></td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 3</div>
                 </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
+                </div>
+            </div>
 
-              
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 4</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
+                </div>
+            </div>
+        </div>
 
-    <!-- =========== Scripts =========  -->
-    <script src="js/main.js"></script>
-    <script src="../java/script.js"></script>
+        
+    </div>
 
-    <!-- ====== ionicons ======= -->
+   
+   
+</body>
+</html>
+
+    <!-- Scripts -->
+    <script src="JavaScript/main.js"></script>
+    <script src="JavaScript/dash.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: '<?php echo $_SESSION['nome'] ?>',
+                text: "Você realmente deseja sair?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'logout.php';
+                }
+            });
+        }
+
+        function cancelLogout() {
+            Swal.fire({
+                title: 'Operação cancelada',
+                text: 'Você permanecerá na página atual',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
+
+    <!-- ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

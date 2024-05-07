@@ -163,7 +163,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <!-- Seção de Cards -->
             <section class="hero-section">
                 <div class="card-grid">
-                    <a class="card" href="pagamento">
+                    <a class="card" href="pagamentos">
                         <div class="card__background"
                             style="background-image: url(https://controlefinanceiro.granatum.com.br/wp-content/uploads/2022/09/header-boleto.png)">
                         </div>

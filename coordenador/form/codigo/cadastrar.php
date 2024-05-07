@@ -22,45 +22,45 @@ include ('../conexao.php');
 // Verifica se os dados do formulário foram recebidos corretamente
 if (
     isset(
-    $_GET['usuario'],
-    $_GET['senha'],
-    $_GET['email'],
-    $_GET['CPF'],
-    $_GET['datas'],
-    $_GET['status'],
-    $_GET['RG'],
-    $_GET['categoria'],
-    $_GET['telefone'],
-    $_GET['endereco'],
-    $_GET['responsavel'],
-    $_GET['data_entrada'],
-    $_GET['tele_respon'],
-    $_GET['idade'],
-    $_GET['nom_dan'],
-    $_GET['genero']
+    $_POST['usuario'],
+    $_POST['senha'],
+    $_POST['email'],
+    $_POST['CPF'],
+    $_POST['datas'],
+    $_POST['status'],
+    $_POST['RG'],
+    $_POST['categoria'],
+    $_POST['telefone'],
+    $_POST['endereco'],
+    $_POST['responsavel'],
+    $_POST['data_entrada'],
+    $_POST['tele_respon'],
+    $_POST['idade'],
+    $_POST['nom_dan'],
+    $_POST['genero']
 )
 ) {
 
     // Dados do formulário
-    $nome = $_GET['usuario'];
-    $senha = $_GET['senha'];
-    $email = $_GET['email'];
-    $CPF = $_GET['CPF'];
-    $datas = $_GET['datas'];
-    $statuss = $_GET['status'];
-    $RG = $_GET['RG'];
-    $categoria = $_GET['categoria'];
-    $telefone = $_GET['telefone'];
-    $endereco = $_GET['endereco'];
-    $responsavel = $_GET['responsavel'];
-    $data_entrada = $_GET['data_entrada'];
-    $tele_respon = $_GET['tele_respon'];
-    $idade = $_GET['idade'];
-    $nom_dan = $_GET['nom_dan'];
-    $genero = $_GET['genero'];
+    $nome = $_POST['usuario'];
+    $senha = $_POST['senha'];
+    $email = $_POST['email'];
+    $CPF = $_POST['CPF'];
+    $datas = $_POST['datas'];
+    $statuss = $_POST['status'];
+    $RG = $_POST['RG'];
+    $categoria = $_POST['categoria'];
+    $telefone = $_POST['telefone'];
+    $endereco = $_POST['endereco'];
+    $responsavel = $_POST['responsavel'];
+    $data_entrada = $_POST['data_entrada'];
+    $tele_respon = $_POST['tele_respon'];
+    $idade = $_POST['idade'];
+    $nom_dan = $_POST['nom_dan'];
+    $genero = $_POST['genero'];
 
     // Gera um número de matrícula único
-    $numero = rand(2022, 9999);
+    $numero = rand(2024, 999999);
     $matricula = date('Y') . $numero;
 
     // Verifica se um arquivo foi enviado
@@ -173,5 +173,5 @@ if (
         });
     </script>";
 }
+
 ?>
-<!-- SweetAlert2 -->

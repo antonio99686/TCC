@@ -3,7 +3,7 @@ session_start();
 include ("conexao.php");
 
 // Verifica se o usuário está logado
-if (!isset($_SESSION)) {
+if (!isset($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -24,21 +24,24 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
+
+ // Consulta SQL para obter todos os pagamentos
+ $sql = "SELECT * FROM pagamentos";
+ $resultado = mysqli_query($conexao, $sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/img/icon.png">
-    <title>Perfil</title>
+    <link rel="shortcut icon" href="../img/img/icon.png">
+    <title>Sentinela da Fronteira</title>
     <!-- Styles -->
-    <link rel="stylesheet" href="css/perfil.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="css/style.css">
     <!-- sweetalert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
@@ -50,14 +53,14 @@ $dados = mysqli_fetch_assoc($resultado);
             <li>
                 <a href="#">
                     <span class="icon">
-                        <ion-icon name="##"></ion-icon>
+                    
                     </span>
                     <span class="title">Sentinela da Fronteira</span>
                 </a>
             </li>
 
             <li>
-                <a href="Dashboard.php">
+                <a href="../Dashboard.php">
                     <span class="icon">
                         <ion-icon name="home-outline"></ion-icon>
                     </span>
@@ -66,13 +69,23 @@ $dados = mysqli_fetch_assoc($resultado);
             </li>
 
             <li>
-                <a href="perfil.php">
+                <a href="../form/index.php">
+                    <span class="icon">
+                        <ion-icon name="pencil-outline"></ion-icon>
+                    </span>
+                    <span class="title">Cadastro</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../perfil.php">
                     <span class="icon">
                         <ion-icon name="person-circle-outline"></ion-icon>
                     </span>
                     <span class="title">Perfil</span>
                 </a>
             </li>
+
             <li>
                 <a onclick="confirmLogout()">
                     <span class="icon">
@@ -88,6 +101,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <!-- Modal -->
     <div id="modal-container" class="modal-container">
         <div class="modal">
+            <h1><?php echo $_SESSION['nome'] ?></h1>
             <p>Você realmente deseja sair?</p>
             <button onclick="confirmLogout()">Sair</button>
             <button onclick="cancelLogout()">Cancelar</button>
@@ -101,31 +115,66 @@ $dados = mysqli_fetch_assoc($resultado);
                 <ion-icon name="menu-outline"></ion-icon>
             </div>
         </div>
-        <div class="user">
-            <img src="img/<?php echo $dados['imagem'] ?>" alt="Foto de Perfil">
+
+        <div class="user" onclick="document.getElementById('fileInput').click();">
+            <img src="../../img/<?php echo $dados['imagem'] ?>" alt="">
+            <input type="file" id="fileInput" style="display: none;" onchange="updateProfilePicture(this)">
         </div>
 
-        <!-- Conteúdo da página -->
-        <section class="py-5">
-            <div class="container">
-                <div class="nome">
-                    <br>
-                    <br>
-                    <br>
-                    <h1 class="fw-light">Perfil</h1>
-                    <p class="lead"><?php echo $dados['nome'] ?></p>
+        <!-- Cards -->
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 1</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
                 </div>
             </div>
-        </section>
+
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 2</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 3</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="numbers"></div>
+                    <div class="cardName">Card 4</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name=""></ion-icon>
+                </div>
+            </div>
+        </div>
+
+        
     </div>
 
-
-
-
+   
+   
+</body>
+</html>
 
     <!-- Scripts -->
-    <script src="javascript/main.js"></script>
-    <script src="javascript/script.js"></script>
+    <script src="JavaScript/main.js"></script>
+    <script src="JavaScript/dash.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
@@ -159,6 +208,10 @@ $dados = mysqli_fetch_assoc($resultado);
     <!-- ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

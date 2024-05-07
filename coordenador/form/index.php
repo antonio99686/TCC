@@ -144,11 +144,18 @@ $dados = mysqli_fetch_assoc($resultado);
          <div class="cardsss verde">
           <h2>Cadastro </h2></a>
           <p>Cadastre o Usuário  </p>
-        </div>       
+        </div>   
+
         <div class="cardsss azul">
         <a href="lista.php">  
              <h2>Editar</h2></a>
           <p>Edite o Usuário</p>
+        </div>
+        
+        <div class="cardsss vermelho">
+        <a href="Roupa.php">  
+             <h2>Roupa</h2></a>
+          <p>Cadasto da Roupa do  Usuário</p>
         </div>
         
         
