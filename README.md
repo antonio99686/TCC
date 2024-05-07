@@ -52,4 +52,4 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ## Contato
 
-Para mais informações, entre em contato conosco em exemplo@email.com.
+Para mais informações, entre em contato conosco em Antonio.2022324018@aluno.iffar.edu.br .
