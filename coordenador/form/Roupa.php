@@ -105,6 +105,8 @@ if (!$resultado_usuarios) {
                             </select>
 
                             <button type="submit" class="submit_btn">Enviar</button>
+                            <a href="../form/index.php" class="submit_btn">VOLTAR</a>
+
                         </form>
 
                     </div><!-- container_form -->
