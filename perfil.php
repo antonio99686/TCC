@@ -109,9 +109,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <section class="py-5">
             <div class="container">
                 <div class="nome">
-                    <br>
-                    <br>
-                    <br>
+                  
                     <h1 class="fw-light">Perfil</h1>
                     <p class="lead"><?php echo $dados['nome'] ?></p>
                 </div>

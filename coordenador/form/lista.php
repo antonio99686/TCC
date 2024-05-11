@@ -105,14 +105,13 @@ $dados = mysqli_fetch_assoc($resultado);
 
         <!-- USER -->
         <div class="user">
-            <img src="../../img/<?php echo $dados['imagem'] ?>" alt="">
+            <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
         </div>
 
         <!-- Modal -->
         <div id="modal-container" class="modal-container">
             <div class="modal">
-                <h1><?php echo $_SESSION['nome'] ?></h1>
-                <p> Você realmente deseja sair?</p>
+                <p>Você realmente deseja sair?</p>
                 <button onclick="confirmLogout()">Sair</button>
                 <button onclick="cancelLogout()">Cancelar</button>
             </div>
@@ -132,24 +131,24 @@ $dados = mysqli_fetch_assoc($resultado);
         </section>
 
 
-        <form method="GET">
-    <div class="form-group">
-        <label for="categoria">Selecione a Categoria:</label>
-        <select class="form-control" id="categoria" name="categoria" onchange="this.form.submit()">
-            <option value="">Selecione...</option>
-            <option value="1">Dançarino(a)</option>
-            <option value="2">Coordenador</option>
-            <option value="3">Responsável</option>
-        </select>
-    </div>
-</form>
+        <form method="POST">
+            <div class="form-group">
+                <label for="categoria">Selecione a Categoria:</label>
+                <select class="form-control" id="categoria" name="categoria" onchange="this.form.submit()">
+                    <option value="">Selecione...</option>
+                    <option value="1">Dançarino(a)</option>
+                    <option value="2">Coordenador</option>
+                    <option value="3">Responsável</option>
+                </select>
+            </div>
+        </form>
 
         <?php
         // Verificar se a categoria foi enviada
-        if (isset($_GET['categoria']) && !empty($_GET['categoria'])) {
+        if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
 
             // Evitar SQL injection
-            $status = $conexao->real_escape_string($_GET['categoria']);
+            $status = $conexao->real_escape_string($_POST['categoria']);
 
             // Consulta SQL para buscar os dados da selecionada
             $sql = "SELECT * FROM usuario WHERE statuss = '$status'";
@@ -169,33 +168,45 @@ $dados = mysqli_fetch_assoc($resultado);
                         </tr>
                     </thead>
                     <tbody>';
-            
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo "<td>" . $row['id_usuario'] . "</td>";
-                echo "<td>" . $row['nome'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
-                echo "<td>" . $row['CPF'] . "</td>";
-                echo "<td>
-                        <a href='codigo/formEdit.php?id_usuario=" . $row['id_usuario'] .
-                                "&nome=" . $row['nome'] .
-                                "&email=" . $row['email'] .
-                                "&CPF=" . $row['CPF'] . "'>
-                            <img src='formulario/img/lapis.png' width='20' height='20' alt='Editar'>
-                        </a>
-                        <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] .
-                                "&nome=" . $row['nome'] .
-                                "&email=" . $row['email'] .
-                                "&CPF=" . $row['CPF'] . "' onclick='return confirmDelete(event)'>
-                            <img src='formulario/img/lixeira.png' width='20' height='20' alt='Excluir'>
-                        </a>
-                    </td>";
-                echo '</tr>';
-            }
-            
-            echo '</tbody>
+                  
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo "<td>" . $row['id_usuario'] . "</td>";
+                        echo "<td>" . $row['nome'] . "</td>";
+                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td>" . $row['CPF'] . "</td>";
+                                       
+                        echo "<td>
+                                <a href='formEdit.php?id_usuario=" . $row['id_usuario'] . 
+                                    "&nome=" . $row['nome'] . 
+                                    "&email=" . $row['email'] . 
+                                    "&CPF=" . $row['CPF'] . 
+                                    "&senha=" . $row['senha'] . 
+                                    "&datas=" . $row['datas'] . 
+                                    "&statuss=" . $row['statuss'] . 
+                                    "&RG=" . $row['RG'] . 
+                                    "&categoria=" . $row['categoria'] . 
+                                    "&telefone=" . $row['telefone'] . 
+                                    "&endereco=" . $row['endereco'] . 
+                                    "&responsavel=" . $row['responsavel'] . 
+                                    "&data_entrada=" . $row['data_entrada'] . 
+                                    "&tele_respon=" . $row['tele_respon'] . 
+                                    "&idade=" . $row['idade'] . 
+                                    "&nom_dan=" . $row['nom_dan'] . 
+                                    "&genero=" . $row['genero'] . 
+                                    "&imagem=" . $row['imagem'] . "'>
+                                    <img src='formulario/img/lapis.png' width='20' height='20' alt='Editar'>
+                                </a>
+                                <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] . "' onclick='return confirmDelete(" . $row['id_usuario'] . ")'>
+                                    <img src='formulario/img/lixeira.png' width='20' height='20' alt='Excluir'>
+                                </a>
+                              </td>";
+                        echo '</tr>';
+                    }
+                    
+                    echo '</tbody>
                 </table> </div>';
-            
+
                 } else {
                     echo 'Nenhum resultado encontrado para essa categoria.';
                 }
@@ -218,7 +229,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <script>
             function confirmLogout() {
                 Swal.fire({
-                    title: '<?php echo $_SESSION['nome'] ?>',
+                    title: '<?php echo $dados['nome'] ?>',
                     text: "Você realmente deseja sair?",
                     icon: 'warning',
                     showCancelButton: true,
@@ -228,6 +239,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        // Redirecionar para a página de logout
                         window.location.href = '../logout.php';
                     }
                 });
@@ -242,8 +254,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 });
             }
 
-            function confirmDelete(event) {
-                event.preventDefault(); // Impede o comportamento padrão do link
+            function confirmDelete(id_usuario) {
                 Swal.fire({
                     title: 'Confirmar Exclusão',
                     text: 'Tem certeza que deseja excluir este item?',
@@ -256,13 +267,13 @@ $dados = mysqli_fetch_assoc($resultado);
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Redirecionar para o script de exclusão
-                        window.location.href = event.target.href="formExcluir.php";
+                        window.location.href = 'formExcluir.php?id_usuario=' + id_usuario;
                     }
                 });
-                return false; // Impede o link de ser seguido imediatamente
             }
-
         </script>
+
+
         <!-- ====== ionicons ======= -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

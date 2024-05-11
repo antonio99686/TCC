@@ -64,7 +64,7 @@ if (isset($_GET['id_usuario'])) {
     <header class="main_header container">
         <div class="content">
             <div class="main_header_logo">
-                <img src="../form/formulario/img/logo.jpg" alt="logo.jpg" />
+                <img src="../form/formulario/img/logo.jpg" alt="logo" />
             </div>
         </div>
     </header>
@@ -76,7 +76,12 @@ if (isset($_GET['id_usuario'])) {
                     <!--Inicia Formulário-->
                     <div class="container_form">
                         <h1>Formulário de Edição do Usuário </h1>
-                        <form class="form" action="codigo/formEdit.php" method="GET" enctype="multipart/form-data">
+                        <form class="form" action="codigo/formEdit.php?id_usuario=<?php echo $id_usuario ?>" method="GET" enctype="multipart/form-data">
+
+                            <div class="form_grupo">
+                                <label for="nome" class="form_label">ID</label>
+                                <input type="text" name="nome" class="form_input" value="<?php echo isset($id_usuario) ? $id_usuario : ''; ?>" placeholder="ID" disabled>
+                            </div>
                             <div class="form_grupo">
                                 <label for="nome" class="form_label">Nome</label>
                                 <input type="text" name="nome" class="form_input" value="<?php echo isset($nome) ? $nome : ''; ?>" placeholder="Nome" required>
@@ -156,8 +161,6 @@ if (isset($_GET['id_usuario'])) {
                                 <input type="file" name="imagem" class="form_input" id="imagem" placeholder="">
                             </div>
                             <div class="submit">
-                            <input type="hidden" name="id_usuario" value="<?php echo $id_usuario; ?>">
-                                <input type="hidden" name="acao" value="editar">
                                 <button type="submit" name="Submit" class="submit_btn">Atualizar</button>
                                 <a href="../form/index.php" class="submit_btn">VOLTAR</a>
                             </div>
