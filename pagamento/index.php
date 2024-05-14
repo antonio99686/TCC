@@ -181,7 +181,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'logout.php';
+                    window.location.href = 'logoutt.php';
                 }
             });
         }

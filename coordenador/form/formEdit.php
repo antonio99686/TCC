@@ -162,7 +162,7 @@ if (isset($_GET['id_usuario'])) {
                             </div>
                             <div class="submit">
                                 <button type="submit" name="Submit" class="submit_btn">Atualizar</button>
-                                <a href="../form/index.php" class="submit_btn">VOLTAR</a>
+                                <a href="../dashboard.php" class="submit_btn">VOLTAR</a>
                             </div>
                         </form>
                     </div><!--container_form-->

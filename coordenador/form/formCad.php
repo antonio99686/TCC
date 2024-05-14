@@ -174,7 +174,7 @@
 
                                
                                 <button type="submit" name="Submit" class="submit_btn">Cadastrar</button>
-                                <a href="../form/index.php" class="submit_btn">VOLTAR</a>
+                                <a href="../dashboard.php" class="submit_btn">VOLTAR</a>
 
                             </div>
                         </form>

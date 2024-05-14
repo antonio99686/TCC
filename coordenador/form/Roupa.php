@@ -9,12 +9,22 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
+// Consulta SQL para obter a lista de usuários ativos
+$sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
+$resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado_usuarios) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
 // Verifica se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtém os dados do formulário e realiza a validação básica
-    $id_usuario = isset($_POST['usuario_selecionado']) ? mysqli_real_escape_string($conexao, $_POST['usuario_selecionado']) : null;
-    $nome_roupa = isset($_POST['nome_roupa']) ? mysqli_real_escape_string($conexao, $_POST['nome_roupa']) : null;
-    $status_roupa = isset($_POST['status_roupa']) ? mysqli_real_escape_string($conexao, $_POST['status_roupa']) : null;
+    $id_usuario = isset($_POST['usuario_selecionado']) ? intval($_POST['usuario_selecionado']) : null;
+    $nome_roupa = isset($_POST['nome_roupa']) ? htmlspecialchars($_POST['nome_roupa']) : null;
+    $status_roupa = isset($_POST['status_roupa']) ? htmlspecialchars($_POST['status_roupa']) : null;
 
     if (!$id_usuario || !$nome_roupa || !$status_roupa) {
         // Se algum campo estiver vazio, exibe uma mensagem de erro
@@ -22,30 +32,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Verifica se a roupa já está cadastrada para o usuário selecionado
-    $sql_verificar_roupa = "SELECT id_roupa FROM roupas WHERE id_usuario = '$id_usuario' AND nome = '$nome_roupa'";
-    $resultado_verificar_roupa = mysqli_query($conexao, $sql_verificar_roupa);
+    // Preparar e executar a consulta para inserir a nova roupa na tabela roupas
+    $sql_insert_roupa = "INSERT INTO roupas (id_usuario, nome, status_devolucao) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($conexao, $sql_insert_roupa);
+    mysqli_stmt_bind_param($stmt, "iss", $id_usuario, $nome_roupa, $status_roupa);
+    $resultado_insert_roupa = mysqli_stmt_execute($stmt);
 
-    // Verifica se a consulta foi bem-sucedida
-    if ($resultado_verificar_roupa && mysqli_num_rows($resultado_verificar_roupa) > 0) {
-        // Se a roupa já estiver cadastrada, exibe uma mensagem ao administrador
-        echo "<p>Atenção: Esta roupa já está cadastrada para o usuário selecionado.</p>";
+    // Verifica se a inserção foi bem-sucedida
+    if ($resultado_insert_roupa) {
+        echo "<script>alert('Sucesso: A roupa foi cadastrada com sucesso.');";
+        echo "window.location.href = 'roupa.php';</script>";
+        exit();
+    } else {
+        // Se houver algum erro, exibe uma mensagem de erro
+        echo "<script>alert('Erro ao cadastrar a roupa.');";
+        echo "window.location.href = 'roupa.php';</script>";
         exit();
     }
-
-    // Insere a nova roupa na tabela roupas
-    $sql_insert_roupa = "INSERT INTO roupas (id_usuario, nome, status_devolucao) VALUES ('$id_usuario', '$nome_roupa', '$status_roupa')";
-    $resultado_insert_roupa = mysqli_query($conexao, $sql_insert_roupa);
-
-   // Verifica se a inserção foi bem-sucedida
-   if ($resultado_insert_roupa) {
-    echo "<p>Sucesso: A roupa foi cadastrada com sucesso.</p>";
-    exit();
-} else {
-    // Se houver algum erro, exibe uma mensagem de erro
-    echo "<p>Erro ao cadastrar a roupa: " . mysqli_error($conexao) . "</p>";
-    exit();
-}
 }
 
 // Consulta SQL para obter a lista de usuários ativos
@@ -105,7 +108,7 @@ if (!$resultado_usuarios) {
                             </select>
 
                             <button type="submit" class="submit_btn">Enviar</button>
-                            <a href="../form/index.php" class="submit_btn">VOLTAR</a>
+                            <a href="../dashboard.php" class="submit_btn">VOLTAR</a>
 
                         </form>
 

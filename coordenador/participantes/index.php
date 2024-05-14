@@ -37,9 +37,10 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- shortcut icon -->
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
+    
     <title>Sentinela da fronteira</title>
 </head>
 
@@ -61,46 +62,46 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
 
             <div class="sidebar">
-                <a href="dashboard.php"class="active">
+                <a href="../dashboard.php">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="participantes">
+                <a href="../participantes" class="active">
                     <span class="material-icons-sharp">
                         groups
                     </span>
                     <h3>Users</h3>
                 </a>
 
-                <a href="perfil.php">
+                <a href="../perfil.php">
                     <span class="material-icons-sharp">
                         person_outline
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="calen">
+                <a href="../calen">
                     <span class="material-icons-sharp">
                         event
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="pagamentos">
+                <a href="../pagamentos">
                     <span class="material-icons-sharp">
                         paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="acessorios">
+                <a href="../acessorios">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-               
+              
 
-                <a href="logout.php">
+                <a href="../logout.php">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -117,7 +118,7 @@ $dados = mysqli_fetch_assoc($resultado);
            
              <div class="analyse">
                <div class="sales">
-                     <a href="form/formcad.php"><div class="status">
+                     <a href="../form/formcad.php"><div class="status">
                         <div class="info">
                             <h3>Cadastro</h3>
                             <h1>Cadastre o Usuário</h1>
@@ -132,7 +133,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
                 
                     <div class="visits">
-                 <a href="form/lista.php">   <div class="status">
+                 <a href="../form/lista.php">   <div class="status">
                         <div class="info">
                             <h3>Editar</h3>
                             <h1>Edite o Usuário</h1>
@@ -146,7 +147,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
                 
                 <div class="searches">
-                    <a href="form/roupa.php"><div class="status">
+                    <a href="../form/roupa.php"><div class="status">
                         <div class="info">
                             <h3>Roupa</h3>
                             <h1>Cadasto da Roupa do  Usuário</h1>
@@ -165,24 +166,84 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <!-- Tabela de pedidos recentes -->
             <div class="box">
-                <h2>Dados Usuário</h2>
-                <br>
-                <div class="user">Nome: <?php echo $dados['nome'] ?></div>
-                <br>
-                <div class="user1">Telefone: <?php echo $dados['telefone'] ?></div>
-                <br>
-                <div class="user2">E-mail: <?php echo $dados['email'] ?></div>
-                <br>
-                <div class="user3">Senha: <?php echo $dados['senha'] ?></div>
-                <br>
-                <div class="user4">CPF: <?php echo $dados['CPF'] ?></div>
-                <br>
-                <div class="user5">Idade: <?php echo $dados['idade'] ?></div>
-                <br>
-                <div class="user6">Matricula: <?php echo $dados['matricula'] ?></div>
-                <br>
-                <div class="user7">Data de Nascimento: <?php echo $dados['datas'] ?></div>
-                <br>
+
+            <form method="POST">
+        <label >Selecione a Nivel</label>
+            <select class="form-control"  name="categoria" onchange="this.form.submit()">
+            <option value="">Selecione</option>
+                <option value="mirim">Mirim</option>
+                <option value="juvenil">Juvenil</option>
+                <option value="adulto">Adulto</option>
+       
+            </select>
+        </form>
+        <?php
+
+// Verificar se a categoria foi enviada
+if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
+
+    // Evitar SQL injection
+    $categoria = $conexao->real_escape_string($_POST['categoria']);
+
+    // Consulta SQL para buscar os dados da selecionada
+    $sql = "SELECT * FROM usuario WHERE categoria = '$categoria'";
+    $result = $conexao->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Exibindo os resultados em uma tabela
+        echo ' <div class="formato"><table class="table table-striped">
+        <thead class="thead-info">
+            <tr>
+                       <th>ID</th>
+                       <th>Nome</th>
+                       <th>CPF</th>
+                       <th>Data de Entrada</th>
+                       <th>Matricula</th>
+                   
+
+                       </tr>
+                    </thead>
+                    <tbody>';
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>';
+            echo "<td>" . $row['id_usuario'] . "</td>";
+            echo "<td>" . $row['nome'] . "</td>";
+            echo "<td>" . $row['CPF'] . "</td>";
+            echo "<td>" . $row['data_entrada'] . "</td>";
+            echo "<td>" . $row['matricula'] . "</td>";
+            echo "<td>
+                        <a href='../PDF/index.php?id_usuario=" . $row['id_usuario'] .
+                "&nome=" . $row['nome'] .
+                "&email=" . $row['email'] .
+                "&CPF=" . $row['CPF'] .
+                "&data_entrada=" . $row['data_entrada'] .
+                "&mattricula=" . $row['matricula'] . "'> 
+                <img src='img/pdf.png' width='20' height='20' alt='PDF'>
+                            
+                        </a>
+                        <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] .
+                "&nome=" . $row['nome'] .
+                "&email=" . $row['email'] .
+                "&CPF=" . $row['CPF'] . "'>
+                         
+                        </a>
+                    </td>";
+            echo '</tr>';
+        }
+
+        echo '
+                </table>
+            </div>';
+    }
+} else {
+    echo 'Nenhum resultado encontrado para essa categoria.';
+}
+
+// Fechar conexão
+$conexao->close();
+
+
+?>
 
             </div>
             <!-- Fim dos pedidos recentes -->
@@ -213,7 +274,7 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 
@@ -222,7 +283,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                    <img class="imgs" src="../../img/icno.jpg">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>
@@ -235,8 +296,8 @@ $dados = mysqli_fetch_assoc($resultado);
 
     </div>
 
-    <script src="JavaScript/orders.js"></script>
-    <script src="JavaScript/index.js"></script>
+    <script src="../JavaScript/orders.js"></script>
+    <script src="../JavaScript/index.js"></script>
 </body>
 
 </html>

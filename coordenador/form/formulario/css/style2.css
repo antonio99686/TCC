@@ -392,6 +392,8 @@ main .recent-orders a {
     display: flex;
     justify-content: end;
     gap: 2rem;
+    position: relative;
+    left: -10%;
 }
 
 .right-section .nav button {
@@ -449,6 +451,8 @@ main .recent-orders a {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     transition: all 0.3s ease;
+    left: -5%;
+    position: relative;
 }
 
 .right-section .user-profile:hover {
@@ -542,6 +546,11 @@ main .recent-orders a {
     gap: 0.6rem;
 }
 
+.formato {
+    position: relative;
+    left: 10%;
+
+}
 
 @media screen and (max-width: 1200px) {
     .container {
@@ -611,21 +620,55 @@ main .recent-orders a {
 
 }
 
-
-.btn_vermelho {
-    color: black;
-    background-color: red;
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
+.user {
+    position: relative;
+    right: 30%;
+    font-size: 15px;
 }
 
-.btn_verde {
-    color: black;
-    background-color: rgb(3, 196, 3);
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
+.user1 {
+    position: relative;
+    left: 30%;
+    margin-top: -5%;
+    font-size: 15px;
+}
+
+.user2 {
+    position: relative;
+    right: 30%;
+    font-size: 15px;
+}
+
+.user3 {
+    position: relative;
+    right: 30%;
+    font-size: 15px;
+}
+
+.user4 {
+    position: relative;
+    right: 30%;
+    font-size: 15px;
+
+}
+
+.user5 {
+    position: relative;
+    left: 30%;
+    margin-top: -17%;
+    font-size: 15px;
+}
+
+.user6 {
+    position: relative;
+    left: 30%;
+    font-size: 15px;
+}
+
+.user7 {
+    position: relative;
+    left: 30%;
+    font-size: 15px;
 }
 
 @media screen and (max-width: 768px) {

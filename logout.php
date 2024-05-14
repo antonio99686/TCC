@@ -1,29 +1,26 @@
 <?php
+// Inicia a sessão
 session_start();
 
-// Destroi a sessão
-unset($_SESSION["id_usuario"]);
-unset($_SESSION["nome"]);
-unset($_SESSION["status"]);
+// Define a mensagem de sucesso na variável de sessão
+$_SESSION['success_message'] = "Você saiu com sucesso.";
 
-// Inclui o link para o SweetAlert2
-echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>';
+// Limpa todas as variáveis de sessão
+$_SESSION = array();
 
-// Inicia o script JavaScript do SweetAlert2
-echo '<script>';
-echo 'Swal.fire({';
-echo '    icon: "success",';
-echo '    title: "Você saiu com sucesso!",';
-echo '    showConfirmButton: false,';
-echo '    timer: 1500';
-echo '}).then(function() {';
-echo '    window.location.href = "index.php";';
-echo '});';
-echo '</script>';
-
-// Redireciona o usuário após a destruição da sessão (caso o JavaScript esteja desativado)
-echo '<meta http-equiv="refresh" content="1.5;url=index.php">';
-
-// Finaliza o script PHP
-exit;
+// Se necessário, destrói a sessão
+if (session_id() != "" || isset($_COOKIE[session_name()])) {
+    setcookie(session_name(), '', time() - 86400, '/');
+}
+session_destroy();
 ?>
+
+<script>
+    // Exibe um alerta de sucesso
+    alert("Você saiu com sucesso.");
+
+    // Aguarda 2 segundos antes de redirecionar o usuário
+    setTimeout(function() {
+        window.location.href = "index.php";
+    }, 2000);
+</script>

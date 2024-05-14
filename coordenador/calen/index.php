@@ -2,8 +2,8 @@
 session_start();
 include ("conexao.php");
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION)) {
+// Verifica se a sessão está iniciada e se o usuário está logado
+if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -12,10 +12,12 @@ if (!isset($_SESSION)) {
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado = mysqli_query($conexao, $sql);
-
+// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql);
+mysqli_stmt_bind_param($stmt, "i", $id_usuario);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -25,9 +27,8 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -35,7 +36,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="in.css">
     <link rel="stylesheet" href="../../css/navbar.css">
-    <link rel="shortcut icon" href="../img/img/calendario.png">
+    <link rel="shortcut icon" href="../../img/img/calendario.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" media="screen"

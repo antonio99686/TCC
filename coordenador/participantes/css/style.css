@@ -392,6 +392,8 @@ main .recent-orders a {
     display: flex;
     justify-content: end;
     gap: 2rem;
+    position: relative;
+    left: -10%;
 }
 
 .right-section .nav button {
@@ -449,6 +451,8 @@ main .recent-orders a {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     transition: all 0.3s ease;
+    left: -5%;
+    position: relative;
 }
 
 .right-section .user-profile:hover {
@@ -612,20 +616,10 @@ main .recent-orders a {
 }
 
 
-.btn_vermelho {
-    color: black;
-    background-color: red;
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
-}
+.formato {
+    position: relative;
+    left: 15%;
 
-.btn_verde {
-    color: black;
-    background-color: rgb(3, 196, 3);
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
 }
 
 @media screen and (max-width: 768px) {

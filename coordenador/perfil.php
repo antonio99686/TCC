@@ -2,8 +2,8 @@
 session_start();
 include ("conexao.php");
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION)) {
+// Verifica se a sessão está iniciada e se o usuário está logado
+if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
@@ -12,9 +12,12 @@ if (!isset($_SESSION)) {
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado = mysqli_query($conexao, $sql);
+// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql);
+mysqli_stmt_bind_param($stmt, "i", $id_usuario);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -31,144 +34,183 @@ $dados = mysqli_fetch_assoc($resultado);
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/img/icon.png">
-    <title>Sentinela da fronteira</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- shortcut icon -->
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <!-- Styles -->
-    <link rel="stylesheet" href="css/janela.css">
-    <link rel="stylesheet" href="css/dashbord.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- sweetalert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <link rel="stylesheet" href="css/perfil.css">
+    <title>Sentinela da fronteira</title>
 </head>
 
-<body style="background-color:rgb(161, 161, 161);">
-    <!-- Navigation -->
-    <div class="navigation">
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="##"></ion-icon>
-                    </span>
-                    <span class="title"> Sentinela da Fronteira </span>
-                </a>
-            </li>
+<body>
 
-            <li>
-                <a href="Dashboard.php">
-                    <span class="icon">
-                        <ion-icon name="home-outline"></ion-icon>
-                    </span>
-                    <span class="title">Dashboard</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="form/index.php">
-                    <span class="icon">
-                        <ion-icon name="pencil-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cadastro</span>
-                </a>
-            </li>
-            <li>
-                <a href="perfil.php">
-                    <span class="icon">
-                        <ion-icon name="person-circle-outline"></ion-icon>
-                    </span>
-                    <span class="title">Perfil</span>
-                </a>
-            </li>
-            <li>
-                <a onclick="confirmLogout()">
-                    <span class="icon">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-                    <span class="title">Sair</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal-container" class="modal-container">
-        <div class="modal">
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você realmente deseja sair?</p>
-            <button onclick="confirmLogout()">Sair</button>
-            <button onclick="cancelLogout()">Cancelar</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <div class="topbar">
+    <div class="container">
+        <!-- Seção da barra lateral -->
+        <aside>
             <div class="toggle">
-                <ion-icon name="menu-outline"></ion-icon>
-            </div>
-        </div>
-        <div class="user">
-            <img src="../img/<?php echo $dados['imagem'] ?>" alt="">
-        </div>
+                <div class="logo">
 
-        <!-- Conteúdo da página -->
-        <section class="py-5">
-            <div class="container">
-                <div class="nome">
-                    <br>
-                    <br>
-                    <br>
-                    <h1 class="fw-light">Perfil</h1>
-                    <p class="lead">
-                        <?php echo $_SESSION['nome'] ?>
-
-                    </p>
+                    <h2>## <span class="danger"> ## </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
                 </div>
             </div>
-        </section>
 
-        
+            <div class="sidebar">
+                <a href="dashboard.php">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="participantes">
+                    <span class="material-icons-sharp">
+                        groups
+                    </span>
+                    <h3>Users</h3>
+                </a>
 
-    <!-- Scripts -->
-    <script src="../java/main.js"></script>
-    <script src="../java/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                <a href="perfil.php"class="active">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Perfil</h3>
+                </a>
+                <a href="calen">
+                    <span class="material-icons-sharp">
+                        event
+                    </span>
+                    <h3>Calendario</h3>
+                </a>
+                <a href="pagamentos">
+                    <span class="material-icons-sharp">
+                        paid
+                    </span>
+                    <h3>Pagamento</h3>
+                </a>
+                <a href="acessorios">
+                    <span class="material-icons-sharp">
+                        checkroom
+                    </span>
+                    <h3>Vestimentas</h3>
+                </a>
 
-    <script>
-        function confirmLogout() {
-            Swal.fire({
-                title: '<?php echo $_SESSION['nome'] ?>',
-                text: "Você realmente deseja sair?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, sair',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'logout.php';
-                }
-            });
-        }
 
-        function cancelLogout() {
-            Swal.fire({
-                title: 'Operação cancelada',
-                text: 'Você permanecerá na página atual',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-        }
-    </script>
+                <a href="logout.php">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- Fim da seção da barra lateral -->
 
-    <!-- ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- Conteúdo principal -->
+        <main>
+            <h1>Sentinela da Fronteira</h1>
+            <!-- Análises -->
+
+
+            <!-- Fim das análises -->
+
+
+            <!-- Fim da seção de novos usuários -->
+
+            <!-- Tabela de pedidos recentes -->
+            <div class="box">
+                <h2>Dados Usuário</h2>
+                <br>
+                <div class="user">Nome: <?php echo $dados['nome'] ?></div>
+                <br>
+                <div class="user1">Telefone: <?php echo $dados['telefone'] ?></div>
+                <br>
+                <div class="user2">E-mail: <?php echo $dados['email'] ?></div>
+                <br>
+                <div class="user3">Senha: <?php echo $dados['senha'] ?></div>
+                <br>
+                <div class="user4">CPF: <?php echo $dados['CPF'] ?></div>
+                <br>
+                <div class="user5">Idade: <?php echo $dados['idade'] ?></div>
+                <br>
+                <div class="user6">Matricula: <?php echo $dados['matricula'] ?></div>
+                <br>
+                <div class="user7">Data de Nascimento: <?php echo $dados['datas'] ?></div>
+                <br>
+                <div class="user8">RG: <?php echo $dados['RG'] ?></div>
+                <br>
+                <div class="user9">Categoria: <?php echo $dados['categoria'] ?></div>
+                <br>
+                <div class="user10">Genero: <?php echo $dados['genero'] ?></div>
+                <br>
+                <div class="user11">Endereço: <?php echo $dados['endereco'] ?></div>
+                <br>
+                <div class="user12">Responsável: <?php echo $dados['responsavel'] ?></div>
+                <br>
+                <div class="user13">Data de Entrada: <?php echo $dados['data_entrada'] ?></div>
+                <br>
+                <div class="user14">Telefone Responsável: <?php echo $dados['tele_respon'] ?></div>
+                <br>
+                <div class="user15">Nome do(a) Dançarino(a): <?php echo $dados['nom_dan'] ?></div>
+                <br>
+
+            </div>
+            <!-- Fim dos pedidos recentes -->
+
+        </main>
+        <!-- Fim do conteúdo principal -->
+
+        <!-- Seção Direita -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+
+                <div class="profile">
+                    <div class="info">
+                        <p>Olá, <b>Bem-Vindo(a)</b></p>
+                        <small class="text-muted"><?php echo $dados['nome'] ?></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                    </div>
+                </div>
+
+            </div>
+            <!-- Fim da navegação -->
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img class="imgs" src="../img/icno.jpg">
+                    <h2>Sentinela da Fronteira</h2>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+    <script src="JavaScript/orders.js"></script>
+    <script src="JavaScript/index.js"></script>
 </body>
 
 </html>

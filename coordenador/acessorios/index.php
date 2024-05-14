@@ -1,7 +1,7 @@
 <?php
-//=================\ INICIA A SESSÃO E LOGA NO BD /=================\\
+// Inicia a sessão
 session_start();
-include("conexao.php");
+include ("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
@@ -10,11 +10,12 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-//=================\ DADOS DO USUÁRIO LOGADO /=================\\
-
-// Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado = mysqli_query($conexao, $sql);
+// Consulta SQL para obter os dados do usuário usando instruções preparadas
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql);
+mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -25,14 +26,16 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-//=================\ SELECIONA USUÁRIO NA LISTA /=================\\
-
-if ($_GET) {
-
+// Verifica se foi recebido um ID de usuário válido
+if (isset($_GET['usuario_selecionado']) && is_numeric($_GET['usuario_selecionado'])) {
     $id_usuario_selecionado = $_GET['usuario_selecionado'];
 
-    // Consulta SQL para obter as roupas do usuário selecionado
-    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
+    // Consulta SQL para obter as roupas do usuário selecionado usando instruções preparadas
+    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = ?";
+    $stmt_roupas_usuario = mysqli_prepare($conexao, $sql_roupas_usuario);
+    mysqli_stmt_bind_param($stmt_roupas_usuario, "i", $id_usuario_selecionado);
+    mysqli_stmt_execute($stmt_roupas_usuario);
+    $resultado_roupas_usuario = mysqli_stmt_get_result($stmt_roupas_usuario);
 
     // Verifica se a consulta foi bem-sucedida
     if (!$resultado_roupas_usuario) {
@@ -41,154 +44,178 @@ if ($_GET) {
     }
 }
 
-//=================\ ATUALIZA A LISTA DE ITENS /=================\\
+// Verifica se foi recebido dados por POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Valida os dados recebidos por POST
+    $id_usuario_selecionado = isset($_POST['id_usuario_selecionado']) ? $_POST['id_usuario_selecionado'] : null;
+    $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : array();
 
-if ($_POST) {
-
-    $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
-    $status_devolucao = $_POST['status_devolucao'];
-
-    // Consulta SQL para obter as roupas do usuário selecionado
-    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
-
-    // Atualiza o status de devolução das roupas do usuário
-    while ($r = mysqli_fetch_assoc($resultado_roupas_usuario)) {
-        if (empty($status_devolucao)) {
-            mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado");
-        } else {
-            if (in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 0) {
-                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 1 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
-            }
-            if (!in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 1) {
-                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
-            }
-        }
+    if (!is_numeric($id_usuario_selecionado)) {
+        echo "ID de usuário inválido.";
+        exit();
     }
 
-    // Obtém a lista atualizada para exibição na tela
-    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado";
-    $resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
+    // Atualiza o status de devolução das roupas do usuário usando instruções preparadas
+    $sql_update = "UPDATE roupas SET status_devolucao = ? WHERE id_usuario = ? AND id = ?";
+    $stmt_update = mysqli_prepare($conexao, $sql_update);
+
+    foreach ($status_devolucao as $id_roupa) {
+        mysqli_stmt_bind_param($stmt_update, "iii", $novo_status, $id_usuario_selecionado, $id_roupa);
+        $novo_status = in_array($id_roupa, $status_devolucao) ? 1 : 0;
+        mysqli_stmt_execute($stmt_update);
+    }
 
     // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
     echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Status de devolução atualizado com sucesso!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-              </script>";
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Status de devolução atualizado com sucesso!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+          </script>";
 }
 ?>
 
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="img/img/icon.png">
-    <title>Sentinela da fronteira</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- shortcut icon -->
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!-- sweetalert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <title>Sentinela da fronteira</title>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <div class="navigation">
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon">
-                        <ion-icon name="##"></ion-icon>
-                    </span>
-                    <span class="title"> Sentinela da Fronteira </span>
-                </a>
-            </li>
 
-            <li>
-                <a href="../dashboard.php">
-                    <span class="icon">
-                        <ion-icon name="home-outline"></ion-icon>
-                    </span>
-                    <span class="title">Dashboard</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="form/index.php">
-                    <span class="icon">
-                        <ion-icon name="pencil-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cadastro</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="../perfil.php">
-                    <span class="icon">
-                        <ion-icon name="person-circle-outline"></ion-icon>
-                    </span>
-                    <span class="title">Perfil</span>
-                </a>
-            </li>
-
-            <li>
-                <a onclick="confirmLogout()">
-                    <span class="icon">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-                    <span class="title">Sair</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal-container" class="modal-container">
-        <div class="modal">
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p> Você realmente deseja sair?</p>
-            <button onclick="confirmLogout()">Sair</button>
-            <button onclick="cancelLogout()">Cancelar</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <div class="topbar">
+    <div class="container">
+        <!-- Seção da barra lateral -->
+        <aside>
             <div class="toggle">
-                <ion-icon name="menu-outline"></ion-icon>
-            </div>
-        </div>
-        <div class="user">
-            <img src="../../img/<?php echo $dados['imagem'] ?>" alt="">
-        </div>
+                <div class="logo">
 
-        <section class="py-5">
-            <div class="container">
-                <div class="nome">
-                    <br>
-                    <br>
-                    <br>
-                    <h1 class="fw-light">Bem-vindo(a)</h1>
-                    <p class="lead">
-                        <?php echo $_SESSION['nome'] ?>
-
-                    </p>
+                    <h2>## <span class="danger"> ## </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
                 </div>
             </div>
-        </section>
+
+            <div class="sidebar">
+                <a href="../dashboard.php">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="../participantes">
+                    <span class="material-icons-sharp">
+                        groups
+                    </span>
+                    <h3>Users</h3>
+                </a>
+
+                <a href="../perfil.php">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Perfil</h3>
+                </a>
+                <a href="../calen">
+                    <span class="material-icons-sharp">
+                        event
+                    </span>
+                    <h3>Calendario</h3>
+                </a>
+                <a href="../pagamentos">
+                    <span class="material-icons-sharp">
+                        paid
+                    </span>
+                    <h3>Pagamento</h3>
+                </a>
+                <a href="../acessorios" class="active">
+                    <span class="material-icons-sharp">
+                        checkroom
+                    </span>
+                    <h3>Vestimentas</h3>
+                </a>
+               
+
+                <a href="../logout.php">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- Fim da seção da barra lateral -->
+
+        <!-- Conteúdo principal -->
+        <main>
+            <h1>Sentinela da Fronteira</h1>
+            <!-- Análises -->
+           
+             <div class="analyse">
+               <div class="sales">
+                     <a href="../form/formcad.php"><div class="status">
+                        <div class="info">
+                            <h3>Cadastro</h3>
+                            <h1>Cadastre o Usuário</h1>
+                        </div>
+                        <div class="progresss">
+                         
+                        </div>
+                    </div> </a>
+                    
+                </div> 
+           
+
+                
+                    <div class="visits">
+                 <a href="../form/lista.php">   <div class="status">
+                        <div class="info">
+                            <h3>Editar</h3>
+                            <h1>Edite o Usuário</h1>
+                        </div>
+                        <div class="progresss">
+                           
+                        </div>
+                    </div></a>
+                </div>
+                
+
+                
+                <div class="searches">
+                    <a href="../    form/roupa.php"><div class="status">
+                        <div class="info">
+                            <h3>Roupa</h3>
+                            <h1>Cadasto da Roupa do  Usuário</h1>
+                        </div>
+                        <div class="progresss">
+                           
+                        </div>
+                    </div>
+                </div> </a>
+               
+            </div>
+            <!-- Fim das análises -->
 
 
-        <form method="GET" action="index.php">
+            <!-- Fim da seção de novos usuários -->
+
+            <!-- Tabela de pedidos recentes -->
+            <div class="box">
+                 <form method="GET" action="index.php">
             <div class="form-group">
                 <label for="usuario_selecionado">Selecione o usuário:</label>
                 <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
@@ -248,43 +275,59 @@ if ($_POST) {
                 <button type="submit" class="btn btn-primary btn-sm">Salvar Status</button>
             </form>
         <?php endif; ?>
+            </div>
+            <!-- Fim dos pedidos recentes -->
 
-        <script src="../../JavaScript/main.js"></script>
-        <script src="../../JavaScript/script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        </main>
+        <!-- Fim do conteúdo principal -->
 
-        <script>
-            function confirmLogout() {
-                Swal.fire({
-                    title: '<?php echo $_SESSION['nome'] ?>',
-                    text: "Você realmente deseja sair?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sim, sair',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '../logout.php';
-                    }
-                });
-            }
+        <!-- Seção Direita -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
 
-            function cancelLogout() {
-                Swal.fire({
-                    title: 'Operação cancelada',
-                    text: 'Você permanecerá na página atual',
-                    icon: 'info',
-                    confirmButtonText: 'OK' 
-                });
-            }
-        </script>
+                <div class="profile">
+                    <div class="info">
+                        <p>Olá, <b>Bem-Vindo(a)</b></p>
+                        <small class="text-muted"><?php echo $dados['nome'] ?></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                    </div>
+                </div>
 
-        <!-- ionicons -->
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            </div>
+            <!-- Fim da navegação -->
 
+            <div class="user-profile">
+                <div class="logo">
+                    <img class="imgs" src="../../img/icno.jpg">
+                    <h2>Sentinela da Fronteira</h2>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+    <script src="../JavaScript/orders.js"></script>
+    <script src="../JavaScript/index.js"></script>
 </body>
 
 </html>

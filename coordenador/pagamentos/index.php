@@ -13,205 +13,305 @@ if (!isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado = mysqli_query($conexao, $sql);
+$sql_usuario = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
+$resultado_usuario = mysqli_query($conexao, $sql_usuario);
 
 // Verifica se a consulta foi bem-sucedida
-if (!$resultado) {
+if (!$resultado_usuario) {
     echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
     exit();
 }
 
 // Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado);
+$dados = mysqli_fetch_assoc($resultado_usuario);
 
- // Consulta SQL para obter todos os pagamentos
- $sql = "SELECT * FROM pagamentos";
- $resultado = mysqli_query($conexao, $sql);
-?>
 
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../img/img/icon.png">
-    <title>Sentinela da Fronteira</title>
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- sweetalert2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <title>Responsive Dashboard Design #1 | AsmrProg</title>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <div class="navigation">
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon">
-                    
-                    </span>
-                    <span class="title">Sentinela da Fronteira</span>
-                </a>
-            </li>
 
-            <li>
-                <a href="../Dashboard.php">
-                    <span class="icon">
-                        <ion-icon name="home-outline"></ion-icon>
-                    </span>
-                    <span class="title">Dashboard</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="../form/index.php">
-                    <span class="icon">
-                        <ion-icon name="pencil-outline"></ion-icon>
-                    </span>
-                    <span class="title">Cadastro</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="../perfil.php">
-                    <span class="icon">
-                        <ion-icon name="person-circle-outline"></ion-icon>
-                    </span>
-                    <span class="title">Perfil</span>
-                </a>
-            </li>
-
-            <li>
-                <a onclick="confirmLogout()">
-                    <span class="icon">
-                        <ion-icon name="log-out-outline"></ion-icon>
-                    </span>
-                    <span class="title">Sair</span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal-container" class="modal-container">
-        <div class="modal">
-            <h1><?php echo $_SESSION['nome'] ?></h1>
-            <p>Você realmente deseja sair?</p>
-            <button onclick="confirmLogout()">Sair</button>
-            <button onclick="cancelLogout()">Cancelar</button>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <div class="topbar">
+    <div class="container">
+        <!-- Seção da barra lateral -->
+        <aside>
             <div class="toggle">
-                <ion-icon name="menu-outline"></ion-icon>
+                <div class="logo">
+
+                    <h2>## <span class="danger"> ## </span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
             </div>
+
+            <div class="sidebar">
+                <a href="dashboard.php"class="active">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="participantes">
+                    <span class="material-icons-sharp">
+                        groups
+                    </span>
+                    <h3>Users</h3>
+                </a>
+
+                <a href="perfil.php">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Perfil</h3>
+                </a>
+                <a href="calen">
+                    <span class="material-icons-sharp">
+                        event
+                    </span>
+                    <h3>Calendario</h3>
+                </a>
+                <a href="pagamentos">
+                    <span class="material-icons-sharp">
+                        paid
+                    </span>
+                    <h3>Pagamento</h3>
+                </a>
+                <a href="acessorios">
+                    <span class="material-icons-sharp">
+                        checkroom
+                    </span>
+                    <h3>Vestimentas</h3>
+                </a>
+               
+
+                <a href="logout.php">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- End of Sidebar Section -->
+
+        <!-- Main Content -->
+        <main>
+            <h1>Analytics</h1>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Total Sales</h3>
+                            <h1>$65,024</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+81%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Site Visit</h3>
+                            <h1>24,981</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>-48%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Searches</h3>
+                            <h1>14,147</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+21%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Analyses -->
+
+            <!-- New Users Section -->
+            <div class="new-users">
+                <h2>New Users</h2>
+                <div class="user-list">
+                    <div class="user">
+                        <img src="images/profile-2.jpg">
+                        <h2>Jack</h2>
+                        <p>54 Min Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/profile-3.jpg">
+                        <h2>Amir</h2>
+                        <p>3 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/profile-4.jpg">
+                        <h2>Ember</h2>
+                        <p>6 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="images/plus.png">
+                        <h2>More</h2>
+                        <p>New User</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End of New Users Section -->
+
+            <!-- Recent Orders Table -->
+            <div class="recent-orders">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Course Name</th>
+                            <th>Course Number</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <a href="#">Show All</a>
+            </div>
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+
+                <div class="profile">
+                    <div class="info">
+                        <p>Olá, <b>Bem-Vindo(a)</b></p>
+                        <small class="text-muted"><?php echo $dados['nome'] ?></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                    </div>
+                </div>
+
+            </div>
+            <!-- End of Nav -->
+
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="images/logo.png">
+                    <h2>AsmrProg</h2>
+                    <p>Fullstack Web Developer</p>
+                </div>
+            </div>
+
+            <div class="reminders">
+                <div class="header">
+                    <h2>Reminders</h2>
+                    <span class="material-icons-sharp">
+                        notifications_none
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            volume_up
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Workshop</h3>
+                            <small class="text_muted">
+                                08:00 AM - 12:00 PM
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            edit
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Workshop</h3>
+                            <small class="text_muted">
+                                08:00 AM - 12:00 PM
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification add-reminder">
+                    <div>
+                        <span class="material-icons-sharp">
+                            add
+                        </span>
+                        <h3>Add Reminder</h3>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="user" onclick="document.getElementById('fileInput').click();">
-            <img src="../../img/<?php echo $dados['imagem'] ?>" alt="">
-            <input type="file" id="fileInput" style="display: none;" onchange="updateProfilePicture(this)">
-        </div>
 
-        <!-- Cards -->
-        <div class="cardBox">
-            <div class="card">
-                <div>
-                    <div class="numbers"></div>
-                    <div class="cardName">Card 1</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name=""></ion-icon>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="numbers"></div>
-                    <div class="cardName">Card 2</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name=""></ion-icon>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="numbers"></div>
-                    <div class="cardName">Card 3</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name=""></ion-icon>
-                </div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div class="numbers"></div>
-                    <div class="cardName">Card 4</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name=""></ion-icon>
-                </div>
-            </div>
-        </div>
-
-        
     </div>
 
    
-   
-</body>
-</html>
-
-    <!-- Scripts -->
-    <script src="JavaScript/main.js"></script>
-    <script src="JavaScript/dash.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    <script>
-        function confirmLogout() {
-            Swal.fire({
-                title: '<?php echo $_SESSION['nome'] ?>',
-                text: "Você realmente deseja sair?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, sair',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'logout.php';
-                }
-            });
-        }
-
-        function cancelLogout() {
-            Swal.fire({
-                title: 'Operação cancelada',
-                text: 'Você permanecerá na página atual',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-        }
-    </script>
-
-    <!-- ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="JavaScript/index.js"></script>
 </body>
 
 </html>
