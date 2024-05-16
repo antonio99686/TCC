@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .content {
+        height: 100vh; /* Define a altura conforme necessário */
+        overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+      }
+      .wrapper {
+        width: 100%;
+        max-width: 500px; /* Ajuste a largura máxima conforme necessário */
+        margin: 0 auto;
+      }
+    </style>
+    <title>Cadastrar</title>
+  </head>
+  <body>
+    <div class="content">
+      <div class="wrapper">
+        <nav class="nav">
+          <div class="nav-logo">
+            <p>Sentinela da Fronteira</p>
+          </div>
+        </nav>
+
+        <!----------------------------- Form box ----------------------------------->
+        <div class="form-box">
+          <!------------------- login form -------------------------->
+
+          <div class="login-container" id="login">
+            <div class="top">
+              <header>Cadastre-se</header>
+            </div>
+            <form
+              class="form"
+              action="cadastrar.php"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="input-box">
+                <input type="text" name="usuario" class="input-field" placeholder="Nome" required />
+                <label for="nome" class="form_label">Nome</label>
+              </div>
+              <div class="input-box">
+                <input type="email" name="email" class="input-field" placeholder="seuemail@email.com" required />
+                <label for="e-mail" class="form_label">Email</label>
+              </div>
+              <div class="input-box">
+                <input type="password" name="senha" class="input-field" placeholder="minimo 8 caracteres" required />
+                <label for="senha" class="form_label">Senha</label>
+              </div>
+              <div class="input-box">
+                <input type="date" name="datas" class="input-field" placeholder="Data de Nascimento" required />
+                <label for="datanascimento" class="form_label">Data de Nascimento</label>
+              </div>
+              <div class="input-box">
+                <select name="status" class="dropdown" required>
+                  <option selected disabled class="form_select_option" value="">Selecione</option>
+                  <option value="1" class="form_select_option">Dançarino</option>
+                  <option value="2" class="form_select_option">Coordenador</option>
+                  <option value="3" class="form_select_option">Responsável</option>
+                </select>
+                <label for="status" class="form_label">Categoria</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="CPF" class="input-field" placeholder="00000000000" required />
+                <label for="CPF" class="form_label">CPF</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="RG" class="input-field" placeholder="00000000000" required />
+                <label for="RG" class="form_label">RG</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="categoria" class="input-field" placeholder="adulto,juvenil,mirim" required />
+                <label for="Categoria" class="form_label">Nivel</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="telefone" class="input-field" placeholder="(00)0000-00000" required />
+                <label for="Telefone" class="form_label">Telefone</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="endereco" class="input-field" placeholder="Rua..." required />
+                <label for="endereco" class="form_label">Endereço</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="responsavel" class="input-field" placeholder="Nome" />
+                <label for="responsavel" class="form_label">Responsável</label>
+              </div>
+              <div class="input-box">
+                <input type="date" name="data_entrada" class="input-field" placeholder="" required />
+                <label for="data_entrada" class="form_label">Data de Entrada</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="tele_respon" class="input-field" placeholder="(00)0000-00000" />
+                <label for="tele_respon" class="form_label">Telefone do Responsável</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="idade" class="input-field" placeholder="" required />
+                <label for="idade" class="form_label">Idade</label>
+              </div>
+              <div class="input-box">
+                <input type="text" name="nom_dan" class="input-field" placeholder="" />
+                <label for="nom_dan" class="form_label">Nome do Dançarino</label>
+              </div>
+              <div class="input-box">
+                <select name="genero" class="dropdown" required>
+                  <option selected disabled class="form_select_option" value="">Selecione</option>
+                  <option value="M" class="form_select_option">Masculino</option>
+                  <option value="F" class="form_select_option">Feminino</option>
+                </select>
+                <label for="genero" class="form_label">Sexo</label>
+              </div>
+              <div class="input-box">
+                <input type="file" name="arquivo" class="input-field" placeholder="" />
+                <label for="arquivo" class="form_label">Imagem</label>
+              </div>
+              <div class="input-box">
+                <button type="submit" name="Submit" class="submit_btn">Cadastrar</button>
+                <a href="../index.php" class="submit_btn">VOLTAR</a>
+              </div>
+            </form>
+          </div>
+
+          <!------------------- registration form -------------------------->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function myMenuFunction() {
+        var i = document.getElementById("navMenu");
+        if (i.className === "nav-menu") {
+          i.className += " responsive";
+        } else {
+          i.className = "nav-menu";
+        }
+      }
+    </script>
+
+    <script>
+      var a = document.getElementById("loginBtn");
+      var b = document.getElementById("registerBtn");
+      var x = document.getElementById("login");
+      var y = document.getElementById("register");
+
+      function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+      }
+
+      function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+      }
+    </script>
+  </body>
+</html>

@@ -196,10 +196,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 
                 <div class="searches">
-                    <a href="../    form/roupa.php"><div class="status">
+                    <a href="../form/roupa.php"><div class="status">
                         <div class="info">
                             <h3>Roupa</h3>
-                            <h1>Cadasto da Roupa do  Usuário</h1>
+                            <h1>Cadasto da Roupa do Usuário</h1>
                         </div>
                         <div class="progresss">
                            
