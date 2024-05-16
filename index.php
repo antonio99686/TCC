@@ -33,7 +33,7 @@
                 <h1>Entrar</h1>
                 <input type="text" name="CPF" placeholder="CPF" required>
                 <input type="password" name="senha" placeholder="SENHA" required>
-                <!-- Alteração aqui: adicionando um evento onclick -->
+               
                 <p style="color: #333; margin-top: 10px; cursor: pointer;" onclick="showContactCoordinator()">Esqueceu sua senha?</p>
                 <button>Entrar</button>
             </form>
