@@ -43,7 +43,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- shortcut icon -->
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da fronteira</title>
@@ -57,7 +57,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                    <h2>## <span class="danger"> ## </span></h2>
+                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -86,7 +86,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="../calen">
+                <a href="../calen" target="_blank">
                     <span class="material-icons-sharp">
                         event
                     </span>
@@ -118,7 +118,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
         <!-- Conteúdo principal -->
         <main>
-            <h1>Sentinela da Fronteira</h1>
+            <h1>Vestimentas</h1>
             <!-- Análises -->
 
 
@@ -129,12 +129,13 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <!-- Tabela de pedidos recentes -->
             <div class="box">
-            <table class="striped">
-   
+            <table>
+    <thead>
         <tr>
             <th>Roupa</th>
             <th>Status</th>
-  
+        </tr>
+    </thead>
     <tbody>
         <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
             <tr>
@@ -150,6 +151,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <?php endwhile; ?>
     </tbody>
 </table>
+
             </div>
             <!-- Fim dos pedidos recentes -->
 

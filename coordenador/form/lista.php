@@ -52,7 +52,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                    <h2>## <span class="danger"> ## </span></h2>
+                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -81,7 +81,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="../calen">
+                <a href="../calen" target="_blank">
                     <span class="material-icons-sharp">
                         event
                     </span>
@@ -133,7 +133,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
                 
                     <div class="visits">
-                 <a href="../form/lista.php">   <div class="status">
+                 <a href="../form/lista.php" class="active" >   <div class="status">
                         <div class="info">
                             <h3>Editar</h3>
                             <h1>Edite o Usuário</h1>
@@ -159,12 +159,12 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div> </a>
                
             </div>
-            <!-- Fim das análises -->
+            <!-- Fim  -->
 
 
-            <!-- Fim da seção de novos usuários -->
+            <!-- Fim -->
 
-            <!-- Tabela de pedidos recentes -->
+            <!-- Tabela  -->
             <div class="box">
             <form method="POST">
             <div class="form-group">
@@ -240,7 +240,7 @@ $dados = mysqli_fetch_assoc($resultado);
                                 delete
                             </span>
                                 </a></td>
-                              </td>";
+                              ";
                         echo '</tr>';
                     }
                     
@@ -263,7 +263,7 @@ $dados = mysqli_fetch_assoc($resultado);
         ?>
 
             </div>
-            <!-- Fim dos pedidos recentes -->
+            <!-- Fim -->
 
         </main>
         <!-- Fim do conteúdo principal -->

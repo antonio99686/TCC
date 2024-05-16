@@ -26,15 +26,17 @@ if (!$resultado_usuario) {
 $dados = mysqli_fetch_assoc($resultado_usuario);
 
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
-    <title>Responsive Dashboard Design #1 | AsmrProg</title>
+    <title>Sentinela da Fronteira</title>
 </head>
 
 <body>
@@ -45,7 +47,7 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
             <div class="toggle">
                 <div class="logo">
 
-                    <h2>## <span class="danger"> ## </span></h2>
+                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -55,44 +57,44 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
             </div>
 
             <div class="sidebar">
-                <a href="dashboard.php"class="active">
+                <a href="../dashboard.php" >
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="participantes">
+                <a href="../participantes">
                     <span class="material-icons-sharp">
                         groups
                     </span>
                     <h3>Users</h3>
                 </a>
 
-                <a href="perfil.php">
+                <a href="../perfil.php">
                     <span class="material-icons-sharp">
                         person_outline
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="calen">
+                <a href="../calen" target="_blank">
                     <span class="material-icons-sharp">
                         event
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="pagamentos">
+                <a href="../pagamentos" class="active">
                     <span class="material-icons-sharp">
                         paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="acessorios">
+                <a href="../acessorios">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-               
+
 
                 <a href="logout.php">
                     <span class="material-icons-sharp">
@@ -106,13 +108,13 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
 
         <!-- Main Content -->
         <main>
-            <h1>Analytics</h1>
+            <h1>Pagamentos</h1>
             <!-- Analyses -->
             <div class="analyse">
                 <div class="sales">
                     <div class="status">
                         <div class="info">
-                            <h3>Total Sales</h3>
+                            <h3>Total em Banco</h3>
                             <h1>$65,024</h1>
                         </div>
                         <div class="progresss">
@@ -128,15 +130,15 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
                 <div class="visits">
                     <div class="status">
                         <div class="info">
-                            <h3>Site Visit</h3>
-                            <h1>24,981</h1>
+                            <h3>Total de Pagamentos</h3>
+                            <h1>24</h1>
                         </div>
                         <div class="progresss">
                             <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>-48%</p>
+                                <p>12%</p>
                             </div>
                         </div>
                     </div>
@@ -144,15 +146,15 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
                 <div class="searches">
                     <div class="status">
                         <div class="info">
-                            <h3>Searches</h3>
-                            <h1>14,147</h1>
+                            <h3>Total de Usuários</h3>
+                            <h1>50</h1>
                         </div>
                         <div class="progresss">
                             <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>+21%</p>
+                                <p>100%</p>
                             </div>
                         </div>
                     </div>
@@ -162,48 +164,39 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
 
             <!-- New Users Section -->
             <div class="new-users">
-                <h2>New Users</h2>
+                <h2>Mensalidades Pendentes</h2>
                 <div class="user-list">
                     <div class="user">
-                        <img src="images/profile-2.jpg">
-                        <h2>Jack</h2>
-                        <p>54 Min Ago</p>
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <h2><?php echo $dados['nome'] ?></h2>
+                        <p>Falta pagar o mês de: ABRIL </p>
                     </div>
-                    <div class="user">
-                        <img src="images/profile-3.jpg">
-                        <h2>Amir</h2>
-                        <p>3 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/profile-4.jpg">
-                        <h2>Ember</h2>
-                        <p>6 Hours Ago</p>
-                    </div>
-                    <div class="user">
-                        <img src="images/plus.png">
-                        <h2>More</h2>
-                        <p>New User</p>
-                    </div>
+
                 </div>
             </div>
             <!-- End of New Users Section -->
 
             <!-- Recent Orders Table -->
             <div class="recent-orders">
-                <h2>Recent Orders</h2>
+                <h2>Recentes</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Course Name</th>
-                            <th>Course Number</th>
-                            <th>Payment</th>
+                            <th>Nome do Usuário</th>
+                            <th>Quantidade</th>
+                            <th>Forma de Pagamento</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        <td> Antonio Carlos Mattes Mongelo</td>
+                        <td> R$: 30,00</td>
+                        <td> PIX </td>
+                        <td> Pago</td>
+                    </tbody>
                 </table>
-                <a href="#">Show All</a>
+
             </div>
             <!-- End of Recent Orders -->
 
@@ -240,77 +233,22 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
             </div>
             <!-- End of Nav -->
 
+
             <div class="user-profile">
                 <div class="logo">
-                    <img src="images/logo.png">
-                    <h2>AsmrProg</h2>
-                    <p>Fullstack Web Developer</p>
+                    <img class="imgs" src="../../img/icno.jpg">
+                    <h2>Sentinela da Fronteira</h2>
+
                 </div>
             </div>
 
-            <div class="reminders">
-                <div class="header">
-                    <h2>Reminders</h2>
-                    <span class="material-icons-sharp">
-                        notifications_none
-                    </span>
-                </div>
-
-                <div class="notification">
-                    <div class="icon">
-                        <span class="material-icons-sharp">
-                            volume_up
-                        </span>
-                    </div>
-                    <div class="content">
-                        <div class="info">
-                            <h3>Workshop</h3>
-                            <small class="text_muted">
-                                08:00 AM - 12:00 PM
-                            </small>
-                        </div>
-                        <span class="material-icons-sharp">
-                            more_vert
-                        </span>
-                    </div>
-                </div>
-
-                <div class="notification deactive">
-                    <div class="icon">
-                        <span class="material-icons-sharp">
-                            edit
-                        </span>
-                    </div>
-                    <div class="content">
-                        <div class="info">
-                            <h3>Workshop</h3>
-                            <small class="text_muted">
-                                08:00 AM - 12:00 PM
-                            </small>
-                        </div>
-                        <span class="material-icons-sharp">
-                            more_vert
-                        </span>
-                    </div>
-                </div>
-
-                <div class="notification add-reminder">
-                    <div>
-                        <span class="material-icons-sharp">
-                            add
-                        </span>
-                        <h3>Add Reminder</h3>
-                    </div>
-                </div>
-
-            </div>
 
         </div>
 
 
     </div>
 
-   
+
     <script src="JavaScript/index.js"></script>
 </body>
 

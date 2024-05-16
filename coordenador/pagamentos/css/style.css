@@ -610,11 +610,15 @@ main .recent-orders a {
     margin-top: 5%;
 
 }
+
 .box {
     background-color: var(--color-white);
-    width: 90%; /* Reduz a largura para 90% da largura da tela */
-    max-width: 400px; /* Define uma largura máxima para garantir que não fique muito largo */
-    margin: 5% auto; /* Centraliza o elemento verticalmente e define uma margem superior de 5% */
+    width: 90%;
+    /* Reduz a largura para 90% da largura da tela */
+    max-width: 400px;
+    /* Define uma largura máxima para garantir que não fique muito largo */
+    margin: 5% auto;
+    /* Centraliza o elemento verticalmente e define uma margem superior de 5% */
     padding: var(--card-padding);
     text-align: center;
     box-shadow: var(--box-shadow);
@@ -624,13 +628,21 @@ main .recent-orders a {
 
 .user {
     position: relative;
-    margin: 0 auto; /* Centraliza o elemento horizontalmente */
+    margin: 0 auto;
+    /* Centraliza o elemento horizontalmente */
     font-size: 15px;
 }
 
 /* Estilos específicos para cada .user */
-.user1, .user2, .user3, .user4, .user5, .user6, .user7 {
-    margin-top: -5%; /* Ajusta o espaçamento superior conforme necessário */
+.user1,
+.user2,
+.user3,
+.user4,
+.user5,
+.user6,
+.user7 {
+    margin-top: -5%;
+    /* Ajusta o espaçamento superior conforme necessário */
 }
 
 

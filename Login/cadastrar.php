@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" type="text/css" href="formulario/css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>cadastro</title>
 </head>
 
@@ -71,7 +71,7 @@ if (
             $imagem = $_FILES['arquivo']['name'];
 
             // Define a pasta para onde enviaremos o arquivo
-            $diretorio = "../../../img/";
+            $diretorio = "../img/";
 
             // Faz o upload, movendo o arquivo para a pasta especificada
             if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem)) {
@@ -109,7 +109,7 @@ if (
                             showConfirmButton: false,
                             timer: 1500
                         }).then(() => {
-                            window.location.href = '../../dashboard.php';
+                            window.location.href = ../index.php';
                         });
                     </script>";
                     exit();

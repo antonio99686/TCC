@@ -11,6 +11,9 @@ if (session_id() != "" || isset($_COOKIE[session_name()])) {
 }
 session_destroy();
 
+// Aguarda 2 segundos antes de redirecionar o usuário
+sleep(2);
+
 // Redireciona o usuário após a destruição da sessão
 header("Location: ../../index.php");
 exit;

@@ -1,10 +1,10 @@
 <?php
-// Verifica se o ID do usuário foi fornecido na URL
-if (isset($_GET['id_usuario'])) {
+// Verifica se o ID do usuário foi fornecido na URL e se é um número válido
+if (isset($_GET['id_usuario']) && is_numeric($_GET['id_usuario'])) {
     $id_usuario = $_GET['id_usuario'];
 } else {
-    // Se o ID do usuário não estiver presente, exibe uma mensagem de erro e interrompe o script
-    die('ID do usuário não fornecido.');
+    // Se o ID do usuário não estiver presente ou não for válido, exibe uma mensagem de erro e interrompe o script
+    die('ID do usuário não fornecido ou inválido.');
 }
 
 // Inclui o arquivo de conexão com o banco de dados
@@ -28,7 +28,6 @@ if ($result->num_rows > 0) {
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <link rel='stylesheet' href='http://localhost:8080/tcc/coordenador/pdf/css/pdf.css'>
         <title>Sentinela da Fronteira</title>
-
     </head>
     <body>
         <div class='container'>
@@ -53,6 +52,12 @@ if ($result->num_rows > 0) {
                 <p><strong>Idade:</strong> " . $dados['idade'] . "</p>
                 <p><strong>Data de Entrada:</strong> " . $dados['data_entrada'] . "</p>
                 <p><strong>Responsável:</strong> " . $dados['responsavel'] . "</p>
+            </div>
+            <div class='identidade'>
+                <p><strong>Identidade Frente:</strong></p>
+                <img class='frente'src='http://localhost:8080/tcc/img/"  . "' alt='Frente'>
+                <p><strong>Identidade Verso:</strong></p>
+                <img   class='verso'src='http://localhost:8080/tcc/img/" . "' alt='Verso'>
             </div>";
     }
 
@@ -81,7 +86,6 @@ $PDF = new Dompdf(['enable_remote' => true]);
 
 // Carrega o HTML gerado para o PDF
 $PDF->loadHtml($html);
-
 
 // Define o tamanho e a orientação do papel
 $PDF->setPaper('A4', 'portrait');

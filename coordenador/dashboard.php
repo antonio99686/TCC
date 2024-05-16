@@ -51,7 +51,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                    <h2>## <span class="danger"> ## </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -80,7 +80,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="calen">
+                <a href="calen" target="_blank">
                     <span class="material-icons-sharp">
                         event
                     </span>
@@ -167,22 +167,21 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="box">
                 <h2>Dados Usuário</h2>
                 <br>
-                <div class="user">Nome: <?php echo $dados['nome'] ?></div>
+                <div class="user"><em>Nome:</em>  <?php echo $dados['nome'] ?></div>
                 <br>
-                <div class="user1">Telefone: <?php echo $dados['telefone'] ?></div>
+                <div class="user1"><em>Telefone:</em>  <?php echo $dados['telefone'] ?></div>
                 <br>
-                <div class="user2">E-mail: <?php echo $dados['email'] ?></div>
+                <div class="user2"><em>E-mail:</em>  <?php echo $dados['email'] ?></div>
                 <br>
-                <div class="user3">Senha: <?php echo $dados['senha'] ?></div>
+                <div class="user3"><em>Senha:</em>  <?php echo $dados['senha'] ?></div>
                 <br>
-                <div class="user4">CPF: <?php echo $dados['CPF'] ?></div>
+                <div class="user4"><em>CPF:</em>  <?php echo $dados['CPF'] ?></div>
                 <br>
-                <div class="user5">Idade: <?php echo $dados['idade'] ?></div>
+                <div class="user5"><em>Idade:</em>  <?php echo $dados['idade'] ?></div>
                 <br>
-                <div class="user6">Matricula: <?php echo $dados['matricula'] ?></div>
+                <div class="user6"><em>Matricula:</em>  <?php echo $dados['matricula'] ?></div>
                 <br>
-                <div class="user7">Data de Nascimento: <?php echo $dados['datas'] ?></div>
-                <br>
+                <div class="user7"><em>Data de Nascimento:</em>  <?php echo $dados['datas'] ?></div>
 
             </div>
             <!-- Fim dos pedidos recentes -->

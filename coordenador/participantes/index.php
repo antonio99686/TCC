@@ -52,7 +52,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                    <h2>## <span class="danger"> ## </span></h2>
+                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -81,7 +81,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="../calen">
+                <a href="../calen" target="_blank">
                     <span class="material-icons-sharp">
                         event
                     </span>
@@ -113,7 +113,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
         <!-- Conteúdo principal -->
         <main>
-            <h1>Sentinela da Fronteira</h1>
+            <h1>Participantes</h1>
             <!-- Análises -->
            
              <div class="analyse">

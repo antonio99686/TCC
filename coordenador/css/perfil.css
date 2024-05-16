@@ -546,109 +546,48 @@ main .recent-orders a {
     gap: 0.6rem;
 }
 
+.box {
+    background-color: var(--color-white);
+    width: 90%;
+    /* Reduz a largura para 90% da largura da tela */
+    max-width: 400px;
+    /* Define uma largura máxima para garantir que não fique muito largo */
+    margin: 5% auto;
+    /* Centraliza o elemento verticalmente e define uma margem superior de 5% */
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--card-border-radius);
+    transition: all 0.3s ease;
+}
+
 .user {
     position: relative;
-    right: 30%;
+    margin: 0 auto;
+    /* Centraliza o elemento horizontalmente */
     font-size: 15px;
 }
 
-.user1 {
-    position: relative;
-    left: 30%;
-    margin-top: -5%;
-    font-size: 15px;
-}
-
-.user2 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-}
-
-.user3 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-}
-
-.user4 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-
-}
-
-.user5 {
-    position: relative;
-    left: 30%;
-    margin-top: -17%;
-    font-size: 15px;
-}
-
-.user6 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-}
-
-.user7 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-}
-
-.user8 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-
-}
-
-.user9 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-    margin-top: -6%;
-}
-
-.user10 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-}
-
-.user11 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-    margin-top: -5.5%;
-}
-
-.user12 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-}
-
-.user13 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-    margin-top: -6%;
-}
-
-.user14 {
-    position: relative;
-    right: 30%;
-    font-size: 15px;
-}
-
+/* Estilos específicos para cada .user */
+.user1,
+.user2,
+.user3,
+.user4,
+.user5,
+.user6,
+.user7,
+.user8,
+.user9,
+.user10,
+.user11,
+.user12,
+.user13,
+.user14,
 .user15 {
-    position: relative;
-    left: 30%;
-    font-size: 15px;
-    margin-top: -6%;
+    margin-top: -5%;
+    /* Ajusta o espaçamento superior conforme necessário */
 }
+
 
 @media screen and (max-width: 1200px) {
     .container {
@@ -706,24 +645,7 @@ main .recent-orders a {
 
 }
 
-.box {
-    background-color: var(--color-white);
-    width: 100%;
-    padding: var(--card-padding);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    border-radius: var(--card-border-radius);
-    transition: all 0.3s ease;
-    margin-top: 5%;
 
-}
-
-
-.formato {
-    position: relative;
-    left: 15%;
-
-}
 
 @media screen and (max-width: 768px) {
     .container {

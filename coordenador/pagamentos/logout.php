@@ -1,15 +1,20 @@
 <?php
+// Inicia a sessão
 session_start();
 
-// Destroi a sessão
-unset($_SESSION["id_usuario"]);
-unset($_SESSION["nome"]);
-unset($_SESSION["status"]);
+// Limpa todas as variáveis de sessão
+$_SESSION = array();
 
+// Se necessário, destrói a sessão
+if (session_id() != "" || isset($_COOKIE[session_name()])) {
+    setcookie(session_name(), '', time() - 86400, '/');
+}
+session_destroy();
 
-// Redireciona o usuário após a destruição da sessão (caso o JavaScript esteja desativado)
-echo '<meta http-equiv="refresh" content="1.5;url=../../index.php">';
+// Aguarda 2 segundos antes de redirecionar o usuário
+sleep(2);
 
-// Finaliza o script PHP
+// Redireciona o usuário após a destruição da sessão
+header("Location: ../../index.php");
 exit;
 ?>
