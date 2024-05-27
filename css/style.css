@@ -633,6 +633,32 @@ main .recent-orders a {
     margin-top: -5%; /* Ajusta o espaçamento superior conforme necessário */
 }
 
+    .aviso {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .aviso h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .aviso p {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .aviso small {
+        font-size: 12px;
+        color: #999;
+    }
+
+
 
 
 @media screen and (max-width: 768px) {

@@ -20,94 +20,76 @@ mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
 // Verifica se a consulta foi bem-sucedida
-if (!$resultado) {
+if (!$resultado || mysqli_num_rows($resultado) == 0) {
     echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
     exit();
 }
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
+
+// Consulta SQL para obter os dados da tabela Avisos
+$sql_avisos = "SELECT * FROM avisos ORDER BY data DESC";
+$result_avisos = mysqli_query($conexao, $sql_avisos);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <!-- shortcut icon -->
     <link rel="shortcut icon" href="img/img/icon.png">
-    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
-    <title>Sentinela da fronteira</title>
+    <title>Sentinela da Fronteira</title>
 </head>
 
 <body>
-
     <div class="container">
-        <!-- Seção da barra lateral -->
+        <!-- Barra lateral -->
         <aside>
             <div class="toggle">
                 <div class="logo">
-
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Fácil</span></h2>
                 </div>
                 <div class="close" id="close-btn">
-                    <span class="material-icons-sharp">
-                        close
-                    </span>
+                    <span class="material-icons-sharp">close</span>
                 </div>
             </div>
 
             <div class="sidebar">
                 <a href="dashboard.php" class="active">
-                    <span class="material-icons-sharp">
-                        dashboard
-                    </span>
+                    <span class="material-icons-sharp">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="participantes" >
-                    <span class="material-icons-sharp">
-                        groups
-                    </span>
+                <a href="participantes">
+                    <span class="material-icons-sharp">groups</span>
                     <h3>Users</h3>
                 </a>
-
                 <a href="perfil.php">
-                    <span class="material-icons-sharp">
-                        person_outline
-                    </span>
+                    <span class="material-icons-sharp">person_outline</span>
                     <h3>Perfil</h3>
                 </a>
                 <a href="calen" target="_blank">
-                    <span class="material-icons-sharp">
-                        event
-                    </span>
-                    <h3>Calendario</h3>
+                    <span class="material-icons-sharp">event</span>
+                    <h3>Calendário</h3>
                 </a>
                 <a href="pagamento">
-                    <span class="material-icons-sharp">
-                        money
-                    </span>
+                    <span class="material-icons-sharp">money</span>
                     <h3>Pagamento</h3>
                 </a>
                 <a href="acessorios">
-                    <span class="material-icons-sharp">
-                        checkroom
-                    </span>
+                    <span class="material-icons-sharp">checkroom</span>
                     <h3>Vestimentas</h3>
                 </a>
-
                 <a href="logout.php">
-                    <span class="material-icons-sharp">
-                        logout
-                    </span>
+                    <span class="material-icons-sharp">logout</span>
                     <h3>Logout</h3>
                 </a>
             </div>
         </aside>
-        <!-- Fim da seção da barra lateral -->
+        <!-- Fim da barra lateral -->
 
         <!-- Conteúdo principal -->
         <main>
@@ -120,7 +102,6 @@ $dados = mysqli_fetch_assoc($resultado);
                             <h3></h3>
                             <h1></h1>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="visits">
@@ -129,7 +110,6 @@ $dados = mysqli_fetch_assoc($resultado);
                             <h3></h3>
                             <h1></h1>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="searches">
@@ -138,89 +118,110 @@ $dados = mysqli_fetch_assoc($resultado);
                             <h3></h3>
                             <h1></h1>
                         </div>
-                       
                     </div>
                 </div>
             </div>
             <!-- Fim das análises -->
 
-
-            <!-- Fim da seção de novos usuários -->
-
-            <!-- Tabela de pedidos recentes -->
+            <!-- Dados do Usuário -->
             <div class="box">
                 <h2>Dados Usuário</h2>
-                <br>
-                <div class="user"><em>Nome:</em>  <?php echo $dados['nome'] ?></div>
-                <br>
-                <div class="user1"><em>Telefone:</em>  <?php echo $dados['telefone'] ?></div>
-                <br>
-                <div class="user2"><em>E-mail:</em>  <?php echo $dados['email'] ?></div>
-                <br>
-                <div class="user3"><em>Senha:</em>  <?php echo $dados['senha'] ?></div>
-                <br>
-                <div class="user4"><em>CPF:</em>  <?php echo $dados['CPF'] ?></div>
-                <br>
-                <div class="user5"><em>Idade:</em>  <?php echo $dados['idade'] ?></div>
-                <br>
-                <div class="user6"><em>Matricula:</em>  <?php echo $dados['matricula'] ?></div>
-                <br>
-                <div class="user7"><em>Data de Nascimento:</em>  <?php echo $dados['datas'] ?></div>
-               
+                <div class="user-info">
+                    <div><em>Nome:</em> <?php echo htmlspecialchars($dados['nome']); ?></div>
+                    <div><em>Telefone:</em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
+                    <div><em>E-mail:</em> <?php echo htmlspecialchars($dados['email']); ?></div>
+                    <div><em>Senha:</em> <?php echo htmlspecialchars($dados['senha']); ?></div>
+                    <div><em>CPF:</em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
+                    <div><em>Idade:</em> <?php echo htmlspecialchars($dados['idade']); ?></div>
+                    <div><em>Matrícula:</em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
+                    <div><em>Data de Nascimento:</em> <?php echo htmlspecialchars($dados['datas']); ?></div>
+                </div>
             </div>
-            <!-- Fim dos pedidos recentes -->
-
         </main>
-        <!-- Fim do conteúdo principal -->
 
         <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
-                    <span class="material-icons-sharp">
-                        menu
-                    </span>
+                    <span class="material-icons-sharp">menu</span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
-                        light_mode
-                    </span>
-                    <span class="material-icons-sharp">
-                        dark_mode
-                    </span>
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
                 </div>
-
                 <div class="profile">
                     <div class="info">
                         <p>Olá, <b>Bem-Vindo(a)</b></p>
-                        <small class="text-muted"><?php echo $dados['nome'] ?></small>
+                        <small class="text-muted"><?php echo htmlspecialchars($dados['nome']); ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="img/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
                     </div>
                 </div>
-
             </div>
-            <!-- Fim da navegação -->
-
             <div class="user-profile">
                 <div class="logo">
                     <img class="imgs" src="img/icno.jpg">
                     <h2>Sentinela da Fronteira</h2>
-
                 </div>
             </div>
+            <div class="reminders">
+    <div id="avisosContainer" class="notification">
+        <h2>Avisos</h2>
+        <?php
+        if (mysqli_num_rows($result_avisos) > 0) {
+            while ($aviso = mysqli_fetch_assoc($result_avisos)) {
+                echo "<div class='aviso'>";
+                echo "<h3>" . htmlspecialchars($aviso['titulo']) . "</h3>";
+                echo "<p>" . htmlspecialchars($aviso['mensagem']) . "</p>";
+                echo "<small>" . htmlspecialchars($aviso['data']) . "</small>";
+                echo "</div>";
+            }
+        } else {
+            echo "<p>Nenhum aviso disponível.</p>";
+        }
+        ?>
+    </div>
+</div>
 
 
 
         </div>
-
-
     </div>
-
     <script src="JavaScript/orders.js"></script>
     <script src="JavaScript/index.js"></script>
-    
+    <script>
+    // Função para fazer os avisos passarem automaticamente
+    function passarAvisos() {
+        var avisos = document.querySelectorAll('.aviso');
+        var index = 0;
+
+        function exibirProximoAviso() {
+            // Oculta o aviso atual
+            avisos[index].style.display = 'none';
+
+            // Incrementa o índice para mostrar o próximo aviso
+            index = (index + 1) % avisos.length;
+
+            // Mostra o próximo aviso
+            avisos[index].style.display = 'block';
+
+            // Chama a função novamente após 5 segundos
+            setTimeout(exibirProximoAviso, 3000); //  o valor para ajustar o tempo entre os avisos (em milissegundos)
+        }
+
+        // Exibe o primeiro aviso
+        avisos[index].style.display = 'block';
+
+        // Chama a função para exibir o próximo aviso após 5 segundos
+        setTimeout(exibirProximoAviso, 3000); //  o valor para ajustar o tempo entre os avisos (em milissegundos)
+    }
+
+    // Chama a função quando a página é carregada
+    window.onload = passarAvisos;
+</script>
+
+
 
 </body>
 

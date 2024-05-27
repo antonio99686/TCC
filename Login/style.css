@@ -8,8 +8,8 @@
 }
 
 body {
-    background-color: #ff8000;
-    background: linear-gradient(to right, #ff8000c5, #fff56a);
+    background-color: #ffffff;
+    background: linear-gradient(to right, green, red, yellow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +47,7 @@ body {
 }
 
 .container button {
-    background-color: rgb(161, 161, 161);
+    background-color: rgb(83, 83, 83);
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -79,13 +79,11 @@ button {
 
 
 button:hover {
-    background-color: #696969;
+    background-color: #1a1a1a;
 }
 
 
-button.enabled:hover {
-    background-color: #4CAF50;
-}
+
 
 
 .container form {
@@ -188,9 +186,9 @@ button.enabled:hover {
 }
 
 .toggle {
-    background-color: rgb(161, 161, 161);
+    background-color: rgb(0, 0, 0);
     height: 100%;
-    background: linear-gradient(to right, #696969, #696969);
+    background: linear-gradient(to right, black);
     color: #fff;
     position: relative;
     left: -100%;

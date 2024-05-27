@@ -497,6 +497,8 @@ main .recent-orders a {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     transition: all 0.3s ease;
+    left: -5%;
+    position: relative;
 }
 
 .right-section .reminders .notification:hover {
@@ -648,6 +650,43 @@ main .recent-orders a {
 }
 
 
+
+    .button {
+        background-color: #4CAF50; /* Cor de fundo do botão */
+        border: none; /* Remove borda padrão */
+        color: white; /* Cor do texto */
+        padding: 15px 32px; /* Espaçamento interno */
+        text-align: center; /* Alinhamento do texto */
+        text-decoration: none; /* Remove sublinhado */
+        display: inline-block; /* Display inline-block */
+        font-size: 16px; /* Tamanho da fonte */
+        margin: 4px 2px; /* Margens */
+        cursor: pointer; /* Cursor ao passar sobre o botão */
+        border-radius: 12px; /* Bordas arredondadas */
+        transition-duration: 0.4s; /* Duração da transição para hover */
+    }
+
+    .button:hover {
+        background-color: white; /* Cor de fundo ao passar o mouse */
+        color: black; /* Cor do texto ao passar o mouse */
+        border: 2px solid #4CAF50; /* Adiciona borda ao passar o mouse */
+    }
+
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+        border: 1px solid #4CAF50;
+        outline: none;
+    }
 
 @media screen and (max-width: 768px) {
     .container {

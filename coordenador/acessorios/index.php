@@ -256,8 +256,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <th>Status</th> <!-- Adicionando cabeçalho para o status de devolução -->
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
+                    <tbody >
+                 <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
                             <tr>
                                 <td><?php echo $row['nome']; ?></td>
                                 <td>

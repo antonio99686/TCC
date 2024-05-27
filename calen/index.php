@@ -57,7 +57,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 <img src="../img/<?php echo $dados['imagem']?>" alt="">
             </div>
 
-            <div class="btns"> Voltar  </div>
+            <div class="btns" onclick="history.back()">Voltar</div>
     <div class="container">
       <div class="left">
         <div class="calendar">
@@ -67,13 +67,13 @@ $dados = mysqli_fetch_assoc($resultado);
             <i class="fas fa-angle-right next"></i>
           </div>
           <div class="weekdays">
-            <div>Domingo</div>
-            <div>Segunda</div>
-            <div>Terça</div>
-            <div>Quarta</div>
-            <div>Quinta</div>
-            <div>Sexta</div>
-            <div>Sábado</div>
+            <div>Dom</div>
+            <div>Seg</div>
+            <div>Te</div>
+            <div>Qua</div>
+            <div>Quin</div>
+            <div>Sex</div>
+            <div>Sáb</div>
           </div>
           <div class="days"></div>
           <div class="goto-today">

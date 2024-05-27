@@ -24,7 +24,24 @@ if (!$resultado_usuario) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado_usuario);
+// Verifica a conexão
+if ($conexao->connect_error) {
+    die("Conexão falhou: " . $conexao->connect_error);
+}
 
+// Consulta para contar o número de usuários
+$sql = "SELECT COUNT(*) as total FROM usuario";
+$result = $conexao->query($sql);
+
+if ($result->num_rows > 0) {
+    // Produza os dados
+    $row = $result->fetch_assoc();
+
+} else {
+    echo "Nenhum usuário encontrado.";
+}
+
+$conexao->close();
 
 ?>
 <!DOCTYPE html>
@@ -47,7 +64,7 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
             <div class="toggle">
                 <div class="logo">
 
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -57,7 +74,7 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
             </div>
 
             <div class="sidebar">
-                <a href="../dashboard.php" >
+                <a href="../dashboard.php">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -115,7 +132,7 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
                     <div class="status">
                         <div class="info">
                             <h3>Total em Banco</h3>
-                            <h1>$65,024</h1>
+                            <h1>R$65,024</h1>
                         </div>
                         <div class="progresss">
                             <svg>
@@ -131,14 +148,14 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
                     <div class="status">
                         <div class="info">
                             <h3>Total de Pagamentos</h3>
-                            <h1>24</h1>
+                            <h1>2</h1>
                         </div>
                         <div class="progresss">
                             <svg>
                                 <circle cx="38" cy="38" r="36"></circle>
                             </svg>
                             <div class="percentage">
-                                <p>12%</p>
+                                <p>0,2%</p>
                             </div>
                         </div>
                     </div>
@@ -147,7 +164,7 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
                     <div class="status">
                         <div class="info">
                             <h3>Total de Usuários</h3>
-                            <h1>50</h1>
+                            <h1> <?php echo "" . $row["total"];?></h1>
                         </div>
                         <div class="progresss">
                             <svg>
@@ -250,6 +267,23 @@ $dados = mysqli_fetch_assoc($resultado_usuario);
 
 
     <script src="JavaScript/index.js"></script>
+    
+    <script>
+        function atualizarCo    ntagem() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("contagem").innerHTML = this.responseText;
+                }
+            };
+            
+        }
+
+        setInterval(atualizarContagem, 5000); // Atualiza a cada 5 segundos
+        window.onload = atualizarContagem; // Atualiza ao carregar a página
+    </script>
+
+
 </body>
 
 </html>

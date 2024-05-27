@@ -612,21 +612,7 @@ main .recent-orders a {
 }
 
 
-.btn_vermelho {
-    color: black;
-    background-color: red;
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
-}
 
-.btn_verde {
-    color: black;
-    background-color: rgb(3, 196, 3);
-    border-radius: 30px;
-    height: 60%;
-    width: 120%;
-}
 
 @media screen and (max-width: 768px) {
     .container {
@@ -742,4 +728,60 @@ main .recent-orders a {
         font-size: 2rem;
     }
 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+thead th {
+    background-color: #181a1e;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #181a1e;
+}
+
+tbody tr:hover {
+    background-color: #612f2f;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.btn_vermelho {
+    background-color: #ff4c4c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+.btn_vermelho:hover {
+    background-color: #e64545;
+}
+
+.btn_verde {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+.btn_verde:hover {
+    background-color: #45a049;
 }
