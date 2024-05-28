@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 15-Maio-2024 às 21:02
+-- Tempo de geração: 28-Maio-2024 às 17:10
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -24,6 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `avisos`
+--
+
+DROP TABLE IF EXISTS `avisos`;
+CREATE TABLE IF NOT EXISTS `avisos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `mensagem` text NOT NULL,
+  `data` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `avisos`
+--
+
+INSERT INTO `avisos` (`id`, `titulo`, `mensagem`, `data`) VALUES
+(9, 'reuniao', '123', '2024-05-18 21:20:35');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `roupas`
 --
 
@@ -35,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `roupas` (
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `roupas`
@@ -44,16 +66,20 @@ CREATE TABLE IF NOT EXISTS `roupas` (
 INSERT INTO `roupas` (`id`, `nome`, `status_devolucao`, `id_usuario`) VALUES
 (3, 'Bombacha', 1, 1),
 (4, 'Camisa', 1, 1),
-(5, 'Cinto (ou guaiaca)', 0, 1),
+(5, 'Cinto (ou guaiaca)', 1, 1),
 (6, 'Chapéu', 1, 1),
 (7, 'Lenço', 1, 1),
-(8, 'Esporas', 0, 1),
+(8, 'Esporas', 1, 1),
 (9, 'lenço de mao', 1, 1),
-(10, 'fita do chapeu ', 1, 1),
+(10, 'fita do chapeu ', 0, 1),
 (12, 'vestido ', 1, 25),
 (13, 'brinco ', 0, 25),
 (14, 'lenço', 1, 25),
-(15, 'flor', 0, 25);
+(15, 'flor', 0, 25),
+(52, 'vestido ', 0, 27),
+(53, 'espora', 0, 25),
+(54, 'vestido ', 1, 28),
+(55, 'espora', 0, 29);
 
 -- --------------------------------------------------------
 
@@ -87,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `identidade_verso` varchar(255) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`

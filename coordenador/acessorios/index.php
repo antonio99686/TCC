@@ -66,15 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
-    echo "<script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: 'Status de devolução atualizado com sucesso!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-          </script>";
+    echo "";
 }
 ?>
 
@@ -272,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endwhile; ?>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary btn-sm">Salvar Status</button>
+                <button type="submit" class="btn">Salvar Status</button>
             </form>
         <?php endif; ?>
             </div>
