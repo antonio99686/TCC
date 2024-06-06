@@ -1,323 +1,106 @@
-.content { float:left; width:92%; margin:0 4%; padding: 20px 0; }
-
-/*HEADER*/
-.main_header          { background:#ffffff; border-bottom:1px #f4f4f4 solid; z-index:1; padding: 0.5em 0em; }
-.main_header .content { float:left; padding:0px 0; }
-
-.fixed            { display:block; position:fixed; z-index:9;  }
-.main_header_logo { text-align:center; margin:auto; float:none; width:138px; }
-.main_header_logo img { height:69px; }
-
-/*Código*/
-.section-seu-codigo          { padding:10px 0px; background-color:#f4f4f4; }
-.section-seu-codigo .content { float:left; padding:1em 0; }
-.section_title               { width: 100%; float:left; margin-bottom:1em; font-size:1.3em; font-weight: 300; text-align: center; border-bottom: 1px #eceaea solid; padding-bottom: 1em; }
-
-.box-artigo   { width:100%; float:left; }
-
-/*Formulário*/
-
-.container_form {
-
-    width: 700px;
-    margin: auto;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #afafaf;
     display: flex;
-    flex-direction: column;
-    background:#ffffff; 
-    box-shadow: 1px 0px 1.2px 0px #e3e3e3; 
-    border-radius:3px; 
-    padding:1em;
-
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
-/* Estilo para o grupo */
-.form_grupo {
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    /* Define a altura máxima */
+    overflow-y: auto;
+    /* Adiciona a barra de rolagem vertical */
+    margin: 20px;
+    /* Adiciona margens ao redor do contêiner */
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
-  }
-  
-  /* Estilo para o rótulo */
-  .form_label {
+}
+
+.logo {
+    max-width: 100px;
+    /* Ajuste conforme necessário */
+    height: auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
     display: block;
     margin-bottom: 5px;
-    color: #333; /* Cor do texto */
-    font-weight: bold;
-  }
-  
-  /* Estilo para o input de arquivo */
-  .form_input {
-    padding: 8px;
-    width: 100%;
-    border: 1px solid #ccc; /* Cor da borda */
-    border-radius: 5px;
-    box-sizing: border-box; /* Para garantir que o padding não altere a largura total */
-  }
-  
-  /* Estilo para quando o input está focado */
-  .form_input:focus {
-    outline: none; /* Remove a borda de foco padrão */
-    border-color: #007bff; /* Cor da borda quando focado */
-  }
-  
-  /* Estilo para o hover do rótulo */
-  .form_label:hover {
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    color: #007bff; /* Cor do texto no hover */
-  }
-  
-.container_form h1 {
-    
-    font-family:'open_sansregular';
-    font-size: 2.3em;
-    color: #00dae0;
-    border-bottom: 1px #f0eded solid;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-
+    color: #333;
 }
 
-.form_grupo {
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.form_grupo .legenda { 
-
-    width: 100%;
-    float: left;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-/* SUBMIT */
-
-.submit { width:100%; float:left; }
-
-.submit_btn {
-
-    float: left;
-    display: block;
-    padding: 5px 30px;
-    border: none;
-    outline: none;
-    background-color: #6fcffb;
-    color: #fff;
-    text-shadow: 0 0 5px rgb(0, 0, 0);
-    font-family: inherit;
-    font-size: 25px;
-    font-family:'open_sansregular';
-    border-radius: 6px;
-    margin: 20px auto;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.submit_btn:hover {
-
-    background-color: #444444;
-    transform: scale(1.03);
-
-}
-
-.dropdown {
-    display: block;
-    margin: 0 auto;
-    font-size: 16px;
-    font-family: inherit;
-    color: #222222;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+select,
+input[type="file"] {
+    width: calc(100% - 20px);
+    /* Adiciona um espaçamento de 10px nas laterais */
+    padding: 10px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    border: 1px #f2f2f2 solid;
-    background: #fdfdfd;
-    outline: none;
-    padding-left: 10px;
-    width: 100%;
+    box-sizing: border-box;
 }
 
-.form_new_input {
+.validation-message {
     display: none;
+    margin-top: 5px;
+    color: red;
 }
 
-.radio_label,
-.check_label {
-
-    float: left;
-    width: 100%;
-    padding-left: 30px;
-    cursor: pointer;
-    margin-bottom: 8px;
-
+input.valid+.validation-message {
+    display: block;
+    color: green;
 }
 
-
-.radio_new_btn {
-
-    position: absolute;
-    left: 0;
-    transform: translateY(3px);
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    border: 0.2em solid #4c4c4c;
-
+input.invalid+.validation-message {
+    display: block;
+    color: red;
 }
 
-.radio_new_btn::after {
-
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #6fcffb;
-    visibility: hidden;
-
-}
-
-.check_new_btn {
-
-    position: absolute;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    border: 0.2em solid #4c4c4c;
-
-}
-
-.check_new_btn::after {
-
-    content: "";
-    height: 8px;
-    width: 8px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #6fcffb;
-    visibility: hidden;
-
-}
-
-.form_new_input:checked ~ .radio_label .radio_new_btn::after,
-.form_new_input:checked ~ .check_label .check_new_btn::after {
- 
-    visibility: visible;
-}
-
-.form_new_input:checked ~ .radio_label,
-.form_new_input:checked ~ .check_label {
-    color: #6fcffb;
-}
-
-
-.form_grupo {
-
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-
-}
-
-.form_input {
-
-    font-size: 16px;
-    font-family: inherit;
-    padding: 8px 15px;
+/* Estilo compartilhado para botões e links */
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
     border-radius: 4px;
-    border: 1px #f2f2f2 solid;
-    background: #fdfdfd;
-    outline: none;
-    width: 100%;
-    transition: all 0.3s;
+    cursor: pointer;
+    width: 20%;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 10px;
 
 }
 
-.form_message,
-.form_message .message_input {
-
-    width: 100%;
-    float:left;
-
+.btn:hover {
+    background-color: #0056b3;
 }
-
-.form_message_label {
-
-    width: 100%;
-    float: left;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-weight: bold;
-    
-}
-
-/*Formulário*/
-
-/*FOOTER*/
-.main_footer          { background-color:#353535; color:#fff; font-size:0.875em; }
-.main_footer .content { padding:3em 0em; }
-
-.main_footer_copy       { background-color:#262626; width:100%; float:left; text-align:center; padding:1.5em 0em; }
-.main_footer_copy p     { font-family:'open_sanslight'; font-size:1em; color:#e1e0e0; height:20px; }
-.main_footer_copy .m-b-footer   { margin-bottom:0.5em; }
-.main_footer_copy .by   { font-size:0.96em; }
-.main_footer_copy .by i { font-size:0.96em; margin-right:3px; color:#e82626; }
-
-
-/*Começa o Responsivo*/
-
-/*480PX BREAKPOINT*/
-/*480 dividido por 16 = 30em*/
-@media (min-width:30em){
-
-.boxBannerTopo { padding:1em 0; }
-
-}
-
-/*600PX BREAKPOINT*/
-/*600 dividido por 16 = 37,5em*/
-@media (min-width:37em){
-
-
-} 
-
-/*768PX BREAKPOINT*/
-/*768 dividido por 16 = 48em*/
-@media (min-width:48em){
-
-
-} 
-
-/*960PX BREAKPOINT*/
-/*960 dividido por 16 = 60em*/
-@media (min-width:60em){
-
- .section-seu-codigo          { padding:20px 0px; }
- .section-seu-codigo .content { width:80%; padding:1em 0; margin:0 10%; }
-
-}
-
-/*1280PX BREAKPOINT*/
-/*1280 dividido por 16 = 80em*/
-@media (min-width:80em){
-
- 
-}
-
-/*1366PX BREAKPOINT*/
-/*1366 dividido por 16 = 85,375em*/
-@media (min-width:85em){
-
- .content  { width:80%; margin:0 10%; }
-
-}
-
-/*1600PX BREAKPOINT*/
-/*1600 dividido por 16 = 100em*/
-@media (min-width:100em){
-
-
-}
-/*Fecha o Responsivo*/

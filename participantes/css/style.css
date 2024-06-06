@@ -356,7 +356,7 @@ main .recent-orders table {
     border-radius: var(--card-border-radius);
     transition: all 0.3s ease;
     position: relative;
-    margin-top: -5%;
+    margin-top: 5%;
 }
 
 main .recent-orders table:hover {
@@ -367,6 +367,7 @@ main table tbody td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
     color: var(--color-dark-variant);
+    padding: 10px 0 10px 0;
 }
 
 main table tbody tr:last-child td {
@@ -390,7 +391,7 @@ main .recent-orders a {
     gap: 2rem;
     position: relative;
     left: 45%;
-    margin-top: -2%;
+    margin-top: -5%;
 }
 
 .right-section .nav button {

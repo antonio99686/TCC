@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>cadastro</title>
 </head>
@@ -38,7 +39,7 @@ if (
     $_POST['idade'],
     $_POST['nom_dan'],
     $_POST['genero']
-)
+) && isset($_FILES['arquivo']) && isset($_FILES['frente']) && isset($_FILES['verso'])
 ) {
 
     // Dados do formulário
@@ -63,99 +64,89 @@ if (
     $numero = rand(2024, 999999);
     $matricula = date('Y') . $numero;
 
-    // Verifica se um arquivo foi enviado
-    if (isset($_FILES['arquivo'])) {
-        // Verifica se houve erro no upload
-        if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            // Define o nome do arquivo
-            $imagem = $_FILES['arquivo']['name'];
+    // Verifica se os arquivos foram enviados
+    $uploadOk1 = $uploadOk2 = $uploadOk3 = false;
+    $diretorio = "../img/carteira/";
 
-            // Define a pasta para onde enviaremos o arquivo
-            $diretorio = "../img/";
+    if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
+        $imagem1 = $_FILES['arquivo']['name'];
+        if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem1)) {
+            $uploadOk1 = true;
+        }
+    }
 
-            // Faz o upload, movendo o arquivo para a pasta especificada
-            if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem)) {
-                // Comando SQL para inserção
-                $sql = "INSERT INTO usuario (
-                          statuss, nome,
-                          email, datas, 
-                          CPF, RG, 
-                          categoria, senha,
-                          telefone, matricula, 
-                          imagem, genero,
-                          endereco, responsavel,
-                          data_entrada, tele_respon,
-                          idade, nom_dan
-                        ) VALUES (
-                          '$statuss','$nome',
-                          '$email','$datas','$CPF',
-                          '$RG','$categoria',
-                          '$senha','$telefone',
-                          '$matricula','$imagem',
-                          '$genero','$endereco',
-                          '$responsavel','$data_entrada',
-                          '$tele_respon','$idade',
-                          '$nom_dan'
-                        )";
+    if ($_FILES['frente']['error'] === UPLOAD_ERR_OK) {
+        $imagem2 = $_FILES['frente']['name'];
+        if (move_uploaded_file($_FILES['frente']['tmp_name'], $diretorio . $imagem2)) {
+            $uploadOk2 = true;
+        }
+    }
 
-                // Executa o comando SQL
-                if (mysqli_query($conexao, $sql)) {
-                    // SweetAlert2 para sucesso
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sucesso!',
-                            text: 'Pessoa cadastrada com sucesso!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            window.location.href = ../index.php';
-                        });
-                    </script>";
-                    exit();
-                } else {
-                    // SweetAlert2 para falha na inserção
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erro!',
-                            text: 'Falha ao cadastrar pessoa.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    </script>";
-                }
-            } else {
-                // SweetAlert2 para erro ao mover arquivo
-                echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erro!',
-                        text: 'Erro ao mover o arquivo.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>";
-            }
+    if ($_FILES['verso']['error'] === UPLOAD_ERR_OK) {
+        $imagem3 = $_FILES['verso']['name'];
+        if (move_uploaded_file($_FILES['verso']['tmp_name'], $diretorio . $imagem3)) {
+            $uploadOk3 = true;
+        }
+    }
+
+    if ($uploadOk1 && $uploadOk2 && $uploadOk3) {
+        // Comando SQL para inserção
+        $sql = "INSERT INTO usuario (
+                  statuss, nome,
+                  email, datas, 
+                  CPF, RG, 
+                  categoria, senha,
+                  telefone, matricula, 
+                  imagem, identidade_frente, identidade_verso, genero,
+                  endereco, responsavel,
+                  data_entrada, tele_respon,
+                  idade, nom_dan
+                ) VALUES (
+                  '$statuss','$nome',
+                  '$email','$datas','$CPF',
+                  '$RG','$categoria',
+                  '$senha','$telefone',
+                  '$matricula','$imagem1','$imagem2','$imagem3',
+                  '$genero','$endereco',
+                  '$responsavel','$data_entrada',
+                  '$tele_respon','$idade',
+                  '$nom_dan'
+                )";
+
+        // Executa o comando SQL
+        if (mysqli_query($conexao, $sql)) {
+            // SweetAlert2 para sucesso
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Pessoa cadastrada com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = '../index.php';
+                });
+            </script>";
+            exit();
         } else {
-            // SweetAlert2 para erro no upload
+            // SweetAlert2 para falha na inserção
             echo "<script>
                 Swal.fire({
                     icon: 'error',
                     title: 'Erro!',
-                    text: 'Erro durante o upload do arquivo.',
+                    text: 'Falha ao cadastrar pessoa.',
                     showConfirmButton: false,
                     timer: 1500
                 });
             </script>";
         }
     } else {
-        // SweetAlert2 para nenhum arquivo enviado
+        // SweetAlert2 para erro ao mover arquivo
         echo "<script>
             Swal.fire({
-                icon: 'warning',
-                title: 'Atenção!',
-                text: 'Nenhum arquivo enviado.',
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Erro ao mover os arquivos.',
                 showConfirmButton: false,
                 timer: 1500
             });

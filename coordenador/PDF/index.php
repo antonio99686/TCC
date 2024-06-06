@@ -4,6 +4,7 @@ if (isset($_GET['id_usuario']) && is_numeric($_GET['id_usuario'])) {
     $id_usuario = $_GET['id_usuario'];
 } else {
     // Se o ID do usuário não estiver presente ou não for válido, exibe uma mensagem de erro e interrompe o script
+
     die('ID do usuário não fornecido ou inválido.');
 }
 
@@ -12,7 +13,6 @@ include ('conexao.php');
 
 // Cria a consulta SQL para selecionar os dados do usuário com o ID especificado
 $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
-
 // Executa a consulta SQL
 $result = $conexao->query($sql);
 
@@ -22,11 +22,12 @@ if ($result->num_rows > 0) {
     // Inicia a construção do HTML para o PDF, incluindo os estilos CSS
     $html = "
     <!DOCTYPE html>
-    <html lang='en'>
+    <html lang='pt-br'>
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <link rel='stylesheet' href='http://localhost:8080/tcc/coordenador/pdf/css/pdf.css'>
+        <link rel='stylesheet' href='css/pdf.css'>
         <title>Sentinela da Fronteira</title>
     </head>
     <body>
@@ -53,12 +54,9 @@ if ($result->num_rows > 0) {
                 <p><strong>Data de Entrada:</strong> " . $dados['data_entrada'] . "</p>
                 <p><strong>Responsável:</strong> " . $dados['responsavel'] . "</p>
             </div>
-            <div class='identidade'>
-                <p><strong>Identidade Frente:</strong></p>
-                <img class='frente'src='http://localhost:8080/tcc/img/"  . "' alt='Frente'>
-                <p><strong>Identidade Verso:</strong></p>
-                <img   class='verso'src='http://localhost:8080/tcc/img/" . "' alt='Verso'>
-            </div>";
+            
+
+            ";
     }
 
     // Adiciona o footer com as informações de email e data
@@ -78,7 +76,6 @@ if ($result->num_rows > 0) {
 
 // Carrega a biblioteca Dompdf
 use Dompdf\Dompdf;
-
 require_once 'dompdf/autoload.inc.php';
 
 // Inicializa o objeto Dompdf

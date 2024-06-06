@@ -1,39 +1,95 @@
 <?php
-// Lógica para verificar e enviar lembretes de pagamentos atrasados
+session_start();
 
-// Função para verificar os pagamentos atrasados e enviar lembretes por e-mail
-function verificarPagamentosAtrasados() {
-    // Conectar ao banco de dados e buscar os pagamentos atrasados
-    // Consulta SQL para buscar os pagamentos atrasados
-    // Substitua 'seu_host', 'seu_usuario', 'sua_senha' e 'seu_banco_de_dados' pelas suas configurações
-    $conn = new mysqli('localhost', 'root', '', 'sentinelas');
-
-    // Verificar conexão
-    if ($conn->connect_error) {
-        die("Falha na conexão: " . $conn->connect_error);
-    }
-
-    // Consulta SQL para selecionar os pagamentos atrasados
-    $sql = "SELECT * FROM pagamentos WHERE data_vencimento < CURDATE() AND pago = 0";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Loop pelos resultados e enviar e-mails de lembrete
-        while ($row = $result->fetch_assoc()) {
-            $email = $row['email'];
-            $valor = $row['valor'];
-
-            // Aqui você pode enviar um e-mail de lembrete para $email sobre o pagamento de $valor
-            // Use a função mail() do PHP ou uma biblioteca de e-mail como PHPMailer
-            // Exemplo com PHPMailer: https://github.com/PHPMailer/PHPMailer
-        }
-    } else {
-        echo "Nenhum pagamento atrasado encontrado.";
-    }
-
-    $conn->close();
+// Verifique se o formulário foi enviado e se os campos CPF e senha estão preenchidos
+if (empty($_POST['CPF']) or empty($_POST['senha'])) {
+    echo "<script>alert('Por favor, preencha todos os campos.');</script>";
+    exit; // Termina o script se as informações não estiverem completas
 }
 
-// Chamar a função para verificar pagamentos atrasados e enviar lembretes
-verificarPagamentosAtrasados();
+include('conexao.php');
+
+$CPF = $_POST['CPF'];
+$senha = $_POST['senha'];
+$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND senha = '{$senha}'";
+
+$resultado = mysqli_query($conexao, $sql);
+$dados = mysqli_fetch_assoc($resultado);
+
+$res = $conexao->query($sql) or die($conexao->error);
+$row = $res->fetch_object();
+$qtd = $res->num_rows;
+
+if ($qtd > 0) {
+    $_SESSION['CPF'] = $CPF;
+    $_SESSION['id_usuario'] = $dados['id_usuario'];
+    $_SESSION['nome'] = $dados['nome'];
+    $_SESSION['statuss'] = $dados['statuss'];
+
+    switch ($dados['statuss']) {
+        case '1':
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    location.href='dashboard.php';
+                });
+            </script>";
+            break;
+        case '2':
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    location.href='coordenador/dashboard.php';
+                });
+            </script>";
+            break;
+        case '3':
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    location.href='pais/dashboard.php';
+                });
+            </script>";
+            break;
+        default:
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'CPF ou SENHA incorretos',
+                    text: 'Por favor, insira novamente.',
+                }).then(() => {
+                    location.href='index.php';
+                });
+            </script>";
+            break;
+    }
+} else {
+    // Se nenhum registro foi encontrado, exibe um alerta informando que o CPF ou a senha estão incorretos
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'CPF ou SENHA incorretos',
+            text: 'Por favor, insira novamente.',
+        }).then(() => {
+            location.href='index.php';
+        });
+    </script>";
+}
 ?>

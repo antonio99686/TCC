@@ -2,28 +2,22 @@
 session_start();
 include ("conexao.php");
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
+// Verifica se a sessão está iniciada e se o usuário está logado
+if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
     exit();
 }
 
-// Consulta SQL para obter as roupas do usuário
-$sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
-
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado_roupas_usuario) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-    exit();
-}
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado = mysqli_query($conexao, $sql);
+// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql);
+mysqli_stmt_bind_param($stmt, "i", $id_usuario);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -43,7 +37,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- shortcut icon -->
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da fronteira</title>
@@ -73,7 +67,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="../participantes">
+                <a href="../participantes" class="active">
                     <span class="material-icons-sharp">
                         groups
                     </span>
@@ -94,11 +88,11 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
                 <a href="../pagamento">
                     <span class="material-icons-sharp">
-                        paid    
+                        paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="../acessorios" class="active">
+                <a href="../acessorios">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
@@ -118,39 +112,51 @@ $dados = mysqli_fetch_assoc($resultado);
 
         <!-- Conteúdo principal -->
         <main>
-            <h1>Vestimentas</h1>
-            <!-- Análises -->
+            <h1>Participantes</h1>
 
+            <div class="recent-orders">
+                <?php
+                // Consulta SQL para buscar os dados da selecionada
+                $sql = "SELECT * FROM usuario WHERE statuss = 1";
+                $result = $conexao->query($sql);
 
-            <!-- Fim das análises -->
-
-
-            <!-- Fim da seção de novos usuários -->
-
-            <!-- Tabela de pedidos recentes -->
-            <div class="box">
-            <table>
-    <thead>
+                if ($result->num_rows > 0) {
+                    // Exibindo os resultados em uma tabela
+                    echo ' <div class="formato"><table class="table table-striped">
+    <thead class="thead-info">
         <tr>
-            <th>Roupa</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
-            <tr>
-                <td><?php echo $row['nome']; ?></td>
-                <td>
-                    <?php if ($row['status_devolucao'] == 0): ?>
-                        <button type="button" class="btn_vermelho">Pendente</button>
-                    <?php else: ?>
-                        <button type="button" class="btn_verde">Entregue</button>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+                   <th>ID</th>
+                   <th>Nome</th>
+                   <th>Data de Nascimento</th>
+                   <th>Matricula</th>
+                   <th>Usuário</th> 
+                   </tr>
+                   </thead>
+                   <tbody>';
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo "<td>" . $row['id_usuario'] . "</td>";
+                        echo "<td>" . $row['nome'] . "</td>";
+                        echo "<td>" . $row['datas'] . "</td>";
+                        echo "<td>" . $row['matricula'] . "</td>";
+                        echo "<td><div class='users'><img src='../../img/" . $row['imagem'] . "' ></div></td>";
+                        echo "<td>
+                    <a href='formedit.php?id_usuario=" .
+                            $row['id_usuario'] .
+                            "&nome=" . $row['nome'] .
+                            "&data_entrada=" . $row['datas'] .
+                            "&mattricula=" . $row['matricula'] . "'>
+                        
+                    </a>
+                </td>";
+                        echo '</tr>';
+                    }
+
+
+                } else {
+                    echo 'Nenhum resultado encontrado para essa categoria.';
+                }
+                ?>
 
             </div>
             <!-- Fim dos pedidos recentes -->
@@ -168,33 +174,27 @@ $dados = mysqli_fetch_assoc($resultado);
                 </button>
                 <div class="dark-mode">
                     <span class="material-icons-sharp active">
-                        light_mode
+                    light_mode
                     </span>
                     <span class="material-icons-sharp">
-                        dark_mode
+                    dark_mode
                     </span>
                 </div>
 
                 <div class="profile">
                     <div class="info">
-                        <p>Olá, <b>Bem-Vindo(a)</b></p>
+                        <p>Ola, <b>Bem-Vindo(a)</b></p>
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 
             </div>
             <!-- Fim da navegação -->
 
-            <div class="user-profile">
-                <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
-                    <h2>Sentinela da Fronteira</h2>
 
-                </div>
-            </div>
 
 
 
@@ -203,7 +203,41 @@ $dados = mysqli_fetch_assoc($resultado);
 
     </div>
 
+   
     <script src="../JavaScript/index.js"></script>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: '<?php echo $_SESSION['nome'] ?>',
+                text: "Você realmente deseja sair?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, sair',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '../logout.php';
+                }
+            });
+        }
+
+        function cancelLogout() {
+            Swal.fire({
+                title: 'Operação cancelada',
+                text: 'Você permanecerá na página atual',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
+    <a onclick="confirmLogout()">
+        <span class="icon">
+            <ion-icon name="log-out-outline"></ion-icon>
+        </span>
+
+    </a>
 </body>
 
 </html>

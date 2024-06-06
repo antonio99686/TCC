@@ -392,6 +392,8 @@ main .recent-orders a {
     display: flex;
     justify-content: end;
     gap: 2rem;
+    position: relative;
+    left: -10%;
 }
 
 .right-section .nav button {
@@ -449,6 +451,8 @@ main .recent-orders a {
     box-shadow: var(--box-shadow);
     cursor: pointer;
     transition: all 0.3s ease;
+    left: -5%;
+    position: relative;
 }
 
 .right-section .user-profile:hover {
@@ -542,6 +546,48 @@ main .recent-orders a {
     gap: 0.6rem;
 }
 
+.box {
+    background-color: var(--color-white);
+    width: 90%;
+    /* Reduz a largura para 90% da largura da tela */
+    max-width: 400px;
+    /* Define uma largura máxima para garantir que não fique muito largo */
+    margin: 5% auto;
+    /* Centraliza o elemento verticalmente e define uma margem superior de 5% */
+    padding: var(--card-padding);
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--card-border-radius);
+    transition: all 0.3s ease;
+}
+
+.user {
+    position: relative;
+    margin: 0 auto;
+    /* Centraliza o elemento horizontalmente */
+    font-size: 15px;
+}
+
+/* Estilos específicos para cada .user */
+.user1,
+.user2,
+.user3,
+.user4,
+.user5,
+.user6,
+.user7,
+.user8,
+.user9,
+.user10,
+.user11,
+.user12,
+.user13,
+.user14,
+.user15 {
+    margin-top: -5%;
+    /* Ajusta o espaçamento superior conforme necessário */
+}
+
 
 @media screen and (max-width: 1200px) {
     .container {
@@ -598,19 +644,6 @@ main .recent-orders a {
     }
 
 }
-
-.box {
-    background-color: var(--color-white);
-    width: 100%;
-    padding: var(--card-padding);
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    border-radius: var(--card-border-radius);
-    transition: all 0.3s ease;
-    margin-top: 5%;
-
-}
-
 
 
 
@@ -728,60 +761,4 @@ main .recent-orders a {
         font-size: 2rem;
     }
 
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-thead th {
-    background-color: #181a1e;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #181a1e;
-}
-
-tbody tr:hover {
-    background-color: #575757;
-}
-
-td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.btn_vermelho {
-    background-color: red;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 20px;
-}
-
-.btn_vermelho:hover {
-    background-color: #e64545;
-}
-
-.btn_verde {
-    background-color: green;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 20px;
-}
-
-.btn_verde:hover {
-    background-color: #45a049;
 }

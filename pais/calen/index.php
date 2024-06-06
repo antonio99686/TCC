@@ -35,7 +35,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="in.css">
     <link rel="stylesheet" href="../../css/navbar.css">
-    <link rel="shortcut icon" href="../img/img/calendario.png">
+    <link rel="shortcut icon" href="../../img/img/calendario.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" media="screen"
@@ -54,10 +54,10 @@ $dados = mysqli_fetch_assoc($resultado);
   </head>
   <body>
   <div class="user">
-                <img src="../../img/<?php echo $dados['imagem']?>" alt="">
+                <img src="../img/<?php echo $dados['imagem']?>" alt="">
             </div>
 
-            <div class="btns"> Voltar  </div>
+            <div class="btns" onclick="history.back()">Voltar</div>
     <div class="container">
       <div class="left">
         <div class="calendar">
@@ -67,13 +67,13 @@ $dados = mysqli_fetch_assoc($resultado);
             <i class="fas fa-angle-right next"></i>
           </div>
           <div class="weekdays">
-            <div>Domingo</div>
-            <div>Segunda</div>
-            <div>Terça</div>
-            <div>Quarta</div>
-            <div>Quinta</div>
-            <div>Sexta</div>
-            <div>Sábado</div>
+            <div>Dom</div>
+            <div>Seg</div>
+            <div>Te</div>
+            <div>Qua</div>
+            <div>Quin</div>
+            <div>Sex</div>
+            <div>Sáb</div>
           </div>
           <div class="days"></div>
           <div class="goto-today">

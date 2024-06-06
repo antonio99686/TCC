@@ -26,16 +26,14 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-// Verifica se foi recebido um ID de usuário válido
-if (isset($_GET['usuario_selecionado']) && is_numeric($_GET['usuario_selecionado'])) {
+//=================\ SELECIONA USUÁRIO NA LISTA /=================\\
+
+if ($_GET) {
+
     $id_usuario_selecionado = $_GET['usuario_selecionado'];
 
-    // Consulta SQL para obter as roupas do usuário selecionado usando instruções preparadas
-    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = ?";
-    $stmt_roupas_usuario = mysqli_prepare($conexao, $sql_roupas_usuario);
-    mysqli_stmt_bind_param($stmt_roupas_usuario, "i", $id_usuario_selecionado);
-    mysqli_stmt_execute($stmt_roupas_usuario);
-    $resultado_roupas_usuario = mysqli_stmt_get_result($stmt_roupas_usuario);
+    // Consulta SQL para obter as roupas do usuário selecionado
+    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
 
     // Verifica se a consulta foi bem-sucedida
     if (!$resultado_roupas_usuario) {
@@ -44,32 +42,46 @@ if (isset($_GET['usuario_selecionado']) && is_numeric($_GET['usuario_selecionado
     }
 }
 
-// Verifica se foi recebido dados por POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Valida os dados recebidos por POST
-    $id_usuario_selecionado = isset($_POST['id_usuario_selecionado']) ? $_POST['id_usuario_selecionado'] : null;
-    $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : array();
+//=================\ ATUALIZA A LISTA DE ITENS /=================\\
 
-    if (!is_numeric($id_usuario_selecionado)) {
-        echo "ID de usuário inválido.";
-        exit();
+if ($_POST) {
+
+    $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
+    $status_devolucao = $_POST['status_devolucao'];
+
+    // Consulta SQL para obter as roupas do usuário selecionado
+    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
+
+    // Atualiza o status de devolução das roupas do usuário
+    while ($r = mysqli_fetch_assoc($resultado_roupas_usuario)) {
+        if (empty($status_devolucao)) {
+            mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado");
+        } else {
+            if (in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 0) {
+                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 1 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
+            }
+            if (!in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 1) {
+                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
+            }
+        }
     }
 
-    // Atualiza o status de devolução das roupas do usuário usando instruções preparadas
-    $sql_update = "UPDATE roupas SET status_devolucao = ? WHERE id_usuario = ? AND id = ?";
-    $stmt_update = mysqli_prepare($conexao, $sql_update);
-
-    foreach ($status_devolucao as $id_roupa) {
-        mysqli_stmt_bind_param($stmt_update, "iii", $novo_status, $id_usuario_selecionado, $id_roupa);
-        $novo_status = in_array($id_roupa, $status_devolucao) ? 1 : 0;
-        mysqli_stmt_execute($stmt_update);
-    }
+    // Obtém a lista atualizada para exibição na tela
+    $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado";
+    $resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
 
     // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
-    echo "";
+    echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Status de devolução atualizado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+              </script>";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -318,7 +330,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
 
-    <script src="../JavaScript/orders.js"></script>
     <script src="../JavaScript/index.js"></script>
 </body>
 

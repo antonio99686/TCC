@@ -748,7 +748,7 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #575757;
+    background-color: #612f2f;
 }
 
 td {
@@ -757,7 +757,7 @@ td {
 }
 
 .btn_vermelho {
-    background-color: red;
+    background-color: #ff4c4c;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -772,7 +772,7 @@ td {
 }
 
 .btn_verde {
-    background-color: green;
+    background-color: #4CAF50;
     color: #fff;
     padding: 10px 20px;
     border: none;

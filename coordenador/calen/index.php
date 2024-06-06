@@ -54,9 +54,6 @@ $dados = mysqli_fetch_assoc($resultado);
     <title>Calendário</title>
   </head>
   <body>
-  <div class="user">
-                <img src="../../img/<?php echo $dados['imagem']?>" alt="">
-            </div>
 
            
     <div class="container">

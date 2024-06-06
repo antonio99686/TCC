@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
+include ("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
@@ -61,61 +61,49 @@ if (!$resultado_usuarios) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário de Inscrição</title>
+    <link rel="stylesheet" href="formulario/css/style.css" />
     <link rel="shortcut icon" href="formulario/img/cadastro.png">
-    <link rel="stylesheet" type="text/css" href="formulario/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="formulario/css/style.css">
-    <title>Cadastro</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
 </head>
+
 <body>
-    <header class="main_header container">
-        <div class="content">
-            <div class="main_header_logo">
-                <img src="../form/formulario/img/logo.jpg" alt="logo.jpg" />
-            </div>
-        </div>
-    </header>
-    <main class="main_content container">
-        <section class="section-seu-codigo container">
-            <div class="content">
-                <div class="box-artigo">
-                    <!--Inícia Formulário-->
-                    <div class="container_form">
-                        <h1> Cadastro da Roupa do Usuário </h1>
-                        <form method="POST" action="Roupa.php">
-                            <label for="nome_roupa">Nome da Roupa:</label>
-                            <input type="text" id="nome_roupa" name="nome_roupa" required>
+    <div class="container">
+        <header>
+            <img src="img/icno.jpg" alt="Logo" class="logo" />
+        </header>
+        <h1> Cadastro da Roupa do Usuário </h1>
+        <form method="POST" action="Roupa.php">
+            <label for="nome_roupa">Nome da Roupa:</label>
+            <input type="text" id="nome_roupa" name="nome_roupa" required>
 
-                            <label for="usuario_selecionado">Selecione o usuário:</label>
-                            <select id="usuario_selecionado" name="usuario_selecionado" required>
-                                <?php
-                                // Exibe as opções de usuários
-                                while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
-                                    echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
-                                }
-                                ?>
-                            </select>
+            <label for="usuario_selecionado">Selecione o usuário:</label>
+            <select id="usuario_selecionado" name="usuario_selecionado" required>
+                <?php
+                // Exibe as opções de usuários
+                while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
+                    echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
+                }
+                ?>
+            </select>
 
-                            <label for="status_roupa">Status da Roupa:</label>
-                            <select id="status_roupa" name="status_roupa" required>
-                                <option value="Pendente">Pendente</option>
-                                <option value="Entregue">Entregue</option>
-                            </select>
+            <label for="status_roupa">Status da Roupa:</label>
+            <select id="status_roupa" name="status_roupa" required>
+                <option value="Pendente">Pendente</option>
+                <option value="Entregue">Entregue</option>
+            </select>
 
-                            <button type="submit" class="submit_btn">Enviar</button>
-                            <a href="../dashboard.php" class="submit_btn">VOLTAR</a>
+            <button type="submit" name="Submit" class="btn">Cadastrar</button>
+            <a href="../dashboard.php" class="btn">Voltar</a>
 
-                        </form>
-
-                    </div><!-- container_form -->
-                </div><!-- Box Artigo -->
-                <div class="clear"></div>
-        </section><!-- FECHA BOX HTML -->
-    </main>
+        </form>
 </body>
+
 </html>

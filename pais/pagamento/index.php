@@ -9,15 +9,6 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-// Consulta SQL para obter as roupas do usuário
-$sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = " . $_SESSION['id_usuario'];
-$resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
-
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado_roupas_usuario) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-    exit();
-}
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
@@ -33,6 +24,10 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
+
+ // Consulta SQL para obter todos os pagamentos
+ $sql = "SELECT * FROM pagamentos";
+ $resultado = mysqli_query($conexao, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -42,11 +37,9 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <!-- shortcut icon -->
-    <link rel="shortcut icon" href="../img/img/icon.png">
-    <!-- Styles -->
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
-    <title>Sentinela da fronteira</title>
+    <title>Sentinela da Fronteira</title>
 </head>
 
 <body>
@@ -67,7 +60,7 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
 
             <div class="sidebar">
-                <a href="../dashboard.php">
+                <a href="../dashboard.php" >
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -92,13 +85,13 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="../pagamento">
+                <a href="../pagamentos" class="active">
                     <span class="material-icons-sharp">
-                        paid    
+                        paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="../acessorios" class="active">
+                <a href="../acessorios">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
@@ -106,7 +99,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
 
 
-                <a href="../logout.php">
+                <a href="logout.php">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -114,51 +107,71 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
             </div>
         </aside>
-        <!-- Fim da seção da barra lateral -->
+        <!-- End of Sidebar Section -->
 
-        <!-- Conteúdo principal -->
+        <!-- Main Content -->
         <main>
-            <h1>Vestimentas</h1>
-            <!-- Análises -->
+            <h1>Pagamentos</h1>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                       
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                      
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                       
+                    </div>
+                </div>
+            </div>
+            <!-- End of Analyses -->
 
+            <!-- New Users Section -->
+            <div class="new-users">
+                <h2>Mensalidades Pendentes</h2>
+                <div class="user-list">
+                    <div class="user">
+                       
+                        <h2><?php echo $dados['nome'] ?></h2>
+                        <p>Falta pagar o mês de: ABRIL </p>
+                    </div>
 
-            <!-- Fim das análises -->
+                </div>
+            </div>
+            <!-- End of New Users Section -->
 
-
-            <!-- Fim da seção de novos usuários -->
-
-            <!-- Tabela de pedidos recentes -->
-            <div class="box">
-            <table>
-    <thead>
-        <tr>
-            <th>Roupa</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
-            <tr>
-                <td><?php echo $row['nome']; ?></td>
-                <td>
-                    <?php if ($row['status_devolucao'] == 0): ?>
-                        <button type="button" class="btn_vermelho">Pendente</button>
-                    <?php else: ?>
-                        <button type="button" class="btn_verde">Entregue</button>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+            <!-- Recent Orders Table -->
+            <div class="recent-orders">
+                <h2>Forma de Pagamento</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Boleto</th>
+                            <th>PIX</th>
+                            <th>Status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td> PDF</td>
+                        <td> PIX [QR_CODE]</td>
+                        <td> Pago</td>
+                    </tbody>
+                </table>
 
             </div>
-            <!-- Fim dos pedidos recentes -->
+            <!-- End of Recent Orders -->
 
         </main>
-        <!-- Fim do conteúdo principal -->
+        <!-- End of Main Content -->
 
-        <!-- Seção Direita -->
+        <!-- Right Section -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
@@ -181,27 +194,28 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 
             </div>
-            <!-- Fim da navegação -->
+            <!-- End of Nav -->
+
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                    <img class="imgs" src="../../img/icno.jpg">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>
             </div>
 
 
-
         </div>
 
 
     </div>
+
 
     <script src="../JavaScript/index.js"></script>
 </body>

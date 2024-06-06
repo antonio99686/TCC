@@ -127,14 +127,14 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
             <div class="box">
                 <h2>Dados Usuário</h2>
                 <div class="user-info">
-                    <div><em>Nome:</em> <?php echo htmlspecialchars($dados['nome']); ?></div>
-                    <div><em>Telefone:</em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
-                    <div><em>E-mail:</em> <?php echo htmlspecialchars($dados['email']); ?></div>
-                    <div><em>Senha:</em> <?php echo htmlspecialchars($dados['senha']); ?></div>
-                    <div><em>CPF:</em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
-                    <div><em>Idade:</em> <?php echo htmlspecialchars($dados['idade']); ?></div>
-                    <div><em>Matrícula:</em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                    <div><em>Data de Nascimento:</em> <?php echo htmlspecialchars($dados['datas']); ?></div>
+                    <div><em><b>Nome:</b></em> <?php echo htmlspecialchars($dados['nome']); ?></div>
+                    <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
+                    <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
+                    <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
+                    <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
+                    <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
+                    <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
+                    <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
                 </div>
             </div>
         </main>

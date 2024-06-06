@@ -157,23 +157,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="box">
                 <h2>Dados Usuário</h2>
-                <br>
-                <div class="user"><em>Nome:</em> <?php echo htmlspecialchars($dados['nome']); ?></div>
-                <br>
-                <div class="user1"><em>Telefone:</em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
-                <br>
-                <div class="user2"><em>E-mail:</em> <?php echo htmlspecialchars($dados['email']); ?></div>
-                <br>
-                <div class="user3"><em>Senha:</em> <?php echo htmlspecialchars($dados['senha']); ?></div>
-                <br>
-                <div class="user4"><em>CPF:</em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
-                <br>
-                <div class="user5"><em>Idade:</em> <?php echo htmlspecialchars($dados['idade']); ?></div>
-                <br>
-                <div class="user6"><em>Matrícula:</em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                <br>
-                <div class="user7"><em>Data de Nascimento:</em> <?php echo htmlspecialchars($dados['datas']); ?></div>
-            </div>
+                <div><em><b>Nome:</b></em> <?php echo htmlspecialchars($dados['nome']); ?></div>
+                    <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
+                    <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
+                    <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
+                    <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
+                    <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
+                    <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
+                    <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
+                 </div>
         </main>
         <div class="right-section">
             <div class="nav">
@@ -201,23 +193,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="reminders">
-                <div class="notification">
-                    <h1>Adicionar Recado</h1>
-                    <form method="post" action="dashboard.php">
-                        <label for="titulo">Título:</label><br>
-                        <input type="text" id="titulo" name="titulo" required><br>
-                        <label for="mensagem">Mensagem:</label><br>
-                        <textarea id="mensagem" name="mensagem" required></textarea><br>
-                        <input type="submit" class="button" value="Adicionar">
-
-                    </form>
-                </div>
-
-            </div>
+        <div class="notification">
+            <h1>Adicionar Recado</h1>
+            <form method="post" action="dashboard.php">
+                <label for="titulo">Título:</label><br>
+                <input type="text" id="titulo" name="titulo" required><br>
+                <label for="mensagem">Mensagem:</label><br>
+                <textarea id="mensagem" name="mensagem" required></textarea><br>
+                <input type="submit" class="button" value="Adicionar">
+            </form>
+        </div>
+    </div>
         </div>
     </div>
     <?php echo $mensagem_alerta; ?>
-    <script src="JavaScript/orders.js"></script>
     <script src="JavaScript/index.js"></script>
 </body>
 
