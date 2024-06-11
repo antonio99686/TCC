@@ -1,4 +1,6 @@
 <?php
+// Aguarda 2 segundos antes de redirecionar o usuário
+sleep(1);
 session_start();
 include ("conexao.php");
 

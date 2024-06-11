@@ -43,6 +43,8 @@ if ($result->num_rows > 0) {
 
 $conexao->close();
 
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
 ?>
 <!DOCTYPE html>
 <html lang="en">

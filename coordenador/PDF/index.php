@@ -55,14 +55,19 @@ if ($result->num_rows > 0) {
                 <p><strong>Responsável:</strong> " . $dados['responsavel'] . "</p>
             </div>
             
-
+        <div class='cart_ident'>
+   
+        <img class='frente' src='http://localhost:8080/tcc/img/carteira/".$dados['identidade_frente']."'>
+        <img class='verso' src='http://localhost:8080/tcc/img/carteira/".$dados['identidade_verso']."'>
+            
+        </div>
             ";
     }
 
     // Adiciona o footer com as informações de email e data
     $html .= "
             <div class='footer'>
-                <p>Email: sentinaladafronteira@gmail.com</p>
+                <p>Email: sentineladafronteira@gmail.com</p>
                 <p>Data: " . date('d/m/Y') . "</p>
             </div>
         </div>
@@ -76,6 +81,7 @@ if ($result->num_rows > 0) {
 
 // Carrega a biblioteca Dompdf
 use Dompdf\Dompdf;
+
 require_once 'dompdf/autoload.inc.php';
 
 // Inicializa o objeto Dompdf

@@ -1,32 +1,6 @@
 <?php
-session_start();
-include ("conexao.php");
-
-// Verifica se a sessão está iniciada e se o usuário está logado
-if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
-    // Redireciona para a página de login se não estiver logado
-    header("Location: ../login.php");
-    exit();
-}
-
-// Obtém o ID do usuário da sessão
-$id_usuario = $_SESSION['id_usuario'];
-
-// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
-$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id_usuario);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-    exit();
-}
-
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado);
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
 ?>
 
 <!DOCTYPE html>

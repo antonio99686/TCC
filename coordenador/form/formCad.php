@@ -1,3 +1,8 @@
+<?php
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -17,7 +22,7 @@
             <img src="img/icno.jpg" alt="Logo" class="logo" />
         </header>
         <h2>Formulário de Inscrição</h2>
-        <form id="registrationForm" novalidate action="cadastrar.php" method="POST" enctype="multipart/form-data">
+        <form id="registrationForm" novalidate action="codigo/cadastrar.php" method="POST" enctype="multipart/form-data">
             <div class="form-grupo">
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" name="usuario" class="form-input" placeholder="Nome Completo" required />

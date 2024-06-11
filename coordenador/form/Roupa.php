@@ -60,6 +60,8 @@ if (!$resultado_usuarios) {
     echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
     exit();
 }
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

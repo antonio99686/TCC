@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -13,13 +13,15 @@
 
 <body>
     <?php
+    // Aguarda 1 segundos antes de redirecionar o usuário
+    sleep(1);
     // Conecta ao banco de dados
     include ('../conexao.php');
 
     // Verifica se o ID do usuário está definido na URL
-    if (isset($_GET['id_usuario'])) {
+    if (isset($_POST['id_usuario'])) {
         // Recebe o ID do usuário da URL
-        $id_usuario = $_GET['id_usuario'];
+        $id_usuario = $_POST['id_usuario'];
 
         // Consulta SQL para obter os dados do usuário
         $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
