@@ -8,6 +8,28 @@ body {
     margin: 0;
 }
 
+:root {
+    --color-primary: #6C9BCF;
+    --color-danger: #FF0060;
+    --color-success: #1B9C85;
+    --color-warning: #F7D060;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
 .container {
     background-color: #fff;
     padding: 20px;
@@ -36,7 +58,7 @@ header {
     height: auto;
 }
 
-h2 {
+h1 {
     margin-bottom: 20px;
     color: #333;
     text-align: center;
@@ -75,32 +97,21 @@ input[type="file"] {
     color: red;
 }
 
-input.valid+.validation-message {
+.form-control {
+    width: 150px;
+    padding: 10px;
     display: block;
-    color: green;
-}
-
-input.invalid+.validation-message {
-    display: block;
-    color: red;
-}
-
-/* Estilo compartilhado para botões e links */
-.btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
     border-radius: 4px;
-    cursor: pointer;
-    width: 20%;
+    background-color: var(--color-primary);
     text-align: center;
     display: inline-block;
     text-decoration: none;
-    margin-top: 10px;
-
+    color: #000000;
+    box-shadow:  1px  1px black;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+.form-control:hover {
+    background-color: var(--color-dark);
+    transition-duration: 0.4s;
+    color: white;
 }

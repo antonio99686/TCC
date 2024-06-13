@@ -200,7 +200,7 @@ sleep(1);
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
-                            <th>Email</th>
+                            <th>Matrícula</th>
                             <th>CPF</th>
                             <th>Editar</th>
                             <th>Excluir</th>
@@ -212,7 +212,7 @@ sleep(1);
                         echo '<tr>';
                         echo "<td>" . $row['id_usuario'] . "</td>";
                         echo "<td>" . $row['nome'] . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $row['CPF'] . "</td>";
                                        
                         echo "<td>
@@ -303,7 +303,7 @@ sleep(1);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../../img/icno.jpg">
+                    <img class="imgs" src="../../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

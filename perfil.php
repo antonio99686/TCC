@@ -1,5 +1,7 @@
 <?php
 session_start();
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
 include ("conexao.php");
 
 // Verifica se a sessão está iniciada e se o usuário está logado
@@ -195,7 +197,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="img/icno.jpg">
+                <img class="imgs" src="img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

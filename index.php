@@ -64,7 +64,7 @@
         function showContactCoordinator() {
             Swal.fire({
                 icon: 'info',
-                title: 'Esqueceu sua senha?',
+                title: 'Esqueceu sua senha? ',
                 text: 'Por favor, entre em contato com o coordenador para redefinir sua senha.'
             });
         }

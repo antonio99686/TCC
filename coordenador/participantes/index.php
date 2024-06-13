@@ -286,7 +286,7 @@ $conexao->close();
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../../img/icno.jpg">
+                    <img class="imgs" src="../../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

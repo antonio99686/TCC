@@ -146,8 +146,8 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
                     <span class="material-icons-sharp">menu</span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">light_mode</span>
-                    <span class="material-icons-sharp">dark_mode</span>
+                    <span class="material-icons-sharp light active">light_mode</span>
+                    <span class="material-icons-sharp dark">dark_mode</span>
                 </div>
                 <div class="profile">
                     <div class="info">
@@ -159,30 +159,31 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
                     </div>
                 </div>
             </div>
+
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="img/icno.jpg">
+                    <img class="imgs" src="img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
                 </div>
             </div>
             <div class="reminders">
-    <div id="avisosContainer" class="notification">
-        <h2>Avisos</h2>
-        <?php
-        if (mysqli_num_rows($result_avisos) > 0) {
-            while ($aviso = mysqli_fetch_assoc($result_avisos)) {
-                echo "<div class='aviso'>";
-                echo "<h3>" . htmlspecialchars($aviso['titulo']) . "</h3>";
-                echo "<p>" . htmlspecialchars($aviso['mensagem']) . "</p>";
-                echo "<small>" . htmlspecialchars($aviso['data']) . "</small>";
-                echo "</div>";
-            }
-        } else {
-            echo "<p>Nenhum aviso disponível.</p>";
-        }
-        ?>
-    </div>
-</div>
+                <div id="avisosContainer" class="notification">
+                    <h2>Avisos</h2>
+                    <?php
+                    if (mysqli_num_rows($result_avisos) > 0) {
+                        while ($aviso = mysqli_fetch_assoc($result_avisos)) {
+                            echo "<div class='aviso'>";
+                            echo "<h3>" . htmlspecialchars($aviso['titulo']) . "</h3>";
+                            echo "<p>" . htmlspecialchars($aviso['mensagem']) . "</p>";
+                            echo "<small>" . htmlspecialchars($aviso['data']) . "</small>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p>Nenhum aviso disponível.</p>";
+                    }
+                    ?>
+                </div>
+            </div>
 
 
 
@@ -191,35 +192,35 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
     <script src="JavaScript/orders.js"></script>
     <script src="JavaScript/index.js"></script>
     <script>
-    // Função para fazer os avisos passarem automaticamente
-    function passarAvisos() {
-        var avisos = document.querySelectorAll('.aviso');
-        var index = 0;
+        // Função para fazer os avisos passarem automaticamente
+        function passarAvisos() {
+            var avisos = document.querySelectorAll('.aviso');
+            var index = 0;
 
-        function exibirProximoAviso() {
-            // Oculta o aviso atual
-            avisos[index].style.display = 'none';
+            function exibirProximoAviso() {
+                // Oculta o aviso atual
+                avisos[index].style.display = 'none';
 
-            // Incrementa o índice para mostrar o próximo aviso
-            index = (index + 1) % avisos.length;
+                // Incrementa o índice para mostrar o próximo aviso
+                index = (index + 1) % avisos.length;
 
-            // Mostra o próximo aviso
+                // Mostra o próximo aviso
+                avisos[index].style.display = 'block';
+
+                // Chama a função novamente após 5 segundos
+                setTimeout(exibirProximoAviso, 3000); //  o valor para ajustar o tempo entre os avisos (em milissegundos)
+            }
+
+            // Exibe o primeiro aviso
             avisos[index].style.display = 'block';
 
-            // Chama a função novamente após 5 segundos
+            // Chama a função para exibir o próximo aviso após 5 segundos
             setTimeout(exibirProximoAviso, 3000); //  o valor para ajustar o tempo entre os avisos (em milissegundos)
         }
 
-        // Exibe o primeiro aviso
-        avisos[index].style.display = 'block';
-
-        // Chama a função para exibir o próximo aviso após 5 segundos
-        setTimeout(exibirProximoAviso, 3000); //  o valor para ajustar o tempo entre os avisos (em milissegundos)
-    }
-
-    // Chama a função quando a página é carregada
-    window.onload = passarAvisos;
-</script>
+        // Chama a função quando a página é carregada
+        window.onload = passarAvisos;
+    </script>
 
 
 

@@ -1,7 +1,7 @@
 <?php
 // Inicia a sessão
 session_start();
-include ("conexao.php");
+include("conexao.php");
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
@@ -29,7 +29,6 @@ $dados = mysqli_fetch_assoc($resultado);
 //=================\ SELECIONA USUÁRIO NA LISTA /=================\\
 
 if ($_GET) {
-
     $id_usuario_selecionado = $_GET['usuario_selecionado'];
 
     // Consulta SQL para obter as roupas do usuário selecionado
@@ -44,25 +43,23 @@ if ($_GET) {
 
 //=================\ ATUALIZA A LISTA DE ITENS /=================\\
 
-if ($_POST) {
+$sweetalert_msg = "";
 
+if ($_POST) {
     $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
-    $status_devolucao = $_POST['status_devolucao'];
+    $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : [];
 
     // Consulta SQL para obter as roupas do usuário selecionado
     $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
 
+    $status_atualizado = false;
+
     // Atualiza o status de devolução das roupas do usuário
     while ($r = mysqli_fetch_assoc($resultado_roupas_usuario)) {
-        if (empty($status_devolucao)) {
-            mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado");
-        } else {
-            if (in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 0) {
-                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 1 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
-            }
-            if (!in_array($r['id'], $status_devolucao) and $r['status_devolucao'] == 1) {
-                mysqli_query($conexao, "UPDATE roupas SET status_devolucao = 0 WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
-            }
+        $novo_status = in_array($r['id'], $status_devolucao) ? 1 : 0;
+        if ($novo_status != $r['status_devolucao']) {
+            mysqli_query($conexao, "UPDATE roupas SET status_devolucao = $novo_status WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
+            $status_atualizado = true;
         }
     }
 
@@ -70,19 +67,11 @@ if ($_POST) {
     $sql_roupas_usuario = "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado";
     $resultado_roupas_usuario = mysqli_query($conexao, $sql_roupas_usuario);
 
-    // Mostra um alerta SweetAlert2 em vez da mensagem de sucesso
-    echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Status de devolução atualizado com sucesso!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-              </script>";
+    // Define a mensagem de sucesso para o SweetAlert se o status foi atualizado
+    if ($status_atualizado) {
+        $sweetalert_msg = "Status de devolução atualizado com sucesso!";
+    }
 }
-// Aguarda 1 segundos antes de redirecionar o usuário
-sleep(1);
 ?>
 
 <!DOCTYPE html>
@@ -96,6 +85,9 @@ sleep(1);
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <title>Sentinela da fronteira</title>
 </head>
 
@@ -106,8 +98,7 @@ sleep(1);
         <aside>
             <div class="toggle">
                 <div class="logo">
-
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -129,7 +120,6 @@ sleep(1);
                     </span>
                     <h3>Users</h3>
                 </a>
-
                 <a href="../perfil.php">
                     <span class="material-icons-sharp">
                         person_outline
@@ -154,8 +144,6 @@ sleep(1);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-               
-
                 <a href="../logout.php">
                     <span class="material-icons-sharp">
                         logout
@@ -170,120 +158,106 @@ sleep(1);
         <main>
             <h1>Vestimentas</h1>
             <!-- Análises -->
-           
-             <div class="analyse">
-               <div class="sales">
-                     <a href="../form/formcad.php"><div class="status">
-                        <div class="info">
-                            <h3>Cadastro</h3>
-                            <h1>Cadastre o Usuário</h1>
+            <div class="analyse">
+                <div class="sales">
+                    <a href="../form/formcad.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Cadastro</h3>
+                                <h1>Cadastre o Usuário</h1>
+                            </div>
+                            <div class="progresss"></div>
                         </div>
-                        <div class="progresss">
-                         
-                        </div>
-                    </div> </a>
-                    
-                </div> 
-           
-
-                
-                    <div class="visits">
-                 <a href="../form/lista.php">   <div class="status">
-                        <div class="info">
-                            <h3>Editar</h3>
-                            <h1>Edite o Usuário</h1>
-                        </div>
-                        <div class="progresss">
-                           
-                        </div>
-                    </div></a>
+                    </a>
                 </div>
-                
-
-                
+                <div class="visits">
+                    <a href="../form/lista.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Editar</h3>
+                                <h1>Edite o Usuário</h3>
+                            </div>
+                            <div class="progresss"></div>
+                        </div>
+                    </a>
+                </div>
                 <div class="searches">
-                    <a href="../form/roupa.php"><div class="status">
-                        <div class="info">
-                            <h3>Roupa</h3>
-                            <h1>Cadasto da Roupa do Usuário</h1>
+                    <a href="../form/roupa.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Roupa</h3>
+                                <h1>Cadasto da Roupa do Usuário</h1>
+                            </div>
+                            <div class="progresss"></div>
                         </div>
-                        <div class="progresss">
-                           
-                        </div>
-                    </div>
-                </div> </a>
-               
+                    </a>
+                </div>
             </div>
             <!-- Fim das análises -->
 
-
-            <!-- Fim da seção de novos usuários -->
-
             <!-- Tabela de pedidos recentes -->
             <div class="box">
-                 <form method="GET" action="index.php">
-            <div class="form-group">
-                <label for="usuario_selecionado">Selecione o usuário:</label>
-                <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
-                    <?php
+                <form method="GET" action="index.php">
+                    <div class="form-group">
+                        <label for="usuario_selecionado">Selecione o usuário:</label>
+                        <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
+                            <?php
+                            // Consulta SQL para obter a lista de usuários com status 1
+                            $sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
+                            $resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
 
-                    // Consulta SQL para obter a lista de usuários com status 1
-                    $sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
-                    $resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
+                            // Verifica se a consulta foi bem-sucedida
+                            if (!$resultado_usuarios) {
+                                echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+                                exit();
+                            }
 
-                    // Verifica se a consulta foi bem-sucedida
-                    if (!$resultado_usuarios) {
-                        echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-                        exit();
-                    }
+                            // Exibe as opções de usuários
+                            while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
+                                if ($id_usuario_selecionado == $row['id_usuario'])
+                                    echo "<option value='" . $row['id_usuario'] . "' selected>" . $row['nome'] . "</option>";
+                                else
+                                    echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="button">Selecionar</button>
+                </form>
 
-                    // Exibe as opções de usuários
-                    while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
-                        if ($id_usuario_selecionado == $row['id_usuario'])
-                            echo "<option value='" . $row['id_usuario'] . "' selected>" . $row['nome'] . "</option>";
-                        else
-                            echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary btn-sm">Selecionar</button>
-        </form>
-
-        <?php if (isset($resultado_roupas_usuario)) : ?>
-            <!-- Exibição de Roupas do Usuário Selecionado -->
-            <h2>Roupas do Usuário Selecionado</h2>
-            <form method="post" action="">
-                <input type="hidden" name="id_usuario_selecionado" value="<?php echo $id_usuario_selecionado; ?>">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Roupa</th>
-                            <th>Status</th> <!-- Adicionando cabeçalho para o status de devolução -->
-                        </tr>
-                    </thead>
-                    <tbody >
-                 <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
-                            <tr>
-                                <td><?php echo $row['nome']; ?></td>
-                                <td>
-                                    <?php
-                                    if ($row['status_devolucao'] == 0)
-                                        echo '<input class="form-check-input" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '"> <label class="form-check-label"> Pendente </label>';
-                                    else
-                                        echo '<input class="form-check-input" class="form-control" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '" checked> <label class="form-check-label" for="flexCheckDefault"> Entregue </label>';
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-                <button type="submit" class="btn">Salvar Status</button>
-            </form>
-        <?php endif; ?>
+                <?php if (isset($resultado_roupas_usuario)) : ?>
+                    <!-- Exibição de Roupas do Usuário Selecionado -->
+                    <h2>Roupas do Usuário Selecionado</h2>
+                    <form method="post" action="">
+                        <input type="hidden" name="id_usuario_selecionado" value="<?php echo $id_usuario_selecionado; ?>">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Roupa</th>
+                                    <th>Status</th> <!-- Adicionando cabeçalho para o status de devolução -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
+                                    <tr>
+                                        <td><?php echo $row['nome']; ?></td>
+                                        <td>
+                                            <?php
+                                            if ($row['status_devolucao'] == 0)
+                                                echo '<input class="form-check-input" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '"> <label class="form-check-label"> Pendente </label>';
+                                            else
+                                                echo '<input class="form-check-input" class="form-control" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '" checked> <label class="form-check-label" for="flexCheckDefault"> Entregue </label>';
+                                            ?>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="button">Salvar Status</button>
+                    </form>
+                <?php endif; ?>
             </div>
             <!-- Fim dos pedidos recentes -->
-
         </main>
         <!-- Fim do conteúdo principal -->
 
@@ -313,26 +287,34 @@ sleep(1);
                         <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
-
             </div>
             <!-- Fim da navegação -->
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../../img/icno.jpg">
+                    <img class="imgs" src="../../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
-
                 </div>
             </div>
-
-
-
         </div>
-
-
     </div>
 
     <script src="../JavaScript/index.js"></script>
+    <script>
+        function showAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: message,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
+        <?php if ($sweetalert_msg) : ?>
+            showAlert('<?php echo $sweetalert_msg; ?>');
+        <?php endif; ?>
+    </script>
 </body>
 
 </html>

@@ -68,7 +68,7 @@ img {
 }
 
 .imgs {
-    left: 15%;
+    left: 5%;
     position: relative;
 }
 
@@ -460,6 +460,8 @@ main .recent-orders a {
     height: auto;
     margin-bottom: 0.8rem;
     border-radius: 50%;
+    height: 250px;
+    width: 260px;
 }
 
 .right-section .user-profile h2 {

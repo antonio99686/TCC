@@ -1,6 +1,9 @@
 <?php
 session_start();
 include ("conexao.php");
+    
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
 
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {

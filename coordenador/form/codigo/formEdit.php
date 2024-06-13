@@ -199,8 +199,8 @@
         text: 'Dados do formulário incompletos.',
         timer: 3000, // 3 segundos
         timerProgressBar: true,
-        showConfirmButton: false
-    });
+            showConfirmButton: false
+        });
     </script>";
         }
     }

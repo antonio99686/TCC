@@ -1,5 +1,5 @@
 <?php
-// Aguarda 2 segundos antes de redirecionar o usuário
+// Aguarda 1 segundos antes de redirecionar o usuário
 sleep(1);
 session_start();
 include ("conexao.php");
@@ -197,7 +197,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                    <img class="imgs" src="../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

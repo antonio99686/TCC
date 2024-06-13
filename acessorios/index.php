@@ -2,6 +2,9 @@
 session_start();
 include ("conexao.php");
 
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
@@ -57,7 +60,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -94,7 +97,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
                 <a href="../pagamento">
                     <span class="material-icons-sharp">
-                        paid    
+                        paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
@@ -129,28 +132,28 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <!-- Tabela de pedidos recentes -->
             <div class="box">
-            <table>
-    <thead>
-        <tr>
-            <th>Roupa</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
-            <tr>
-                <td><?php echo $row['nome']; ?></td>
-                <td>
-                    <?php if ($row['status_devolucao'] == 0): ?>
-                        <button type="button" class="btn_vermelho">Pendente</button>
-                    <?php else: ?>
-                        <button type="button" class="btn_verde">Entregue</button>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roupa</th>
+                            <th class="class">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
+                            <tr>
+                                <td class="clas"><?php echo $row['nome']; ?></td>
+                                <td>
+                                    <?php if ($row['status_devolucao'] == 0): ?>
+                                        <button type="button" class="btn_vermelho">Pendente</button>
+                                    <?php else: ?>
+                                        <button type="button" class="btn_verde">Entregue</button>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
 
             </div>
             <!-- Fim dos pedidos recentes -->
@@ -190,7 +193,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                <img class="imgs" src="../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

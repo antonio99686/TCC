@@ -65,11 +65,13 @@ img {
     width: 100%;
     object-fit: cover;
 
+
 }
 
 .imgs {
-    left: 15%;
+    left: 5%;
     position: relative;
+
 }
 
 h1 {
@@ -141,6 +143,7 @@ aside .toggle {
 aside .toggle .logo {
     display: flex;
     gap: 0.5rem;
+
 }
 
 aside .toggle .logo img {
@@ -456,10 +459,11 @@ main .recent-orders a {
 }
 
 .right-section .user-profile img {
-    width: 11rem;
-    height: auto;
     margin-bottom: 0.8rem;
     border-radius: 50%;
+    height: 250px;
+    width: 260px;
+
 }
 
 .right-section .user-profile h2 {
@@ -486,8 +490,9 @@ main .recent-orders a {
 
 .right-section .reminders .notification {
     background-color: var(--color-white);
-    display: flex;
+    text-align: center;
     align-items: center;
+    display: flex;
     gap: 1rem;
     margin-bottom: 0.7rem;
     padding: 1.4rem var(--card-padding);
@@ -610,11 +615,12 @@ main .recent-orders a {
     margin-top: 5%;
 
 }
+
 .box {
     background-color: var(--color-white);
-    width: 90%; /* Reduz a largura para 90% da largura da tela */
-    max-width: 400px; /* Define uma largura máxima para garantir que não fique muito largo */
-    margin: 5% auto; /* Centraliza o elemento verticalmente e define uma margem superior de 5% */
+    width: 90%;
+    max-width: 400px;
+    margin: 5% auto;
     padding: var(--card-padding);
     text-align: center;
     box-shadow: var(--box-shadow);
@@ -622,42 +628,33 @@ main .recent-orders a {
     transition: all 0.3s ease;
 }
 
-.user {
-    position: relative;
-    margin: 0 auto; /* Centraliza o elemento horizontalmente */
-    font-size: 15px;
+
+
+
+.aviso {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(132, 139, 200, 0.18);
 }
 
-/* Estilos específicos para cada .user */
-.user1, .user2, .user3, .user4, .user5, .user6, .user7 {
-    margin-top: -5%; /* Ajusta o espaçamento superior conforme necessário */
+.aviso h3 {
+    font-size: 18px;
+    color: #696969  ;
+    margin-bottom: 5px;
 }
 
-    .aviso {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-    }
+.aviso p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
 
-    .aviso h3 {
-        font-size: 18px;
-        color: #333;
-        margin-bottom: 5px;
-    }
-
-    .aviso p {
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 5px;
-    }
-
-    .aviso small {
-        font-size: 12px;
-        color: #999;
-    }
-
+.aviso small {
+    font-size: 12px;
+    color: #999;
+}
 
 
 

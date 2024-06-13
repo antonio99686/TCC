@@ -68,7 +68,7 @@ img {
 }
 
 .imgs {
-    left: 15%;
+    left: 5%;
     position: relative;
 }
 
@@ -196,6 +196,7 @@ aside .sidebar a.active {
     color: var(--color-primary);
     background-color: var(--color-light);
     margin-left: 0;
+
 }
 
 aside .sidebar a.active::before {
@@ -203,11 +204,13 @@ aside .sidebar a.active::before {
     width: 6px;
     height: 18px;
     background-color: var(--color-primary);
+
 }
 
 aside .sidebar a.active span {
     color: var(--color-primary);
     margin-left: calc(1rem - 3px);
+
 }
 
 aside .sidebar a:hover {
@@ -458,8 +461,8 @@ main .recent-orders a {
 }
 
 .right-section .user-profile img {
-    width: 11rem;
-    height: auto;
+    width: 250px;
+    height: 260px;
     margin-bottom: 0.8rem;
     border-radius: 50%;
 }
@@ -630,63 +633,47 @@ main .recent-orders a {
     transition: all 0.3s ease;
 }
 
-.user {
-    position: relative;
-    margin: 0 auto;
-    /* Centraliza o elemento horizontalmente */
-    font-size: 15px;
+
+
+.button {
+    background-color: var(--color-primary);
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+
 }
 
-/* Estilos específicos para cada .user */
-.user1,
-.user2,
-.user3,
-.user4,
-.user5,
-.user6,
-.user7 {
-    margin-top: -5%;
-    /* Ajusta o espaçamento superior conforme necessário */
+.button:hover {
+    background-color: var(--color-info-dark);
+    color: black;
+    border: 2px solid black;
 }
 
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
 
-
-    .button {
-        background-color: #4CAF50; /* Cor de fundo do botão */
-        border: none; /* Remove borda padrão */
-        color: white; /* Cor do texto */
-        padding: 15px 32px; /* Espaçamento interno */
-        text-align: center; /* Alinhamento do texto */
-        text-decoration: none; /* Remove sublinhado */
-        display: inline-block; /* Display inline-block */
-        font-size: 16px; /* Tamanho da fonte */
-        margin: 4px 2px; /* Margens */
-        cursor: pointer; /* Cursor ao passar sobre o botão */
-        border-radius: 12px; /* Bordas arredondadas */
-        transition-duration: 0.4s; /* Duração da transição para hover */
-    }
-
-    .button:hover {
-        background-color: white; /* Cor de fundo ao passar o mouse */
-        color: black; /* Cor do texto ao passar o mouse */
-        border: 2px solid #4CAF50; /* Adiciona borda ao passar o mouse */
-    }
-
-    input[type="text"], textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0 20px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 16px;
-    }
-
-    input[type="text"]:focus, textarea:focus {
-        border: 1px solid #4CAF50;
-        outline: none;
-    }
+input[type="text"]:focus,
+textarea:focus {
+    border: 1px solid #4CAF50;
+    outline: none;
+}
 
 @media screen and (max-width: 768px) {
     .container {
@@ -803,3 +790,4 @@ main .recent-orders a {
     }
 
 }
+

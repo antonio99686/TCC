@@ -160,14 +160,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="box">
                 <h2>Dados Usuário</h2>
                 <div><em><b>Nome:</b></em> <?php echo htmlspecialchars($dados['nome']); ?></div>
-                    <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
-                    <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
-                    <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
-                    <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
-                    <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
-                    <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                    <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
-                 </div>
+                <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
+                <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
+                <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
+                <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
+                <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
+                <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
+                <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
+            </div>
         </main>
         <div class="right-section">
             <div class="nav">
@@ -190,22 +190,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                    <img class="imgs" src="../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
                 </div>
             </div>
             <div class="reminders">
-        <div class="notification">
-            <h1>Adicionar Recado</h1>
-            <form method="post" action="dashboard.php">
-                <label for="titulo">Título:</label><br>
-                <input type="text" id="titulo" name="titulo" required><br>
-                <label for="mensagem">Mensagem:</label><br>
-                <textarea id="mensagem" name="mensagem" required></textarea><br>
-                <input type="submit" class="button" value="Adicionar">
-            </form>
-        </div>
-    </div>
+                <div class="notification">
+                    <h1>Adicionar Recado</h1>
+                    <form method="post" action="dashboard.php">
+                        <label for="titulo">Título:</label><br>
+                        <input type="text" id="titulo" name="titulo" required><br>
+                        <label for="mensagem">Mensagem:</label><br>
+                        <textarea id="mensagem" name="mensagem" required></textarea><br>
+                        <input type="submit" class="button" value="Adicionar">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <?php echo $mensagem_alerta; ?>

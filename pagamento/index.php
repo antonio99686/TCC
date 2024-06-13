@@ -2,6 +2,9 @@
 session_start();
 include ("conexao.php");
 
+// Aguarda 1 segundos antes de redirecionar o usuário
+sleep(1);
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
@@ -204,7 +207,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/icno.jpg">
+                <img class="imgs" src="../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
 
                 </div>

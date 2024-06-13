@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="img/icno.jpg" alt="Logo" class="logo" />
+            <img src="../img/icno.jpg" alt="Logo" class="logo" />
         </header>
         <h2>Formulário de Inscrição</h2>
         <form id="registrationForm" novalidate action="cadastrar.php" method="POST" enctype="multipart/form-data">

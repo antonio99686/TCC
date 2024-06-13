@@ -68,7 +68,7 @@ img {
 }
 
 .imgs {
-    left: 15%;
+    left: 5%;
     position: relative;
 }
 
@@ -460,8 +460,8 @@ main .recent-orders a {
 }
 
 .right-section .user-profile img {
-    width: 11rem;
-    height: auto;
+    width: 250px;
+    height: 260px;
     margin-bottom: 0.8rem;
     border-radius: 50%;
 }
@@ -820,21 +820,64 @@ table {
 }
 
 thead th {
-    background-color: #181a1e;
+    background-color: rgba(132, 139, 200, 0.18);
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+    border-bottom: 1px solid #171717;
+    text-align: center;
+
 }
 
 tbody tr:nth-child(even) {
-    background-color: #181a1e;
+    background-color: rgba(132, 139, 200, 0.18);
+
 }
 
 tbody tr:hover {
     background-color: #484d50;
+
 }
 
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    margin-top: 1%;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.form-control {
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control:focus {
+    border-color: #000000;
+    outline: none;
+}
+
+.form-control option {
+    padding: 10px;
 }
