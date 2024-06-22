@@ -9,7 +9,8 @@ if (isset($_GET['id_usuario']) && is_numeric($_GET['id_usuario'])) {
 }
 
 // Inclui o arquivo de conexão com o banco de dados
-include ('conexao.php');
+require_once "../../conexao.php";
+$conexao = conectar();
 
 // Cria a consulta SQL para selecionar os dados do usuário com o ID especificado
 $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";

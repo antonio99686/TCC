@@ -1,6 +1,7 @@
 <?php
 session_start();
-include ("conexao.php");
+require_once "../../conexao.php";
+$conexao = conectar();
 
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
@@ -202,6 +203,7 @@ if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
                        <th>CPF</th>
                        <th>Data de Entrada</th>
                        <th>Matricula</th>
+                       <th></th>
                    
 
                        </tr>
@@ -221,7 +223,7 @@ if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
                 "&CPF=" . $row['CPF'] .
                 "&data_entrada=" . $row['data_entrada'] .
                 "&mattricula=" . $row['matricula'] . "'> 
-                <img src='img/pdf.png' width='20' height='20' alt='PDF'>
+                <img src ='img/pdf.png' width='25' height='20' alt='PDF'>
                             
                         </a>
                         <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] .

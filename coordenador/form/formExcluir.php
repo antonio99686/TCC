@@ -1,5 +1,6 @@
 <?php
-include("conexao.php");
+require_once "../../../conexao.php";
+$conexao = conectar();
 
 if (!isset($_GET['id_usuario']) || empty($_GET['id_usuario'])) {
     echo "ID do usuário não foi recebido.";

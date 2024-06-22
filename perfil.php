@@ -2,7 +2,8 @@
 session_start();
 // Aguarda 1 segundos antes de redirecionar o usuário
 sleep(1);
-include ("conexao.php");
+require_once "conexao.php";
+$conexao = conectar();
 
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {

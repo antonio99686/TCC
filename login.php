@@ -22,7 +22,8 @@ if (empty($_POST['CPF']) or empty($_POST['senha'])) {
    exit; // Termina o script se as informações não estiverem completas
 }
 
-include ('conexao.php');
+require_once "conexao.php";
+$conexao = conectar();
 
 $CPF = $_POST['CPF'];
 $senha = $_POST['senha'];

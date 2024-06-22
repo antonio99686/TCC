@@ -35,8 +35,8 @@
     margin: 0;
     padding: 0;
     outline: 0;
-    appearance: 0;
-    border: 0;
+    appearance: none;
+    border: none;
     text-decoration: none;
     box-sizing: border-box;
 }
@@ -64,13 +64,11 @@ img {
     display: block;
     width: 100%;
     object-fit: cover;
-
 }
 
 .imgs {
     left: 5%;
     position: relative;
-
 }
 
 h1 {
@@ -237,7 +235,7 @@ main .analyse {
     gap: 1.6rem;
 }
 
-main .analyse>div {
+main .analyse > div {
     background-color: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
@@ -247,11 +245,11 @@ main .analyse>div {
     transition: all 0.3s ease;
 }
 
-main .analyse>div:hover {
+main .analyse > div:hover {
     box-shadow: none;
 }
 
-main .analyse>div .status {
+main .analyse > div .status {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -436,7 +434,6 @@ main .recent-orders a {
     height: 2.8rem;
     border-radius: 50%;
     overflow: hidden;
-
 }
 
 .right-section .user-profile {
@@ -457,13 +454,10 @@ main .recent-orders a {
 }
 
 .right-section .user-profile img {
-    width: 11rem;
-    height: auto;
     margin-bottom: 0.8rem;
     border-radius: 50%;
     height: 250px;
     width: 260px;
-
 }
 
 .right-section .user-profile h2 {
@@ -546,7 +540,6 @@ main .recent-orders a {
     gap: 0.6rem;
 }
 
-
 @media screen and (max-width: 1200px) {
     .container {
         width: 95%;
@@ -600,7 +593,6 @@ main .recent-orders a {
     main table tbody tr td:first-child {
         display: none;
     }
-
 }
 
 .box {
@@ -612,11 +604,7 @@ main .recent-orders a {
     border-radius: var(--card-border-radius);
     transition: all 0.3s ease;
     margin-top: 5%;
-
 }
-
-
-
 
 @media screen and (max-width: 768px) {
     .container {
@@ -731,9 +719,7 @@ main .recent-orders a {
     .right-section .nav button span {
         font-size: 2rem;
     }
-
 }
-
 
 table {
     width: 100%;
@@ -746,23 +732,19 @@ thead th {
     padding: 10px;
     border-bottom: 1px solid #171717;
     text-align: left;
-
 }
 
 tbody tr:nth-child(even) {
     background-color: rgba(132, 139, 200, 0.18);
-
 }
 
 tbody tr:hover {
     background-color: #484d50;
-
 }
 
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-
 }
 
 .btn_vermelho {
@@ -770,11 +752,9 @@ td {
     color: #fff;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
     border-radius: 20px;
-    left: 5%;
 }
 
 .btn_vermelho:hover {
@@ -786,7 +766,6 @@ td {
     color: #fff;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
     border-radius: 20px;
@@ -798,7 +777,6 @@ td {
 
 .clas {
     text-align: left;
-
 }
 
 .class {

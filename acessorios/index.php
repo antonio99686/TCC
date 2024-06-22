@@ -1,6 +1,7 @@
 <?php
 session_start();
-include ("conexao.php");
+require_once "../conexao.php";
+$conexao = conectar();
 
 // Aguarda 1 segundos antes de redirecionar o usuário
 sleep(1);

@@ -636,24 +636,24 @@ main .recent-orders a {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: rgba(132, 139, 200, 0.18);
+    background-color:#6c9bcf;
 }
 
 .aviso h3 {
     font-size: 18px;
-    color: #696969  ;
+    color: #ffffff;
     margin-bottom: 5px;
 }
 
 .aviso p {
     font-size: 14px;
-    color: #666;
+    color: #ffffff;
     margin-bottom: 5px;
 }
 
 .aviso small {
     font-size: 12px;
-    color: #999;
+    color: #ffffff;
 }
 
 

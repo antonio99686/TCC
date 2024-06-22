@@ -17,7 +17,8 @@
 </html>
 <?php
 // Conecta ao banco de dados
-include ('../conexao.php');
+require_once "../../../conexao.php";
+$conexao = conectar();
 
 // Verifica se os dados do formulário foram recebidos corretamente
 if (

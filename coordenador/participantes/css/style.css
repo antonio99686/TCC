@@ -753,14 +753,14 @@ label {
     padding: 10px;
     margin: auto;
     display: block;
-    border: 1px solid #ccc;
+    border: 1px solid #181a1e;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
-    background-color: #fff;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    color: black;
+    /* background-color: var(--color-white);*/
+    background-color: white;
+
 }
 
 .form-control:focus {
@@ -770,4 +770,39 @@ label {
 
 .form-control option {
     padding: 10px;
+}
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    position: relative;
+    right: 15%;
+}
+
+thead th {
+    background-color: rgba(132, 139, 200, 0.18);
+    padding: 10px;
+    border-bottom: 1px solid black;
+    text-align: center;
+
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(132, 139, 200, 0.18);
+
+}
+
+tbody tr:hover {
+    background-color: #484d50;
+
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+
 }

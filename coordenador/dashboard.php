@@ -1,9 +1,8 @@
 <?php
 
-
 session_start();
-include ("conexao.php");
-
+require_once "../conexao.php";
+$conexao = conectar();
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado

@@ -1,6 +1,7 @@
 <?php
 session_start();
-include ("conexao.php");
+require_once "conexao.php";
+$conexao = conectar();
 
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
@@ -76,7 +77,7 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
                     <h3>Calendário</h3>
                 </a>
                 <a href="pagamento">
-                    <span class="material-icons-sharp">money</span>
+                    <span class="material-icons-sharp">paid</span>
                     <h3>Pagamento</h3>
                 </a>
                 <a href="acessorios">
