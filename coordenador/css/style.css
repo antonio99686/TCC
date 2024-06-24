@@ -791,3 +791,19 @@ textarea:focus {
 
 }
 
+label {
+    color: white;
+    background-color: var(--color-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+label:hover {
+    background-color: #3c597b;
+}

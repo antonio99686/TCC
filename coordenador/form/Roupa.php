@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../conexao.php";
+require_once "../../conexao.php";
 $conexao = conectar();
 
 // Verifica se o usuário está logado

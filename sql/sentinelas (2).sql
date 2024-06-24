@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 28-Maio-2024 às 17:10
+-- Tempo de geração: 24-Jun-2024 às 12:37
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -24,28 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `avisos`
---
-
-DROP TABLE IF EXISTS `avisos`;
-CREATE TABLE IF NOT EXISTS `avisos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(255) NOT NULL,
-  `mensagem` text NOT NULL,
-  `data` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Extraindo dados da tabela `avisos`
---
-
-INSERT INTO `avisos` (`id`, `titulo`, `mensagem`, `data`) VALUES
-(9, 'reuniao', '123', '2024-05-18 21:20:35');
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `roupas`
 --
 
@@ -57,29 +35,19 @@ CREATE TABLE IF NOT EXISTS `roupas` (
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `roupas`
 --
 
 INSERT INTO `roupas` (`id`, `nome`, `status_devolucao`, `id_usuario`) VALUES
-(3, 'Bombacha', 1, 1),
-(4, 'Camisa', 1, 1),
-(5, 'Cinto (ou guaiaca)', 1, 1),
-(6, 'Chapéu', 1, 1),
-(7, 'Lenço', 1, 1),
-(8, 'Esporas', 1, 1),
-(9, 'lenço de mao', 1, 1),
-(10, 'fita do chapeu ', 0, 1),
-(12, 'vestido ', 1, 25),
-(13, 'brinco ', 0, 25),
-(14, 'lenço', 1, 25),
-(15, 'flor', 0, 25),
-(52, 'vestido ', 0, 27),
-(53, 'espora', 0, 25),
-(54, 'vestido ', 1, 28),
-(55, 'espora', 0, 29);
+(80, 'Bombacha', 0, 38),
+(81, 'espora', 1, 38),
+(82, 'flor', 1, 25),
+(83, 'vestido ', 1, 25),
+(84, 'lenço', 1, 38),
+(85, 'vestido ', 1, 28);
 
 -- --------------------------------------------------------
 
@@ -94,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nome` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `datas` date DEFAULT NULL,
-  `CPF` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `CPF` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `RG` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `categoria` varchar(255) NOT NULL,
   `senha` varchar(255) DEFAULT NULL,
@@ -113,20 +81,22 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `identidade_verso` varchar(255) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
 INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `matricula`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`, `saldo`, `identidade_frente`, `identidade_verso`) VALUES
-(1, 1, 'Antonio Carlos Mattes Mongelo', 'antoniomattes72@gmail.com', '2006-08-10', '05500840029', '2108268794', 'adulto', '123', '5596860344', '2024324018', 'antonionMong.png', 'M', 'cohab 2', 'Raquel Mattes Mongelo', '2022-10-06', '55999982163', '17', '', '100.00', '', ''),
 (2, 3, 'Raquel Mattes Mongelo', 'Raquelmattes88@gmail.com', '1975-09-12', '80610420020', '1234567890', 'adulto', '123', '55999982163', '2024324058', 'raquel.jpg', 'F', 'cohab 2', 'proprio', '2034-04-12', '', '48', 'Luce Terezinha Mattes Mongelo', '150.00', '', ''),
-(3, 2, 'JEAN ANDERSON GODOY DE SOUZA', 'jean@gmail.com', '1974-05-31', '12345678900', '1234567980', 'adulto', '123', '5596441634', '2024325874', 'jean.png', 'M', 'cohab 2', 'proprio', '2022-10-05', '', '50', '', '200.00', '', ''),
+(3, 2, 'Jean Anderson Godoy de Souza', 'jean@gmail.com', '1974-05-31', '12345678900', '1234567980', 'adulto', '123', '5596441634', '2024325874', 'jean.png', 'M', 'cohab 2', 'proprio', '2022-10-05', '', '50', '', '200.00', '', ''),
 (25, 1, 'Luce Terezinha Mattes Mongelo', 'lucemattes2@gmail.com', '2009-12-21', '05500866095', '1234567890', 'juvenil', '123', '55999302422', '2024397380', 'luce.jpg', 'F', 'COHAB II Q19 CASA 302', 'Raquel mattes mongelo ', '2021-10-06', '55999982163', '14', 'Luce TerezinhaMattes Mongelo', '3.00', '', ''),
 (27, 1, 'vitória da silva flores ', 'vitoriadasilvaflores2014@gmail.com', '2006-09-15', '04879776025', '1112212053', 'adulto', 'Vitoria15', '55991898282', '2024885754', 'vih.jpg', 'F', 'santo inácio rua antônio mascia 936', ' andréia regiane santos da silva', '2023-06-26', '51 98151-30', '17', '', '0.00', '', ''),
 (28, 1, 'Larissa da Silva Alves', 'alveszlari@gmail.com', '2006-05-25', '04324264007', '00000000000', 'adulto', 'Jesus101sa', '55996797629', '2024195451', 'lari.jpg', 'F', 'Emílio Brand Q7 n°133', 'Rita de Cascia da Silva Alves ', '2021-10-06', '55 99605518', '17', '', '0.00', '', ''),
-(29, 1, 'Lucas da Silva Alves  ', 'lucazalvessilva012@gmail.com', '2006-05-25', '04324259003', '00000000000', 'adulto', '25052006', '55 99004987', '2024587151', 'lucas.jpg', 'M', ' cohab 2, quadra sete casa 133', 'Rita de Cascia da Silva Alves ', '2021-10-06', '55 99605518', '17', '', '0.00', '', '');
+(29, 1, 'Lucas da Silva Alves  ', 'lucazalvessilva012@gmail.com', '2006-05-25', '04324259003', '00000000000', 'adulto', '25052006', '55 99004987', '2024587151', 'lucas.jpg', 'M', ' cohab 2, quadra sete casa 133', 'Rita de Cascia da Silva Alves ', '2021-10-06', '55 99605518', '17', '', '0.00', '', ''),
+(38, 1, 'Antonio Carlos Mattes Mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '05500840029', '2108268794', 'adulto', '123', '55996860344', '2024843701', 'antonionMong.png', 'M', 'Emílio Brand Q19 n°302', 'Raquel mattes mongelo ', '2021-10-06', '55999982163', '17', '', '0.00', 'frente.jpg', 'verso.jpg'),
+(40, 1, 'gabriel ', 'lucemattes2@gmail.com', '0022-05-05', '44', '44444444444', 'adulto', '123', '55999302422', '202449279', 'Antnio_Mattes.png', 'F', 'cohab', 'Raquel mattes mongelo ', '0044-04-04', '55999982163', '44', 'antonio carlos mattes mongelo', '0.00', '', ''),
+(41, 1, 'Vitor Murilo colcete de lima', 'murilocolcete@gmail.com', '2004-06-03', '04166564048', '1112628944', 'adulto', 'Gremista26', '55991237560', '2024408493', 'murilo.jpg', 'M', 'Rua tarumã 20 profilurb ', 'Isa Marina colcete de lima ', '2024-06-21', '55991237560', '55', '20', '0.00', '', '');
 
 --
 -- Restrições para despejos de tabelas

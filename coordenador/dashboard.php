@@ -29,38 +29,6 @@ if (!$resultado || mysqli_num_rows($resultado) == 0) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-$mensagem_alerta = "";
-
-// Processa o formulário de adição de recado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $titulo = $_POST['titulo'];
-    $mensagem = $_POST['mensagem'];
-
-    // Consulta SQL para inserir o recado
-    $sql_avisos = "INSERT INTO avisos (titulo, mensagem) VALUES (?, ?)";
-    $stmt_avisos = mysqli_prepare($conexao, $sql_avisos);
-    mysqli_stmt_bind_param($stmt_avisos, "ss", $titulo, $mensagem);
-
-    if (mysqli_stmt_execute($stmt_avisos)) {
-        $mensagem_alerta = "<script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Recado adicionado com sucesso!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>";
-    } else {
-        $mensagem_alerta = "<script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Erro ao adicionar recado!',
-                text: '" . mysqli_error($conexao) . "',
-                showConfirmButton: true
-            });
-        </script>";
-    }
-}
 
 
 
@@ -195,20 +163,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="reminders">
                 <div class="notification">
-                    <h1>Adicionar Recado</h1>
-                    <form method="post" action="dashboard.php">
-                        <label for="titulo">Título:</label><br>
-                        <input type="text" id="titulo" name="titulo" required><br>
-                        <label for="mensagem">Mensagem:</label><br>
-                        <textarea id="mensagem" name="mensagem" required></textarea><br>
-                        <input type="submit" class="button" value="Adicionar">
-                    </form>
+                    <h1>Enviar Email</h1>
+                    <p>Roupas pendentes</p>
+                    <a href="../email/index.php"><label for="enviar">ENVIAR</label></a>
                 </div>
             </div>
         </div>
-    </div>
-    <?php echo $mensagem_alerta; ?>
-    <script src="JavaScript/index.js"></script>
+
+        <script src="JavaScript/index.js"></script>
 </body>
 
 </html>
