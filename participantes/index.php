@@ -1,8 +1,9 @@
 <?php
 session_start();
-include ("conexao.php");
-    
-// Aguarda 1 segundos antes de redirecionar o usuário
+require_once "../conexao.php";
+$conexao = conectar();
+
+// Aguarda 1 segundo antes de redirecionar o usuário
 sleep(1);
 
 // Verifica se a sessão está iniciada e se o usuário está logado
@@ -15,12 +16,9 @@ if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
-$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id_usuario);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
+// Consulta SQL para obter os dados do usuário
+$sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
+$resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -30,6 +28,26 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
+
+// Função para calcular a idade com base na data de nascimento
+function calcular_idade($data_nascimento) {
+    $data_nasc = new DateTime($data_nascimento);
+    $hoje = new DateTime();
+    $idade = $hoje->diff($data_nasc);
+    return $idade->y;
+}
+
+// Função para determinar a categoria com base na idade
+function determinar_categoria($idade) {
+    if ($idade <= 12) {
+        return 'Mirim';
+    } elseif ($idade <= 17) {
+        return 'Juvenil';
+    } else {
+        return 'Adulto';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -53,8 +71,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <aside>
             <div class="toggle">
                 <div class="logo">
-
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                <h2>Unindo Forças é <span class="danger">Bem Mais Fácil</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -87,7 +104,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <span class="material-icons-sharp">
                         event
                     </span>
-                    <h3>Calendario</h3>
+                    <h3>Calendário</h3>
                 </a>
                 <a href="../pagamento">
                     <span class="material-icons-sharp">
@@ -101,7 +118,6 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-
 
                 <a href="../logout.php">
                     <span class="material-icons-sharp">
@@ -119,11 +135,11 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="recent-orders">
                 <?php
-                // Consulta SQL para buscar os dados da selecionada
+                // Consulta SQL para buscar os dados dos dançarinos com base na categoria
                 $sql = "SELECT * FROM usuario WHERE statuss = 1";
-                $result = $conexao->query($sql);
+                $resultado = mysqli_query($conexao, $sql);
 
-                if ($result->num_rows > 0) {
+                if (mysqli_num_rows($resultado) > 0) {
                     // Exibindo os resultados em uma tabela
                     echo ' <div class="formato"><table class="table table-striped">
     <thead class="thead-info">
@@ -132,32 +148,28 @@ $dados = mysqli_fetch_assoc($resultado);
                    <th>Nome</th>
                    <th>Data de Nascimento</th>
                    <th>Matricula</th>
+                   <th>Categoria</th>
                    <th>Usuário</th> 
                    </tr>
                    </thead>
                    <tbody>';
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = mysqli_fetch_assoc($resultado)) {
+                        $idade = calcular_idade($row['datas']);
+                        $categoria = determinar_categoria($idade);
                         echo '<tr>';
                         echo "<td>" . $row['id_usuario'] . "</td>";
                         echo "<td>" . $row['nome'] . "</td>";
                         echo "<td>" . $row['datas'] . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";
+                        echo "<td>" . $categoria . "</td>";
                         echo "<td><div class='users'><img src='../img/" . $row['imagem'] . "' ></div></td>";
                         echo "<td>
-                    <a href='formedit.php?id_usuario=" .
-                            $row['id_usuario'] .
-                            "&nome=" . $row['nome'] .
-                            "&data_entrada=" . $row['datas'] .
-                            "&mattricula=" . $row['matricula'] . "'>
-                        
-                    </a>
+                    
                 </td>";
                         echo '</tr>';
                     }
-
-
                 } else {
-                    echo 'Nenhum resultado encontrado para essa categoria.';
+                    echo 'Nenhum resultado encontrado.';
                 }
                 ?>
 
@@ -186,7 +198,7 @@ $dados = mysqli_fetch_assoc($resultado);
 
                 <div class="profile">
                     <div class="info">
-                        <p>Ola, <b>Bem-Vindo(a)</b></p>
+                        <p>Olá, <b>Bem-Vindo(a)</b></p>
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
@@ -197,50 +209,12 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
             <!-- Fim da navegação -->
 
-
-
-
-
         </div>
-
 
     </div>
 
-   
     <script src="../JavaScript/index.js"></script>
-    <script>
-        function confirmLogout() {
-            Swal.fire({
-                title: '<?php echo $_SESSION['nome'] ?>',
-                text: "Você realmente deseja sair?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, sair',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../logout.php';
-                }
-            });
-        }
-
-        function cancelLogout() {
-            Swal.fire({
-                title: 'Operação cancelada',
-                text: 'Você permanecerá na página atual',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-        }
-    </script>
-    <a onclick="confirmLogout()">
-        <span class="icon">
-            <ion-icon name="log-out-outline"></ion-icon>
-        </span>
-
-    </a>
+   
 </body>
 
 </html>

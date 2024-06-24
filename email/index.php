@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Notificações</title>
+    <title>Sistema de Email</title>
     <link rel="shortcut icon" href="img/gmail.png" />
     <!-- Inclua o SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -53,9 +53,9 @@
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;           // Porta padrão para SMTP
     
-            $mail->setFrom($config['email'], "Sistema de Notificações");
+            $mail->setFrom($config['email'], "Devolução");
             $mail->addAddress($email_usuario, $nome_usuario);
-            $mail->addReplyTo($config['email'], "Sistema de Notificações");
+            $mail->addReplyTo($config['email'], "Devolução");
 
             $mail->isHTML(true);
             $mail->Subject = $assunto;
@@ -114,7 +114,7 @@
             Solicitamos gentilmente que você providencie a devolução desses itens o mais breve possível.<br>
             Agradecemos pela sua colaboração.<br>
             Atenciosamente,<br>
-           <b> Grupo de dança Sentinela da Fronteira </b>";
+           <em><b> Grupo de dança Sentinela da Fronteira </b></em>";
 
 
                 // Envia o e-mail
