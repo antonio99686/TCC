@@ -1,52 +1,63 @@
 <?php
-// Inicia a sessão
-session_start();
-require_once "../../conexao.php";
-$conexao = conectar();
+session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
+require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
+$conexao = conectar(); // Estabelece a conexão com o banco de dados
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
-    // Redireciona para a página de login se não estiver logado
-    header("Location: ../login.php");
+    header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
     exit();
 }
 
-// Consulta SQL para obter os dados do usuário usando instruções preparadas
+// Obtém os dados do usuário logado
 $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
+$stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
+mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
+mysqli_stmt_execute($stmt); // Executa a consulta preparada
+$resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
 
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+// Verifica se foi feita uma requisição de busca de usuários
+if (isset($_GET['nome_usuario'])) {
+    $nome_usuario = $_GET['nome_usuario'];
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE 
+    CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
+    mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca
+    mysqli_stmt_execute($stmt); // Executa a consulta preparada
+    $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+
+    $usuarios = [];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($usuario = mysqli_fetch_assoc($resultado)) {
+            $usuarios[] = $usuario; // Armazena os usuários encontrados no array $usuarios
+        }
+    }
+
+    echo json_encode($usuarios); // Retorna os usuários encontrados como JSON e termina o script
     exit();
 }
 
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado);
 
-//=================\ SELECIONA USUÁRIO NA LISTA /=================\\
-
-if ($_GET) {
+// Verifica se um usuário foi selecionado
+if (isset($_GET['usuario_selecionado'])) {
     $id_usuario_selecionado = $_GET['usuario_selecionado'];
 
     // Consulta SQL para obter as roupas do usuário selecionado
-    $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
+    $stmt = mysqli_prepare($conexao, "SELECT * FROM roupas WHERE id_usuario = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id_usuario_selecionado); // Associa o parâmetro à consulta de roupas
+    mysqli_stmt_execute($stmt); // Executa a consulta preparada
+    $resultado_roupas_usuario = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta de roupas
 
-    // Verifica se a consulta foi bem-sucedida
     if (!$resultado_roupas_usuario) {
-        echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+        echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao); // Exibe erro em caso de falha na consulta
         exit();
     }
 }
 
-//=================\ ATUALIZA A LISTA DE ITENS /=================\\
+// Atualiza a lista de itens se o formulário for enviado
+$sweetalert_msg = ""; // Inicializa a variável para mensagem do SweetAlert
 
-$sweetalert_msg = "";
-
-if ($_POST) {
+if ($_POST) { // Verifica se o formulário foi submetido
     $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
     $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : [];
 
@@ -75,6 +86,7 @@ if ($_POST) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,13 +94,10 @@ if ($_POST) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <!-- shortcut icon -->
     <link rel="shortcut icon" href="../../img/img/icon.png">
-    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
     <title>Sentinela da fronteira</title>
 </head>
 
@@ -176,7 +185,7 @@ if ($_POST) {
                         <div class="status">
                             <div class="info">
                                 <h3>Editar</h3>
-                                <h1>Edite o Usuário</h3>
+                                <h1>Edite o Usuário</h1>
                             </div>
                             <div class="progresss"></div>
                         </div>
@@ -198,35 +207,14 @@ if ($_POST) {
 
             <!-- Tabela de pedidos recentes -->
             <div class="box">
-                <form method="GET" action="index.php">
-                    <div class="form-group">
-                        <label for="usuario_selecionado">Selecione o usuário:</label>
-                        <select class="form-control" id="usuario_selecionado" name="usuario_selecionado">
-                            <?php
-                            // Consulta SQL para obter a lista de usuários com status 1
-                            $sql_usuarios = "SELECT id_usuario, nome FROM usuario WHERE statuss = 1";
-                            $resultado_usuarios = mysqli_query($conexao, $sql_usuarios);
+                <div class="form-group">
+                    <label for="nome_usuario">Digite o nome do usuário:</label>
+                    <input type="text" class="form-control" id="nome_usuario" name="nome_usuario"
+                        onkeyup="buscarUsuarios()">
+                </div>
+                <div id="resultados_busca"></div>
 
-                            // Verifica se a consulta foi bem-sucedida
-                            if (!$resultado_usuarios) {
-                                echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-                                exit();
-                            }
-
-                            // Exibe as opções de usuários
-                            while ($row = mysqli_fetch_assoc($resultado_usuarios)) {
-                                if ($id_usuario_selecionado == $row['id_usuario'])
-                                    echo "<option value='" . $row['id_usuario'] . "' selected>" . $row['nome'] . "</option>";
-                                else
-                                    echo "<option value='" . $row['id_usuario'] . "'>" . $row['nome'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <button type="submit" class="button">Selecionar</button>
-                </form>
-
-                <?php if (isset($resultado_roupas_usuario)) : ?>
+                <?php if (isset($resultado_roupas_usuario)): ?>
                     <!-- Exibição de Roupas do Usuário Selecionado -->
                     <h2>Roupas do Usuário Selecionado</h2>
                     <form method="post" action="">
@@ -239,7 +227,7 @@ if ($_POST) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)) : ?>
+                                <?php while ($row = mysqli_fetch_assoc($resultado_roupas_usuario)): ?>
                                     <tr>
                                         <td><?php echo $row['nome']; ?></td>
                                         <td>
@@ -247,21 +235,20 @@ if ($_POST) {
                                             if ($row['status_devolucao'] == 0)
                                                 echo '<input class="form-check-input" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '"> <label class="form-check-label"> Pendente </label>';
                                             else
-                                                echo '<input class="form-check-input" class="form-control" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '" checked> <label class="form-check-label" for="flexCheckDefault"> Entregue </label>';
+                                                echo '<input class="form-check-input" type="checkbox" name="status_devolucao[]" value="' . $row['id'] . '" checked> <label class="form-check-label"> Devolvido </label>';
                                             ?>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
-                        <button type="submit" class="button">Salvar Status</button>
+                        <button type="submit" class="button">Salvar</button>
                     </form>
                 <?php endif; ?>
             </div>
             <!-- Fim dos pedidos recentes -->
         </main>
         <!-- Fim do conteúdo principal -->
-
         <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
@@ -299,23 +286,43 @@ if ($_POST) {
             </div>
         </div>
     </div>
-
     <script src="../JavaScript/index.js"></script>
     <script>
-        function showAlert(message) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: message,
-                showConfirmButton: false,
-                timer: 1500
-            });
+        function buscarUsuarios() {
+            const nomeUsuario = document.getElementById('nome_usuario').value; // Obtém o valor do campo de entrada de nome de usuário
+            if (nomeUsuario.length > 0) { // Verifica se o campo não está vazio
+                const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest para fazer a requisição AJAX
+                xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true); // Configura a requisição GET para buscar usuários com base no nome digitado
+                xhr.onload = function () { // Define o que fazer quando a requisição retornar
+                    if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
+                        const resultados = JSON.parse(this.responseText); // Converte a resposta JSON em um objeto JavaScript
+                        let output = '<ul>'; // Inicia uma lista não ordenada para mostrar os resultados
+                        resultados.forEach(function (usuario) { // Itera sobre cada usuário retornado
+                            output += `<li><a href="?usuario_selecionado=${usuario.id_usuario}">${usuario.nome}</a></li>`; // Cria um link para selecionar o usuário
+                        });
+                        output += '</ul>'; // Fecha a lista de resultados
+                        document.getElementById('resultados_busca').innerHTML = output; // Insere os resultados na div 'resultados_busca' do HTML
+                    }
+                };
+                xhr.send(); // Envia a requisição
+            } else {
+                document.getElementById('resultados_busca').innerHTML = ''; // Limpa os resultados se o campo de busca estiver vazio
+            }
         }
-
-        <?php if ($sweetalert_msg) : ?>
-            showAlert('<?php echo $sweetalert_msg; ?>');
-        <?php endif; ?>
     </script>
-</body>
 
-</html>
+
+    <?php if ($sweetalert_msg): ?>
+        <script>
+            function showAlert(message) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+            showAlert('<?php echo $sweetalert_msg; ?>');
+        </script>
+    <?php endif; ?>

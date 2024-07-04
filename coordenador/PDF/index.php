@@ -9,7 +9,7 @@ if (isset($_GET['id_usuario']) && is_numeric($_GET['id_usuario'])) {
 }
 
 // Inclui o arquivo de conexão com o banco de dados
-require_once "../../conexao.php";
+require_once "conexao.php";
 $conexao = conectar();
 
 // Cria a consulta SQL para selecionar os dados do usuário com o ID especificado
@@ -58,8 +58,8 @@ if ($result->num_rows > 0) {
             
         <div class='cart_ident'>
    
-        <img class='frente' src='http://localhost:8080/tcc/img/carteira/".$dados['identidade_frente']."'>
-        <img class='verso' src='http://localhost:8080/tcc/img/carteira/".$dados['identidade_verso']."'>
+        <img class='frente' src='http://localhost:8080/tcc/img/carteira/" . $dados['identidade_frente'] . "'>
+        <img class='verso' src='http://localhost:8080/tcc/img/carteira/" . $dados['identidade_verso'] . "'>
             
         </div>
             ";

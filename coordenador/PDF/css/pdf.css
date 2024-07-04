@@ -41,20 +41,7 @@ body {
     margin: 5px 0;
 }
 
-.frente {
-    height: 260px;
-    position: relative;
-    margin-top: 10%;
-}
 
-.verso {
-    height: 150px;
-    margin-top: 10%;
-}
-
-@page {
-    margin: 100px 25px;
-}
 
 
 .footer {
@@ -73,12 +60,12 @@ body {
 .frente {
     height: 300px;
     position: relative;
-    top: 5%;
+    margin-top: 15%;
 }
 
 .verso {
     height: 300px;
     position: relative;
-    top: 0%;
+    margin-top: 0%;
     left: 15%;
 }

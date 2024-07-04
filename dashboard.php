@@ -29,9 +29,6 @@ if (!$resultado || mysqli_num_rows($resultado) == 0) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-// Consulta SQL para obter os dados da tabela Avisos
-$sql_avisos = "SELECT * FROM avisos ORDER BY data DESC";
-$result_avisos = mysqli_query($conexao, $sql_avisos);
 ?>
 
 <!DOCTYPE html>
@@ -135,8 +132,8 @@ $result_avisos = mysqli_query($conexao, $sql_avisos);
                     <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                     <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                     <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                    <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
-                </div>
+                    <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
+    </div>
             </div>
         </main>
 

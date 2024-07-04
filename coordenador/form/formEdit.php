@@ -68,37 +68,36 @@ sleep(1);
             <img src="img/icno.jpg" alt="Logo" class="logo" />
         </header>
         <h1> Atualização do Usuário </h1>
-        <form class="form" action="codigo/formEdit.php" method="GET"
-            enctype="multipart/form-data">
+        <form class="form" action="codigo/formEdit.php" method="GET" enctype="multipart/form-data">
 
             <div class="form_grupo">
                 <label for="nome" class="form_label">ID</label>
                 <input type="text" name="id_usuario" class="form_input"
-                    value="<?php echo isset($id_usuario) ? $id_usuario : ''; ?>" placeholder="ID" >
+                    value="<?php echo isset($id_usuario) ? $id_usuario : ''; ?>" placeholder="ID">
             </div>
             <div class="form_grupo">
                 <label for="nome" class="form_label">Nome</label>
                 <input type="text" name="nome" class="form_input" value="<?php echo isset($nome) ? $nome : ''; ?>"
-                    placeholder="Nome" >
+                    placeholder="Nome">
             </div>
             <div class="form_grupo">
                 <label for="email" class="form_label">Email</label>
                 <input type="email" name="email" class="form_input" value="<?php echo isset($email) ? $email : ''; ?>"
-                    placeholder="seuemail@email.com" >
+                    placeholder="seuemail@email.com">
             </div>
             <div class="form_grupo">
                 <label for="senha" class="form_label">Senha</label>
                 <input type="password" name="senha" class="form_input"
-                    value="<?php echo isset($senha) ? $senha : ''; ?>" placeholder="mínimo 8 caracteres" >
+                    value="<?php echo isset($senha) ? $senha : ''; ?>" placeholder="mínimo 8 caracteres">
             </div>
             <div class="form_grupo">
                 <label for="datas" class="form_label">Data de Nascimento</label>
                 <input type="date" name="datas" class="form_input" value="<?php echo isset($datas) ? $datas : ''; ?>"
-                    placeholder="Data de Nascimento" >
+                    placeholder="Data de Nascimento">
             </div>
             <div class="form_grupo">
                 <label for="status" class="text">Categoria</label>
-                <select name="status" class="dropdown" >
+                <select name="status" class="dropdown">
                     <option value="" disabled <?php echo ($status == '') ? 'selected' : ''; ?>>Selecione</option>
                     <option value="1" <?php echo ($status == 1) ? 'selected' : ''; ?>>Dançarino</option>
                     <option value="2" <?php echo ($status == 2) ? 'selected' : ''; ?>>Coordenador</option>
@@ -108,28 +107,27 @@ sleep(1);
             <div class="form_grupo">
                 <label for="CPF" class="form_label">CPF</label>
                 <input type="text" name="CPF" class="form_input" value="<?php echo isset($CPF) ? $CPF : ''; ?>"
-                    placeholder="00000000000" >
+                    placeholder="00000000000">
             </div>
             <div class="form_grupo">
                 <label for="RG" class="form_label">RG</label>
                 <input type="text" name="RG" class="form_input" value="<?php echo isset($RG) ? $RG : ''; ?>"
-                    placeholder="00000000000" >
+                    placeholder="00000000000">
             </div>
             <div class="form_grupo">
                 <label for="categoria" class="form_label">Nível</label>
                 <input type="text" name="categoria" class="form_input"
-                    value="<?php echo isset($categoria) ? $categoria : ''; ?>" placeholder="adulto, juvenil, mirim"
-                    >
+                    value="<?php echo isset($categoria) ? $categoria : ''; ?>" placeholder="adulto, juvenil, mirim">
             </div>
             <div class="form_grupo">
                 <label for="telefone" class="form_label">Telefone</label>
                 <input type="text" name="telefone" class="form_input"
-                    value="<?php echo isset($telefone) ? $telefone : ''; ?>" placeholder="(00)0000-00000" >
+                    value="<?php echo isset($telefone) ? $telefone : ''; ?>" placeholder="(00)0000-00000">
             </div>
             <div class="form_grupo">
                 <label for="endereco" class="form_label">Endereço</label>
                 <input type="text" name="endereco" class="form_input"
-                    value="<?php echo isset($endereco) ? $endereco : ''; ?>" placeholder="" >
+                    value="<?php echo isset($endereco) ? $endereco : ''; ?>" placeholder="">
             </div>
             <div class="form_grupo">
                 <label for="responsavel" class="form_label">Responsável</label>
@@ -139,7 +137,7 @@ sleep(1);
             <div class="form_grupo">
                 <label for="data_entrada" class="form_label">Data de Entrada</label>
                 <input type="date" name="data_entrada" class="form_input"
-                    value="<?php echo isset($data_entrada) ? $data_entrada : ''; ?>" placeholder="" >
+                    value="<?php echo isset($data_entrada) ? $data_entrada : ''; ?>" placeholder="">
             </div>
             <div class="form_grupo">
                 <label for="tele_respon" class="form_label">Telefone do Responsável</label>
@@ -149,7 +147,7 @@ sleep(1);
             <div class="form_grupo">
                 <label for="idade" class="form_label">Idade</label>
                 <input type="text" name="idade" class="form_input" value="<?php echo isset($idade) ? $idade : ''; ?>"
-                    placeholder="" >
+                    placeholder="">
             </div>
             <div class="form_grupo">
                 <label for="nom_dan" class="form_label">Nome do Dançarino</label>
@@ -158,17 +156,14 @@ sleep(1);
             </div>
             <div class="form_grupo">
                 <label for="genero" class="text">Sexo</label>
-                <select name="genero" class="dropdown" >
+                <select name="genero" class="dropdown">
                     <option value="" disabled <?php echo ($genero == '') ? 'selected' : ''; ?>>Selecione</option>
                     <option value="M" <?php echo ($genero == 'M') ? 'selected' : ''; ?>>Masculino</option>
                     <option value="F" <?php echo ($genero == 'F') ? 'selected' : ''; ?>>Feminino</option>
                 </select>
             </div>
             <br>
-            <div class="form_grupo">
-                <label for="imagem" class="form_label">Imagem</label>
-                <input type="file" name="imagem" class="form_input" id="imagem" placeholder="">
-            </div>
+
 
             <button type="submit" name="Submit" class="form-control">Atualizar</button>
             <a href="../dashboard.php" class="form-control">Voltar</a>

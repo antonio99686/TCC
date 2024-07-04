@@ -13,7 +13,7 @@
 
 <body>
     <?php
-    // Aguarda 1 segundos antes de redirecionar o usuário
+    // Aguarda 1 segundo antes de redirecionar o usuário
     sleep(1);
     // Conecta ao banco de dados
     require_once "../../../conexao.php";
@@ -120,86 +120,49 @@
         $nom_dan = $_POST['nom_dan'];
         $genero = $_POST['genero'];
 
-        // Verifica se um arquivo foi enviado
-        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            // Define o nome do arquivo
-            $imagem = $_FILES['arquivo']['name'];
+        // Comando SQL para atualização
+        $sql = "UPDATE usuario SET 
+                nome='$nome',
+                statuss='$statuss',
+                email='$email',
+                datas='$datas',
+                CPF='$CPF',
+                RG='$RG',
+                categoria='$categoria',
+                senha='$senha',
+                telefone='$telefone',
+                endereco='$endereco',
+                responsavel='$responsavel',
+                data_entrada='$data_entrada',
+                tele_respon='$tele_respon',
+                idade='$idade',
+                nom_dan='$nom_dan',
+                genero='$genero'
+                WHERE id_usuario=$id_usuario";
 
-            // Define a pasta para onde enviaremos o arquivo
-            $diretorio = "../../img/";
-
-            // Faz o upload, movendo o arquivo para a pasta especificada
-            if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem)) {
-                // Comando SQL para atualização
-                $sql = "UPDATE usuario SET 
-                        nome='$nome',
-                        statuss='$statuss',
-                        email='$email',
-                        datas='$datas',
-                        CPF='$CPF',
-                        RG='$RG',
-                        categoria='$categoria',
-                        senha='$senha',
-                        telefone='$telefone',
-                        endereco='$endereco',
-                        responsavel='$responsavel',
-                        data_entrada='$data_entrada',
-                        tele_respon='$tele_respon',
-                        idade='$idade',
-                        nom_dan='$nom_dan',
-                        genero='$genero',
-                        imagem='$imagem'
-                        WHERE id_usuario=$id_usuario";
-
-                // Executa o comando SQL
-                if (mysqli_query($conexao, $sql)) {
-                    // Dados atualizados com sucesso
-                    echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Sucesso!',
-                        text: 'Dados do usuário atualizados com sucesso!',
-                        timer: 3000, // 3 segundos
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.href = '../lista.php';
-                    });
-                </script>";
-                    exit();
-                } else {
-                    // Falha ao atualizar os dados
-                    echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Falha ao atualizar os dados do usuário.',
-                        timer: 3000, // 3 segundos
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    });
-                </script>";
-                }
-            } else {
-                // Erro ao mover o arquivo
-                echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Erro ao mover o arquivo.',
-                    timer: 3000, // 3 segundos
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
-            </script>";
-            }
+        // Executa o comando SQL
+        if (mysqli_query($conexao, $sql)) {
+            // Dados atualizados com sucesso
+            echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Dados do usuário atualizados com sucesso!',
+                timer: 3000, // 3 segundos
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = '../lista.php';
+            });
+        </script>";
+            exit();
         } else {
-            // Nenhum arquivo enviado ou erro no upload
+            // Falha ao atualizar os dados
             echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Nenhum arquivo enviado ou erro no upload.',
+                text: 'Falha ao atualizar os dados do usuário.',
                 timer: 3000, // 3 segundos
                 timerProgressBar: true,
                 showConfirmButton: false
@@ -220,4 +183,6 @@
     </script>";
     }
     ?>
-    
+</body>
+
+</html>

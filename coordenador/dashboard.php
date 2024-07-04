@@ -10,7 +10,7 @@ if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     exit();
 }
 
-// Obtém o ID do usuário da sessão
+// Obtém o ID do usuário da sessão  
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
@@ -133,7 +133,8 @@ $dados = mysqli_fetch_assoc($resultado);
                 <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                 <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                 <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars($dados['datas']); ?></div>
+                <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
+
             </div>
         </main>
         <div class="right-section">

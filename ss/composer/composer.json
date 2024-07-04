@@ -1,0 +1,8 @@
+{
+    "name": "vendor/mercado-pago",
+    "description": "Description of project Mercado Pago.",
+    
+    "require": {
+        "mercadopago/dx-php":"2.4.5"
+    }
+}

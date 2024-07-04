@@ -128,38 +128,37 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="box">
                 <h2>Dados Usuário</h2>
                 <br>
-                <div class="user"><em><b>Nome:</b></em>  <?php echo $dados['nome'] ?></div>
+                <div class="user"><em><b>Nome:</b></em> <?php echo $dados['nome'] ?></div>
                 <br>
-                <div class="user1"><em><b>Telefone:</b></em>  <?php echo $dados['telefone'] ?></div>
+                <div class="user1"><em><b>Telefone:</b></em> <?php echo $dados['telefone'] ?></div>
                 <br>
-                <div class="user2"><em><b>E-mail:</b></em>  <?php echo $dados['email'] ?></div>
+                <div class="user2"><em><b>E-mail:</b></em> <?php echo $dados['email'] ?></div>
                 <br>
-                <div class="user3"><em><b>Senha:</b></em>  <?php echo $dados['senha'] ?></div>
+                <div class="user3"><em><b>Senha:</b></em> <?php echo $dados['senha'] ?></div>
                 <br>
-                <div class="user4"><em><b>CPF:</b></em>  <?php echo $dados['CPF'] ?></div>
+                <div class="user4"><em><b>CPF:</b></em> <?php echo $dados['CPF'] ?></div>
                 <br>
-                <div class="user5"><em><b>Idade:</b></em>  <?php echo $dados['idade'] ?></div>
+                <div class="user5"><em><b>Idade:</b></em> <?php echo $dados['idade'] ?></div>
                 <br>
-                <div class="user6"><em><b>Matricula:</b></em>  <?php echo $dados['matricula'] ?></div>
+                <div class="user6"><em><b>Matrícula:</b></em> <?php echo $dados['matricula'] ?></div>
                 <br>
-                <div class="user7"><em><b>Data de Nascimento:</b></em>  <?php echo $dados['datas'] ?></div>
+                <div class="user7"><em><b>Data de Nascimento:</b></em>
+                    <?php echo date('d/m/Y', strtotime($dados['datas'])) ?></div>
                 <br>
                 <div class="user8"><em><b>RG:</b></em> <?php echo $dados['RG'] ?></div>
                 <br>
-                <div class="user9"><em><b>Categoria:</b></em>  <?php echo $dados['categoria'] ?></div>
+                <div class="user9"><em><b>Categoria:</b></em> <?php echo $dados['categoria'] ?></div>
                 <br>
-                <div class="user10"><em><b>Genero:</b></em>  <?php echo $dados['genero'] ?></div>
+                <div class="user10"><em><b>Gênero:</b></em> <?php echo $dados['genero'] ?></div>
                 <br>
-                <div class="user11"><em><b>Endereço:</b></em>  <?php echo $dados['endereco'] ?></div>
+                <div class="user11"><em><b>Endereço:</b></em> <?php echo $dados['endereco'] ?></div>
                 <br>
-                <div class="user12"><em><b>Responsável:</b></em>  <?php echo $dados['responsavel'] ?></div>
+                <div class="user12"><em><b>Responsável:</b></em> <?php echo $dados['responsavel'] ?></div>
                 <br>
-                <div class="user13"><em><b>Data de Entrada:</b></em>  <?php echo $dados['data_entrada'] ?></div>
+                <div class="user13"><em><b>Data de Entrada:</b></em>
+                    <?php echo date('d/m/Y', strtotime($dados['data_entrada'])) ?></div>
                 <br>
-                <div class="user14"><em><b>Telefone Responsável:</b></em>  <?php echo $dados['tele_respon'] ?></div>
-                <br>
-                
-
+                <div class="user14"><em><b>Telefone Responsável:</b></em> <?php echo $dados['tele_respon'] ?></div>
             </div>
             <!-- Fim dos pedidos recentes -->
 

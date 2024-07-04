@@ -103,8 +103,8 @@ sleep(1);
                 <option value="Entregue">Entregue</option>
             </select>
 
-            <button type="submit" name="Submit" class="form-control">Cadastrar</button>
-            <a href="../dashboard.php" class="form-control">Voltar</>
+            <button type="submit" name="Submit" class="button">Cadastrar</button>
+            <a href="../dashboard.php" class="button">Voltar</>
 
         </form>
 </body>
