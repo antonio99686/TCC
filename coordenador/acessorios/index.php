@@ -2,7 +2,7 @@
 session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
 require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
 $conexao = conectar(); // Estabelece a conexão com o banco de dados
-
+sleep(1);
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado

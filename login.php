@@ -17,7 +17,7 @@
 session_start();
 
 // Verifique se o formulário foi enviado e se os campos CPF e senha estão preenchidos
-if (empty($_POST['CPF']) or empty($_POST['senha'])) {
+if (empty($_GET['CPF']) or empty($_GET['senha'])) {
    echo "<script>alert('Por favor, preencha todos os campos.');</script>";
    exit; // Termina o script se as informações não estiverem completas
 }
@@ -25,8 +25,8 @@ if (empty($_POST['CPF']) or empty($_POST['senha'])) {
 require_once "conexao.php";
 $conexao = conectar();
 
-$CPF = $_POST['CPF'];
-$senha = $_POST['senha'];
+$CPF = $_GET['CPF'];
+$senha = $_GET['senha'];
 $sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND senha = '{$senha}'";
 
 $resultado = mysqli_query($conexao, $sql);
@@ -46,64 +46,83 @@ if ($qtd > 0) {
 
    switch ($dados['statuss']) {
       case '1':
-         echo "<script>
-         Swal.fire({
-             icon: 'success',
-             title: 'Seja bem-vindo, " . $dados['nome'] . "',
-             showConfirmButton: false,
-             timer: 1500
-         }).then(() => {
-             location.href='dashboard.php';
-         });
-     </script>";
+         // Verifica se é a primeira vez que o usuário faz login
+         if ($dados['primeiro_login'] == 0) {
+            // Atualiza o banco de dados para indicar que não é mais o primeiro login
+            $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
+            mysqli_query($conexao, $updateSql);
 
+            echo "<script>
+               Swal.fire({
+                  icon: 'success',
+                  title: 'Primeiro login!',
+                  text: 'Você será redirecionado para o formulário de edição.',
+                  showConfirmButton: false,
+                  timer: 1500
+               }).then(() => {
+                  location.href='login/formEdit.php'; // Redireciona para o formulário de edição
+               });
+            </script>";
+         } else {
+            // Se não for o primeiro login, redireciona diretamente para o dashboard
+            echo "<script>
+               Swal.fire({
+                  icon: 'success',
+                  title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                  showConfirmButton: false,
+                  timer: 1500
+               }).then(() => {
+                  location.href='dashboard.php';
+               });
+            </script>";
+         }
          break;
       case '2':
          echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    location.href='coordenador/dashboard.php';
-                });
-            </script>";
+            Swal.fire({
+               icon: 'success',
+               title: 'Seja bem-vindo, " . $dados['nome'] . "',
+               showConfirmButton: false,
+               timer: 1500
+            }).then(() => {
+               location.href='coordenador/dashboard.php';
+            });
+         </script>";
          break;
       case '3':
          echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    location.href='pais/dashboard.php';
-                });
-            </script>";
+            Swal.fire({
+               icon: 'success',
+               title: 'Seja bem-vindo, " . $dados['nome'] . "',
+               showConfirmButton: false,
+               timer: 1500
+            }).then(() => {
+               location.href='pais/dashboard.php';
+            });
+         </script>";
          break;
       default:
          echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'CPF ou SENHA incorretos',
-                    text: 'Por favor, insira novamente.',
-                }).then(() => {
-                    location.href='index.php';
-                });
-            </script>";
+            Swal.fire({
+               icon: 'error',
+               title: 'CPF ou SENHA incorretos',
+               text: 'Por favor, insira novamente.',
+            }).then(() => {
+               location.href='index.php';
+            });
+         </script>";
          break;
    }
 } else {
    // Se nenhum registro foi encontrado, exibe um alerta informando que o CPF ou a senha estão incorretos
    echo "<script>
-        Swal.fire({
-            icon: 'error',
-            title: 'CPF ou SENHA incorretos',
-            text: 'Por favor, insira novamente.',
-        }).then(() => {
-            location.href='index.php';
-        });
-    </script>";
+      Swal.fire({
+         icon: 'error',
+         title: 'CPF ou SENHA incorretos',
+         text: 'Por favor, insira novamente.',
+      }).then(() => {
+         location.href='index.php';
+      });
+   </script>";
 }
 ?>

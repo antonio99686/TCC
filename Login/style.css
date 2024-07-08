@@ -29,7 +29,7 @@ body {
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 480px;
+    height: 85vh; /* Ajusta a altura do contêiner */
 }
 
 /* Estilos para parágrafos dentro do contêiner */
@@ -94,21 +94,23 @@ button:hover {
     background-color: #fff;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Ajuste de alinhamento */
     flex-direction: column;
-    padding: 0 40px;
+    padding: 20px;
     height: 100%;
+    overflow-y: auto; /* Adiciona barra de rolagem se necessário */
+    width: 100%; /* Ajusta a largura do formulário */
 }
 
-/* Estilos para inputs dentro do contêiner */
-.container input {
+/* Estilos para inputs e selects dentro do contêiner */
+.container input, .container select {
     background-color: #eee;
     border: none;
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 13px;
     border-radius: 8px;
-    width: 100%;
+    width: calc(100% - 30px); /* Ajusta a largura dos inputs */
     outline: none;
 }
 
@@ -226,7 +228,6 @@ button:hover {
     padding: 0 30px;
     text-align: center;
     top: 0;
-    transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
 

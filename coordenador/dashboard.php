@@ -1,8 +1,8 @@
 <?php
-
 session_start();
 require_once "../conexao.php";
 $conexao = conectar();
+
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
@@ -28,10 +28,6 @@ if (!$resultado || mysqli_num_rows($resultado) == 0) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -113,14 +109,13 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </div>
                 <div class="searches">
-                    <a href="form/roupa.php">
+                    <a href="form/roupa.php" id="openSearchBox">
                         <div class="status">
                             <div class="info">
                                 <h3>Roupa</h3>
-                                <h1>Cadastro da Roupa do Usuário</h1>
+                                <h1>Selecionar Usuário e Roupas</h1>
                             </div>
                         </div>
-
                     </a>
                 </div>
             </div>
@@ -134,7 +129,6 @@ $dados = mysqli_fetch_assoc($resultado);
                 <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                 <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
                 <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
-
             </div>
         </main>
         <div class="right-section">
@@ -170,8 +164,24 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="JavaScript/index.js"></script>
+    <!-- Modal para Seleção de Usuário e Roupas -->
+    <div id="userSelectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Selecionar Usuário e Roupas</h2>
+            <div class="search-container">
+                <input type="text" id="userSearchInput" placeholder="Digite o nome do usuário">
+                <ul id="userList" class="user-list"></ul>
+            </div>
+            <div id="selectedUserDetails" class="selected-user-details"></div>
+            <div id="clothingTable" class="clothing-table"></div>
+            <button id="saveClothingButton">Salvar Roupas</button>
+        </div>
+    </div>
+
+    <script src="JavaScript/index.js"></script>
 </body>
 
 </html>

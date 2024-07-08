@@ -134,7 +134,7 @@ sleep(1);
                 <div class="sales">
                     <div class="status">
                         <div class="info">
-                            <h3>Total em Banco</h3>
+                           <h3>Total em Banco</h3>
                             <h1>R$65,024</h1>
                         </div>
                         <div class="progresss">

@@ -157,9 +157,10 @@ function determinar_categoria($idade) {
                         $idade = calcular_idade($row['datas']);
                         $categoria = determinar_categoria($idade);
                         echo '<tr>';
+                        $data = date("d/m/Y", strtotime($row['datas']));
                         echo "<td>" . $row['id_usuario'] . "</td>";
                         echo "<td>" . $row['nome'] . "</td>";
-                        echo "<td>" . $row['datas'] . "</td>";
+                        echo "<td>" . $data . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $categoria . "</td>";
                         echo "<td><div class='users'><img src='../img/" . $row['imagem'] . "' ></div></td>";

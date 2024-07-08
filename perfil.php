@@ -30,6 +30,45 @@ if (!$resultado) {
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
+
+// Verifica se um arquivo foi enviado via formulário
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK) {
+    $fileTmpPath = $_FILES['file']['tmp_name'];
+    $fileName = $_FILES['file']['name'];
+    $fileSize = $_FILES['file']['size'];
+    $fileType = $_FILES['file']['type'];
+    $fileNameCmps = explode(".", $fileName);
+    $fileExtension = strtolower(end($fileNameCmps));
+
+    $newFileName = $id_usuario . '.' . $fileExtension;
+
+    $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg');
+    if (in_array($fileExtension, $allowedfileExtensions)) {
+        $uploadFileDir = 'img/';
+        $dest_path = $uploadFileDir . $newFileName;
+
+        if (move_uploaded_file($fileTmpPath, $dest_path)) {
+            $updateSql = "UPDATE usuario SET imagem = ? WHERE id_usuario = ?";
+            $updateStmt = mysqli_prepare($conexao, $updateSql);
+            mysqli_stmt_bind_param($updateStmt, 'si', $newFileName, $id_usuario);
+            mysqli_stmt_execute($updateStmt);
+
+            $_SESSION['mensagem'] = 'Imagem atualizada com sucesso!';
+            $_SESSION['tipo_mensagem'] = 'success';
+            $_SESSION['titulo_mensagem'] = 'Sucesso';
+        } else {
+            $_SESSION['mensagem'] = 'Erro ao mover o arquivo enviado';
+            $_SESSION['tipo_mensagem'] = 'error';
+            $_SESSION['titulo_mensagem'] = 'Erro';
+        }
+    } else {
+        $_SESSION['mensagem'] = 'Formato de arquivo não suportado';
+        $_SESSION['tipo_mensagem'] = 'error';
+        $_SESSION['titulo_mensagem'] = 'Erro';
+    }
+    header('Location: perfil.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,22 +78,17 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <!-- shortcut icon -->
     <link rel="shortcut icon" href="img/img/icon.png">
-    <!-- Styles -->
     <link rel="stylesheet" href="css/perfil.css">
     <title>Sentinela da fronteira</title>
-</head>
+   </head>
 
 <body>
-
     <div class="container">
-        <!-- Seção da barra lateral -->
         <aside>
             <div class="toggle">
                 <div class="logo">
-
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -76,7 +110,6 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Users</h3>
                 </a>
-
                 <a href="perfil.php" class="active">
                     <span class="material-icons-sharp">
                         person_outline
@@ -84,7 +117,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <h3>Perfil</h3>
                 </a>
                 <a href="calen" target="_blank">
-                    <span class ="material-icons-sharp">
+                    <span class="material-icons-sharp">
                         event
                     </span>
                     <h3>Calendario</h3>
@@ -101,8 +134,6 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-
-
                 <a href="logout.php">
                     <span class="material-icons-sharp">
                         logout
@@ -111,20 +142,9 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
             </div>
         </aside>
-        <!-- Fim da seção da barra lateral -->
 
-        <!-- Conteúdo principal -->
         <main>
             <h1>Perfil</h1>
-            <!-- Análises -->
-
-
-            <!-- Fim das análises -->
-
-
-            <!-- Fim da seção de novos usuários -->
-
-            <!-- Tabela de pedidos recentes -->
             <div class="box">
                 <h2>Dados Usuário</h2>
                 <br>
@@ -142,8 +162,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 <br>
                 <div class="user6"><em><b>Matrícula:</b></em> <?php echo $dados['matricula'] ?></div>
                 <br>
-                <div class="user7"><em><b>Data de Nascimento:</b></em>
-                    <?php echo date('d/m/Y', strtotime($dados['datas'])) ?></div>
+                <div class="user7"><em><b>Data de Nascimento:</b></em> <?php echo date('d/m/Y', strtotime($dados['datas'])) ?></div>
                 <br>
                 <div class="user8"><em><b>RG:</b></em> <?php echo $dados['RG'] ?></div>
                 <br>
@@ -155,17 +174,12 @@ $dados = mysqli_fetch_assoc($resultado);
                 <br>
                 <div class="user12"><em><b>Responsável:</b></em> <?php echo $dados['responsavel'] ?></div>
                 <br>
-                <div class="user13"><em><b>Data de Entrada:</b></em>
-                    <?php echo date('d/m/Y', strtotime($dados['data_entrada'])) ?></div>
+                <div class="user13"><em><b>Data de Entrada:</b></em> <?php echo date('d/m/Y', strtotime($dados['data_entrada'])) ?></div>
                 <br>
                 <div class="user14"><em><b>Telefone Responsável:</b></em> <?php echo $dados['tele_respon'] ?></div>
             </div>
-            <!-- Fim dos pedidos recentes -->
-
         </main>
-        <!-- Fim do conteúdo principal -->
 
-        <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
@@ -181,37 +195,65 @@ $dados = mysqli_fetch_assoc($resultado);
                         dark_mode
                     </span>
                 </div>
-
                 <div class="profile">
                     <div class="info">
                         <p>Olá, <b>Bem-Vindo(a)</b></p>
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="img/<?php echo $dados['imagem'] ?>" alt="user" id="profile-picture">
                     </div>
                 </div>
-
-            </div>
-            <!-- Fim da navegação -->
-
-            <div class="user-profile">
-                <div class="logo">
-                <img class="imgs" src="img/fundo.png">
-                    <h2>Sentinela da Fronteira</h2>
-
-                </div>
             </div>
 
-
-
+            <div class="box-perfil" style="margin-top: 20px;">
+                <h2>Alterar Foto de Perfil</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" id="avatar-image">
+                    <img class="box-perfil-img"id="preview-image" src="#" alt="Preview">
+                    <button type="submit" class="form-control" style="margin-top: 10px;">Salvar Foto</button>
+                </form>
+            </div>
         </div>
-
-
     </div>
-
-    <script src="JavaScript/orders.js"></script>
     <script src="JavaScript/index.js"></script>
-</body>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const avatarImage = document.querySelector('#avatar-image');
+        const previewImage = document.querySelector('#preview-image');
+        const profilePicture = document.querySelector('#profile-picture');
+
+        avatarImage.addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    previewImage.src = event.target.result;
+                    previewImage.style.display = 'block';
+                    profilePicture.src = event.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '#';
+                previewImage.style.display = 'none';
+            }
+        });
+
+        <?php if (isset($_SESSION['mensagem'])): ?>
+            Swal.fire({
+                title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
+                text: "<?php echo $_SESSION['mensagem']; ?>",
+                icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+            });
+            <?php
+            unset($_SESSION['mensagem']);
+            unset($_SESSION['tipo_mensagem']);
+            unset($_SESSION['titulo_mensagem']);
+            ?>
+        <?php endif; ?>
+    </script>
+</body>
 </html>

@@ -239,11 +239,14 @@ sleep(1);
                                     edit
                                 </span></td>
                                 </a>
-                                <td><a href='formExcluir.php?id_usuario=" . $row['id_usuario'] . "' onclick='return confirmDelete(" . $row['id_usuario'] . ")'>
+
+                                <td>
+                                <button type='button' class='btn-delete' data-id='" . $row['id_usuario'] . "'>
                                 <span class='material-icons-sharp'>
-                                delete
-                            </span>
-                                </a></td>
+                                    delete
+                                </span>
+                            </button>
+                                </td>
                               ";
                         echo '</tr>';
                     }
@@ -317,8 +320,32 @@ sleep(1);
 
     </div>
 
-    <script src="../JavaScript/orders.js"></script>
+
     <script src="../JavaScript/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: 'Tem certeza?',
+                    text: "Você não poderá reverter isso!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, excluir!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirecionar para formExcluir.php com o id_usuario
+                        window.location.href = `formExcluir.php?id_usuario=${userId}`;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

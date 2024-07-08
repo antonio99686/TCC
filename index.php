@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,20 +17,44 @@
 </head>
 
 <body>
-
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <form id="registrationForm" novalidate action="login/cadastrar.php" method="POST" enctype="multipart/form-data">
                 <div class="social-icons">
                     <img src="img/icno.jpg" alt="login form" height="150px" width="120px" />
                 </div>
-                <h1>Criar uma conta</h1>
-                <p>Acesse esse link e se cadastre</p>
-                <a href="login/formCad.php" target="_blank">Clique aqui!</a>
+                <h2>  Inscrição</h2>
+                <div class="form-grupo">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" name="usuario" class="form-input" placeholder="Nome Completo" required />
+                    <span class="validation-message"></span>
+                </div>
+                <div class="form-grupo">
+                    <label for="status" class="form-label">Categoria</label>
+                    <select name="status" class="dropdown" required>
+                        <option selected disabled class="form-select-option" value="">Selecione</option>
+                        <option value="1" class="form-select-option">Dançarino</option>
+                        <option value="2" class="form-select-option">Coordenador</option>
+                        <option value="3" class="form-select-option">Responsável</option>
+                    </select>
+                    <span class="validation-message"></span>
+                </div>
+                <div class="form-grupo">
+                    <label for="CPF" class="form-label">CPF</label>
+                    <input type="text" name="CPF" class="form-input" placeholder="Somente os N°" required />
+                    <span class="validation-message"></span>
+                </div>
+                <div class="form-grupo">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
+                    <span class="validation-message"></span>
+                </div>
+               
+                <button type="submit">Enviar</button>
             </form>
         </div>
         <div class="form-container sign-in">
-            <form action="login.php" method="POST">
+            <form action="login.php" method="GET">
                 <div class="social-icons">
                     <img src="img/icno.jpg" alt="login form" height="160px" width="120px">
                 </div>
@@ -57,14 +82,12 @@
     </div>
 
     <script src="login/script.js"></script>
-
     <script>
-
         // Função para mostrar a mensagem de contato com o coordenador
         function showContactCoordinator() {
             Swal.fire({
                 icon: 'info',
-                title: 'Esqueceu sua senha? ',
+                title: 'Esqueceu sua senha?',
                 text: 'Por favor, entre em contato com o coordenador para redefinir sua senha.'
             });
         }

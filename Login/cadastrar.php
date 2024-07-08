@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>cadastro</title>
+    <title>Cadastro</title>
 </head>
 
 <body>
@@ -18,137 +18,53 @@
 </html>
 <?php
 // Conecta ao banco de dados
-include ('../conexao.php');
+require_once '../conexao.php';
+$conexao = conectar();
 
 // Verifica se os dados do formulário foram recebidos corretamente
-if (
-    isset(
-    $_POST['usuario'],
-    $_POST['senha'],
-    $_POST['email'],
-    $_POST['CPF'],
-    $_POST['datas'],
-    $_POST['status'],
-    $_POST['RG'],
-    $_POST['categoria'],
-    $_POST['telefone'],
-    $_POST['endereco'],
-    $_POST['responsavel'],
-    $_POST['data_entrada'],
-    $_POST['tele_respon'],
-    $_POST['idade'],
-    $_POST['nom_dan'],
-    $_POST['genero']
-) && isset($_FILES['arquivo']) && isset($_FILES['frente']) && isset($_FILES['verso'])
-) {
+if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'])) {
 
     // Dados do formulário
     $nome = $_POST['usuario'];
     $senha = $_POST['senha'];
-    $email = $_POST['email'];
+    $status = $_POST['status'];
     $CPF = $_POST['CPF'];
-    $datas = $_POST['datas'];
-    $statuss = $_POST['status'];
-    $RG = $_POST['RG'];
-    $categoria = $_POST['categoria'];
-    $telefone = $_POST['telefone'];
-    $endereco = $_POST['endereco'];
-    $responsavel = $_POST['responsavel'];
-    $data_entrada = $_POST['data_entrada'];
-    $tele_respon = $_POST['tele_respon'];
-    $idade = $_POST['idade'];
-    $nom_dan = $_POST['nom_dan'];
-    $genero = $_POST['genero'];
 
     // Gera um número de matrícula único
     $numero = rand(2024, 999999);
     $matricula = date('Y') . $numero;
 
-    // Verifica se os arquivos foram enviados
-    $uploadOk1 = $uploadOk2 = $uploadOk3 = false;
-    $diretorio = "../img/carteira/";
+    // Comando SQL para inserção
+    $sql = "INSERT INTO usuario (nome, statuss, senha, matricula,CPF) 
+    VALUES 
+    ('$nome', '$status', '$senha', '$matricula','$CPF')";
 
-    if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-        $imagem1 = $_FILES['arquivo']['name'];
-        if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem1)) {
-            $uploadOk1 = true;
-        }
-    }
-
-    if ($_FILES['frente']['error'] === UPLOAD_ERR_OK) {
-        $imagem2 = $_FILES['frente']['name'];
-        if (move_uploaded_file($_FILES['frente']['tmp_name'], $diretorio . $imagem2)) {
-            $uploadOk2 = true;
-        }
-    }
-
-    if ($_FILES['verso']['error'] === UPLOAD_ERR_OK) {
-        $imagem3 = $_FILES['verso']['name'];
-        if (move_uploaded_file($_FILES['verso']['tmp_name'], $diretorio . $imagem3)) {
-            $uploadOk3 = true;
-        }
-    }
-
-    if ($uploadOk1 && $uploadOk2 && $uploadOk3) {
-        // Comando SQL para inserção
-        $sql = "INSERT INTO usuario (
-                  statuss, nome,
-                  email, datas, 
-                  CPF, RG, 
-                  categoria, senha,
-                  telefone, matricula, 
-                  imagem, identidade_frente, identidade_verso, genero,
-                  endereco, responsavel,
-                  data_entrada, tele_respon,
-                  idade, nom_dan
-                ) VALUES (
-                  '$statuss','$nome',
-                  '$email','$datas','$CPF',
-                  '$RG','$categoria',
-                  '$senha','$telefone',
-                  '$matricula','$imagem1','$imagem2','$imagem3',
-                  '$genero','$endereco',
-                  '$responsavel','$data_entrada',
-                  '$tele_respon','$idade',
-                  '$nom_dan'
-                )";
-
-        // Executa o comando SQL
-        if (mysqli_query($conexao, $sql)) {
-            // SweetAlert2 para sucesso
-            echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Pessoa cadastrada com sucesso!',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(() => {
-                    window.location.href = '../index.php';
-                });
-            </script>";
-            exit();
-        } else {
-            // SweetAlert2 para falha na inserção
-            echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erro!',
-                    text: 'Falha ao cadastrar pessoa.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            </script>";
-        }
+    // Executa o comando SQL
+    if (mysqli_query($conexao, $sql)) {
+        // SweetAlert2 para sucesso
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: 'Pessoa cadastrada com sucesso!',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
+        exit();
     } else {
-        // SweetAlert2 para erro ao mover arquivo
+        // SweetAlert2 para falha na inserção
         echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Erro!',
-                text: 'Erro ao mover os arquivos.',
+                text: 'Falha ao cadastrar pessoa.',
                 showConfirmButton: false,
                 timer: 1500
+            }).then(() => {
+                window.location.href = '../index.php';
             });
         </script>";
     }
@@ -161,6 +77,8 @@ if (
             text: 'Dados do formulário incompletos.',
             showConfirmButton: false,
             timer: 1500
+        }).then(() => {
+            window.location.href = '../index.php';
         });
     </script>";
 }

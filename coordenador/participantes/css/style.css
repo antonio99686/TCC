@@ -806,3 +806,13 @@ td {
     border-bottom: 1px solid #ddd;
 
 }
+.btn-delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.btn-delete .material-icons-sharp {
+    color: #f00; /* Cor do ícone de deletar */
+    font-size: 24px;
+}

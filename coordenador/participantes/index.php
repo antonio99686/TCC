@@ -29,7 +29,7 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-// Aguarda 1 segundos antes de redirecionar o usuário
+// Aguarda 1 segundo antes de redirecionar o usuário
 sleep(1);
 ?>
 
@@ -44,8 +44,8 @@ sleep(1);
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <title>Sentinela da fronteira</title>
+
+    <title>Sentinela da Fronteira</title>
 </head>
 
 <body>
@@ -56,7 +56,7 @@ sleep(1);
             <div class="toggle">
                 <div class="logo">
 
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -103,7 +103,7 @@ sleep(1);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-              
+
 
                 <a href="../logout.php">
                     <span class="material-icons-sharp">
@@ -119,49 +119,54 @@ sleep(1);
         <main>
             <h1>Participantes</h1>
             <!-- Análises -->
-           
-             <div class="analyse">
-               <div class="sales">
-                     <a href="../form/formcad.php"><div class="status">
-                        <div class="info">
-                            <h3>Cadastro</h3>
-                            <h1>Cadastre o Usuário</h1>
-                        </div>
-                        <div class="progresss">
-                         
-                        </div>
-                    </div> </a>
-                    
-                </div> 
-           
 
-                
-                    <div class="visits">
-                 <a href="../form/lista.php">   <div class="status">
-                        <div class="info">
-                            <h3>Editar</h3>
-                            <h1>Edite o Usuário</h1>
+            <div class="analyse">
+                <div class="sales">
+                    <a href="../form/formcad.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Cadastro</h3>
+                                <h1>Cadastre o Usuário</h1>
+                            </div>
+                            <div class="progresss">
+
+                            </div>
                         </div>
-                        <div class="progresss">
-                           
-                        </div>
-                    </div></a>
+                    </a>
+
                 </div>
-                
 
-                
+
+
+                <div class="visits">
+                    <a href="../form/lista.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Editar</h3>
+                                <h1>Edite o Usuário</h1>
+                            </div>
+                            <div class="progresss">
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+
                 <div class="searches">
-                    <a href="../form/roupa.php"><div class="status">
-                        <div class="info">
-                            <h3>Roupa</h3>
-                            <h1>Cadasto da Roupa do  Usuário</h1>
+                    <a href="../form/roupa.php">
+                        <div class="status">
+                            <div class="info">
+                                <h3>Roupa</h3>
+                                <h1>Cadasto da Roupa do Usuário</h1>
+                            </div>
+                            <div class="progresss">
+
+                            </div>
                         </div>
-                        <div class="progresss">
-                           
-                        </div>
-                    </div>
                 </div> </a>
-               
+
             </div>
             <!-- Fim das análises -->
 
@@ -171,31 +176,31 @@ sleep(1);
             <!-- Tabela de pedidos recentes -->
             <div class="box">
 
-            <form method="POST">
-        <label >Selecione a Nivel</label>
-            <select class="form-control"  name="categoria" onchange="this.form.submit()">
-            <option value="">Selecione</option>
-                <option value="mirim">Mirim</option>
-                <option value="juvenil">Juvenil</option>
-                <option value="adulto">Adulto</option>
-       
-            </select>
-        </form>
-        <?php
+                <form method="POST">
+                    <label>Selecione a Nivel</label>
+                    <select class="form-control" name="categoria" onchange="this.form.submit()">
+                        <option value="">Selecione</option>
+                        <option value="mirim">Mirim</option>
+                        <option value="juvenil">Juvenil</option>
+                        <option value="adulto">Adulto</option>
 
-// Verificar se a categoria foi enviada
-if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
+                    </select>
+                </form>
+                <?php
 
-    // Evitar SQL injection
-    $categoria = $conexao->real_escape_string($_POST['categoria']);
+                // Verificar se a categoria foi enviada
+                if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
 
-    // Consulta SQL para buscar os dados da selecionada
-    $sql = "SELECT * FROM usuario WHERE categoria = '$categoria'";
-    $result = $conexao->query($sql);
+                    // Evitar SQL injection
+                    $categoria = $conexao->real_escape_string($_POST['categoria']);
 
-    if ($result->num_rows > 0) {
-        // Exibindo os resultados em uma tabela
-        echo ' <div class="formato"><table class="table table-striped">
+                    // Consulta SQL para buscar os dados da selecionada
+                    $sql = "SELECT * FROM usuario WHERE categoria = '$categoria'";
+                    $result = $conexao->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Exibindo os resultados em uma tabela
+                        echo ' <div class="formato"><table class="table table-striped">
         <thead class="thead-info">
             <tr>
                        <th>ID</th>
@@ -203,52 +208,49 @@ if (isset($_POST['categoria']) && !empty($_POST['categoria'])) {
                        <th>CPF</th>
                        <th>Data de Entrada</th>
                        <th>Matricula</th>
-                       <th></th>
+                       <th>PDF</th>
+                       
                    
 
                        </tr>
                     </thead>
                     <tbody>';
-        while ($row = $result->fetch_assoc()) {
-            echo '<tr>';
-            echo "<td>" . $row['id_usuario'] . "</td>";
-            echo "<td>" . $row['nome'] . "</td>";
-            echo "<td>" . $row['CPF'] . "</td>";
-            echo "<td>" . $row['data_entrada'] . "</td>";
-            echo "<td>" . $row['matricula'] . "</td>";
-            echo "<td>
-                        <a href='../PDF/index.php?id_usuario=" . $row['id_usuario'] .
-                "&nome=" . $row['nome'] .
-                "&email=" . $row['email'] .
-                "&CPF=" . $row['CPF'] .
-                "&data_entrada=" . $row['data_entrada'] .
-                "&mattricula=" . $row['matricula'] . "'> 
-                <img src ='img/pdf.png' width='25' height='20' alt='PDF'>
-                            
-                        </a>
-                        <a href='formExcluir.php?id_usuario=" . $row['id_usuario'] .
-                "&nome=" . $row['nome'] .
-                "&email=" . $row['email'] .
-                "&CPF=" . $row['CPF'] . "'>
-                         
-                        </a>
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<tr>';
+                            $data_entrada = date("d/m/Y", strtotime($row['data_entrada']));
+                            echo "<td>" . $row['id_usuario'] . "</td>";
+                            echo "<td>" . $row['nome'] . "</td>";
+                            echo "<td>" . $row['CPF'] . "</td>";
+                            echo "<td>" . $data_entrada . "</td>";
+                            echo "<td>" . $row['matricula'] . "</td>";
+                            echo "<td>
+                                    <a href='../PDF/index.php?id_usuario=" . $row['id_usuario'] .
+                                "&nome=" . $row['nome'] .
+                                "&email=" . $row['email'] .
+                                "&CPF=" . $row['CPF'] .
+                                "&data_entrada=" . $data_entrada .
+                                "&mattricula=" . $row['matricula'] . "'>
+                                    <img src='img/pdf.png' width='25' height='20' alt='PDF'>
+                                    </a>
+                                    </td> <td>
+                                   
                     </td>";
-            echo '</tr>';
-        }
+                            echo '</tr>';
+                        }
 
-        echo '
+                        echo '
                 </table>
             </div>';
-    }
-} else {
-    echo 'Nenhum resultado encontrado para essa categoria.';
-}
+                    }
+                } else {
+                    echo 'Nenhum resultado encontrado para essa categoria.';
+                }
 
-// Fechar conexão
-$conexao->close();
+                // Fechar conexão
+                $conexao->close();
 
 
-?>
+                ?>
 
             </div>
             <!-- Fim dos pedidos recentes -->
@@ -301,8 +303,32 @@ $conexao->close();
 
     </div>
 
-    <script src="../JavaScript/orders.js"></script>
+
     <script src="../JavaScript/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: 'Tem certeza?',
+                    text: "Você não poderá reverter isso!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, excluir!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Redirecionar para formExcluir.php com o id_usuario
+                        window.location.href = `formExcluir.php?id_usuario=${userId}`;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

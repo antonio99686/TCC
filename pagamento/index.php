@@ -28,9 +28,7 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
- // Consulta SQL para obter todos os pagamentos
- $sql = "SELECT * FROM pagamentos";
- $resultado = mysqli_query($conexao, $sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +51,7 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="toggle">
                 <div class="logo">
 
-                <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -63,7 +61,7 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
 
             <div class="sidebar">
-                <a href="../dashboard.php" >
+                <a href="../dashboard.php">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
@@ -119,17 +117,17 @@ $dados = mysqli_fetch_assoc($resultado);
             <div class="analyse">
                 <div class="sales">
                     <div class="status">
-                       
+
                     </div>
                 </div>
                 <div class="visits">
                     <div class="status">
-                      
+
                     </div>
                 </div>
                 <div class="searches">
                     <div class="status">
-                       
+
                     </div>
                 </div>
             </div>
@@ -140,7 +138,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 <h2>Mensalidades Pendentes</h2>
                 <div class="user-list">
                     <div class="user">
-                       
+
                         <h2><?php echo $dados['nome'] ?></h2>
                         <p>Falta pagar o mês de: ABRIL </p>
                     </div>
@@ -155,16 +153,19 @@ $dados = mysqli_fetch_assoc($resultado);
                 <table>
                     <thead>
                         <tr>
-                            <th>Boleto</th>
-                            <th>PIX</th>
-                            <th>Status</th>
-                            
+                            <th>LINK - Pagamento</th>
+
+
                         </tr>
                     </thead>
                     <tbody>
-                        <td> PDF</td>
-                        <td> PIX [QR_CODE]</td>
-                        <td> Pago</td>
+                        <td>
+                            <a
+                                href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-82fdb2e4-1292-4e74-8c91-5bee026afa7e">
+
+                                Clique, aqui</a>
+                        </td>
+
                     </tbody>
                 </table>
 
@@ -207,8 +208,8 @@ $dados = mysqli_fetch_assoc($resultado);
 
             <div class="user-profile">
                 <div class="logo">
-                <img class="imgs" src="../img/fundo.png">
-                    <h2>Sentinela da Fronteira</h2>
+
+                    <h2></h2>
 
                 </div>
             </div>
