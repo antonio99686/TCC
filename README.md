@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-Este projeto visa desenvolver um sistema de gerenciamento de invernada para PTG (Piquete de Tradições Gaúchas). O objetivo principal é proporcionar aos usuários uma plataforma onde possam gerenciar as atividades da invernada, incluindo agendamento de ensaios, inscrição em eventos, acompanhamento de resultados de competições e comunicação interna, facilitando a organização e o desempenho das atividades tradicionalistas. O problema que está sendo resolvido é a dificuldade de gerenciar as diversas atividades da invernada de forma coordenada e eficiente, especialmente em PTGs com grande número de integrantes e eventos. Este estudo é importante porque promove a preservação e a valorização da cultura gaúcha, além de fortalecer os laços comunitários e incentivar a participação ativa dos membros nas atividades do PTG.
+Este projeto visa desenvolver um sistema de gerenciamento de invernada para PTG (Piquete de Tradições Gaúchas) Sentinela da Fronteira. O objetivo principal é proporcionar aos usuários uma plataforma onde possam gerenciar as atividades da invernada, incluindo agendamento de ensaios, inscrição em eventos, facilitando a organização e o desempenho das atividades tradicionalistas. O problema que está sendo resolvido é a dificuldade de gerenciar as diversas atividades da invernada de forma coordenada e eficiente, especialmente em PTGs com grande número de integrantes e eventos. Este estudo é importante porque promove a preservação e a valorização da cultura gaúcha, além de fortalecer os laços comunitários e incentivar a participação ativa dos membros nas atividades do PTG.
 
 ## Sumário
 
@@ -32,7 +32,7 @@ Este projeto visa desenvolver um sistema de gerenciamento de invernada para PTG 
 Após a instalação, siga estas instruções:
 
 1. Inicie o servidor utilizando `npm start`.
-2. Abra o navegador da web e acesse `http://localhost:3000`.
+2. Abra o navegador da web e acesse `http://localhost:8080`.
 3. Faça login ou crie uma conta.
 4. Explore as funcionalidades disponíveis para gerenciamento da invernada.
 
@@ -52,4 +52,4 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ## Contato
 
-Para mais informações, entre em contato conosco em Antonio.2022324018@aluno.iffar.edu.br .
+Para mais informações, entre em contato com Antonio.2022324018@aluno.iffar.edu.br .
