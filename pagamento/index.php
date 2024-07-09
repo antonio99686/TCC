@@ -161,7 +161,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <tbody>
                         <td>
                             <a
-                                href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-82fdb2e4-1292-4e74-8c91-5bee026afa7e">
+                                href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-a93222f3-a33b-48de-9154-1879b1e2778d">
 
                                 Clique, aqui</a>
                         </td>

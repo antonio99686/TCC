@@ -30,6 +30,7 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'])) 
     $status = $_POST['status'];
     $CPF = $_POST['CPF'];
 
+//$crip = password_hash($senha,PASSWORD_ARGON2I);
     // Gera um número de matrícula único
     $numero = rand(2024, 999999);
     $matricula = date('Y') . $numero;

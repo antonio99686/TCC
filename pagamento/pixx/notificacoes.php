@@ -12,6 +12,6 @@ $notification = json_decode($body, true);
 if (isset($notification['type']) && $notification['type'] == 'payment') {
     $payment = MercadoPago\Payment::find_by_id($notification['data']['id']);
     // Atualizar status do pagamento no seu sistema
-    // $payment->status -> 'approved', 'pending', etc.
+    $payment->status;
 }
 

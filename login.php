@@ -13,6 +13,7 @@
 
 </body>
 </html>
+
 <?php
 session_start();
 
@@ -47,9 +48,9 @@ if ($qtd > 0) {
    switch ($dados['statuss']) {
       case '1':
          // Verifica se é a primeira vez que o usuário faz login
-         if ($dados['primeiro_login'] == 0) {
+         if ($dados['primeiro_login'] == 1) {
             // Atualiza o banco de dados para indicar que não é mais o primeiro login
-            $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
+            $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
             mysqli_query($conexao, $updateSql);
 
             echo "<script>
@@ -60,7 +61,7 @@ if ($qtd > 0) {
                   showConfirmButton: false,
                   timer: 1500
                }).then(() => {
-                  location.href='login/formEdit.php'; // Redireciona para o formulário de edição
+                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}'; // Redireciona para o formulário de edição com os parâmetros GET
                });
             </script>";
          } else {

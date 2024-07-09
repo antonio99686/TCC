@@ -1,34 +1,44 @@
 <?php
-session_start();
-require_once "../conexao.php";
-$conexao = conectar();
-
-// Verifica se a sessão está iniciada e se o usuário está logado
-if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
-    // Redireciona para a página de login se não estiver logado
-    header("Location: ../login.php");
+session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
+require_once "../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
+$conexao = conectar(); // Estabelece a conexão com o banco de dados
+sleep(1);
+// Verifica se o usuário está logado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
     exit();
 }
 
-// Obtém o ID do usuário da sessão  
-$id_usuario = $_SESSION['id_usuario'];
-
-// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
+// Obtém os dados do usuário logado
 $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id_usuario);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
+$stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
+mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
+mysqli_stmt_execute($stmt); // Executa a consulta preparada
+$resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
 
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado || mysqli_num_rows($resultado) == 0) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+// Verifica se foi feita uma requisição de busca de usuários
+if (isset($_GET['nome_usuario'])) {
+    $nome_usuario = $_GET['nome_usuario'];
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE 
+    CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
+    mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca
+    mysqli_stmt_execute($stmt); // Executa a consulta preparada
+    $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+
+    $usuarios = [];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($usuario = mysqli_fetch_assoc($resultado)) {
+            $usuarios[] = $usuario; // Armazena os usuários encontrados no array $usuarios
+        }
+    }
+
+    echo json_encode($usuarios); // Retorna os usuários encontrados como JSON e termina o script
     exit();
 }
-
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -109,7 +119,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     </a>
                 </div>
                 <div class="searches">
-                    <a href="form/roupa.php" id="openSearchBox">
+                    <a href="#" id="openSearchBox">
                         <div class="status">
                             <div class="info">
                                 <h3>Roupa</h3>
@@ -128,7 +138,8 @@ $dados = mysqli_fetch_assoc($resultado);
                 <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                 <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                 <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
-                <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
+                <div><em><b>Data de Nascimento:</b></em>
+                    <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
             </div>
         </main>
         <div class="right-section">
@@ -166,22 +177,45 @@ $dados = mysqli_fetch_assoc($resultado);
         </div>
     </div>
 
-    <!-- Modal para Seleção de Usuário e Roupas -->
+    <!-- Campo de busca adicionado fora do modal -->
+
+
+    <!-- Modal de Seleção de Usuário e Roupas -->
     <div id="userSelectionModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Selecionar Usuário e Roupas</h2>
-            <div class="search-container">
-                <input type="text" id="userSearchInput" placeholder="Digite o nome do usuário">
-                <ul id="userList" class="user-list"></ul>
-            </div>
-            <div id="selectedUserDetails" class="selected-user-details"></div>
-            <div id="clothingTable" class="clothing-table"></div>
-            <button id="saveClothingButton">Salvar Roupas</button>
+            <h1>Selecionar Usuário e Roupas</h1>
+            <input type="text" class="form-control" id="nome_usuario" name="nome_usuario"
+                placeholder="Digite o nome do usuário" onkeyup="buscarUsuarios()">
+            <ul id="userList" class="user-list"></ul>
         </div>
     </div>
 
     <script src="JavaScript/index.js"></script>
+    <script src="JavaScript/roupas.js"></script>
+    <script>
+        function buscarUsuarios() {
+            const nomeUsuario = document.getElementById('nome_usuario').value; // Obtém o valor do campo de entrada de nome de usuário
+            if (nomeUsuario.length > 0) { // Verifica se o campo não está vazio
+                const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest para fazer a requisição AJAX
+                xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true); // Configura a requisição GET para buscar usuários com base no nome digitado
+                xhr.onload = function () { // Define o que fazer quando a requisição retornar
+                    if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
+                        const resultados = JSON.parse(this.responseText); // Converte a resposta JSON em um objeto JavaScript
+                        let output = '<ul>'; // Inicia uma lista não ordenada para mostrar os resultados
+                        resultados.forEach(function (usuario) { // Itera sobre cada usuário retornado
+                            output += `<li><a href="?usuario_selecionado=${usuario.id_usuario}">${usuario.nome}</a></li>`; // Cria um link para selecionar o usuário
+                        });
+                        output += '</ul>'; // Fecha a lista de resultados
+                        document.getElementById('userList').innerHTML = output; // Insere os resultados na div 'resultados_busca' do HTML
+                    }
+                };
+                xhr.send(); // Envia a requisição
+            } else {
+                document.getElementById('userList').innerHTML = ''; // Limpa os resultados se o campo de busca estiver vazio
+            }
+        }
+    </script>
+
 </body>
 
 </html>

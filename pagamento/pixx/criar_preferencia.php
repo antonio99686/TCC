@@ -12,7 +12,7 @@ MercadoPago\SDK::setAccessToken('APP_USR-1228299603673792-062511-2cf7ec6e1d129bd
 $preference = new MercadoPago\Preference();
 
 $item = new MercadoPago\Item();
-$item->title = 'Mensalidade';
+$item->title = 'Mensalidade Referente ao mês de ';
 $item->quantity = 1;
 $item->currency_id = 'BRL';
 $item->unit_price = 30.00;
