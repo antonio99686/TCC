@@ -3,7 +3,7 @@ require_once "../conexao.php";
 $conexao = conectar();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Coletar dados do formulário
+    // Coletar dados do formulário (assumindo que os dados são validados e filtrados)
     $id_usuario = $_POST['id_usuario'];
     $nome = $_POST['nome'];
     $email = $_POST['email'];
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nom_dan = $_POST['nom_dan'];
     $genero = $_POST['genero'];
 
-    // Atualizar os dados no banco de dados
+    // Atualizar os dados no banco de dados (sem declarações preparadas)
     $sql = "UPDATE usuario SET 
                 nome = '$nome', email = '$email', senha = '$senha', datas = '$datas', categoria = '$status', 
                 CPF = '$CPF', RG = '$RG', categoria = '$categoria', telefone = '$telefone', endereco = '$endereco', 
@@ -51,7 +51,7 @@ if (isset($_GET['id_usuario'])) {
     $result = $conexao->query($sql);
 
     if ($result->num_rows > 0) {
-        // Loop pelos resultados e atribui às variáveis PHP
+        // Atribuir os resultados às variáveis PHP
         $row = $result->fetch_assoc();
         $nome = $row['nome'];
         $email = $row['email'];
@@ -74,15 +74,51 @@ if (isset($_GET['id_usuario'])) {
             alert('Nenhum resultado encontrado para o ID especificado.');
         </script>";
     }
-
-    // Fecha a conexão com o banco de dados
-    $conexao->close();
-} else {
-    echo "<script>
-        alert('ID de usuário não especificado.');
-    </script>";
 }
+/*
+// Inserir roupas correspondentes ao gênero do usuário
+if (isset($_GET['id_usuario'])) {
+    $id_usuario = $_GET['id_usuario'];
+
+    // Verificar o gênero do usuário
+    $sql = "SELECT genero FROM usuario WHERE id_usuario = $id_usuario";
+    $result = $conexao->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $genero = $row['genero'];
+
+        // Inserir roupas correspondentes ao gênero
+        if ($genero == 'M') {
+            $roupas = [
+                'Bombacha', 'Espora',
+                'Lenço', 'Chapéu',
+                'Camisa', 'Lenço de mão',
+                'Faixa', 'Colete'
+            ];
+        } elseif ($genero == 'F') {
+            $roupas = ['Flor', 'Lenço', 'Vestido'];
+        } else {
+            echo "Gênero não especificado corretamente.";
+            exit();
+        }
+
+        foreach ($roupas as $roupa) {
+            $sql = "INSERT INTO roupas (nome, id_usuario) VALUES ('$roupa', $id_usuario)";
+            $conexao->query($sql);
+        }
+
+        echo "Roupas cadastradas com sucesso!";
+    } else {
+        echo "Usuário não encontrado.";
+    }
+} else {
+    echo "ID do usuário não fornecido.";
+}
+*/
+$conexao->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -58,7 +58,7 @@ function determinar_categoria($idade) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- shortcut icon -->
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da fronteira</title>
@@ -163,7 +163,7 @@ function determinar_categoria($idade) {
                         echo "<td>" . $data . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $categoria . "</td>";
-                        echo "<td><div class='users'><img src='../img/" . $row['imagem'] . "' ></div></td>";
+                        echo "<td><div class='users'><img src='../../img/" . $row['imagem'] . "' ></div></td>";
                         echo "<td>
                     
                 </td>";
@@ -203,7 +203,7 @@ function determinar_categoria($idade) {
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

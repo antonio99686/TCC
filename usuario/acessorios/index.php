@@ -47,7 +47,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <!-- shortcut icon -->
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da fronteira</title>
@@ -185,7 +185,7 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

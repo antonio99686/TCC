@@ -15,6 +15,6 @@ session_destroy();
 sleep(2);
 
 // Redireciona o usuário após a destruição da sessão
-header("Location: index.php");
+header("Location: ../index.php");
 exit;
 ?>

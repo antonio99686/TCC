@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <link rel="stylesheet" href="css/perfil.css">
     <title>Sentinela da fronteira</title>
    </head>
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="img/<?php echo $dados['imagem'] ?>" alt="user" id="profile-picture">
+                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user" id="profile-picture">
                     </div>
                 </div>
             </div>

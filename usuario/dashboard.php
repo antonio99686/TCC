@@ -2,7 +2,7 @@
 session_start();
 require_once "conexao.php";
 $conexao = conectar();
-
+sleep(1);
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
@@ -38,7 +38,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="shortcut icon" href="img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
 </head>
@@ -153,14 +153,14 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo htmlspecialchars($dados['nome']); ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="img/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
+                        <img src="../img/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
                     </div>
                 </div>
             </div>
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="img/fundo.png">
+                    <img class="imgs" src="../img/fundo.png">
                     <h2>Sentinela da Fronteira</h2>
                 </div>
             </div>

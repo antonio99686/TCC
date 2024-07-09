@@ -13,7 +13,7 @@
 <body>
     <a href="../coordenador/dashboard.php"><label for="voltar">VOLTAR</label></a>
     <?php
-
+;
     require_once "../conexao.php";
     $conexao = conectar();
 
@@ -62,10 +62,10 @@
             $mail->Body = $corpo;
 
             $mail->send();
-            echo "<script>Swal.fire('Sucesso!', 'Email enviado com sucesso para $nome_usuario ($email_usuario).', 'success');</script>";
+            echo "<script>Swal.fire('Sucesso!', 'Email enviado com sucesso para.', 'success');</script>";
 
         } catch (Exception $e) {
-            echo "<script>Swal.fire('Erro!', 'Não foi possível enviar o email para $nome_usuario ($email_usuario). Erro: {$mail->ErrorInfo}', 'error');</script>";
+            echo "<script>Swal.fire('Erro!', 'Não foi possível enviar o email para . Erro: {$mail->ErrorInfo}', 'error');</script>";
         }
     }
 

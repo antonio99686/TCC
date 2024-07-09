@@ -138,7 +138,8 @@ sleep(1);
                 <span class="validation-message"></span>
             </div>
 
-            <button type="submit">Enviar</button>
+            <button type="submit"  class="form-control">Enviar</button>
+            <a href="../dashboard.php"  class="form-control">Volta</a>
         </form>
     </div>
     <script src="JavaScript.js"></script>

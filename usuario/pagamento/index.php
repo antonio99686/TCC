@@ -38,7 +38,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
 </head>
@@ -198,7 +198,7 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

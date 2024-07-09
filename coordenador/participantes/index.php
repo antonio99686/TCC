@@ -224,7 +224,7 @@ sleep(1);
                             echo "<td>" . $data_entrada . "</td>";
                             echo "<td>" . $row['matricula'] . "</td>";
                             echo "<td>
-                                    <a href='../PDF/index.php?id_usuario=" . $row['id_usuario'] .
+                                    <a href='../../PDF/index.php?id_usuario=" . $row['id_usuario'] .
                                 "&nome=" . $row['nome'] .
                                 "&email=" . $row['email'] .
                                 "&CPF=" . $row['CPF'] .
