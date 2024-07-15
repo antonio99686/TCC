@@ -75,47 +75,8 @@ if (isset($_GET['id_usuario'])) {
         </script>";
     }
 }
-/*
-// Inserir roupas correspondentes ao gênero do usuário
-if (isset($_GET['id_usuario'])) {
-    $id_usuario = $_GET['id_usuario'];
 
-    // Verificar o gênero do usuário
-    $sql = "SELECT genero FROM usuario WHERE id_usuario = $id_usuario";
-    $result = $conexao->query($sql);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $genero = $row['genero'];
-
-        // Inserir roupas correspondentes ao gênero
-        if ($genero == 'M') {
-            $roupas = [
-                'Bombacha', 'Espora',
-                'Lenço', 'Chapéu',
-                'Camisa', 'Lenço de mão',
-                'Faixa', 'Colete'
-            ];
-        } elseif ($genero == 'F') {
-            $roupas = ['Flor', 'Lenço', 'Vestido'];
-        } else {
-            echo "Gênero não especificado corretamente.";
-            exit();
-        }
-
-        foreach ($roupas as $roupa) {
-            $sql = "INSERT INTO roupas (nome, id_usuario) VALUES ('$roupa', $id_usuario)";
-            $conexao->query($sql);
-        }
-
-        echo "Roupas cadastradas com sucesso!";
-    } else {
-        echo "Usuário não encontrado.";
-    }
-} else {
-    echo "ID do usuário não fornecido.";
-}
-*/
 $conexao->close();
 ?>
 
@@ -126,6 +87,7 @@ $conexao->close();
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="shortcut icon" href="formulario/img/cadastro.png">
     <link rel="stylesheet" href="css/style2.css">
+    <link rel="shortcut icon" href="../img/img/icon.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     

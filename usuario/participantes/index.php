@@ -119,7 +119,7 @@ function determinar_categoria($idade) {
                     <h3>Vestimentas</h3>
                 </a>
 
-                <a href="../logout.php">
+                <a href="logout.php">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -163,7 +163,7 @@ function determinar_categoria($idade) {
                         echo "<td>" . $data . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $categoria . "</td>";
-                        echo "<td><div class='users'><img src='../../img/" . $row['imagem'] . "' ></div></td>";
+                        echo "<td><div class='users'><img src='../../img/perfil/" . $row['imagem'] . "' ></div></td>";
                         echo "<td>
                     
                 </td>";
@@ -203,7 +203,7 @@ function determinar_categoria($idade) {
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/perfil/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

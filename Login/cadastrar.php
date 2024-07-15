@@ -13,44 +13,73 @@
 
 <body>
 
-</body>
-
-</html>
 <?php
 // Conecta ao banco de dados
 require_once '../conexao.php';
 $conexao = conectar();
 
 // Verifica se os dados do formulário foram recebidos corretamente
-if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'])) {
+if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'], $_POST['genero'])) {
 
     // Dados do formulário
     $nome = $_POST['usuario'];
     $senha = $_POST['senha'];
     $status = $_POST['status'];
     $CPF = $_POST['CPF'];
+    $genero = $_POST['genero'];
 
-    //$crip = password_hash($senha,PASSWORD_ARGON2I);
     // Gera um número de matrícula único
     $numero = rand(2024, 999999);
     $matricula = date('Y') . $numero;
 
     // Caminho da imagem de perfil padrão
-    $profileImagePath = '../img/img/perfil.jpg';
+    $profileImagePath = '../img/img/perfil2.png';
 
     // Comando SQL para inserção
-    $sql = "INSERT INTO usuario (nome, statuss, senha, matricula, CPF, imagem) 
-    VALUES 
-    ('$nome', '$status', '$senha', '$matricula', '$CPF', '$profileImagePath')";
+    $sql = "INSERT INTO usuario (nome, statuss, senha, matricula, CPF, imagem, genero) 
+            VALUES ('$nome', '$status', '$senha', '$matricula', '$CPF', '$profileImagePath', '$genero')";
 
     // Executa o comando SQL
     if (mysqli_query($conexao, $sql)) {
+        // Obtém o ID do usuário inserido
+        $id_usuario = mysqli_insert_id($conexao);
+
+        // Inserir roupas correspondentes ao gênero
+        if ($genero == 'M') {
+            $roupas = [
+                'Bombacha', 'Espora',
+                'Lenço', 'Chapéu',
+                'Camisa', 'Lenço de mão',
+                'Faixa', 'Colete'
+            ];
+        } elseif ($genero == 'F') {
+            $roupas = ['Flor', 'Lenço', 'Vestido','Brinco'];
+        } else {
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: 'Gênero não especificado corretamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = '../index.php';
+                });
+            </script>";
+            exit();
+        }
+
+        foreach ($roupas as $roupa) {
+            $sql = "INSERT INTO roupas (nome, id_usuario) VALUES ('$roupa', $id_usuario)";
+            $conexao->query($sql);
+        }
+
         // SweetAlert2 para sucesso
         echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso!',
-                text: 'Pessoa cadastrada com sucesso!',
+                text: 'Usuário e roupas cadastradas com sucesso!',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
@@ -64,7 +93,7 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'])) 
             Swal.fire({
                 icon: 'error',
                 title: 'Erro!',
-                text: 'Falha ao cadastrar pessoa.',
+                text: 'Falha ao cadastrar Usuário.',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
@@ -86,5 +115,7 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'])) 
         });
     </script>";
 }
-
 ?>
+
+</body>
+</html>

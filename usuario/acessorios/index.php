@@ -110,7 +110,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
 
 
-                <a href="../logout.php">
+                <a href="logout.php">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -185,7 +185,7 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/perfil/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

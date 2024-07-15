@@ -44,6 +44,7 @@ if ($qtd > 0) {
    $_SESSION['id_usuario'] = $dados['id_usuario'];
    $_SESSION['nome'] = $dados['nome'];
    $_SESSION['statuss'] = $dados['statuss'];
+   $_SESSION['genero'] = $dados['genero'];
 
    switch ($dados['statuss']) {
       case '1':
@@ -61,7 +62,7 @@ if ($qtd > 0) {
                   showConfirmButton: false,
                   timer: 1500
                }).then(() => {
-                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}'; // Redireciona para o formulário de edição com os parâmetros GET
+                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}'; // Redireciona para o formulário de edição com os parâmetros GET
                });
             </script>";
          } else {

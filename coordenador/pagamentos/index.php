@@ -1,52 +1,53 @@
 <?php
-session_start();
-require_once "../../conexao.php";
-$conexao = conectar();
-
+session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
+require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
+$conexao = conectar(); // Estabelece a conexão com o banco de dados
+sleep(1);
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
-    // Redireciona para a página de login se não estiver logado
-    header("Location: ../login.php");
+    header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
     exit();
 }
 
-// Obtém o ID do usuário da sessão
-$id_usuario = $_SESSION['id_usuario'];
+// Obtém os dados do usuário logado
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
+mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
+mysqli_stmt_execute($stmt); // Executa a consulta preparada
+$resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
 
-// Consulta SQL para obter os dados do usuário
-$sql_usuario = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
-$resultado_usuario = mysqli_query($conexao, $sql_usuario);
+// Verifica se foi feita uma requisição de busca de usuários
+if (isset($_GET['nome_usuario'])) {
+    $nome_usuario = $_GET['nome_usuario'];
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE 
+    CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
+    mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca
+    mysqli_stmt_execute($stmt); // Executa a consulta preparada
+    $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
 
-// Verifica se a consulta foi bem-sucedida
-if (!$resultado_usuario) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    $usuarios = [];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($usuario = mysqli_fetch_assoc($resultado)) {
+            $usuarios[] = $usuario; // Armazena os usuários encontrados no array $usuarios
+        }
+    }
+
+    echo json_encode($usuarios); // Retorna os usuários encontrados como JSON e termina o script
     exit();
 }
 
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado_usuario);
-// Verifica a conexão
-if ($conexao->connect_error) {
-    die("Conexão falhou: " . $conexao->connect_error);
-}
 
-// Consulta para contar o número de usuários
-$sql = "SELECT COUNT(*) as total FROM usuario";
-$result = $conexao->query($sql);
 
-if ($result->num_rows > 0) {
-    // Produza os dados
-    $row = $result->fetch_assoc();
 
-} else {
-    echo "Nenhum usuário encontrado.";
-}
 
-$conexao->close();
-
-// Aguarda 1 segundos antes de redirecionar o usuário
-sleep(1);
+// Consulta para contar o número de usuários ativos
+$sql_total_usuarios = "SELECT COUNT(*) as total FROM usuario WHERE statuss = 1";
+$result_total_usuarios = $conexao->query($sql_total_usuarios);
+$rows = $result_total_usuarios->fetch_assoc();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,7 +57,9 @@ sleep(1);
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
-    <title>Sentinela da Fronteira</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <title>Sentinela da fronteira</title>
 </head>
 
 <body>
@@ -66,7 +69,6 @@ sleep(1);
         <aside>
             <div class="toggle">
                 <div class="logo">
-
                     <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
                 </div>
                 <div class="close" id="close-btn">
@@ -89,34 +91,31 @@ sleep(1);
                     </span>
                     <h3>Users</h3>
                 </a>
-
                 <a href="../perfil.php">
                     <span class="material-icons-sharp">
                         person_outline
                     </span>
                     <h3>Perfil</h3>
                 </a>
-                <a href="../calen" target="_blank">
+                <a href="../calen">
                     <span class="material-icons-sharp">
                         event
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="../pagamentos" class="active">
+                <a href="../pagamentos">
                     <span class="material-icons-sharp">
                         paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="../acessorios">
+                <a href="../acessorios" class="active">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-
-
-                <a href="logout.php">
+                <a href="../logout.php">
                     <span class="material-icons-sharp">
                         logout
                     </span>
@@ -124,50 +123,40 @@ sleep(1);
                 </a>
             </div>
         </aside>
-        <!-- End of Sidebar Section -->
+        <!-- Fim da seção da barra lateral -->
 
-        <!-- Main Content -->
+        <!-- Conteúdo principal -->
         <main>
             <h1>Pagamentos</h1>
-            <!-- Analyses -->
+            <!-- Análises -->
             <div class="analyse">
                 <div class="sales">
-                    <div class="status">
-                        <div class="info">
-                           <h3>Total em Banco</h3>
-                            <h1>R$65,024</h1>
-                        </div>
-                        <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="percentage">
-                                <p>+81%</p>
+                
+                        <div class="status">
+                            <div class="info">
+                                <h3></h3>
+                                <h1>    </h1>
                             </div>
+                            <div class="progresss"></div>
                         </div>
-                    </div>
+                    
                 </div>
                 <div class="visits">
-                    <div class="status">
-                        <div class="info">
-                            <h3>Total de Pagamentos</h3>
-                            <h1>2</h1>
-                        </div>
-                        <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="percentage">
-                                <p>0,2%</p>
+                
+                        <div class="status">
+                            <div class="info">
+                                <h3></h3>
+                                <h1></h1>
                             </div>
+                            <div class="progresss"></div>
                         </div>
-                    </div>
+                
                 </div>
                 <div class="searches">
                     <div class="status">
                         <div class="info">
                             <h3>Total de Usuários</h3>
-                            <h1> <?php echo "" . $row["total"];?></h1>
+                            <h1><?php echo $rows['total']; ?></h1>
                         </div>
                         <div class="progresss">
                             <svg>
@@ -180,50 +169,23 @@ sleep(1);
                     </div>
                 </div>
             </div>
-            <!-- End of Analyses -->
+            <!-- Fim das análises -->
 
-            <!-- New Users Section -->
-            <div class="new-users">
-                <h2>Mensalidades Pendentes</h2>
-                <div class="user-list">
-                    <div class="user">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
-                        <h2><?php echo $dados['nome'] ?></h2>
-                        <p>Falta pagar o mês de: ABRIL </p>
-                    </div>
-
+            <!-- Tabela de pedidos recentes -->
+            <div class="box">
+                <div class="form-group">
+                    <label for="nome_usuario">Digite o nome do usuário:</label>
+                    <input type="text" class="form-control" id="nome_usuario" name="nome_usuario"
+                        onkeyup="buscarUsuarios()">
                 </div>
+                <div id="resultados_busca"></div>
+
+                
             </div>
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-            <div class="recent-orders">
-                <h2>Recentes</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome do Usuário</th>
-                            <th>Quantidade</th>
-                            <th>Forma de Pagamento</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td> Antonio Carlos Mattes Mongelo</td>
-                        <td> R$: 30,00</td>
-                        <td> PIX </td>
-                        <td> Pago</td>
-                    </tbody>
-                </table>
-
-            </div>
-            <!-- End of Recent Orders -->
-
+            <!-- Fim dos pedidos recentes -->
         </main>
-        <!-- End of Main Content -->
-
-        <!-- Right Section -->
+        <!-- Fim do conteúdo principal -->
+        <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
@@ -246,47 +208,56 @@ sleep(1);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/perfil/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
-
             </div>
-            <!-- End of Nav -->
-
+            <!-- Fim da navegação -->
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../../img/fundo.png">
-                    <h2>Sentinela da Fronteira</h2>
-
+                   
                 </div>
             </div>
-
-
         </div>
-
-
     </div>
-
-
-    <script src="JavaScript/index.js"></script>
-    
+    <script src="../JavaScript/index.js"></script>
     <script>
-        function atualizarCo    ntagem() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("contagem").innerHTML = this.responseText;
-                }
-            };
-            
-        }
-333
-        setInterval(atualizarContagem, 5000); // Atualiza a cada 5 segundos
-        window.onload = atualizarContagem; // Atualiza ao carregar a página
+function buscarUsuarios() {
+    const nomeUsuario = document.getElementById('nome_usuario').value;
+    if (nomeUsuario.length > 0) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                const resultados = JSON.parse(this.responseText);
+                let output = '<ul>';
+                resultados.forEach(function (usuario) {
+                    // Adiciona um evento onclick que abre um SweetAlert vazio ao clicar no nome do usuário
+                    output += `<li><a href="#" onclick="abrirSweetAlert('${usuario.id_usuario}', '${usuario.nome}')">${usuario.nome}</a></li>`;
+                });
+                output += '</ul>';
+                document.getElementById('resultados_busca').innerHTML = output;
+            }
+        };
+        xhr.send();
+    } else {
+        document.getElementById('resultados_busca').innerHTML = '';
+    }
+}
+
+// Função para abrir um SweetAlert vazio ao clicar no nome do usuário
+function abrirSweetAlert(idUsuario, nomeUsuario) {
+    Swal.fire({
+        title: `Mensalidades`,
+        html: `ID do Usuário: ${idUsuario}<br>Nome: ${nomeUsuario}`,
+      
+        showCancelButton: false,
+        confirmButtonText: 'Fechar'
+    });
+}
+
     </script>
 
 
-</body>
-
-</html>
+   

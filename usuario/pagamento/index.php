@@ -1,8 +1,8 @@
 <?php
 session_start();
-include ("conexao.php");
+include("conexao.php");
 
-// Aguarda 1 segundos antes de redirecionar o usuário
+// Aguarda 1 segundo antes de redirecionar o usuário
 sleep(1);
 
 // Verifica se o usuário está logado
@@ -28,7 +28,48 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
+    $file = $_FILES['comprovante'];
+    $mes = date('F'); // Obtém o mês atual
 
+    // Diretório para salvar o arquivo enviado
+    $uploadDir = '../../img/comprovantes/';
+    $uploadFile = $uploadDir . basename($file['name']);
+    $fileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
+
+    // Tipos de arquivo permitidos
+    $allowedTypes = ['png', 'jpg', 'jpeg', 'pdf'];
+
+    if (in_array($fileType, $allowedTypes)) {
+        // Move o arquivo enviado para o diretório do servidor
+        if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
+            // Insere as informações do arquivo na tabela 'mensalidades'
+            $sql = "INSERT INTO mensalidades (usuario_id, mes, comprovante) VALUES ('$id_usuario', '$mes', '$uploadFile')";
+            if (mysqli_query($conexao, $sql)) {
+                $_SESSION['titulo_mensagem'] = 'Sucesso';
+                $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
+                $_SESSION['tipo_mensagem'] = 'success';
+                header("Location: ../pagamentos.php");
+                exit();
+            } else {
+                $_SESSION['titulo_mensagem'] = 'Erro';
+                $_SESSION['mensagem'] = 'Erro ao salvar no banco de dados: ' . mysqli_error($conexao);
+                $_SESSION['tipo_mensagem'] = 'error';
+            }
+        } else {
+            $_SESSION['titulo_mensagem'] = 'Erro';
+            $_SESSION['mensagem'] = 'Erro ao fazer o upload do arquivo.';
+            $_SESSION['tipo_mensagem'] = 'error';
+        }
+    } else {
+        $_SESSION['titulo_mensagem'] = 'Erro';
+        $_SESSION['mensagem'] = 'Tipo de arquivo não permitido.';
+        $_SESSION['tipo_mensagem'] = 'error';
+    }
+    header("Location: ../pagamentos.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +82,20 @@ $dados = mysqli_fetch_assoc($resultado);
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
+    <style>
+        .preview-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .preview-container img, .preview-container .pdf-icon {
+            max-width: 100%;
+            height: auto;
+        }
+        .pdf-icon {
+            font-size: 50px;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,8 +105,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <aside>
             <div class="toggle">
                 <div class="logo">
-
-                    <h2>Unindo Forças é <span class="danger">Bem Mais Facíl </span></h2>
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Fácil</span></h2>
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -84,7 +138,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <span class="material-icons-sharp">
                         event
                     </span>
-                    <h3>Calendario</h3>
+                    <h3>Calendário</h3>
                 </a>
                 <a href="../pagamentos" class="active">
                     <span class="material-icons-sharp">
@@ -98,7 +152,6 @@ $dados = mysqli_fetch_assoc($resultado);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-
 
                 <a href="logout.php">
                     <span class="material-icons-sharp">
@@ -140,7 +193,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <div class="user">
 
                         <h2><?php echo $dados['nome'] ?></h2>
-                        <p>Falta pagar o mês de: ABRIL </p>
+                        <p>Falta pagar o mês de: ABRIL</p>
                     </div>
 
                 </div>
@@ -154,21 +207,16 @@ $dados = mysqli_fetch_assoc($resultado);
                     <thead>
                         <tr>
                             <th>LINK - Pagamento</th>
-
-
                         </tr>
                     </thead>
                     <tbody>
                         <td>
-                            <a
-                                href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-a93222f3-a33b-48de-9154-1879b1e2778d">
-
-                                Clique, aqui</a>
+                            <a href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-96f0861f-f4d5-4d20-8e7f-4d6c82acb4ea">
+                                Clique, aqui
+                            </a>
                         </td>
-
                     </tbody>
                 </table>
-
             </div>
             <!-- End of Recent Orders -->
 
@@ -198,29 +246,78 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/perfil/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
-
             </div>
             <!-- End of Nav -->
 
-
+            <!-- User Profile Section -->
             <div class="user-profile">
                 <div class="logo">
-
-                    <h2></h2>
-
+                    <h2>Comprovante</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf" required>
+                        <div class="preview-container">
+                            <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview" style="display:none;">
+                            <span class="pdf-icon material-icons-sharp" style="display:none;">picture_as_pdf</span>
+                        </div>
+                        <button type="submit" class="form-control" style="margin-top: 10px;">Enviar Comprovante</button>
+                    </form>
                 </div>
             </div>
-
-
+            <!-- End of User Profile Section -->
         </div>
-
-
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const comprovanteFile = document.querySelector('#comprovante-file');
+        const previewComprovante = document.querySelector('#preview-comprovante');
+        const pdfIcon = document.querySelector('.pdf-icon');
 
+        comprovanteFile.addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (file) {
+                const fileType = file.type;
+                if (fileType === 'application/pdf') {
+                    previewComprovante.style.display = 'none';
+                    pdfIcon.style.display = 'block';
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        if (fileType.startsWith('image/')) {
+                            previewComprovante.src = event.target.result;
+                            previewComprovante.style.display = 'block';
+                            pdfIcon.style.display = 'none';
+                        } else {
+                            // Fallback for non-image files
+                            previewComprovante.style.display = 'none';
+                            pdfIcon.style.display = 'none';
+                        }
+                    }
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                previewComprovante.src = '#';
+                previewComprovante.style.display = 'none';
+                pdfIcon.style.display = 'none';
+            }
+        });
+
+        <?php if (isset($_SESSION['mensagem'])): ?>
+            Swal.fire({
+                title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
+                text: "<?php echo $_SESSION['mensagem']; ?>",
+                icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+            });
+            <?php
+            unset($_SESSION['mensagem']);
+            unset($_SESSION['tipo_mensagem']);
+            unset($_SESSION['titulo_mensagem']);
+            ?>
+        <?php endif; ?>
+    </script>
     <script src="../JavaScript/index.js"></script>
 </body>
 

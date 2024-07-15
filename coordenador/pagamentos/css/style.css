@@ -762,3 +762,27 @@ main .recent-orders a {
     }
 
 }
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control:focus {
+    border-color: #000000;
+    outline: none;
+}
+
+.form-control option {
+    padding: 10px;
+}

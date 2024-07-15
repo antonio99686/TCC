@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
 
     $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg');
     if (in_array($fileExtension, $allowedfileExtensions)) {
-        $uploadFileDir = 'img/';
+        $uploadFileDir = '../img/perfil/';
         $dest_path = $uploadFileDir . $newFileName;
 
         if (move_uploaded_file($fileTmpPath, $dest_path)) {
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo $dados['imagem'] ?>" alt="user" id="profile-picture">
+                        <img src="../img/perfil/<?php echo $dados['imagem'] ?>" alt="user" id="profile-picture">
                     </div>
                 </div>
             </div>

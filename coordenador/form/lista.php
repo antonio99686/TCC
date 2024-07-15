@@ -298,7 +298,7 @@ sleep(1);
                         <small class="text-muted"><?php echo $dados['nome'] ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../../img/<?php echo $dados['imagem'] ?>" alt="user">
+                        <img src="../../img/perfil/<?php echo $dados['imagem'] ?>" alt="user">
                     </div>
                 </div>
 

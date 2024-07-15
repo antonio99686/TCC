@@ -157,7 +157,7 @@ if (isset($_GET['nome_usuario'])) {
                         <small class="text-muted"><?php echo htmlspecialchars($dados['nome']); ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
+                        <img src="../img/perfil/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
                     </div>
                 </div>
             </div>

@@ -54,6 +54,22 @@
                     <span class="validation-message"></span>
                 </div>
                 <div class="form-grupo">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
+                    <span class="validation-message"></span>
+                </div>
+                <div class="form-grupo">
+                <label for="genero" class="form-label">Genero</label>
+                <select name="genero" class="dropdown" required>
+                    <option selected disabled class="form-select-option" value="">
+                        Selecione
+                    </option>
+                    <option value="M" class="form-select-option">Masculino</option>
+                    <option value="F" class="form-select-option">Feminino</option>
+                </select>
+                <span class="validation-message"></span>
+            </div>
+                <div class="form-grupo">
                     <label for="status" class="form-label">Categoria</label>
                     <select name="status" class="dropdown" required>
                         <option selected disabled class="form-select-option" value="">Selecione</option>
@@ -66,11 +82,6 @@
                 <div class="form-grupo">
                     <label for="CPF" class="form-label">CPF</label>
                     <input type="text" name="CPF" class="form-input" maxlength="14" placeholder="Somente os N°" required>
-                    <span class="validation-message"></span>
-                </div>
-                <div class="form-grupo">
-                    <label for="senha" class="form-label">Senha</label>
-                    <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
                     <span class="validation-message"></span>
                 </div>
 
