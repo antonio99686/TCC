@@ -16,60 +16,151 @@ if (!isset($_SESSION['id_usuario'])) {
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário
-$sql = "SELECT * FROM usuario WHERE id_usuario = " . $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
 $resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
-    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    $_SESSION['titulo_mensagem'] = 'Erro';
+    $_SESSION['mensagem'] = 'Erro ao consultar o banco de dados: ' . mysqli_error($conexao);
+    $_SESSION['tipo_mensagem'] = 'error';
+    header("Location: ../pagamento");
     exit();
 }
 
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
+// Inicializa o array $meses
+$meses = [];
+
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
-    $file = $_FILES['comprovante'];
-    $mes = date('F'); // Obtém o mês atual
+    // Obtém os arquivos de comprovante
+    $files = $_FILES['comprovante'];
 
-    // Diretório para salvar o arquivo enviado
-    $uploadDir = '../../img/comprovantes/';
-    $uploadFile = $uploadDir . basename($file['name']);
-    $fileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
+    // Processamento dos arquivos de comprovante
+    foreach ($files['name'] as $index => $filename) {
+        $file = [
+            'name' => $files['name'][$index],
+            'tmp_name' => $files['tmp_name'][$index],
+            'type' => $files['type'][$index],
+            'error' => $files['error'][$index],
+            'size' => $files['size'][$index]
+        ];
 
-    // Tipos de arquivo permitidos
-    $allowedTypes = ['png', 'jpg', 'jpeg', 'pdf'];
+        // Obtém o mês atual para cada arquivo
+        $mes = date('F', strtotime("+$index month"));
 
-    if (in_array($fileType, $allowedTypes)) {
-        // Move o arquivo enviado para o diretório do servidor
-        if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
-            // Insere as informações do arquivo na tabela 'mensalidades'
-            $sql = "INSERT INTO mensalidades (usuario_id, mes, comprovante) VALUES ('$id_usuario', '$mes', '$uploadFile')";
-            if (mysqli_query($conexao, $sql)) {
-                $_SESSION['titulo_mensagem'] = 'Sucesso';
-                $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
-                $_SESSION['tipo_mensagem'] = 'success';
-                header("Location: ../pagamentos.php");
-                exit();
+        // Diretório para salvar o arquivo enviado
+        $uploadDir = '../../img/comprovantes/';
+        $uploadFile = $uploadDir . basename($file['name']);
+        $fileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
+
+        // Tipos de arquivo permitidos
+        $allowedTypes = ['png', 'jpg', 'jpeg', 'pdf'];
+
+        if (in_array($fileType, $allowedTypes)) {
+            // Move o arquivo enviado para o diretório do servidor
+            if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
+                // Verifica se já existe um registro para o mês atual
+                $sql_check = "SELECT * FROM mensalidades WHERE usuario_id = '$id_usuario' AND mes = '$mes' AND pago = 0";
+                $result_check = mysqli_query($conexao, $sql_check);
+
+                if (!$result_check) {
+                    $_SESSION['titulo_mensagem'] = 'Erro';
+                    $_SESSION['mensagem'] = 'Erro ao consultar o banco de dados: ' . mysqli_error($conexao);
+                    $_SESSION['tipo_mensagem'] = 'error';
+                } elseif (mysqli_num_rows($result_check) > 0) {
+                    // Atualiza o comprovante existente
+                    $sql_update = "UPDATE mensalidades SET comprovante = '$uploadFile' WHERE usuario_id = '$id_usuario' AND mes = '$mes' AND pago = 1 ";
+                    if (mysqli_query($conexao, $sql_update)) {
+                        $_SESSION['titulo_mensagem'] = 'Sucesso';
+                        $_SESSION['mensagem'] = 'Comprovante atualizado com sucesso!';
+                        $_SESSION['tipo_mensagem'] = 'success';
+                        $meses[] = $mes;
+                    } else {
+                        $_SESSION['titulo_mensagem'] = 'Erro';
+                        $_SESSION['mensagem'] = 'Erro ao atualizar no banco de dados: ' . mysqli_error($conexao);
+                        $_SESSION['tipo_mensagem'] = 'error';
+                    }
+                } else {
+                    // Insere um novo registro
+                    $sql_insert = "INSERT INTO mensalidades (usuario_id, mes, pago, comprovante) VALUES ('$id_usuario', '$mes', 0, '$uploadFile')";
+                    if (mysqli_query($conexao, $sql_insert)) {
+                        $_SESSION['titulo_mensagem'] = 'Sucesso';
+                        $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
+                        $_SESSION['tipo_mensagem'] = 'success';
+                        $meses[] = $mes;
+                    } else {
+                        $_SESSION['titulo_mensagem'] = 'Erro';
+                        $_SESSION['mensagem'] = 'Erro ao salvar no banco de dados: ' . mysqli_error($conexao);
+                        $_SESSION['tipo_mensagem'] = 'error';
+                    }
+                }
             } else {
                 $_SESSION['titulo_mensagem'] = 'Erro';
-                $_SESSION['mensagem'] = 'Erro ao salvar no banco de dados: ' . mysqli_error($conexao);
+                $_SESSION['mensagem'] = 'Erro ao fazer o upload do arquivo.';
                 $_SESSION['tipo_mensagem'] = 'error';
             }
         } else {
             $_SESSION['titulo_mensagem'] = 'Erro';
-            $_SESSION['mensagem'] = 'Erro ao fazer o upload do arquivo.';
+            $_SESSION['mensagem'] = 'Tipo de arquivo não permitido.';
             $_SESSION['tipo_mensagem'] = 'error';
         }
-    } else {
-        $_SESSION['titulo_mensagem'] = 'Erro';
-        $_SESSION['mensagem'] = 'Tipo de arquivo não permitido.';
-        $_SESSION['tipo_mensagem'] = 'error';
     }
-    header("Location: ../pagamentos.php");
+
+    // Redireciona para a página de pagamentos após processamento
+    header("Location: ../pagamento");
     exit();
 }
+
+// Consulta SQL para obter os meses pendentes de pagamento
+$sql_meses_pendentes = "SELECT DISTINCT mes FROM mensalidades WHERE usuario_id = '$id_usuario' AND pago = 0";
+$resultado_meses_pendentes = mysqli_query($conexao, $sql_meses_pendentes);
+
+// Verifica se houve erro na consulta
+if (!$resultado_meses_pendentes) {
+    $_SESSION['titulo_mensagem'] = 'Erro';
+    $_SESSION['mensagem'] = 'Erro ao consultar meses pendentes: ' . mysqli_error($conexao);
+    $_SESSION['tipo_mensagem'] = 'error';
+    header("Location: ../pagamento");
+    exit();
+}
+
+// Obter o mês atual para comparação
+$mesAtual = date('m');
+
+// Itera sobre os resultados para obter os meses pendentes
+while ($row = mysqli_fetch_assoc($resultado_meses_pendentes)) {
+    $mesPendente = $row['mes'];
+    $mesPendenteNumero = date('m', strtotime($mesPendente));
+
+    // Verifica se já passou do dia 10 do mês seguinte ao mês pendente
+    $dataLimite = date('Y-m-10', strtotime("+1 month", strtotime($mesPendente)));
+    $dataAtual = date('Y-m-d');
+
+    if ($dataAtual > $dataLimite) {
+        // Insere automaticamente o mês na tabela 'mensalidades'
+        $sql_insert = "INSERT INTO mensalidades (usuario_id, mes, pago, comprovante) VALUES ('$id_usuario', '$mesPendente', 0, '')";
+        if (mysqli_query($conexao, $sql_insert)) {
+            $_SESSION['titulo_mensagem'] = 'Aviso';
+            $_SESSION['mensagem'] = "O mês de $mesPendente foi cadastrado automaticamente devido ao atraso no pagamento.";
+            $_SESSION['tipo_mensagem'] = 'warning';
+            $meses[] = $mesPendente;
+        } else {
+            $_SESSION['titulo_mensagem'] = 'Erro';
+            $_SESSION['mensagem'] = 'Erro ao cadastrar automaticamente no banco de dados: ' . mysqli_error($conexao);
+            $_SESSION['tipo_mensagem'] = 'error';
+        }
+    }
+
+    // Adiciona o mês pendente ao array de meses apenas se ainda não estiver pago
+    if (!in_array($mesPendente, $meses)) {
+        $meses[] = $mesPendente;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -88,16 +179,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
             align-items: center;
             margin-top: 10px;
         }
-        .preview-container img, .preview-container .pdf-icon {
+
+        .preview-container img,
+        .preview-container .pdf-icon {
             max-width: 100%;
             height: auto;
         }
+
         .pdf-icon {
             font-size: 50px;
         }
     </style>
 </head>
-
 <body>
 
     <div class="container">
@@ -193,7 +286,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
                     <div class="user">
 
                         <h2><?php echo $dados['nome'] ?></h2>
-                        <p>Falta pagar o mês de: ABRIL</p>
+                        <?php foreach ($meses as $mesPago): ?>
+                            <p>Falta pagar o mês de: <?php echo strtoupper($mesPago); ?></p>
+                        <?php endforeach; ?>
+
                     </div>
 
                 </div>
@@ -211,9 +307,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
                     </thead>
                     <tbody>
                         <td>
-                            <a href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=474362529-96f0861f-f4d5-4d20-8e7f-4d6c82acb4ea">
-                                Clique, aqui
-                            </a>
+                            <?php
+                            require_once "../../pix/gerar_checkot.php";
+                            ?>
                         </td>
                     </tbody>
                 </table>
@@ -232,7 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                         light_mode
                     </span>
                     <span class="material-icons-sharp">
@@ -253,13 +349,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
             <!-- End of Nav -->
 
             <!-- User Profile Section -->
+
             <div class="user-profile">
                 <div class="logo">
                     <h2>Comprovante</h2>
                     <form method="post" enctype="multipart/form-data">
-                        <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf" required>
+                        <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf"
+                            required>
                         <div class="preview-container">
-                            <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview" style="display:none;">
+                            <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview"
+                                style="display:none;">
                             <span class="pdf-icon material-icons-sharp" style="display:none;">picture_as_pdf</span>
                         </div>
                         <button type="submit" class="form-control" style="margin-top: 10px;">Enviar Comprovante</button>
@@ -269,9 +368,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
             <!-- End of User Profile Section -->
         </div>
     </div>
-
+    <!-- End of User Profile Section -->
+    </div>
+    </div>
+    <script src="JavaScript/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const comprovanteFile = document.querySelector('#comprovante-file');
         const previewComprovante = document.querySelector('#preview-comprovante');
         const pdfIcon = document.querySelector('.pdf-icon');
@@ -285,7 +388,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
                     pdfIcon.style.display = 'block';
                 } else {
                     const reader = new FileReader();
-                    reader.onload = function(event) {
+                    reader.onload = function (event) {
                         if (fileType.startsWith('image/')) {
                             previewComprovante.src = event.target.result;
                             previewComprovante.style.display = 'block';
@@ -310,15 +413,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
                 title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
                 text: "<?php echo $_SESSION['mensagem']; ?>",
                 icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+            }).then(() => {
+                <?php
+                unset($_SESSION['mensagem']);
+                unset($_SESSION['tipo_mensagem']);
+                unset($_SESSION['titulo_mensagem']);
+                ?>
             });
-            <?php
-            unset($_SESSION['mensagem']);
-            unset($_SESSION['tipo_mensagem']);
-            unset($_SESSION['titulo_mensagem']);
-            ?>
         <?php endif; ?>
-    </script>
+    });
+</script>
+
     <script src="../JavaScript/index.js"></script>
 </body>
-
 </html>

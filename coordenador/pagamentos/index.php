@@ -1,52 +1,61 @@
 <?php
-session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
-require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
-$conexao = conectar(); // Estabelece a conexão com o banco de dados
+session_start();
+require_once "../../conexao.php";
+$conexao = conectar();
 sleep(1);
-// Verifica se o usuário está logado
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
     exit();
 }
 
 // Obtém os dados do usuário logado
-$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
-mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
-mysqli_stmt_execute($stmt); // Executa a consulta preparada
-$resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
-$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
+$id_usuario = $_SESSION['id_usuario'];
+$sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
+$resultado = mysqli_query($conexao, $sql);
+$dados = mysqli_fetch_assoc($resultado);
 
 // Verifica se foi feita uma requisição de busca de usuários
 if (isset($_GET['nome_usuario'])) {
     $nome_usuario = $_GET['nome_usuario'];
-    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE 
-    CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
-    mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca
-    mysqli_stmt_execute($stmt); // Executa a consulta preparada
-    $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
+    $sql = "SELECT id_usuario, nome FROM usuario WHERE nome LIKE '%$nome_usuario%' AND statuss = 1 ORDER BY nome ASC";
+    $resultado = mysqli_query($conexao, $sql);
 
     $usuarios = [];
     if ($resultado && mysqli_num_rows($resultado) > 0) {
         while ($usuario = mysqli_fetch_assoc($resultado)) {
-            $usuarios[] = $usuario; // Armazena os usuários encontrados no array $usuarios
+            $usuarios[] = $usuario;
         }
     }
 
-    echo json_encode($usuarios); // Retorna os usuários encontrados como JSON e termina o script
+    echo json_encode($usuarios);
     exit();
 }
 
+// Verifica se foi feita uma requisição de busca de mensalidades
+if (isset($_GET['id_usuario'])) {
+    $id_usuario = $_GET['id_usuario'];
+    $sql = "SELECT mes, pago FROM mensalidades WHERE usuario_id = $id_usuario";
+    $resultado = mysqli_query($conexao, $sql);
 
+    $mensalidades = [];
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        while ($mensalidade = mysqli_fetch_assoc($resultado)) {
+            $mensalidades[] = $mensalidade;
+        }
+    }
 
+    echo json_encode($mensalidades);
+    exit();
+}
 
-
-// Consulta para contar o número de usuários ativos
 $sql_total_usuarios = "SELECT COUNT(*) as total FROM usuario WHERE statuss = 1";
-$result_total_usuarios = $conexao->query($sql_total_usuarios);
-$rows = $result_total_usuarios->fetch_assoc();
+$result_total_usuarios = mysqli_query($conexao, $sql_total_usuarios);
+$rows = mysqli_fetch_assoc($result_total_usuarios);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,13 +66,13 @@ $rows = $result_total_usuarios->fetch_assoc();
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pag.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <title>Sentinela da fronteira</title>
 </head>
 
 <body>
-
     <div class="container">
         <!-- Seção da barra lateral -->
         <aside>
@@ -103,17 +112,21 @@ $rows = $result_total_usuarios->fetch_assoc();
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="../pagamentos">
+                <a href="../pagamentos" class="active">
                     <span class="material-icons-sharp">
                         paid
                     </span>
                     <h3>Pagamento</h3>
                 </a>
-                <a href="../acessorios" class="active">
+                <a href="../acessorios">
                     <span class="material-icons-sharp">
                         checkroom
                     </span>
                     <h3>Vestimentas</h3>
+                </a>
+                <a href="../../email">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
                 </a>
                 <a href="../logout.php">
                     <span class="material-icons-sharp">
@@ -131,26 +144,22 @@ $rows = $result_total_usuarios->fetch_assoc();
             <!-- Análises -->
             <div class="analyse">
                 <div class="sales">
-                
-                        <div class="status">
-                            <div class="info">
-                                <h3></h3>
-                                <h1>    </h1>
-                            </div>
-                            <div class="progresss"></div>
+                    <div class="status">
+                        <div class="info">
+                            <h3></h3>
+                            <h1></h1>
                         </div>
-                    
+                        <div class="progresss"></div>
+                    </div>
                 </div>
                 <div class="visits">
-                
-                        <div class="status">
-                            <div class="info">
-                                <h3></h3>
-                                <h1></h1>
-                            </div>
-                            <div class="progresss"></div>
+                    <div class="status">
+                        <div class="info">
+                            <h3></h3>
+                            <h1></h1>
                         </div>
-                
+                        <div class="progresss"></div>
+                    </div>
                 </div>
                 <div class="searches">
                     <div class="status">
@@ -175,16 +184,14 @@ $rows = $result_total_usuarios->fetch_assoc();
             <div class="box">
                 <div class="form-group">
                     <label for="nome_usuario">Digite o nome do usuário:</label>
-                    <input type="text" class="form-control" id="nome_usuario" name="nome_usuario"
-                        onkeyup="buscarUsuarios()">
+                    <input type="text" class="form-control" id="nome_usuario" name="nome_usuario" onkeyup="buscarUsuarios()">
                 </div>
                 <div id="resultados_busca"></div>
-
-                
             </div>
             <!-- Fim dos pedidos recentes -->
         </main>
         <!-- Fim do conteúdo principal -->
+
         <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
@@ -194,7 +201,7 @@ $rows = $result_total_usuarios->fetch_assoc();
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                         light_mode
                     </span>
                     <span class="material-icons-sharp">
@@ -216,48 +223,77 @@ $rows = $result_total_usuarios->fetch_assoc();
 
             <div class="user-profile">
                 <div class="logo">
-                   
                 </div>
             </div>
         </div>
     </div>
     <script src="../JavaScript/index.js"></script>
+
     <script>
-function buscarUsuarios() {
-    const nomeUsuario = document.getElementById('nome_usuario').value;
-    if (nomeUsuario.length > 0) {
+    function buscarUsuarios() {
+        const nomeUsuario = document.getElementById('nome_usuario').value;
+        console.log(`Buscando usuários com o nome: ${nomeUsuario}`);
+        if (nomeUsuario.length > 0) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    try {
+                        const resultados = JSON.parse(this.responseText);
+                        let output = '<ul>';
+                        resultados.forEach(function (usuario) {
+                            output += `<li><a href="#" onclick="buscarMensalidades(${usuario.id_usuario}, '${usuario.nome}')">${usuario.nome}</a></li>`;
+                        });
+                        output += '</ul>';
+                        document.getElementById('resultados_busca').innerHTML = output;
+                    } catch (e) {
+                        console.error('Error parsing JSON:', e);
+                        console.error('Response was:', this.responseText);
+                    }
+                }
+            };
+            xhr.send();
+        } else {
+            document.getElementById('resultados_busca').innerHTML = '';
+        }
+    }
+
+    function buscarMensalidades(idUsuario, nomeUsuario) {
+        console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`);
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
+        xhr.open('GET', `?id_usuario=${idUsuario}`, true);
         xhr.onload = function () {
             if (this.status === 200) {
-                const resultados = JSON.parse(this.responseText);
-                let output = '<ul>';
-                resultados.forEach(function (usuario) {
-                    // Adiciona um evento onclick que abre um SweetAlert vazio ao clicar no nome do usuário
-                    output += `<li><a href="#" onclick="abrirSweetAlert('${usuario.id_usuario}', '${usuario.nome}')">${usuario.nome}</a></li>`;
-                });
-                output += '</ul>';
-                document.getElementById('resultados_busca').innerHTML = output;
+                try {
+                    const mensalidades = JSON.parse(this.responseText);
+                    let content = `<h3>Mensalidades de ${nomeUsuario}</h3>`;
+                    if (mensalidades.length > 0) {
+                        content += "<table><tr><th>Mês</th><th>Status</th></tr>";
+                        mensalidades.forEach(function (mensalidade) {
+                            content += `<tr><td>${mensalidade.mes}</td><td>${mensalidade.pagamento ? 'Pago' : 'Não Pago'}</td></tr>`;
+                        });
+                        content += "</table>";
+                    } else {
+                        content += "<p>Não há pendências.</p>";
+                    }
+                    abrirSweetAlert(content);
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    console.error('Response was:', this.responseText);
+                }
             }
         };
         xhr.send();
-    } else {
-        document.getElementById('resultados_busca').innerHTML = '';
     }
-}
 
-// Função para abrir um SweetAlert vazio ao clicar no nome do usuário
-function abrirSweetAlert(idUsuario, nomeUsuario) {
-    Swal.fire({
-        title: `Mensalidades`,
-        html: `ID do Usuário: ${idUsuario}<br>Nome: ${nomeUsuario}`,
-      
-        showCancelButton: false,
-        confirmButtonText: 'Fechar'
-    });
-}
-
+    function abrirSweetAlert(content) {
+        Swal.fire({
+            title: 'Detalhes das Mensalidades',
+            html: content,
+            icon: 'info',
+            showCloseButton: true
+        });
+    }
     </script>
-
-
-   
+</body>
+</html>

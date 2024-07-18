@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                         light_mode
                     </span>
                     <span class="material-icons-sharp">
@@ -220,40 +220,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const avatarImage = document.querySelector('#avatar-image');
-        const previewImage = document.querySelector('#preview-image');
-        const profilePicture = document.querySelector('#profile-picture');
+    const avatarImage = document.querySelector('#avatar-image');
+    const previewImage = document.querySelector('#preview-image');
+    const profilePicture = document.querySelector('#profile-picture');
 
-        avatarImage.addEventListener('change', event => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
+    // Listener para o evento de mudança no input de arquivo
+    avatarImage.addEventListener('change', event => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
 
-                reader.onload = function(event) {
-                    previewImage.src = event.target.result;
-                    previewImage.style.display = 'block';
-                    profilePicture.src = event.target.result;
-                }
-
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.src = '#';
-                previewImage.style.display = 'none';
+            reader.onload = function(event) {
+                // Define a imagem de pré-visualização e a exibe
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+                // Atualiza a imagem do perfil na interface
+                profilePicture.src = event.target.result;
             }
-        });
 
-        <?php if (isset($_SESSION['mensagem'])): ?>
-            Swal.fire({
-                title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
-                text: "<?php echo $_SESSION['mensagem']; ?>",
-                icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
-            });
-            <?php
-            unset($_SESSION['mensagem']);
-            unset($_SESSION['tipo_mensagem']);
-            unset($_SESSION['titulo_mensagem']);
-            ?>
-        <?php endif; ?>
-    </script>
+            reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+        } else {
+            previewImage.src = '#';
+            previewImage.style.display = 'none'; // Esconde a imagem de pré-visualização se nenhum arquivo for selecionado
+        }
+    });
+
+    // Verifica se há mensagem na sessão e exibe um alerta utilizando SweetAlert2 se houver
+    <?php if (isset($_SESSION['mensagem'])): ?>
+        Swal.fire({
+            title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
+            text: "<?php echo $_SESSION['mensagem']; ?>",
+            icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+        });
+        <?php
+        // Limpa as variáveis de sessão após exibir o alerta
+        unset($_SESSION['mensagem']);
+        unset($_SESSION['tipo_mensagem']);
+        unset($_SESSION['titulo_mensagem']);
+        ?>
+    <?php endif; ?>
+</script>
+
 </body>
 </html>

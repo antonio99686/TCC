@@ -89,6 +89,10 @@ if (isset($_GET['nome_usuario'])) {
                     <span class="material-icons-sharp">checkroom</span>
                     <h3>Vestimentas</h3>
                 </a>
+                <a href="../email">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
+                </a>
                 <a href="logout.php">
                     <span class="material-icons-sharp">logout</span>
                     <h3>Logout</h3>
@@ -118,16 +122,7 @@ if (isset($_GET['nome_usuario'])) {
                         </div>
                     </a>
                 </div>
-                <div class="searches">
-                    <a href="#" id="openSearchBox">
-                        <div class="status">
-                            <div class="info">
-                                <h3>Roupa</h3>
-                                <h1>Selecionar Usuário e Roupas</h1>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                
             </div>
             <div class="box">
                 <h2>Dados Usuário</h2>
@@ -148,7 +143,7 @@ if (isset($_GET['nome_usuario'])) {
                     <span class="material-icons-sharp">menu</span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp ">light_mode</span>
                     <span class="material-icons-sharp">dark_mode</span>
                 </div>
                 <div class="profile">
@@ -168,10 +163,7 @@ if (isset($_GET['nome_usuario'])) {
                 </div>
             </div>
             <div class="reminders">
-                <div class="notification">
-                    <h1>Enviar Email</h1>
-                    <p>Roupas pendentes</p>
-                    <a href="../email/index.php"><label for="enviar">ENVIAR</label></a>
+                
                 </div>
             </div>
         </div>

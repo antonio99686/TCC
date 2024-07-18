@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                     </span>
                     <h3>Calendario</h3>
                 </a>
-                <a href="pagamento">
+                <a href="pagamentos">
                     <span class="material-icons-sharp">
                         paid
                     </span>
@@ -133,6 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                         checkroom
                     </span>
                     <h3>Vestimentas</h3>
+                </a>
+                <a href="../email">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
                 </a>
                 <a href="logout.php">
                     <span class="material-icons-sharp">
@@ -188,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                         light_mode
                     </span>
                     <span class="material-icons-sharp">

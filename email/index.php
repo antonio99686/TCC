@@ -1,135 +1,189 @@
+<?php
+session_start();
+require_once "conexao.php";
+$conexao = conectar();
+sleep(1);
+// Verifica se a sessão está iniciada e se o usuário está logado
+if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header("Location: ../login.php");
+    exit();
+}
+
+// Obtém o ID do usuário da sessão
+$id_usuario = $_SESSION['id_usuario'];
+
+// Consulta SQL para obter os dados do usuário utilizando prepared statements para evitar injeção de SQL
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql);
+mysqli_stmt_bind_param($stmt, "i", $id_usuario);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
+
+// Verifica se a consulta foi bem-sucedida
+if (!$resultado || mysqli_num_rows($resultado) == 0) {
+    echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
+    exit();
+}
+
+// Obtém os dados do usuário
+$dados = mysqli_fetch_assoc($resultado);
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Email</title>
-    <link rel="shortcut icon" href="img/gmail.png" />
-    <!-- Inclua o SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Sentinela da Fronteira</title>
 </head>
 
 <body>
-    <a href="../coordenador/dashboard.php"><label for="voltar">VOLTAR</label></a>
-    <?php
-;
-    require_once "../conexao.php";
-    $conexao = conectar();
+    <div class="container">
+        <!-- Barra lateral -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <h2>Unindo Forças é <span class="danger">Bem Mais Fácil</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
 
-    // Verifica a conexão
-    if ($conexao->connect_error) {
-        die("Erro na conexão com o banco de dados: " . $conexao->connect_error);
-    }
+            <div class="sidebar">
+                <a href="../coordenador/dashboard.php">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="../coordenador/participantes">
+                    <span class="material-icons-sharp">groups</span>
+                    <h3>Users</h3>
+                </a>
+                <a href="../coordenador/perfil.php">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Perfil</h3>
+                </a>
+                <a href="../coordenador/calen" target="_blank">
+                    <span class="material-icons-sharp">event</span>
+                    <h3>Calendário</h3>
+                </a>
+                <a href="../coordenador/pagamentos">
+                    <span class="material-icons-sharp">paid</span>
+                    <h3>Pagamento</h3>
+                </a>
+                <a href="../coordenador/acessorios">
+                    <span class="material-icons-sharp">checkroom</span>
+                    <h3>Vestimentas</h3>
+                </a>
+                <a href="email" class="active">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
+                </a>
+                <a href="logout.php">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- Fim da barra lateral -->
 
-    // Carregando o PHPMailer
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    use PHPMailer\PHPMailer\SMTP;
+        <!-- Conteúdo principal -->
+        <main>
+            <h1>Sentinela da Fronteira</h1>
+            <!-- Análises -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3></h3>
+                            <h1></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3></h3>
+                            <h1></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                            <h3></h3>
+                            <h1></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim das análises -->
 
-    // Incluindo os arquivos necessários do PHPMailer
-    require_once 'PHPMailer/src/Exception.php';
-    require_once 'PHPMailer/src/PHPMailer.php';
-    require_once 'PHPMailer/src/SMTP.php';
-    include "config.php";
+            <!-- Dados do Usuário -->
+            <div class="box">
+                <h1>Enviar Email</h1>
+              
+                <div class="notification">
+                    <h2>Roupas pendentes</h2>
+                    <a href="email.php">
+                        <label for="enviar" class="form-control">ENVIAR</label></a>
+                </div>
+            </div>
+            <div class="box">
+                <h1>Enviar Email</h1>
+              
+                <div class="notification">
+                    <h2>Mensalidades</h2>
+                    <a href="../usuario/pagamento/email/email.php">
+                        <label for="enviar" class="form-control">ENVIAR</label></a>
+                </div>
+            </div>
+        </main>
 
-    // Função para enviar e-mails
-    function enviarEmail($email_usuario, $nome_usuario, $assunto, $corpo)
-    {
-        global $config;
-        $mail = new PHPMailer(true); // Habilita exceções
-    
-        try {
-            // Configuração do servidor SMTP
-            $mail->CharSet = 'UTF-8';
-            $mail->Encoding = 'base64';
-            $mail->setLanguage('br');
-            $mail->SMTPDebug = SMTP::DEBUG_OFF; // ou SMTP::DEBUG_SERVER para depuração
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';  // Endereço do servidor SMTP
-            $mail->SMTPAuth = true;    // Autenticação necessária
-            $mail->Username = $config['email'];
-            $mail->Password = $config['senha_email'];
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;           // Porta padrão para SMTP
-    
-            $mail->setFrom($config['email'], "Devolução");
-            $mail->addAddress($email_usuario, $nome_usuario);
-            $mail->addReplyTo($config['email'], "Devolução");
+        <!-- Seção Direita -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp light ">light_mode</span>
+                    <span class="material-icons-sharp dark">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Olá, <b>Bem-Vindo(a)</b></p>
+                        <small class="text-muted"><?php echo htmlspecialchars($dados['nome']); ?></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../img/perfil/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
+                    </div>
+                </div>
+            </div>
 
-            $mail->isHTML(true);
-            $mail->Subject = $assunto;
-            $mail->Body = $corpo;
-
-            $mail->send();
-            echo "<script>Swal.fire('Sucesso!', 'Email enviado com sucesso para.', 'success');</script>";
-
-        } catch (Exception $e) {
-            echo "<script>Swal.fire('Erro!', 'Não foi possível enviar o email para . Erro: {$mail->ErrorInfo}', 'error');</script>";
-        }
-    }
-
-    // Verificação da data
-    $dia_atual = date('d'); // Obtém o dia atual
-    
-    if ($dia_atual > 10) {
-        // Consulta SQL para selecionar usuários com roupas pendentes
-        $sql = "SELECT u.nome, u.email, r.nome AS nome_roupa
-            FROM usuario u
-            INNER JOIN roupas r ON u.id_usuario = r.id_usuario
-            WHERE r.status_devolucao = 0";
-
-        $result = $conexao->query($sql);
-
-        if ($result->num_rows > 0) {
-            // Array para armazenar roupas pendentes por usuário
-            $usuarios = [];
-
-            // Loop pelos resultados da consulta
-            while ($row = $result->fetch_assoc()) {
-                $nome_usuario = $row['nome'];
-                $email_usuario = $row['email'];
-                $nome_roupa = $row['nome_roupa'];
-
-                // Agrupa roupas pendentes por usuário
-                if (!isset($usuarios[$email_usuario])) {
-                    $usuarios[$email_usuario] = [
-                        'nome' => $nome_usuario,
-                        'roupas' => []
-                    ];
-                }
-
-                $usuarios[$email_usuario]['roupas'][] = $nome_roupa;
-            }
-
-            // Envia um e-mail para cada usuário com todas as roupas pendentes
-            foreach ($usuarios as $email_usuario => $dados_usuario) {
-                $nome_usuario = $dados_usuario['nome'];
-                $roupas_pendentes = implode(', ', $dados_usuario['roupas']);
-
-                // Conteúdo do e-mail
-                $assunto = 'Notificação de Roupa Pendente';
-                $corpo = "Olá $nome_usuario,<br>
-            Identificamos que você possui os seguintes itens pendentes para devolução: <h2>$roupas_pendentes</h2>.<br>
-            Solicitamos gentilmente que você providencie a devolução desses itens o mais breve possível.<br>
-            Agradecemos pela sua colaboração.<br>
-            Atenciosamente,<br>
-           <em><b> Grupo de dança Sentinela da Fronteira </b></em>";
+            <div class="user-profile">
+                <div class="logo">
+                   
+                </div>
+            </div>
 
 
-                // Envia o e-mail
-                enviarEmail($email_usuario, $nome_usuario, $assunto, $corpo);
-            }
-        } else {
-            echo "<script>Swal.fire('Informação!', 'Não há usuários com roupas pendentes para notificar.', 'info');</script>";
-        }
 
-        // Fecha a conexão com o banco de dados
-        $conexao->close();
-    } else {
-        echo "<script>Swal.fire('Informação!', 'Os e-mails só serão enviados após o dia 10 do mês.', 'info');</script>";
-    }
-    ?>
+
+        </div>
+    </div>
+
+    <script src="JavaScript/index.js"></script>
+
+
+
+
 </body>
 
 </html>

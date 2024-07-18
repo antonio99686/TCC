@@ -189,7 +189,7 @@ function determinar_categoria($idade) {
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                     light_mode
                     </span>
                     <span class="material-icons-sharp">

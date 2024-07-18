@@ -154,6 +154,10 @@ if ($_POST) { // Verifica se o formulário foi submetido
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
+                <a href="../../email">
+                    <span class="material-icons-sharp">email</span>
+                    <h3>Email</h3>
+                </a>
                 <a href="../logout.php">
                     <span class="material-icons-sharp">
                         logout
@@ -191,17 +195,7 @@ if ($_POST) { // Verifica se o formulário foi submetido
                         </div>
                     </a>
                 </div>
-                <div class="searches">
-                    <a href="../form/roupa.php">
-                        <div class="status">
-                            <div class="info">
-                                <h3>Roupa</h3>
-                                <h1>Cadasto da Roupa do Usuário</h1>
-                            </div>
-                            <div class="progresss"></div>
-                        </div>
-                    </a>
-                </div>
+                
             </div>
             <!-- Fim das análises -->
 
@@ -258,7 +252,7 @@ if ($_POST) { // Verifica se o formulário foi submetido
                     </span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp active">
+                    <span class="material-icons-sharp ">
                         light_mode
                     </span>
                     <span class="material-icons-sharp">

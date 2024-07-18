@@ -144,7 +144,7 @@ $dados = mysqli_fetch_assoc($resultado);
                     <span class="material-icons-sharp">menu</span>
                 </button>
                 <div class="dark-mode">
-                    <span class="material-icons-sharp light active">light_mode</span>
+                    <span class="material-icons-sharp light ">light_mode</span>
                     <span class="material-icons-sharp dark">dark_mode</span>
                 </div>
                 <div class="profile">

@@ -33,11 +33,11 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'], $
     $matricula = date('Y') . $numero;
 
     // Caminho da imagem de perfil padrão
-    $profileImagePath = '../img/img/perfil2.png';
+    $img = '../img/img/perfil.jpg';
 
     // Comando SQL para inserção
     $sql = "INSERT INTO usuario (nome, statuss, senha, matricula, CPF, imagem, genero) 
-            VALUES ('$nome', '$status', '$senha', '$matricula', '$CPF', '$profileImagePath', '$genero')";
+            VALUES ('$nome', '$status', '$senha', '$matricula', '$CPF', '$img', '$genero')";
 
     // Executa o comando SQL
     if (mysqli_query($conexao, $sql)) {

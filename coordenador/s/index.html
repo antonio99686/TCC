@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div class="main-content">
+            <div class="header">
+                
+                <div class="year-filter">
+                    <input type="text" placeholder="Nome ou código">
+                    <select>
+                        <option value="2017">2017</option>
+                        <!-- Adicionar mais opções conforme necessário -->
+                    </select>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Ano</th>
+                        <th>Jan</th>
+                        <th>Fev</th>
+                        <th>Mar</th>
+                        <!-- Adicionar mais meses conforme necessário -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fulano José Silva</td>
+                        <td>2017</td>
+                        <td class="paid">Pago</td>
+                        <td class="paid">Pago</td>
+                        <td class="unpaid">Não Pago</td>
+                        <!-- Adicionar mais meses conforme necessário -->
+                    </tr>
+                    <!-- Adicionar mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
