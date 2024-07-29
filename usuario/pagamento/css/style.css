@@ -802,3 +802,27 @@ main .recent-orders a {
     transition-duration: 0.4s;
     color: var(--color-white);
 }
+.form-control2 {
+    width: 80%;
+    padding: 5px;
+    margin: auto;
+    display: block;
+    border: 1px solid #181a1e;
+    border-radius: 30px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: black;
+    /* background-color: var(--color-white);*/
+    background-color: white;
+    text-align: center;
+
+}
+
+.form-control2:focus {
+    border-color: #000000;
+    outline: none;
+}
+
+.form-control2 option {
+    padding: 10px;
+}

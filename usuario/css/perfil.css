@@ -702,11 +702,17 @@ main .recent-orders a {
     display: none;
     animation: showMenu 0.4s ease forwards;
   }
+  .box-perfil{
+    position: relative;
+    text-align: center;
+    left: 2%;
+  }
 
   @keyframes showMenu {
     to {
       left: 0;
     }
+    
   }
 
   aside .logo {
@@ -798,3 +804,4 @@ main .recent-orders a {
     font-size: 2rem;
   }
 }
+

@@ -272,12 +272,7 @@ if ($_POST) { // Verifica se o formulário foi submetido
             </div>
             <!-- Fim da navegação -->
 
-            <div class="user-profile">
-                <div class="logo">
-                    <img class="imgs" src="../../img/fundo.png">
-                    <h2>Sentinela da Fronteira</h2>
-                </div>
-            </div>
+            
         </div>
     </div>
     <script src="../JavaScript/index.js"></script>

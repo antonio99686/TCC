@@ -1,16 +1,6 @@
 <?php
 session_start();
-include("conexao.php");
-
-// Aguarda 1 segundo antes de redirecionar o usuário
-sleep(1);
-
-// Verifica se o usuário está logado
-if (!isset($_SESSION['id_usuario'])) {
-    // Redireciona para a página de login se não estiver logado
-    header("Location: ../login.php");
-    exit();
-}
+include ("conexao.php");
 
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
@@ -31,138 +21,105 @@ if (!$resultado) {
 // Obtém os dados do usuário
 $dados = mysqli_fetch_assoc($resultado);
 
-// Inicializa o array $meses
-$meses = [];
+// Obtém a data atual
+$dataAtual = new DateTime();
+$diaAtual = $dataAtual->format('d');
+$mesAtual = $dataAtual->format('Y-m');
 
-// Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['comprovante'])) {
-    // Obtém os arquivos de comprovante
-    $files = $_FILES['comprovante'];
+// Disponibiliza o mês atual para pagamento se não estiver disponível
+if ($diaAtual == 1) {
+    $sqlUpdateDisponibiliza = "INSERT INTO mensalidades (usuario_id, mes, pago) 
+                                SELECT $id_usuario, DATE_FORMAT(NOW(), '%Y-%m'), 0
+                                WHERE NOT EXISTS (SELECT 1 FROM mensalidades WHERE usuario_id = $id_usuario AND mes = DATE_FORMAT(NOW(), '%Y-%m'))";
+    mysqli_query($conexao, $sqlUpdateDisponibiliza);
+}
 
-    // Processamento dos arquivos de comprovante
-    foreach ($files['name'] as $index => $filename) {
-        $file = [
-            'name' => $files['name'][$index],
-            'tmp_name' => $files['tmp_name'][$index],
-            'type' => $files['type'][$index],
-            'error' => $files['error'][$index],
-            'size' => $files['size'][$index]
-        ];
+// Verifica se um arquivo foi enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
+    // Obtém o mês selecionado
+    $mes_pendente = $_POST['mes_pendente'];
+    $usuario_id = $_SESSION['id_usuario']; // Certifique-se de que o ID do usuário está sendo armazenado na sessão
 
-        // Obtém o mês atual para cada arquivo
-        $mes = date('F', strtotime("+$index month"));
+    $arquivoTmp = $_FILES['comprovante']['tmp_name'];
+    $nomeArquivo = $_FILES['comprovante']['name'];
+    $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION));
+    $nomeNovoArquivo = uniqid() . '.' . $extensao;
+    $diretorioDestino = "../../coordenador/pagamentos/img/" . $nomeNovoArquivo;
 
-        // Diretório para salvar o arquivo enviado
-        $uploadDir = '../../img/comprovantes/';
-        $uploadFile = $uploadDir . basename($file['name']);
-        $fileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
+    // Move o arquivo para o diretório de destino
+    if (move_uploaded_file($arquivoTmp, $diretorioDestino)) {
+        // Atualiza o banco de dados com as informações do comprovante
+        $sqlUpdate = "UPDATE mensalidades SET comprovante = '$nomeNovoArquivo', pago = 1 WHERE usuario_id = $usuario_id AND mes = '$mes_pendente'";
+        $resultadoUpdate = mysqli_query($conexao, $sqlUpdate);
 
-        // Tipos de arquivo permitidos
-        $allowedTypes = ['png', 'jpg', 'jpeg', 'pdf'];
+        if ($resultadoUpdate) {
+            $_SESSION['titulo_mensagem'] = 'Sucesso!';
+            $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
+            $_SESSION['tipo_mensagem'] = 'success';
+        } else {
+            $_SESSION['titulo_mensagem'] = 'Erro!';
+            $_SESSION['mensagem'] = 'Não foi possível enviar o comprovante. Por favor, tente novamente.';
+            $_SESSION['tipo_mensagem'] = 'error';
+        }
+    } else {
+        $_SESSION['titulo_mensagem'] = 'Erro!';
+        $_SESSION['mensagem'] = 'Ocorreu um erro ao enviar o arquivo. Por favor, tente novamente.';
+        $_SESSION['tipo_mensagem'] = 'error';
+    }
 
-        if (in_array($fileType, $allowedTypes)) {
-            // Move o arquivo enviado para o diretório do servidor
-            if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
-                // Verifica se já existe um registro para o mês atual
-                $sql_check = "SELECT * FROM mensalidades WHERE usuario_id = '$id_usuario' AND mes = '$mes' AND pago = 0";
-                $result_check = mysqli_query($conexao, $sql_check);
+    // Atualiza as mensalidades pendentes se não foram pagas até o dia 10
+    if ($diaAtual > 10) {
+        $sqlMesesPendentes = "SELECT mes FROM mensalidades WHERE usuario_id = $id_usuario AND pago = 0";
+        $resultadoMesesPendentes = mysqli_query($conexao, $sqlMesesPendentes);
 
-                if (!$result_check) {
-                    $_SESSION['titulo_mensagem'] = 'Erro';
-                    $_SESSION['mensagem'] = 'Erro ao consultar o banco de dados: ' . mysqli_error($conexao);
-                    $_SESSION['tipo_mensagem'] = 'error';
-                } elseif (mysqli_num_rows($result_check) > 0) {
-                    // Atualiza o comprovante existente
-                    $sql_update = "UPDATE mensalidades SET comprovante = '$uploadFile' WHERE usuario_id = '$id_usuario' AND mes = '$mes' AND pago = 1 ";
-                    if (mysqli_query($conexao, $sql_update)) {
-                        $_SESSION['titulo_mensagem'] = 'Sucesso';
-                        $_SESSION['mensagem'] = 'Comprovante atualizado com sucesso!';
-                        $_SESSION['tipo_mensagem'] = 'success';
-                        $meses[] = $mes;
-                    } else {
+        if ($resultadoMesesPendentes) {
+            while ($row = mysqli_fetch_assoc($resultadoMesesPendentes)) {
+                $mesPendente = $row['mes'];
+                $mesPendenteData = new DateTime($mesPendente);
+
+                // Verifica se o mês pendente é anterior ao mês atual
+                if ($mesPendenteData < $dataAtual) {
+                    // Atualiza o banco de dados para marcar o mês como pago
+                    $sqlUpdate = "UPDATE mensalidades SET pago = 1 WHERE usuario_id = $id_usuario AND mes = '$mesPendente'";
+                    $resultadoUpdate = mysqli_query($conexao, $sqlUpdate);
+
+                    if (!$resultadoUpdate) {
                         $_SESSION['titulo_mensagem'] = 'Erro';
-                        $_SESSION['mensagem'] = 'Erro ao atualizar no banco de dados: ' . mysqli_error($conexao);
-                        $_SESSION['tipo_mensagem'] = 'error';
-                    }
-                } else {
-                    // Insere um novo registro
-                    $sql_insert = "INSERT INTO mensalidades (usuario_id, mes, pago, comprovante) VALUES ('$id_usuario', '$mes', 0, '$uploadFile')";
-                    if (mysqli_query($conexao, $sql_insert)) {
-                        $_SESSION['titulo_mensagem'] = 'Sucesso';
-                        $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
-                        $_SESSION['tipo_mensagem'] = 'success';
-                        $meses[] = $mes;
-                    } else {
-                        $_SESSION['titulo_mensagem'] = 'Erro';
-                        $_SESSION['mensagem'] = 'Erro ao salvar no banco de dados: ' . mysqli_error($conexao);
+                        $_SESSION['mensagem'] = 'Erro ao atualizar o mês pendente: ' . mysqli_error($conexao);
                         $_SESSION['tipo_mensagem'] = 'error';
                     }
                 }
-            } else {
-                $_SESSION['titulo_mensagem'] = 'Erro';
-                $_SESSION['mensagem'] = 'Erro ao fazer o upload do arquivo.';
-                $_SESSION['tipo_mensagem'] = 'error';
             }
         } else {
             $_SESSION['titulo_mensagem'] = 'Erro';
-            $_SESSION['mensagem'] = 'Tipo de arquivo não permitido.';
+            $_SESSION['mensagem'] = 'Erro ao consultar os meses pendentes: ' . mysqli_error($conexao);
             $_SESSION['tipo_mensagem'] = 'error';
         }
+    } else {
+        $_SESSION['titulo_mensagem'] = 'Informação';
+        $_SESSION['mensagem'] = 'O sistema só atualiza os meses pendentes após o dia 10.';
+        $_SESSION['tipo_mensagem'] = 'info';
     }
 
-    // Redireciona para a página de pagamentos após processamento
-    header("Location: ../pagamento");
+    header("Location: index.php");
     exit();
 }
 
-// Consulta SQL para obter os meses pendentes de pagamento
-$sql_meses_pendentes = "SELECT DISTINCT mes FROM mensalidades WHERE usuario_id = '$id_usuario' AND pago = 0";
-$resultado_meses_pendentes = mysqli_query($conexao, $sql_meses_pendentes);
+// Consulta SQL para obter os meses pendentes de pagamento do usuário
+$sqlMeses = "SELECT mes FROM mensalidades WHERE usuario_id = $id_usuario AND pago = 0";
+$resultadoMeses = mysqli_query($conexao, $sqlMeses);
 
-// Verifica se houve erro na consulta
-if (!$resultado_meses_pendentes) {
+if ($resultadoMeses) {
+    $meses = [];
+    while ($row = mysqli_fetch_assoc($resultadoMeses)) {
+        $meses[] = $row['mes'];
+    }
+} else {
     $_SESSION['titulo_mensagem'] = 'Erro';
-    $_SESSION['mensagem'] = 'Erro ao consultar meses pendentes: ' . mysqli_error($conexao);
+    $_SESSION['mensagem'] = 'Erro ao consultar os meses pendentes: ' . mysqli_error($conexao);
     $_SESSION['tipo_mensagem'] = 'error';
-    header("Location: ../pagamento");
-    exit();
 }
-
-// Obter o mês atual para comparação
-$mesAtual = date('m');
-
-// Itera sobre os resultados para obter os meses pendentes
-while ($row = mysqli_fetch_assoc($resultado_meses_pendentes)) {
-    $mesPendente = $row['mes'];
-    $mesPendenteNumero = date('m', strtotime($mesPendente));
-
-    // Verifica se já passou do dia 10 do mês seguinte ao mês pendente
-    $dataLimite = date('Y-m-10', strtotime("+1 month", strtotime($mesPendente)));
-    $dataAtual = date('Y-m-d');
-
-    if ($dataAtual > $dataLimite) {
-        // Insere automaticamente o mês na tabela 'mensalidades'
-        $sql_insert = "INSERT INTO mensalidades (usuario_id, mes, pago, comprovante) VALUES ('$id_usuario', '$mesPendente', 0, '')";
-        if (mysqli_query($conexao, $sql_insert)) {
-            $_SESSION['titulo_mensagem'] = 'Aviso';
-            $_SESSION['mensagem'] = "O mês de $mesPendente foi cadastrado automaticamente devido ao atraso no pagamento.";
-            $_SESSION['tipo_mensagem'] = 'warning';
-            $meses[] = $mesPendente;
-        } else {
-            $_SESSION['titulo_mensagem'] = 'Erro';
-            $_SESSION['mensagem'] = 'Erro ao cadastrar automaticamente no banco de dados: ' . mysqli_error($conexao);
-            $_SESSION['tipo_mensagem'] = 'error';
-        }
-    }
-
-    // Adiciona o mês pendente ao array de meses apenas se ainda não estiver pago
-    if (!in_array($mesPendente, $meses)) {
-        $meses[] = $mesPendente;
-    }
-}
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -191,6 +148,7 @@ while ($row = mysqli_fetch_assoc($resultado_meses_pendentes)) {
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -354,6 +312,12 @@ while ($row = mysqli_fetch_assoc($resultado_meses_pendentes)) {
                 <div class="logo">
                     <h2>Comprovante</h2>
                     <form method="post" enctype="multipart/form-data">
+                        <label for="mes-pendente">Selecione o Mês:</label>
+                        <select name="mes_pendente" class="form-control2" id="mes-pendente" required>
+                            <?php foreach ($meses as $mesPendente): ?>
+                                <option value="<?php echo $mesPendente; ?>"><?php echo strtoupper($mesPendente); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf"
                             required>
                         <div class="preview-container">
@@ -374,56 +338,57 @@ while ($row = mysqli_fetch_assoc($resultado_meses_pendentes)) {
     <script src="JavaScript/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const comprovanteFile = document.querySelector('#comprovante-file');
-        const previewComprovante = document.querySelector('#preview-comprovante');
-        const pdfIcon = document.querySelector('.pdf-icon');
+        document.addEventListener('DOMContentLoaded', function () {
+            const comprovanteFile = document.querySelector('#comprovante-file');
+            const previewComprovante = document.querySelector('#preview-comprovante');
+            const pdfIcon = document.querySelector('.pdf-icon');
 
-        comprovanteFile.addEventListener('change', event => {
-            const file = event.target.files[0];
-            if (file) {
-                const fileType = file.type;
-                if (fileType === 'application/pdf') {
-                    previewComprovante.style.display = 'none';
-                    pdfIcon.style.display = 'block';
-                } else {
-                    const reader = new FileReader();
-                    reader.onload = function (event) {
-                        if (fileType.startsWith('image/')) {
-                            previewComprovante.src = event.target.result;
-                            previewComprovante.style.display = 'block';
-                            pdfIcon.style.display = 'none';
-                        } else {
-                            // Fallback for non-image files
-                            previewComprovante.style.display = 'none';
-                            pdfIcon.style.display = 'none';
+            comprovanteFile.addEventListener('change', event => {
+                const file = event.target.files[0];
+                if (file) {
+                    const fileType = file.type;
+                    if (fileType === 'application/pdf') {
+                        previewComprovante.style.display = 'none';
+                        pdfIcon.style.display = 'block';
+                    } else {
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            if (fileType.startsWith('image/')) {
+                                previewComprovante.src = event.target.result;
+                                previewComprovante.style.display = 'block';
+                                pdfIcon.style.display = 'none';
+                            } else {
+                                // Fallback for non-image files
+                                previewComprovante.style.display = 'none';
+                                pdfIcon.style.display = 'none';
+                            }
                         }
+                        reader.readAsDataURL(file);
                     }
-                    reader.readAsDataURL(file);
+                } else {
+                    previewComprovante.src = '#';
+                    previewComprovante.style.display = 'none';
+                    pdfIcon.style.display = 'none';
                 }
-            } else {
-                previewComprovante.src = '#';
-                previewComprovante.style.display = 'none';
-                pdfIcon.style.display = 'none';
-            }
-        });
-
-        <?php if (isset($_SESSION['mensagem'])): ?>
-            Swal.fire({
-                title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
-                text: "<?php echo $_SESSION['mensagem']; ?>",
-                icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
-            }).then(() => {
-                <?php
-                unset($_SESSION['mensagem']);
-                unset($_SESSION['tipo_mensagem']);
-                unset($_SESSION['titulo_mensagem']);
-                ?>
             });
-        <?php endif; ?>
-    });
-</script>
+
+            <?php if (isset($_SESSION['mensagem'])): ?>
+                Swal.fire({
+                    title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
+                    text: "<?php echo $_SESSION['mensagem']; ?>",
+                    icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+                }).then(() => {
+                    <?php
+                    unset($_SESSION['mensagem']);
+                    unset($_SESSION['tipo_mensagem']);
+                    unset($_SESSION['titulo_mensagem']);
+                    ?>
+                });
+            <?php endif; ?>
+        });
+    </script>
 
     <script src="../JavaScript/index.js"></script>
 </body>
+
 </html>

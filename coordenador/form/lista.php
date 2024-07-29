@@ -103,7 +103,7 @@ sleep(1);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-                <a href="../../../email">
+                <a href="../../email">
                     <span class="material-icons-sharp">email</span>
                     <h3>Email</h3>
                 </a>

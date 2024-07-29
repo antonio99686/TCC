@@ -2,11 +2,11 @@
 session_start();
 require_once "../../conexao.php";
 $conexao = conectar();
-sleep(1);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Verifica se o usuário está autenticado
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php");
     exit();
@@ -14,21 +14,30 @@ if (!isset($_SESSION['id_usuario'])) {
 
 // Obtém os dados do usuário logado
 $id_usuario = $_SESSION['id_usuario'];
-$sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
-$resultado = mysqli_query($conexao, $sql);
-$dados = mysqli_fetch_assoc($resultado);
+
+// Obtém dados do usuário logado com proteção contra SQL Injection
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = $conexao->prepare($sql);
+$stmt->bind_param('i', $id_usuario);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$dados = $resultado->fetch_assoc();
 
 // Verifica se foi feita uma requisição de busca de usuários
 if (isset($_GET['nome_usuario'])) {
     $nome_usuario = $_GET['nome_usuario'];
-    $sql = "SELECT id_usuario, nome FROM usuario WHERE nome LIKE '%$nome_usuario%' AND statuss = 1 ORDER BY nome ASC";
-    $resultado = mysqli_query($conexao, $sql);
+
+    // Busca usuários com proteção contra SQL Injection
+    $sql = "SELECT id_usuario, nome FROM usuario WHERE nome LIKE ? AND statuss = 1 ORDER BY nome ASC";
+    $stmt = $conexao->prepare($sql);
+    $search_term = '%' . $nome_usuario . '%';
+    $stmt->bind_param('s', $search_term);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
     $usuarios = [];
-    if ($resultado && mysqli_num_rows($resultado) > 0) {
-        while ($usuario = mysqli_fetch_assoc($resultado)) {
-            $usuarios[] = $usuario;
-        }
+    while ($usuario = $resultado->fetch_assoc()) {
+        $usuarios[] = $usuario;
     }
 
     echo json_encode($usuarios);
@@ -38,20 +47,24 @@ if (isset($_GET['nome_usuario'])) {
 // Verifica se foi feita uma requisição de busca de mensalidades
 if (isset($_GET['id_usuario'])) {
     $id_usuario = $_GET['id_usuario'];
-    $sql = "SELECT mes, pago FROM mensalidades WHERE usuario_id = $id_usuario";
-    $resultado = mysqli_query($conexao, $sql);
+
+    // Busca mensalidades com proteção contra SQL Injection
+    $sql = "SELECT id, mes, pago, comprovante FROM mensalidades WHERE usuario_id = ?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param('i', $id_usuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
     $mensalidades = [];
-    if ($resultado && mysqli_num_rows($resultado) > 0) {
-        while ($mensalidade = mysqli_fetch_assoc($resultado)) {
-            $mensalidades[] = $mensalidade;
-        }
+    while ($mensalidade = $resultado->fetch_assoc()) {
+        $mensalidades[] = $mensalidade;
     }
 
     echo json_encode($mensalidades);
     exit();
 }
 
+// Consulta para obter o total de usuários
 $sql_total_usuarios = "SELECT COUNT(*) as total FROM usuario WHERE statuss = 1";
 $result_total_usuarios = mysqli_query($conexao, $sql_total_usuarios);
 $rows = mysqli_fetch_assoc($result_total_usuarios);
@@ -71,10 +84,16 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <title>Sentinela da fronteira</title>
 </head>
-
+<style>
+    .download {
+        color: black;
+    }
+    .download:hover {
+        color: red;
+    }
+</style>
 <body>
     <div class="container">
-        <!-- Seção da barra lateral -->
         <aside>
             <div class="toggle">
                 <div class="logo">
@@ -136,12 +155,9 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                 </a>
             </div>
         </aside>
-        <!-- Fim da seção da barra lateral -->
 
-        <!-- Conteúdo principal -->
         <main>
             <h1>Pagamentos</h1>
-            <!-- Análises -->
             <div class="analyse">
                 <div class="sales">
                     <div class="status">
@@ -178,9 +194,7 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                     </div>
                 </div>
             </div>
-            <!-- Fim das análises -->
 
-            <!-- Tabela de pedidos recentes -->
             <div class="box">
                 <div class="form-group">
                     <label for="nome_usuario">Digite o nome do usuário:</label>
@@ -188,11 +202,8 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                 </div>
                 <div id="resultados_busca"></div>
             </div>
-            <!-- Fim dos pedidos recentes -->
         </main>
-        <!-- Fim do conteúdo principal -->
 
-        <!-- Seção Direita -->
         <div class="right-section">
             <div class="nav">
                 <button id="menu-btn">
@@ -219,7 +230,6 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                     </div>
                 </div>
             </div>
-            <!-- Fim da navegação -->
 
             <div class="user-profile">
                 <div class="logo">
@@ -230,53 +240,22 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
     <script src="../JavaScript/index.js"></script>
 
     <script>
-    function buscarUsuarios() {
-        const nomeUsuario = document.getElementById('nome_usuario').value;
-        console.log(`Buscando usuários com o nome: ${nomeUsuario}`);
-        if (nomeUsuario.length > 0) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
-            xhr.onload = function () {
-                if (this.status === 200) {
-                    try {
-                        const resultados = JSON.parse(this.responseText);
-                        let output = '<ul>';
-                        resultados.forEach(function (usuario) {
-                            output += `<li><a href="#" onclick="buscarMensalidades(${usuario.id_usuario}, '${usuario.nome}')">${usuario.nome}</a></li>`;
-                        });
-                        output += '</ul>';
-                        document.getElementById('resultados_busca').innerHTML = output;
-                    } catch (e) {
-                        console.error('Error parsing JSON:', e);
-                        console.error('Response was:', this.responseText);
-                    }
-                }
-            };
-            xhr.send();
-        } else {
-            document.getElementById('resultados_busca').innerHTML = '';
-        }
-    }
-
-    function buscarMensalidades(idUsuario, nomeUsuario) {
-        console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`);
+   function buscarUsuarios() {
+    const nomeUsuario = document.getElementById('nome_usuario').value;
+    console.log(`Buscando usuários com o nome: ${nomeUsuario}`);
+    if (nomeUsuario.length > 0) {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `?id_usuario=${idUsuario}`, true);
+        xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
         xhr.onload = function () {
             if (this.status === 200) {
                 try {
-                    const mensalidades = JSON.parse(this.responseText);
-                    let content = `<h3>Mensalidades de ${nomeUsuario}</h3>`;
-                    if (mensalidades.length > 0) {
-                        content += "<table><tr><th>Mês</th><th>Status</th></tr>";
-                        mensalidades.forEach(function (mensalidade) {
-                            content += `<tr><td>${mensalidade.mes}</td><td>${mensalidade.pagamento ? 'Pago' : 'Não Pago'}</td></tr>`;
-                        });
-                        content += "</table>";
-                    } else {
-                        content += "<p>Não há pendências.</p>";
-                    }
-                    abrirSweetAlert(content);
+                    const resultados = JSON.parse(this.responseText);
+                    let output = '<ul>';
+                    resultados.forEach(function (usuario) {
+                        output += `<li><a href="#" onclick="buscarMensalidades(${usuario.id_usuario}, '${usuario.nome}')">${usuario.nome}</a></li>`;
+                    });
+                    output += '</ul>';
+                    document.getElementById('resultados_busca').innerHTML = output;
                 } catch (e) {
                     console.error('Error parsing JSON:', e);
                     console.error('Response was:', this.responseText);
@@ -284,16 +263,73 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
             }
         };
         xhr.send();
+    } else {
+        document.getElementById('resultados_busca').innerHTML = '';
     }
+}
 
-    function abrirSweetAlert(content) {
-        Swal.fire({
-            title: 'Detalhes das Mensalidades',
-            html: content,
-            icon: 'info',
-            showCloseButton: true
-        });
+function buscarMensalidades(idUsuario, nomeUsuario) {
+    console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `?id_usuario=${idUsuario}`, true);
+    xhr.onload = function () {
+        if (this.status === 200) {
+            try {
+                const mensalidades = JSON.parse(this.responseText);
+                let content = `<h3>Mensalidades de ${nomeUsuario}</h3>`;
+                if (mensalidades.length > 0) {
+                    content += "<table><tr><th>Mês</th><th>Status</th><th>Comprovante</th></tr>";
+                    mensalidades.forEach(function (mensalidade) {
+                        const comprovanteLink = mensalidade.comprovante ? 
+                            `download_comprovante.php?id=${mensalidade.id}` : '#';
+                        const status = mensalidade.pago == 1 ? 'Pago' : 'Não Pago';
+                        content += `<tr>
+                            <td>${mensalidade.mes}</td>
+                            <td>${status}</td>
+                            <td><a href="${comprovanteLink}" class="download" ${mensalidade.comprovante ? '' : 'disabled'}>Download</a></td>
+                        </tr>`;
+                    });
+                    content += "</table>";
+                } else {
+                    content += "<p>Não há pendências.</p>";
+                }
+                abrirSweetAlert(content);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                console.error('Response was:', this.responseText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+function abrirSweetAlert(content) {
+    Swal.fire({
+        title: 'Detalhes das Mensalidades',
+        html: content,
+        icon: 'info',
+        showCloseButton: true
+    });
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target.matches('.download')) {
+        event.preventDefault();
+        const link = event.target.getAttribute('href');
+        if (link !== '#') {
+            window.location.href = link; // Redireciona para o link de download
+        } else {
+            Swal.fire({
+                title: 'Aviso',
+                text: 'Nenhum comprovante disponível para download.',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            });
+        }
     }
+});
+
+
     </script>
 </body>
 </html>

@@ -741,6 +741,8 @@ main .recent-orders a {
   .right-section {
     width: 94%;
     margin: 0 auto 4rem;
+    position: relative;
+        left: 19%;
   }
 
   .right-section .nav {
