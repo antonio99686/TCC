@@ -132,7 +132,7 @@ if ($qtd > 0) {
                   showConfirmButton: false,
                   timer: 1500
                }).then(() => {
-                  location.href='pais/dashboard.php';
+                  location.href='usuario/dashboard.php';
                });
             </script>";
          }
