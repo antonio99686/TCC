@@ -137,6 +137,7 @@ if ($qtd > 0) {
             </script>";
          }
          break;
+         
       default:
          echo "<script>
             Swal.fire({

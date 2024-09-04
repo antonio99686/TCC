@@ -251,3 +251,15 @@ button:hover {
 .container.active .toggle-right {
     transform: translateX(200%);
 }
+
+
+#olho{
+    position: relative;
+    left:40%;
+    margin-top: -10%;
+}
+#olho2{
+    position: relative;
+    left:55%;
+    top: 54%;
+}

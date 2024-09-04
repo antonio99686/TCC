@@ -144,7 +144,7 @@ function determinar_categoria($idade) {
                     echo ' <div class="formato"><table class="table table-striped">
     <thead class="thead-info">
         <tr>
-                   <th>ID</th>
+               
                    <th>Nome</th>
                    <th>Data de Nascimento</th>
                    <th>Matricula</th>
@@ -158,7 +158,6 @@ function determinar_categoria($idade) {
                         $categoria = determinar_categoria($idade);
                         echo '<tr>';
                         $data = date("d/m/Y", strtotime($row['datas']));
-                        echo "<td>" . $row['id_usuario'] . "</td>";
                         echo "<td>" . $row['nome'] . "</td>";
                         echo "<td>" . $data . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";

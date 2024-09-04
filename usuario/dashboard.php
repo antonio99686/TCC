@@ -30,7 +30,6 @@ if (!$resultado || mysqli_num_rows($resultado) == 0) {
 $dados = mysqli_fetch_assoc($resultado);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -46,46 +45,46 @@ $dados = mysqli_fetch_assoc($resultado);
 <body>
     <div class="container">
         <!-- Barra lateral -->
-        <aside>
+        <aside aria-label="Barra lateral de navegação">
             <div class="toggle">
                 <div class="logo">
                     <h2>Unindo Forças é <span class="danger">Bem Mais Fácil</span></h2>
                 </div>
-                <div class="close" id="close-btn">
-                    <span class="material-icons-sharp">close</span>
-                </div>
+                <button class="close" id="close-btn" aria-label="Fechar menu">
+                    <span class="material-icons-sharp" aria-hidden="true">close</span>
+                </button>
             </div>
 
-            <div class="sidebar">
-                <a href="dashboard.php" class="active">
-                    <span class="material-icons-sharp">dashboard</span>
+            <nav class="sidebar" role="navigation">
+                <a href="dashboard.php" class="active" aria-current="page">
+                    <span class="material-icons-sharp" aria-hidden="true">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
                 <a href="participantes">
-                    <span class="material-icons-sharp">groups</span>
+                    <span class="material-icons-sharp" aria-hidden="true">groups</span>
                     <h3>Users</h3>
                 </a>
                 <a href="perfil.php">
-                    <span class="material-icons-sharp">person_outline</span>
+                    <span class="material-icons-sharp" aria-hidden="true">person_outline</span>
                     <h3>Perfil</h3>
                 </a>
                 <a href="calen" target="_blank">
-                    <span class="material-icons-sharp">event</span>
+                    <span class="material-icons-sharp" aria-hidden="true">event</span>
                     <h3>Calendário</h3>
                 </a>
                 <a href="pagamento">
-                    <span class="material-icons-sharp">paid</span>
+                    <span class="material-icons-sharp" aria-hidden="true">paid</span>
                     <h3>Pagamento</h3>
                 </a>
                 <a href="acessorios">
-                    <span class="material-icons-sharp">checkroom</span>
+                    <span class="material-icons-sharp" aria-hidden="true">checkroom</span>
                     <h3>Vestimentas</h3>
                 </a>
                 <a href="logout.php">
-                    <span class="material-icons-sharp">logout</span>
+                    <span class="material-icons-sharp" aria-hidden="true">logout</span>
                     <h3>Logout</h3>
                 </a>
-            </div>
+            </nav>
         </aside>
         <!-- Fim da barra lateral -->
 
@@ -93,7 +92,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <main>
             <h1>Sentinela da Fronteira</h1>
             <!-- Análises -->
-            <div class="analyse">
+            <section class="analyse" aria-label="Análises">
                 <div class="sales">
                     <div class="status">
                         <div class="info">
@@ -118,32 +117,31 @@ $dados = mysqli_fetch_assoc($resultado);
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             <!-- Fim das análises -->
 
             <!-- Dados do Usuário -->
-            <div class="box">
-                <h2>Dados Usuário</h2>
+            <section class="box" aria-labelledby="dados-usuario">
+                <h2 id="dados-usuario">Dados do Usuário</h2>
                 <div class="user-info">
                     <div><em><b>Nome:</b></em> <?php echo htmlspecialchars($dados['nome']); ?></div>
                     <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
                     <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
-                    <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
                     <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                     <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                     <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
                     <div><em><b>Data de Nascimento:</b></em> <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
-    </div>
-            </div>
+                </div>
+            </section>
         </main>
 
         <!-- Seção Direita -->
         <div class="right-section">
-            <div class="nav">
-                <button id="menu-btn">
-                    <span class="material-icons-sharp">menu</span>
+            <div class="nav" aria-label="Navegação">
+                <button id="menu-btn" aria-label="Abrir menu">
+                    <span class="material-icons-sharp" aria-hidden="true">menu</span>
                 </button>
-                <div class="dark-mode">
+                  <div class="dark-mode">
                     <span class="material-icons-sharp light ">light_mode</span>
                     <span class="material-icons-sharp dark">dark_mode</span>
                 </div>
@@ -153,29 +151,21 @@ $dados = mysqli_fetch_assoc($resultado);
                         <small class="text-muted"><?php echo htmlspecialchars($dados['nome']); ?></small>
                     </div>
                     <div class="profile-photo">
-                        <img src="../img/perfil/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="user">
+                        <img src="../img/perfil/<?php echo htmlspecialchars($dados['imagem']); ?>" alt="Foto de perfil do usuário">
                     </div>
                 </div>
             </div>
 
             <div class="user-profile">
                 <div class="logo">
-                    <img class="imgs" src="../img/fundo.png">
+                    <img class="imgs" src="../img/fundo.png" alt="Logotipo Sentinela da Fronteira">
                     <h2>Sentinela da Fronteira</h2>
                 </div>
             </div>
-           
-
-
-
         </div>
     </div>
 
     <script src="JavaScript/index.js"></script>
-  
-
-
-
 </body>
 
 </html>

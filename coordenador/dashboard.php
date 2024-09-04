@@ -129,7 +129,6 @@ if (isset($_GET['nome_usuario'])) {
                 <div><em><b>Nome:</b></em> <?php echo htmlspecialchars($dados['nome']); ?></div>
                 <div><em><b>Telefone:</b></em> <?php echo htmlspecialchars($dados['telefone']); ?></div>
                 <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
-                <div><em><b>Senha:</b></em> <?php echo htmlspecialchars($dados['senha']); ?></div>
                 <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                 <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
                 <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>

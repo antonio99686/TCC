@@ -192,7 +192,7 @@ sleep(1);
                     echo ' <div class="formato"><table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            
                             <th>Nome</th>
                             <th>Matrícula</th>
                             <th>CPF</th>
@@ -204,7 +204,7 @@ sleep(1);
                   
                     while ($row = $result->fetch_assoc()) {
                         echo '<tr>';
-                        echo "<td>" . $row['id_usuario'] . "</td>";
+                        
                         echo "<td>" . $row['nome'] . "</td>";
                         echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $row['CPF'] . "</td>";
@@ -298,14 +298,7 @@ sleep(1);
             </div>
             <!-- Fim da navegação -->
 
-            <div class="user-profile">
-                <div class="logo">
-                    <img class="imgs" src="../../img/fundo.png">
-                    <h2>Sentinela da Fronteira</h2>
-
-                </div>
-            </div>
-
+            
 
 
         </div>

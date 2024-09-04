@@ -208,11 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
 
             <div class="box-perfil" style="margin-top: 20px;">
                 <h2>Alterar Foto de Perfil</h2>
-                <form method="post" enctype="multipart/form-data">
-                    <input type="file" name="file" id="avatar-image">
-                    <img class="box-perfil-img"id="preview-image" src="#" alt="Preview">
-                    <button type="submit" class="form-control" style="margin-top: 10px;">Salvar Foto</button>
-                </form>
+                 <form method="post" enctype="multipart/form-data">
+                    <label for="avatar-image">Selecionar Foto de Perfil</label>
+                    <input type="file" name="file" id="avatar-image" aria-describedby="file-help">
+                    <p id="file-help">Escolha uma imagem para a foto de perfil.</p>
+                    <img class="box-perfil-img" id="preview-image" src="#" alt="Pré-visualização da Imagem">
+                    <button type="submit" class="form-control" style="margin-top: 10px;">Salvar Foto</button>   
             </div>
         </div>
     </div>
