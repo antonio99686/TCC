@@ -91,6 +91,12 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
     .download:hover {
         color: red;
     }
+    .download.disabled {
+    color: gray;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
 </style>
 <body>
     <div class="container">
@@ -267,7 +273,6 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
         document.getElementById('resultados_busca').innerHTML = '';
     }
 }
-
 function buscarMensalidades(idUsuario, nomeUsuario) {
     console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`);
     const xhr = new XMLHttpRequest();
@@ -283,10 +288,16 @@ function buscarMensalidades(idUsuario, nomeUsuario) {
                         const comprovanteLink = mensalidade.comprovante ? 
                             `download_comprovante.php?id=${mensalidade.id}` : '#';
                         const status = mensalidade.pago == 1 ? 'Pago' : 'Não Pago';
+
+                        // Se não estiver pago, desativar o link de download
+                        const downloadLink = mensalidade.pago == 1 && mensalidade.comprovante ? 
+                            `<a href="${comprovanteLink}" class="download">Download</a>` : 
+                            '<span class="download disabled">Download indisponível</span>';
+                        
                         content += `<tr>
                             <td>${mensalidade.mes}</td>
                             <td>${status}</td>
-                            <td><a href="${comprovanteLink}" class="download" ${mensalidade.comprovante ? '' : 'disabled'}>Download</a></td>
+                            <td>${downloadLink}</td>
                         </tr>`;
                     });
                     content += "</table>";
@@ -302,6 +313,7 @@ function buscarMensalidades(idUsuario, nomeUsuario) {
     };
     xhr.send();
 }
+
 
 function abrirSweetAlert(content) {
     Swal.fire({
