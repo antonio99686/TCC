@@ -97,6 +97,8 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
     text-decoration: none;
 }
 
+
+
 </style>
 <body>
     <div class="container">
