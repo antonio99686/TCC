@@ -187,7 +187,7 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                     <div class="status">
                         <div class="info">
                             <h3></h3>
-                            
+
                             <h1></h1>
                         </div>
                         <div class="progresss">
@@ -312,6 +312,7 @@ function buscarMensalidades(idUsuario, nomeUsuario) {
     };
     xhr.send();
 }
+
 
 
 function abrirSweetAlert(content) {
