@@ -186,15 +186,14 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
                 <div class="searches">
                     <div class="status">
                         <div class="info">
-                            <h3>Total de Usuários</h3>
-                            <h1><?php echo $rows['total']; ?></h1>
+                            <h3></h3>
+                            
+                            <h1></h1>
                         </div>
                         <div class="progresss">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
+                           >
                             <div class="percentage">
-                                <p>100%</p>
+                                <p></p>
                             </div>
                         </div>
                     </div>
