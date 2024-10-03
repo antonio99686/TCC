@@ -27,39 +27,43 @@ if ($result->num_rows > 0) {
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <link rel='stylesheet' href='http://localhost:8080/tcc/coordenador/pdf/css/pdf.css'>
+        <link rel='stylesheet' href='http://localhost/tcc/pdf/css/pdf.css'>
         <link rel='stylesheet' href='css/pdf.css'>
         <title>Sentinela da Fronteira</title>
     </head>
     <body>
         <div class='container'>
             <div class='header'>
-                <img src='http://localhost:8080/tcc/coordenador/pdf/img/logo.jpg' alt='Logo'>
+                <img src='http://localhost/tcc/pdf/img/logo.jpg' alt='Logo'>
                 <h2>Sentinela da Fronteira</h2>
             </div>";
 
     // Loop para percorrer os resultados da consulta
     while ($dados = $result->fetch_assoc()) {
         // Adiciona os detalhes do usuário ao HTML do PDF
+        $data_entrada = date("d/m/Y", strtotime($dados['data_entrada']));
+        $datas = date("d/m/Y", strtotime($dados['datas']));
+
         $html .= "
             <div class='info'>
+            
                 <h3>Detalhes do Usuário</h3>
                 <p><strong>Nome:</strong> " . $dados['nome'] . "</p>
                 <p><strong>Email:</strong> " . $dados['email'] . "</p>
                 <p><strong>Telefone:</strong> " . $dados['telefone'] . "</p>
-                <p><strong>Data de Nascimento:</strong> " . $dados['datas'] . "</p>
+                <p><strong>Data de Nascimento:</strong> " . $datas . "</p>
                 <p><strong>CPF:</strong> " . $dados['CPF'] . "</p>
                 <p><strong>RG:</strong> " . $dados['RG'] . "</p>
                 <p><strong>Sexo:</strong> " . $dados['genero'] . "</p>
                 <p><strong>Idade:</strong> " . $dados['idade'] . "</p>
-                <p><strong>Data de Entrada:</strong> " . $dados['data_entrada'] . "</p>
+                <p><strong>Data de Entrada:</strong> " . $data_entrada . "</p>
                 <p><strong>Responsável:</strong> " . $dados['responsavel'] . "</p>
             </div>
             
         <div class='cart_ident'>
    
-        <img class='frente' src='http://localhost:8080/tcc/img/carteira/" . $dados['identidade_frente'] . "'>
-        <img class='verso' src='http://localhost:8080/tcc/img/carteira/" . $dados['identidade_verso'] . "'>
+        <img class='frente' src='http://localhost/tcc/img/carteira/" . $dados['identidade_frente'] . "'>
+        <img class='verso' src='http://localhost/tcc/img/carteira/" . $dados['identidade_verso'] . "'>
             
         </div>
             ";

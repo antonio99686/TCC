@@ -223,7 +223,7 @@ sleep(1);
                                 "&CPF=" . $row['CPF'] .
                                 "&data_entrada=" . $data_entrada .
                                 "&mattricula=" . $row['matricula'] . "'>
-                                    <img src='img/pdf.png' width='25' height='20' alt='PDF'>
+                                    <img src='img/pdf.png' width='20' height='20' alt='PDF'>
                                     </a>
                                     </td> <td>
                                    
