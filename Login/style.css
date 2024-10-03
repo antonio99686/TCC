@@ -257,9 +257,11 @@ button:hover {
     position: relative;
     left:40%;
     margin-top: -10%;
+    cursor: pointer;
 }
 #olho2{
     position: relative;
     left:55%;
     top: 54%;
+    cursor: pointer;
 }

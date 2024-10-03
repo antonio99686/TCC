@@ -196,7 +196,7 @@ sleep(1);
                         echo ' <div class="formato"><table class="table table-striped">
         <thead class="thead-info">
             <tr>
-                       <th>ID</th>
+                       
                        <th>Nome</th>
                        <th>CPF</th>
                        <th>Data de Entrada</th>
@@ -211,7 +211,7 @@ sleep(1);
                         while ($row = $result->fetch_assoc()) {
                             echo '<tr>';
                             $data_entrada = date("d/m/Y", strtotime($row['data_entrada']));
-                            echo "<td>" . $row['id_usuario'] . "</td>";
+                           
                             echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['CPF'] . "</td>";
                             echo "<td>" . $data_entrada . "</td>";

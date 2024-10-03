@@ -59,6 +59,11 @@
                     <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
                     <span class="validation-message"></span>
                 </div>
+                <div class="form-grupo">
+                    <label for="senha" class="form-label">Confirmação</label>
+                    <input type="password" name="senha" class="form-input" placeholder="Confirme a senha" required />
+                    <span class="validation-message"></span>
+                </div>
                 
                 <div class="form-grupo">
                     <label for="genero" class="form-label">Genero</label>
