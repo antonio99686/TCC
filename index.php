@@ -22,8 +22,7 @@
                 <h1>Entrar</h1>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                 <input type="text" name="CPF" maxlength="14" placeholder="Digite seu CPF" required>
-                <input type="password" id="senha"name="senha" placeholder="Digite sua senha" required> <img id="olho" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII="
-    />
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required> <img id="olho" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVQ4jd2SvW3DMBBGbwQVKlyo4BGC4FKFS4+TATKCNxAggkeoSpHSRQbwAB7AA7hQoUKFLH6E2qQQHfgHdpo0yQHX8T3exyPR/ytlQ8kOhgV7FvSx9+xglA3lM3DBgh0LPn/onbJhcQ0bv2SHlgVgQa/suFHVkCg7bm5gzB2OyvjlDFdDcoa19etZMN8Qp7oUDPEM2KFV1ZAQO2zPMBERO7Ra4JQNpRa4K4FDS0R0IdneCbQLb4/zh/c7QdH4NL40tPXrovFpjHQr6PJ6yr5hQV80PiUiIm1OKxZ0LICS8TWvpyyOf2DBQQtcXk8Zi3+JcKfNafVsjZ0WfGgJlZZQxZjdwzX+ykf6u/UF0Fwo5Apfcq8AAAAASUVORK5CYII=" />
                 <p style="color: #333; margin-top: 10px; cursor: pointer;" onclick="showContactCoordinator()">Esqueceusua senha?</p>
                 <button type="submit">Entrar</button>
             </form>
@@ -59,15 +58,11 @@
                     <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
                     <span class="validation-message"></span>
                 </div>
-                <div class="form-grupo">
-                    <label for="senha" class="form-label">Confirmação</label>
-                    <input type="password" name="senha" class="form-input" placeholder="Confirme a senha" required />
-                    <span class="validation-message"></span>
-                </div>
                 
+
                 <div class="form-grupo">
-                    <label for="genero" class="form-label">Genero</label>
-                    <select name="genero" class="dropdown" required>
+                    <label for="genero" class="form-label"> Genero </label>
+                        <select name="genero" required>
                         <option selected disabled class="form-select-option" value="">
                             Selecione
                         </option>
@@ -111,10 +106,10 @@
         }
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             var cpfInputs = document.querySelectorAll('input[name="CPF"]');
-            cpfInputs.forEach(function (input) {
-                input.addEventListener("input", function (e) {
+            cpfInputs.forEach(function(input) {
+                input.addEventListener("input", function(e) {
                     var value = e.target.value.replace(/\D/g, "");
                     if (value.length > 11) value = value.slice(0, 11);
                     var formattedValue = value;
@@ -134,20 +129,19 @@
         var senha = $('#senha');
         var olho = $("#olho");
 
-        olho.mousedown(function () {
+        olho.mousedown(function() {
             senha.attr("type", "text");
         });
 
-        olho.mouseup(function () {
+        olho.mouseup(function() {
             senha.attr("type", "password");
         });
-        // para evitar o problema de arrastar a imagem e a senha continuar exposta, 
-        //citada pelo nosso amigo nos comentários
-        $("#olho").mouseout(function () {
+   
+      
+        $("#olho").mouseout(function() {
             $("#senha").attr("type", "password");
         });
-        
-            </script>
+    </script>
 
 </body>
 
