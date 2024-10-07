@@ -49,7 +49,7 @@ if ($recuperar == null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="shortcut icon" href="icon/icon.png">
+    <link rel="shortcut icon" href="img/gmail.png">
     <link rel="stylesheet" href="css/style.css">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -71,12 +71,12 @@ if ($recuperar == null) {
                 <br>
                 <br>
                 <label>Senha:</label>
-                    <input type="password" name="senha">
+                <input type="password" name="senha">
                 <label>Repita a senha:</label>
-                    <input type="password" name="repetirSenha">
-              <button type="button">Salvar nova senha</button>
+                <input type="password" name="repetirSenha">
+                <button type="submit">Salvar nova senha</button>
             </form>
-           
+
         </div>
 
     </div>
