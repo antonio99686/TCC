@@ -1,10 +1,9 @@
 <?php
-
 $config = [
-    'host' => '',
-    'user' => '',
+    'host' => 'localhost',
+    'user' => 'root',
     'pass' => '',
-    'db'   => '',
-    'email' => '',
-    'senha_email' => ''
+    'db' => 'sentinelas',
+    'email' => 'sentineladafronteira7@gmail.com',
+    'senha_email' => 'a n n a a a z o a x l a x t a e'
 ];

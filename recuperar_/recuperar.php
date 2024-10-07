@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Recuperação de Email</title>
+</head>
+<body>
+    
+</body>
+</html>
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -17,7 +29,14 @@ if (isset($_GET['email'])) {
     $usuario = mysqli_fetch_assoc($resultado);
 
     if ($usuario == null) {
-        echo "Email não cadastrado! Faça o cadastro e em seguida realize o login.";
+        // Usando SweetAlert2 para erro de email não cadastrado
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Email não cadastrado!',
+                text: 'Faça o cadastro e em seguida realize o login.',
+            });
+        </script>";
         die();
     }
 
@@ -36,7 +55,7 @@ if (isset($_GET['email'])) {
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
         $mail->setLanguage('br');
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;  // Para debug: mostrar mensagens de erro
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;  // Desativa debug em produção
         $mail->isSMTP();  // Envia o email usando SMTP
         $mail->Host = 'smtp.gmail.com';  // Servidor SMTP
         $mail->SMTPAuth = true;  // Habilita autenticação SMTP
@@ -63,26 +82,53 @@ if (isset($_GET['email'])) {
         $mail->Body = 'Olá!<br>
             Você solicitou a recuperação da sua conta no nosso sistema.
             Para isso, clique no link abaixo para realizar a troca de senha:<br>
-            <a href="http://' . $_SERVER['SERVER_NAME'] . '/recuperar-senha/nova-senha.php?email='
+            <a href="http://' . $_SERVER['SERVER_NAME'] . '/tcc/recuperar_/nova-senha.php?email='
             . $usuario['email'] . '&token=' . $token . '">Clique aqui para recuperar o acesso à sua conta!</a><br><br>
             Atenciosamente,<br>
             Equipe do Sistema';
 
         // Envia o email
         $mail->send();
-        echo 'Email enviado com sucesso! Confira o seu email.';
+
+        // Usando SweetAlert2 para sucesso
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Email enviado com sucesso!',
+                text: 'Confira o seu email para redefinir sua senha.',
+                showConfirmButton: false,
+                timer: 3000
+            }).then(() => {
+                window.location.href = '../index.php';
+            });
+        </script>";
 
         // Grava as informações na tabela recuperar-senha
         date_default_timezone_set('America/Sao_Paulo');
         $data = new DateTime('now');
         $agora = $data->format('Y-m-d H:i:s');
 
-        $sql2 = "INSERT INTO `recuperar-senha` (email, token, data_criacao, usado) 
+        $sql2 = "INSERT INTO `recuperar_senha` (email, token, data_criacao, usado) 
                  VALUES ('" . $usuario['email'] . "', '$token', '$agora', 0)";
         executarSQL($conexao, $sql2);
     } catch (Exception $e) {
-        echo "Não foi possível enviar o email. Mailer Error: {$mail->ErrorInfo}";
+        // Usando SweetAlert2 para erro no envio do email
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Não foi possível enviar o email. Tente novamente mais tarde.',
+                footer: '{$mail->ErrorInfo}'
+            });
+        </script>";
     }
 } else {
-    echo "Nenhum email foi enviado!";
+    // Usando SweetAlert2 para erro de falta de email
+    echo "<script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Nenhum email informado!',
+            text: 'Por favor, informe um email válido.',
+        });
+    </script>";
 }

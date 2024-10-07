@@ -7,7 +7,7 @@ $token = $_GET['token'];
 
 require_once "conexao.php";
 $conexao = conectar();
-$sql = "SELECT * FROM `recuperar-senha` WHERE email='$email' AND 
+$sql = "SELECT * FROM `recuperar_senha` WHERE email='$email' AND 
         token='$token'";
 $resultado = executarSQL($conexao, $sql);
 $recuperar = mysqli_fetch_assoc($resultado);
@@ -43,23 +43,45 @@ if ($recuperar == null) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Senha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="shortcut icon" href="icon/icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Inputmask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.7-beta.16/jquery.inputmask.min.js"></script>
+    <title>LOGIN</title>
 </head>
 
 <body>
-    <form action="salvar-nova-senha.php" method="post">
-        <input type="hidden" name="email" value="<?= $email ?>">
-        <input type="hidden" name="token" value="<?= $token ?>">
-        Email: <?= $email ?><br>
-        <label>Senha: <input type="password" name="senha"></label><br>
-        <label>Repita a senha: <input type="password" name="repetirSenha"></label><br>
-        <input type="submit" value="Salvar nova senha">
-    </form>
+
+    <div class="container" id="container">
+
+        <div class="form-container sign-in">
+            <form action="salvar-nova-senha.php" method="post">
+                <input type="hidden" name="email" value="<?= $email ?>">
+                <input type="hidden" name="token" value="<?= $token ?>">
+                <SPAn>Email: <?= $email ?></SPAn>
+                <br>
+                <br>
+                <label>Senha:</label>
+                    <input type="password" name="senha">
+                <label>Repita a senha:</label>
+                    <input type="password" name="repetirSenha">
+              <button type="button">Salvar nova senha</button>
+            </form>
+           
+        </div>
+
+    </div>
+
+
 </body>
 
 </html>
