@@ -111,9 +111,10 @@
     });
     if (email) {
         // Redireciona para um novo formulário com o e-mail como parâmetro na URL
-        window.location.href = `=${encodeURIComponent(email)}`;
+        window.location.href = `recuperar_/recuperar.php?email=${encodeURIComponent(email)}`;
     }
 }
+
 
     </script>
     <script>
