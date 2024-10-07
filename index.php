@@ -58,11 +58,11 @@
                     <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
                     <span class="validation-message"></span>
                 </div>
-                
+
 
                 <div class="form-grupo">
                     <label for="genero" class="form-label"> Genero </label>
-                        <select name="genero" required>
+                    <select name="genero" required>
                         <option selected disabled class="form-select-option" value="">
                             Selecione
                         </option>
@@ -97,13 +97,24 @@
 
     <script>
         // Função para mostrar a mensagem de contato com o coordenador
-        function showContactCoordinator() {
-            Swal.fire({
-                icon: 'info',
-                title: 'Esqueceu sua senha?',
-                text: 'Por favor, entre em contato com o coordenador para redefinir sua senha.'
-            });
+        async function showContactCoordinator() {
+    const { value: email } = await Swal.fire({
+        title: "Insira o endereço de e-mail",
+        input: "email",
+        inputLabel: "Seu endereço de email",
+        inputPlaceholder: "Digite seu endereço de e-mail",
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Você precisa inserir um e-mail válido!';
+            }
         }
+    });
+    if (email) {
+        // Redireciona para um novo formulário com o e-mail como parâmetro na URL
+        window.location.href = `=${encodeURIComponent(email)}`;
+    }
+}
+
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -136,8 +147,8 @@
         olho.mouseup(function() {
             senha.attr("type", "password");
         });
-   
-      
+
+
         $("#olho").mouseout(function() {
             $("#senha").attr("type", "password");
         });
