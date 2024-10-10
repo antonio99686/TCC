@@ -164,8 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                 <br>
                 <div class="user5"><em><b>Idade:</b></em> <?php echo $dados['idade'] ?></div>
                 <br>
-                <div class="user6"><em><b>Matrícula:</b></em> <?php echo $dados['matricula'] ?></div>
-                <br>
                 <div class="user7"><em><b>Data de Nascimento:</b></em> <?php echo date('d/m/Y', strtotime($dados['datas'])) ?></div>
                 <br>
                 <div class="user8"><em><b>RG:</b></em> <?php echo $dados['RG'] ?></div>

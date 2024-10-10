@@ -194,7 +194,6 @@ sleep(1);
                         <tr>
                             
                             <th>Nome</th>
-                            <th>Matrícula</th>
                             <th>CPF</th>
                             <th>Editar</th>
                             <th>Excluir</th>
@@ -206,7 +205,6 @@ sleep(1);
                         echo '<tr>';
                         
                         echo "<td>" . $row['nome'] . "</td>";
-                        echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $row['CPF'] . "</td>";
                                        
                         echo "<td>

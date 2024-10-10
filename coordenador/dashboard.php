@@ -131,7 +131,6 @@ if (isset($_GET['nome_usuario'])) {
                 <div><em><b>E-mail:</b></em> <?php echo htmlspecialchars($dados['email']); ?></div>
                 <div><em><b>CPF:</b></em> <?php echo htmlspecialchars($dados['CPF']); ?></div>
                 <div><em><b>Idade:</b></em> <?php echo htmlspecialchars($dados['idade']); ?></div>
-                <div><em><b>Matrícula:</b></em> <?php echo htmlspecialchars($dados['matricula']); ?></div>
                 <div><em><b>Data de Nascimento:</b></em>
                     <?php echo htmlspecialchars(date('d/m/Y', strtotime($dados['datas']))); ?></div>
             </div>
