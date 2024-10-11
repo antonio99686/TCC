@@ -200,7 +200,7 @@ sleep(1);
                        <th>Nome</th>
                        <th>CPF</th>
                        <th>Data de Entrada</th>
-                       <th>Matricula</th>
+                       
                        <th>PDF</th>
                        
                    
@@ -215,15 +215,14 @@ sleep(1);
                             echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['CPF'] . "</td>";
                             echo "<td>" . $data_entrada . "</td>";
-                            echo "<td>" . $row['matricula'] . "</td>";
+                            
                             echo "<td>
                                     <a href='../../PDF/index.php?id_usuario=" . $row['id_usuario'] .
                                 "&nome=" . $row['nome'] .
                                 "&email=" . $row['email'] .
                                 "&CPF=" . $row['CPF'] .
-                                "&data_entrada=" . $data_entrada .
-                                "&mattricula=" . $row['matricula'] . "'>
-                                    <img src='img/pdf.png' width='20' height='20' alt='PDF'>
+                                "&data_entrada=" . $data_entrada  . "'>
+                                    <img src='img/pdf.png' width='20px' height='20px' alt='PDF'>
                                     </a>
                                     </td> <td>
                                    
