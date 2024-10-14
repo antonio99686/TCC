@@ -23,21 +23,19 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'], $
 
     // Dados do formulário
     $nome = $_POST['usuario'];
-    $senha = $_POST['senha'];
     $status = $_POST['status'];
     $CPF = $_POST['CPF'];
     $genero = $_POST['genero'];
 
-    // Gera um número de matrícula único
-    $numero = rand(2024, 999999);
-    $matricula = date('Y') . $numero;
+    // Criptografia (password_hash)
+    $hash = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     // Caminho da imagem de perfil padrão
     $img = '../img/img/perfil.jpg';
 
     // Comando SQL para inserção
-    $sql = "INSERT INTO usuario (nome, statuss, senha, matricula, CPF, imagem, genero) 
-            VALUES ('$nome', '$status', '$senha', '$matricula', '$CPF', '$img', '$genero')";
+    $sql = "INSERT INTO usuario (nome, statuss, senha, CPF, imagem, genero) 
+            VALUES ('$nome', '$status', '$hash', '$CPF', '$img', '$genero')";
 
     // Executa o comando SQL
     if (mysqli_query($conexao, $sql)) {

@@ -1,165 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-   <link rel="shortcut icon" href="img/img/icon.png">
-   <title>LOGIN</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+   <title>Redirecionamento</title>
 </head>
 <body>
-
+   
 </body>
 </html>
-
 <?php
 session_start();
-
-// Verifique se o formulário foi enviado e se os campos CPF e senha estão preenchidos
-if (empty($_GET['CPF']) or empty($_GET['senha'])) {
-   echo "<script>alert('Por favor, preencha todos os campos.');</script>";
-   exit; // Termina o script se as informações não estiverem completas
-}
 
 require_once "conexao.php";
 $conexao = conectar();
 
-$CPF = $_GET['CPF'];
-$senha = $_GET['senha'];
-$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}' AND senha = '{$senha}'";
+$CPF = $_POST['CPF'];
+$senha = $_POST['senha'];
+$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}'";
 
 $resultado = mysqli_query($conexao, $sql);
 $dados = mysqli_fetch_assoc($resultado);
 
-$res = $conexao->query($sql) or die($conexao->error);
-$row = $res->fetch_object();
-$qtd = $res->num_rows;
+if ($dados) {
+    if (password_verify($senha, $dados['senha'])) {
+        $_SESSION['CPF'] = $CPF;
+        $_SESSION['id_usuario'] = $dados['id_usuario'];
+        $_SESSION['nome'] = $dados['nome'];
+        $_SESSION['statuss'] = $dados['statuss'];
+        $_SESSION['genero'] = $dados['genero'];
 
-echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        // Inclua o SweetAlert2 no início
+        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-if ($qtd > 0) {
-   $_SESSION['CPF'] = $CPF;
-   $_SESSION['id_usuario'] = $dados['id_usuario'];
-   $_SESSION['nome'] = $dados['nome'];
-   $_SESSION['statuss'] = $dados['statuss'];
-   $_SESSION['genero'] = $dados['genero'];
+        switch ($dados['statuss']) {
+            case '1':
+                if ($dados['primeiro_login'] == 0) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
+                    mysqli_query($conexao, $updateSql);
 
-   switch ($dados['statuss']) {
-      case '1':
-         // Verifica se é a primeira vez que o usuário faz login
-         if ($dados['primeiro_login'] == 1) {
-            // Atualiza o banco de dados para indicar que não é mais o primeiro login
-            $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
-            mysqli_query($conexao, $updateSql);
+                    // Aqui adicionamos um setTimeout para garantir o redirecionamento
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Primeiro login!',
+                            text: 'Você será redirecionado para o formulário de edição.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
 
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Primeiro login!',
-                  text: 'Você será redirecionado para o formulário de edição.',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}'; // Redireciona para o formulário de edição com os parâmetros GET
-               });
-            </script>";
-         } else {
-            // Se não for o primeiro login, redireciona diretamente para o dashboard
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='usuario/dashboard.php';
-               });
-            </script>";
-         }
-         break;
-      case '2':
-         if ($dados['primeiro_login'] == 1) {
-            $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
-            mysqli_query($conexao, $updateSql);
+                        setTimeout(() => {
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
+                        }, 1600);
+                    </script>";
+                } else {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
 
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Primeiro login!',
-                  text: 'Você será redirecionado para o formulário de edição.',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
-               });
-            </script>";
-         } else {
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='coordenador/dashboard.php';
-               });
-            </script>";
-         }
-         break;
-      case '3':
-         if ($dados['primeiro_login'] == 1) {
-            $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
-            mysqli_query($conexao, $updateSql);
+                        setTimeout(() => {
+                            window.location.href = 'usuario/dashboard.php';
+                        }, 1600);
+                    </script>";
+                }
+                break;
 
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Primeiro login!',
-                  text: 'Você será redirecionado para o formulário de edição.',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
-               });
-            </script>";
-         } else {
-            echo "<script>
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  location.href='usuario/dashboard.php';
-               });
-            </script>";
-         }
-         break;
-         
-      default:
-         echo "<script>
+            case '2':
+                if ($dados['primeiro_login'] == 1) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
+                    mysqli_query($conexao, $updateSql);
+
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Primeiro login!',
+                            text: 'Você será redirecionado para o formulário de edição.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
+                        }, 1600);
+                    </script>";
+                } else {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.href = 'coordenador/dashboard.php';
+                        }, 1600);
+                    </script>";
+                }
+                break;
+
+            case '3':
+                if ($dados['primeiro_login'] == 1) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
+                    mysqli_query($conexao, $updateSql);
+
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Primeiro login!',
+                            text: 'Você será redirecionado para o formulário de edição.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
+                        }, 1600);
+                    </script>";
+                } else {
+                    echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(() => {
+                            window.location.href = 'usuario/dashboard.php';
+                        }, 1600);
+                    </script>";
+                }
+                break;
+
+            default:
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'CPF ou SENHA incorretos',
+                        text: 'Por favor, insira novamente.',
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = 'index.php';
+                    }, 1600);
+                </script>";
+                break;
+        }
+    } else {
+        echo "<script>
             Swal.fire({
-               icon: 'error',
-               title: 'CPF ou SENHA incorretos',
-               text: 'Por favor, insira novamente.',
-            }).then(() => {
-               location.href='index.php';
+                icon: 'error',
+                title: 'Senha incorreta',
+                text: 'A senha fornecida não corresponde.',
             });
-         </script>";
-         break;
-   }
+
+            setTimeout(() => {
+                window.location.href = 'index.php';
+            }, 1600);
+        </script>";
+    }
 } else {
-   // Se nenhum registro foi encontrado, exibe um alerta informando que o CPF ou a senha estão incorretos
-   echo "<script>
-      Swal.fire({
-         icon: 'error',
-         title: 'CPF ou SENHA incorretos',
-         text: 'Por favor, insira novamente.',
-      }).then(() => {
-         location.href='index.php';
-      });
-   </script>";
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'CPF não encontrado',
+            text: 'O CPF informado não está cadastrado.',
+        });
+
+        setTimeout(() => {
+            window.location.href = 'index.php';
+        }, 1600);
+    </script>";
 }
 ?>

@@ -5,6 +5,7 @@ $conexao = conectar();
 function excluirUsuario($conexao, $id_usuario) {
     $id_usuario = mysqli_real_escape_string($conexao, $id_usuario);
 
+    // Check if user exists
     $sql = "SELECT * FROM usuario WHERE id_usuario = '$id_usuario'";
     $resultado = mysqli_query($conexao, $sql);
 
@@ -12,16 +13,25 @@ function excluirUsuario($conexao, $id_usuario) {
         return "Usuário não encontrado.";
     }
 
+    // Delete related mensalidades first
+    $sql_delete_mensalidades = "DELETE FROM mensalidades WHERE usuario_id = '$id_usuario'";
+    if (!mysqli_query($conexao, $sql_delete_mensalidades)) {
+        return "Erro ao excluir mensalidades: " . mysqli_error($conexao);
+    }
+
+    // Delete related roupas
     $sql_delete_roupas = "DELETE FROM roupas WHERE id_usuario = '$id_usuario'";
     if (!mysqli_query($conexao, $sql_delete_roupas)) {
         return "Erro ao excluir roupas: " . mysqli_error($conexao);
     }
 
+    // Delete user
     $sql_delete_usuario = "DELETE FROM usuario WHERE id_usuario = '$id_usuario'";
     if (!mysqli_query($conexao, $sql_delete_usuario)) {
         return "Erro ao excluir usuário: " . mysqli_error($conexao);
     }
 
+    // Return success message if user and related records were deleted
     if (mysqli_affected_rows($conexao) > 0) {
         return "Usuário e suas roupas foram excluídos com sucesso.";
     } else {

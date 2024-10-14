@@ -15,7 +15,7 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in">
-            <form action="login.php" method="GET">
+            <form action="login.php" method="POST">
                 <div class="social-icons">
                     <img src="img/icno.jpg" alt="login form" height="160px" width="120px">
                 </div>
@@ -53,12 +53,16 @@
                     <input type="text" name="usuario" class="form-input" placeholder="Nome Completo" required />
                     <span class="validation-message"></span>
                 </div>
-                <div class="form-grupo">
+                <div class="form-group">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" name="senha" class="form-input" placeholder="mínimo 8 caracteres" required />
-                    <span class="validation-message"></span>
+                    <input type="password" id="senhass" name="senha" class="form-input" placeholder="Digite sua Senha" required>
+                    <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
-
+                <div class="form-group">
+                    <label for="senha" class="form-label">Repita</label>
+                    <input type="password"  name="senha" class="form-input" placeholder="Repite a senha" required>
+                    <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
+                </div>
 
                 <div class="form-grupo">
                     <label for="genero" class="form-label"> Genero </label>
@@ -81,12 +85,12 @@
                     </select>
                     <span class="validation-message"></span>
                 </div>
-                <div class="form-grupo">
+                <div class="form-group">
                     <label for="CPF" class="form-label">CPF</label>
-                    <input type="text" name="CPF" validaCPF() class="form-input" maxlength="14" placeholder="Somente os N°"
-                        required>
-                    <span class="validation-message"></span>
+                    <input type="text" name="CPF" class="form-input" maxlength="14" placeholder="Somente os N°" required>
+                    <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
+
 
                 <button type="submit">Enviar</button>
             </form>
@@ -98,33 +102,35 @@
     <script>
         // Função para mostrar a mensagem de contato com o coordenador
         async function showContactCoordinator() {
-    const { value: email } = await Swal.fire({
-        title: "Insira o endereço de e-mail",
-        input: "email",
-        inputLabel: "Seu endereço de email",
-        inputPlaceholder: "Digite seu endereço de e-mail",
-        inputValidator: (value) => {
-            if (!value) {
-                return 'Você precisa inserir um e-mail válido!';
+            const {
+                value: email
+            } = await Swal.fire({
+                title: "Insira o endereço de e-mail",
+                input: "email",
+                inputLabel: "Seu endereço de email",
+                inputPlaceholder: "Digite seu endereço de e-mail",
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Você precisa inserir um e-mail válido!';
+                    }
+                }
+            });
+            if (email) {
+                // Redireciona para um novo formulário com o e-mail como parâmetro na URL
+                window.location.href = `recuperar_/recuperar.php?email=${encodeURIComponent(email)}`;
             }
         }
-    });
-    if (email) {
-        // Redireciona para um novo formulário com o e-mail como parâmetro na URL
-        window.location.href = `recuperar_/recuperar.php?email=${encodeURIComponent(email)}`;
-    }
-}
-
-
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var cpfInputs = document.querySelectorAll('input[name="CPF"]');
             cpfInputs.forEach(function(input) {
                 input.addEventListener("input", function(e) {
-                    var value = e.target.value.replace(/\D/g, "");
-                    if (value.length > 11) value = value.slice(0, 11);
+                    var value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+                    if (value.length > 11) value = value.slice(0, 11); // Limita o CPF a 11 dígitos
                     var formattedValue = value;
+
+                    // Formata o CPF conforme o número de dígitos
                     if (value.length > 9) {
                         formattedValue = value.slice(0, 3) + '.' + value.slice(3, 6) + '.' + value.slice(6, 9) + '-' + value.slice(9, 11);
                     } else if (value.length > 6) {
@@ -132,10 +138,67 @@
                     } else if (value.length > 3) {
                         formattedValue = value.slice(0, 3) + '.' + value.slice(3);
                     }
+
                     e.target.value = formattedValue;
+
+                    // Valida o CPF
+                    if (value.length === 11 && !validarCPF(value)) {
+                        // Exibe a mensagem de erro
+                        e.target.nextElementSibling.textContent = "CPF inválido";
+                    } else {
+                        // Limpa a mensagem de erro se o CPF for válido
+                        e.target.nextElementSibling.textContent = "";
+                    }
                 });
             });
         });
+
+        // Função para validar o CPF
+        function validarCPF(cpf) {
+            // Elimina CPFs com todos os números iguais (ex: 111.111.111-11)
+            if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+            var soma = 0;
+            var resto;
+
+            // Validação do primeiro dígito verificador
+            for (var i = 1; i <= 9; i++) {
+                soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+            }
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(9))) return false;
+
+            soma = 0;
+
+            // Validação do segundo dígito verificador
+            for (var i = 1; i <= 10; i++) {
+                soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+            }
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(10))) return false;
+
+            return true;
+        }
+        //Validação de senha com 8 digitos
+        document.addEventListener("DOMContentLoaded", function() {
+    var senhaInput = document.getElementById('senhass');
+    
+    senhaInput.addEventListener("input", function(e) {
+        var value = e.target.value;
+        
+        // Verifica se a senha tem pelo menos 8 caracteres
+        if (value.length < 8) {
+            // Exibe a mensagem de erro
+            e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
+        } else {
+            // Limpa a mensagem de erro se a senha for válida
+            e.target.nextElementSibling.textContent = "";
+        }
+    });
+});
+
     </script>
     <script>
         var senha = $('#senha');
