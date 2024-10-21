@@ -103,7 +103,7 @@ sleep(1);
                     </span>
                     <h3>Vestimentas</h3>
                 </a>
-                
+
                 <a href="../../email">
                     <span class="material-icons-sharp">email</span>
                     <h3>Email</h3>
@@ -158,7 +158,7 @@ sleep(1);
 
 
 
-               
+
 
             </div>
             <!-- Fim das análises -->
@@ -196,26 +196,21 @@ sleep(1);
                         echo ' <div class="formato"><table class="table table-striped">
         <thead class="thead-info">
             <tr>
-                       
                        <th>Nome</th>
                        <th>CPF</th>
                        <th>Data de Entrada</th>
-                       
                        <th>PDF</th>
-                       
-                   
-
                        </tr>
                     </thead>
                     <tbody>';
                         while ($row = $result->fetch_assoc()) {
                             echo '<tr>';
                             $data_entrada = date("d/m/Y", strtotime($row['data_entrada']));
-                           
+
                             echo "<td>" . $row['nome'] . "</td>";
                             echo "<td>" . $row['CPF'] . "</td>";
                             echo "<td>" . $data_entrada . "</td>";
-                            
+
                             echo "<td>
                                     <a href='../../PDF/index.php?id_usuario=" . $row['id_usuario'] .
                                 "&nome=" . $row['nome'] .
@@ -280,7 +275,7 @@ sleep(1);
             </div>
             <!-- Fim da navegação -->
 
-           
+
 
 
 

@@ -118,20 +118,10 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
             </div>
         </aside>
-        <!-- Fim da seção da barra lateral -->
-
-        <!-- Conteúdo principal -->
+      
         <main>
             <h1>Vestimentas</h1>
-            <!-- Análises -->
-
-
-            <!-- Fim das análises -->
-
-
-            <!-- Fim da seção de novos usuários -->
-
-            <!-- Tabela de pedidos recentes -->
+        
             <div class="box">
                 <table>
                     <thead>
