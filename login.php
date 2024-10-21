@@ -3,7 +3,8 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"> <!-- Importa o CSS do SweetAlert2 para mostrar alertas visuais -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
    <title>Redirecionamento</title>
 </head>
 <body>
@@ -11,38 +12,36 @@
 </body>
 </html>
 <?php
-session_start(); // Inicia a sessão para usar variáveis de sessão
+session_start();
 
-require_once "conexao.php"; // Inclui o arquivo de conexão com o banco de dados
-$conexao = conectar(); // Conecta ao banco de dados usando uma função conectar() definida no arquivo de conexão
+require_once "conexao.php";
+$conexao = conectar();
 
-$CPF = $_POST['CPF']; // Obtém o CPF do formulário enviado pelo método POST
-$senha = $_POST['senha']; // Obtém a senha do formulário enviado pelo método POST
-$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}'"; // Consulta SQL para selecionar o usuário baseado no CPF informado
+$CPF = $_POST['CPF'];
+$senha = $_POST['senha'];
+$sql = "SELECT * FROM usuario WHERE CPF = '{$CPF}'";
 
-$resultado = mysqli_query($conexao, $sql); // Executa a consulta no banco de dados
-$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário, se encontrados
+$resultado = mysqli_query($conexao, $sql);
+$dados = mysqli_fetch_assoc($resultado);
 
-if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
-    if (password_verify($senha, $dados['senha'])) { // Verifica se a senha fornecida corresponde à senha armazenada no banco
-        // Armazena os dados do usuário na sessão
+if ($dados) {
+    if (password_verify($senha, $dados['senha'])) {
         $_SESSION['CPF'] = $CPF;
         $_SESSION['id_usuario'] = $dados['id_usuario'];
         $_SESSION['nome'] = $dados['nome'];
         $_SESSION['statuss'] = $dados['statuss'];
         $_SESSION['genero'] = $dados['genero'];
 
-        // Inclui o script do SweetAlert2 para exibir alertas
+        // Inclua o SweetAlert2 no início
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-        // Verifica o status do usuário para redirecionamento baseado em seu tipo
         switch ($dados['statuss']) {
-            case '1': // Usuário comum
-                if ($dados['primeiro_login'] == 0) { // Verifica se é o primeiro login
-                    $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}"; // Atualiza o banco para marcar que o usuário já fez o primeiro login
+            case '1':
+                if ($dados['primeiro_login'] == 0) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
                     mysqli_query($conexao, $updateSql);
 
-                    // Exibe uma mensagem de sucesso com SweetAlert2 e redireciona o usuário para o formulário de edição
+                    // Aqui adicionamos um setTimeout para garantir o redirecionamento
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -53,10 +52,10 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}'; // Redireciona para o formulário de edição
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
                         }, 1600);
                     </script>";
-                } else { // Se não for o primeiro login
+                } else {
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -66,18 +65,17 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'usuario/dashboard.php'; // Redireciona para o dashboard do usuário
+                            window.location.href = 'usuario/dashboard.php';
                         }, 1600);
                     </script>";
                 }
                 break;
 
-            case '2': // Coordenador
-                if ($dados['primeiro_login'] == 1) { // Primeiro login para o coordenador
-                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}"; // Atualiza o banco para marcar que o primeiro login foi feito
+            case '2':
+                if ($dados['primeiro_login'] == 1) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
                     mysqli_query($conexao, $updateSql);
 
-                    // Exibe a mensagem e redireciona para o formulário de edição
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -88,10 +86,10 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}'; // Redireciona para o formulário de edição
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
                         }, 1600);
                     </script>";
-                } else { // Caso não seja o primeiro login
+                } else {
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -101,18 +99,17 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'coordenador/dashboard.php'; // Redireciona para o dashboard do coordenador
+                            window.location.href = 'coordenador/dashboard.php';
                         }, 1600);
                     </script>";
                 }
                 break;
 
-            case '3': // Outro tipo de usuário
-                if ($dados['primeiro_login'] == 1) { // Verifica o primeiro login
-                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}"; // Atualiza o status de primeiro login
+            case '3':
+                if ($dados['primeiro_login'] == 1) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
                     mysqli_query($conexao, $updateSql);
 
-                    // Exibe uma mensagem e redireciona para o formulário de edição
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -123,10 +120,10 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}'; // Redireciona para o formulário de edição
+                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
                         }, 1600);
                     </script>";
-                } else { // Caso não seja o primeiro login
+                } else {
                     echo "<script>
                         Swal.fire({
                             icon: 'success',
@@ -136,13 +133,13 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                         });
 
                         setTimeout(() => {
-                            window.location.href = 'usuario/dashboard.php'; // Redireciona para o dashboard
+                            window.location.href = 'usuario/dashboard.php';
                         }, 1600);
                     </script>";
                 }
                 break;
 
-            default: // Caso o status seja inválido
+            default:
                 echo "<script>
                     Swal.fire({
                         icon: 'error',
@@ -151,12 +148,12 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
                     });
 
                     setTimeout(() => {
-                        window.location.href = 'index.php'; // Redireciona para a página de login
+                        window.location.href = 'index.php';
                     }, 1600);
                 </script>";
                 break;
         }
-    } else { // Senha incorreta
+    } else {
         echo "<script>
             Swal.fire({
                 icon: 'error',
@@ -165,11 +162,11 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
             });
 
             setTimeout(() => {
-                window.location.href = 'index.php'; // Redireciona para a página de login
+                window.location.href = 'index.php';
             }, 1600);
         </script>";
     }
-} else { // CPF não encontrado
+} else {
     echo "<script>
         Swal.fire({
             icon: 'error',
@@ -178,7 +175,7 @@ if ($dados) { // Verifica se o CPF foi encontrado no banco de dados
         });
 
         setTimeout(() => {
-            window.location.href = 'index.php'; // Redireciona para a página de login
+            window.location.href = 'index.php';
         }, 1600);
     </script>";
 }

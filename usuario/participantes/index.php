@@ -1,54 +1,56 @@
 <?php
-session_start();
-require_once "../conexao.php";
-$conexao = conectar();
+session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
+require_once "../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
+$conexao = conectar(); // Estabelece a conexão com o banco de dados
 
-// Aguarda 1 segundo antes de redirecionar o usuário
+// Aguarda 1 segundo antes de redirecionar o usuário (para simular um carregamento ou evitar requisições muito rápidas)
 sleep(1);
 
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
     header("Location: ../login.php");
-    exit();
+    exit(); // Termina a execução do script após o redirecionamento
 }
 
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Consulta SQL para obter os dados do usuário
+// Consulta SQL para obter os dados do usuário baseado no ID
 $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
-$resultado = mysqli_query($conexao, $sql);
+$resultado = mysqli_query($conexao, $sql); // Executa a consulta SQL
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
+    // Exibe um erro se houve um problema na consulta
     echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao);
-    exit();
+    exit(); // Termina a execução do script
 }
 
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado);
+// Obtém os dados do usuário a partir do resultado da consulta
+$dados = mysqli_fetch_assoc($resultado); // Armazena os dados do usuário em um array associativo
 
 // Função para calcular a idade com base na data de nascimento
 function calcular_idade($data_nascimento) {
-    $data_nasc = new DateTime($data_nascimento);
-    $hoje = new DateTime();
-    $idade = $hoje->diff($data_nasc);
-    return $idade->y;
+    $data_nasc = new DateTime($data_nascimento); // Cria um objeto DateTime com a data de nascimento
+    $hoje = new DateTime(); // Obtém a data atual
+    $idade = $hoje->diff($data_nasc); // Calcula a diferença entre a data atual e a data de nascimento
+    return $idade->y; // Retorna a idade em anos
 }
 
 // Função para determinar a categoria com base na idade
 function determinar_categoria($idade) {
+    // Define as categorias com base na idade
     if ($idade <= 12) {
-        return 'Mirim';
+        return 'Mirim'; // Categoria para crianças até 12 anos
     } elseif ($idade <= 17) {
-        return 'Juvenil';
+        return 'Juvenil'; // Categoria para adolescentes de 13 a 17 anos
     } else {
-        return 'Adulto';
+        return 'Adulto'; // Categoria para adultos acima de 17 anos
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +149,6 @@ function determinar_categoria($idade) {
                
                    <th>Nome</th>
                    <th>Data de Nascimento</th>
-                   <th>Matricula</th>
                    <th>Categoria</th>
                    <th>Usuário</th> 
                    </tr>
@@ -160,7 +161,6 @@ function determinar_categoria($idade) {
                         $data = date("d/m/Y", strtotime($row['datas']));
                         echo "<td>" . $row['nome'] . "</td>";
                         echo "<td>" . $data . "</td>";
-                        echo "<td>" . $row['matricula'] . "</td>";
                         echo "<td>" . $categoria . "</td>";
                         echo "<td><div class='users'><img src='../../img/perfil/" . $row['imagem'] . "' ></div></td>";
                         echo "<td>

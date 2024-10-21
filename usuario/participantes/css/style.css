@@ -357,7 +357,7 @@ main .recent-orders table {
     transition: all 0.3s ease;
     position: relative;
     margin-top: 5%;
-    left: 15%;
+    left: 5%;
 }
 
 main .recent-orders table:hover {
@@ -391,8 +391,8 @@ main .recent-orders a {
     justify-content: end;
     gap: 2rem;
     position: relative;
-    left: 45%;
-    margin-top: -5%;
+    left: 20%;
+    margin-top: -4%;
 }
 
 .right-section .nav button {

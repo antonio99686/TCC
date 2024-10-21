@@ -2,15 +2,16 @@
 session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
 require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
 $conexao = conectar(); // Estabelece a conexão com o banco de dados
-sleep(1);
+sleep(1); // Pausa a execução por 1 segundo (pode ser usado para simular latência)
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
-    exit();
+    exit(); // Encerra a execução do script após o redirecionamento
 }
 
 // Obtém os dados do usuário logado
-$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?"; // Consulta SQL para obter dados do usuário
 $stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
 mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
 mysqli_stmt_execute($stmt); // Executa a consulta preparada
@@ -19,14 +20,14 @@ $dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
 
 // Verifica se foi feita uma requisição de busca de usuários
 if (isset($_GET['nome_usuario'])) {
-    $nome_usuario = $_GET['nome_usuario'];
-    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE 
-    CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
+    $nome_usuario = $_GET['nome_usuario']; // Obtém o nome do usuário a ser buscado
+    // Prepara a consulta SQL para buscar usuários com base no nome
+    $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
     mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca
     mysqli_stmt_execute($stmt); // Executa a consulta preparada
     $resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
 
-    $usuarios = [];
+    $usuarios = []; // Inicializa um array para armazenar os usuários encontrados
     if ($resultado && mysqli_num_rows($resultado) > 0) {
         while ($usuario = mysqli_fetch_assoc($resultado)) {
             $usuarios[] = $usuario; // Armazena os usuários encontrados no array $usuarios
@@ -34,44 +35,47 @@ if (isset($_GET['nome_usuario'])) {
     }
 
     echo json_encode($usuarios); // Retorna os usuários encontrados como JSON e termina o script
-    exit();
+    exit(); // Encerra a execução após retornar a resposta
 }
-
 
 // Verifica se um usuário foi selecionado
 if (isset($_GET['usuario_selecionado'])) {
-    $id_usuario_selecionado = $_GET['usuario_selecionado'];
+    $id_usuario_selecionado = $_GET['usuario_selecionado']; // Obtém o ID do usuário selecionado
 
     // Consulta SQL para obter as roupas do usuário selecionado
-    $stmt = mysqli_prepare($conexao, "SELECT * FROM roupas WHERE id_usuario = ?");
+    $stmt = mysqli_prepare($conexao, "SELECT * FROM roupas WHERE id_usuario = ?"); // Prepara a consulta para buscar roupas
     mysqli_stmt_bind_param($stmt, "i", $id_usuario_selecionado); // Associa o parâmetro à consulta de roupas
     mysqli_stmt_execute($stmt); // Executa a consulta preparada
     $resultado_roupas_usuario = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta de roupas
 
+    // Verifica se a consulta foi bem-sucedida
     if (!$resultado_roupas_usuario) {
         echo "Erro ao consultar o banco de dados: " . mysqli_error($conexao); // Exibe erro em caso de falha na consulta
-        exit();
+        exit(); // Encerra a execução em caso de erro
     }
 }
 
-// Atualiza a lista de itens se o formulário for enviado
-$sweetalert_msg = ""; // Inicializa a variável para mensagem do SweetAlert
+// Inicializa a variável para mensagem do SweetAlert
+$sweetalert_msg = ""; 
 
+// Atualiza a lista de itens se o formulário for enviado
 if ($_POST) { // Verifica se o formulário foi submetido
-    $id_usuario_selecionado = $_POST['id_usuario_selecionado'];
-    $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : [];
+    $id_usuario_selecionado = $_POST['id_usuario_selecionado']; // Obtém o ID do usuário selecionado do formulário
+    // Obtém os status de devolução enviados no formulário
+    $status_devolucao = isset($_POST['status_devolucao']) ? $_POST['status_devolucao'] : []; 
 
     // Consulta SQL para obter as roupas do usuário selecionado
     $resultado_roupas_usuario = mysqli_query($conexao, "SELECT * FROM roupas WHERE id_usuario = $id_usuario_selecionado");
 
-    $status_atualizado = false;
+    $status_atualizado = false; // Inicializa a variável para verificar se o status foi atualizado
 
     // Atualiza o status de devolução das roupas do usuário
     while ($r = mysqli_fetch_assoc($resultado_roupas_usuario)) {
-        $novo_status = in_array($r['id'], $status_devolucao) ? 1 : 0;
-        if ($novo_status != $r['status_devolucao']) {
+        $novo_status = in_array($r['id'], $status_devolucao) ? 1 : 0; // Define o novo status com base na seleção do formulário
+        if ($novo_status != $r['status_devolucao']) { // Verifica se o status foi alterado
+            // Atualiza o status de devolução no banco de dados
             mysqli_query($conexao, "UPDATE roupas SET status_devolucao = $novo_status WHERE id_usuario = $id_usuario_selecionado AND id = " . $r['id']);
-            $status_atualizado = true;
+            $status_atualizado = true; // Marca que o status foi atualizado
         }
     }
 
@@ -81,10 +85,11 @@ if ($_POST) { // Verifica se o formulário foi submetido
 
     // Define a mensagem de sucesso para o SweetAlert se o status foi atualizado
     if ($status_atualizado) {
-        $sweetalert_msg = "Status de devolução atualizado com sucesso!";
+        $sweetalert_msg = "Status de devolução atualizado com sucesso!"; // Mensagem de sucesso
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -277,41 +282,41 @@ if ($_POST) { // Verifica se o formulário foi submetido
     </div>
     <script src="../JavaScript/index.js"></script>
     <script>
-        function buscarUsuarios() {
-            const nomeUsuario = document.getElementById('nome_usuario').value; // Obtém o valor do campo de entrada de nome de usuário
-            if (nomeUsuario.length > 0) { // Verifica se o campo não está vazio
-                const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest para fazer a requisição AJAX
-                xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true); // Configura a requisição GET para buscar usuários com base no nome digitado
-                xhr.onload = function () { // Define o que fazer quando a requisição retornar
-                    if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
-                        const resultados = JSON.parse(this.responseText); // Converte a resposta JSON em um objeto JavaScript
-                        let output = '<ul>'; // Inicia uma lista não ordenada para mostrar os resultados
-                        resultados.forEach(function (usuario) { // Itera sobre cada usuário retornado
-                            output += `<li><a href="?usuario_selecionado=${usuario.id_usuario}">${usuario.nome}</a></li>`; // Cria um link para selecionar o usuário
-                        });
-                        output += '</ul>'; // Fecha a lista de resultados
-                        document.getElementById('resultados_busca').innerHTML = output; // Insere os resultados na div 'resultados_busca' do HTML
-                    }
-                };
-                xhr.send(); // Envia a requisição
-            } else {
-                document.getElementById('resultados_busca').innerHTML = ''; // Limpa os resultados se o campo de busca estiver vazio
-            }
+    function buscarUsuarios() {
+        const nomeUsuario = document.getElementById('nome_usuario').value; // Obtém o valor do campo de entrada de nome de usuário
+        if (nomeUsuario.length > 0) { // Verifica se o campo não está vazio
+            const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest para fazer a requisição AJAX
+            xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true); // Configura a requisição GET para buscar usuários com base no nome digitado
+            xhr.onload = function () { // Define o que fazer quando a requisição retornar
+                if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
+                    const resultados = JSON.parse(this.responseText); // Converte a resposta JSON em um objeto JavaScript
+                    let output = '<ul>'; // Inicia uma lista não ordenada para mostrar os resultados
+                    resultados.forEach(function (usuario) { // Itera sobre cada usuário retornado
+                        // Cria um link que redireciona para a seleção do usuário baseado no ID
+                        output += `<li><a href="?usuario_selecionado=${usuario.id_usuario}">${usuario.nome}</a></li>`;
+                    });
+                    output += '</ul>'; // Fecha a lista de resultados
+                    document.getElementById('resultados_busca').innerHTML = output; // Insere os resultados na div 'resultados_busca' do HTML
+                }
+            };
+            xhr.send(); // Envia a requisição para o servidor
+        } else {
+            document.getElementById('resultados_busca').innerHTML = ''; // Limpa os resultados se o campo de busca estiver vazio
         }
+    }
+</script>
+
+<?php if ($sweetalert_msg): ?> <!-- Verifica se há uma mensagem de sucesso para exibir -->
+    <script>
+        function showAlert(message) { // Função para exibir um alerta usando SweetAlert
+            Swal.fire({
+                icon: 'success', // Define o ícone do alerta como sucesso
+                title: 'Sucesso!', // Título do alerta
+                text: message, // Mensagem do alerta
+                showConfirmButton: false, // Esconde o botão de confirmação
+                timer: 1500 // Define um tempo para o alerta se fechar automaticamente
+            });
+        }
+        showAlert('<?php echo $sweetalert_msg; ?>'); // Chama a função showAlert passando a mensagem do PHP
     </script>
-
-
-    <?php if ($sweetalert_msg): ?>
-        <script>
-            function showAlert(message) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: message,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-            showAlert('<?php echo $sweetalert_msg; ?>');
-        </script>
-    <?php endif; ?>
+<?php endif; ?> <!-- Fim da verificação da mensagem de sucesso -->

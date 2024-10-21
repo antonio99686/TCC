@@ -1,73 +1,75 @@
 <?php
-session_start();
-require_once "../../conexao.php";
-$conexao = conectar();
+session_start(); // Inicia a sessão
+require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
+$conexao = conectar(); // Conecta ao banco de dados
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+error_reporting(E_ALL); // Define que todos os erros sejam reportados
+ini_set('display_errors', 1); // Exibe os erros no navegador (útil para desenvolvimento)
 
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php");
-    exit();
+    header("Location: ../login.php"); // Redireciona para a página de login se o usuário não estiver autenticado
+    exit(); // Finaliza o script
 }
 
-// Obtém os dados do usuário logado
+// Obtém os dados do usuário logado a partir da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
-// Obtém dados do usuário logado com proteção contra SQL Injection
+// Prepara uma consulta SQL para obter os dados do usuário logado, com proteção contra SQL Injection
 $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param('i', $id_usuario);
-$stmt->execute();
-$resultado = $stmt->get_result();
-$dados = $resultado->fetch_assoc();
+$stmt = $conexao->prepare($sql); // Prepara a consulta SQL
+$stmt->bind_param('i', $id_usuario); // Vincula o parâmetro (id do usuário)
+$stmt->execute(); // Executa a consulta
+$resultado = $stmt->get_result(); // Obtém o resultado da consulta
+$dados = $resultado->fetch_assoc(); // Obtém os dados do usuário como um array associativo
 
-// Verifica se foi feita uma requisição de busca de usuários
+// Verifica se foi feita uma requisição de busca de usuários (via método GET)
 if (isset($_GET['nome_usuario'])) {
-    $nome_usuario = $_GET['nome_usuario'];
+    $nome_usuario = $_GET['nome_usuario']; // Obtém o nome do usuário da requisição
 
-    // Busca usuários com proteção contra SQL Injection
+    // Prepara uma consulta SQL para buscar usuários que correspondam ao nome, protegendo contra SQL Injection
     $sql = "SELECT id_usuario, nome FROM usuario WHERE nome LIKE ? AND statuss = 1 ORDER BY nome ASC";
-    $stmt = $conexao->prepare($sql);
-    $search_term = '%' . $nome_usuario . '%';
-    $stmt->bind_param('s', $search_term);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+    $stmt = $conexao->prepare($sql); // Prepara a consulta SQL
+    $search_term = '%' . $nome_usuario . '%'; // Define o termo de busca (usando LIKE)
+    $stmt->bind_param('s', $search_term); // Vincula o parâmetro (termo de busca)
+    $stmt->execute(); // Executa a consulta
+    $resultado = $stmt->get_result(); // Obtém o resultado da consulta
 
+    // Monta um array com os resultados dos usuários encontrados
     $usuarios = [];
     while ($usuario = $resultado->fetch_assoc()) {
-        $usuarios[] = $usuario;
+        $usuarios[] = $usuario; // Adiciona cada usuário ao array
     }
 
-    echo json_encode($usuarios);
-    exit();
+    echo json_encode($usuarios); // Retorna os usuários encontrados em formato JSON
+    exit(); // Finaliza o script
 }
 
-// Verifica se foi feita uma requisição de busca de mensalidades
+// Verifica se foi feita uma requisição de busca de mensalidades (via método GET)
 if (isset($_GET['id_usuario'])) {
-    $id_usuario = $_GET['id_usuario'];
+    $id_usuario = $_GET['id_usuario']; // Obtém o id do usuário da requisição
 
-    // Busca mensalidades com proteção contra SQL Injection
+    // Prepara uma consulta SQL para buscar as mensalidades do usuário, com proteção contra SQL Injection
     $sql = "SELECT id, mes, pago, comprovante FROM mensalidades WHERE usuario_id = ?";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param('i', $id_usuario);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+    $stmt = $conexao->prepare($sql); // Prepara a consulta SQL
+    $stmt->bind_param('i', $id_usuario); // Vincula o parâmetro (id do usuário)
+    $stmt->execute(); // Executa a consulta
+    $resultado = $stmt->get_result(); // Obtém o resultado da consulta
 
+    // Monta um array com os resultados das mensalidades encontradas
     $mensalidades = [];
     while ($mensalidade = $resultado->fetch_assoc()) {
-        $mensalidades[] = $mensalidade;
+        $mensalidades[] = $mensalidade; // Adiciona cada mensalidade ao array
     }
 
-    echo json_encode($mensalidades);
-    exit();
+    echo json_encode($mensalidades); // Retorna as mensalidades encontradas em formato JSON
+    exit(); // Finaliza o script
 }
 
-// Consulta para obter o total de usuários
+// Consulta para obter o total de usuários ativos (statuss = 1)
 $sql_total_usuarios = "SELECT COUNT(*) as total FROM usuario WHERE statuss = 1";
-$result_total_usuarios = mysqli_query($conexao, $sql_total_usuarios);
-$rows = mysqli_fetch_assoc($result_total_usuarios);
+$result_total_usuarios = mysqli_query($conexao, $sql_total_usuarios); // Executa a consulta
+$rows = mysqli_fetch_assoc($result_total_usuarios); // Obtém o total de usuários
 ?>
 
 <!DOCTYPE html>
@@ -248,96 +250,104 @@ $rows = mysqli_fetch_assoc($result_total_usuarios);
 
     <script>
    function buscarUsuarios() {
+    // Obtém o valor do campo de entrada com id 'nome_usuario'
     const nomeUsuario = document.getElementById('nome_usuario').value;
-    console.log(`Buscando usuários com o nome: ${nomeUsuario}`);
+    console.log(`Buscando usuários com o nome: ${nomeUsuario}`); // Log para depuração
+
+    // Verifica se o campo de busca não está vazio
     if (nomeUsuario.length > 0) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true);
+        const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest
+        xhr.open('GET', `?nome_usuario=${nomeUsuario}`, true); // Prepara a requisição GET para buscar usuários
         xhr.onload = function () {
-            if (this.status === 200) {
+            if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
                 try {
-                    const resultados = JSON.parse(this.responseText);
-                    let output = '<ul>';
+                    const resultados = JSON.parse(this.responseText); // Tenta analisar a resposta JSON
+                    let output = '<ul>'; // Inicia a construção da lista de resultados
                     resultados.forEach(function (usuario) {
+                        // Cria um item de lista para cada usuário encontrado
                         output += `<li><a href="#" onclick="buscarMensalidades(${usuario.id_usuario}, '${usuario.nome}')">${usuario.nome}</a></li>`;
                     });
-                    output += '</ul>';
-                    document.getElementById('resultados_busca').innerHTML = output;
+                    output += '</ul>'; // Fecha a lista
+                    document.getElementById('resultados_busca').innerHTML = output; // Atualiza o DOM com os resultados
                 } catch (e) {
-                    console.error('Error parsing JSON:', e);
-                    console.error('Response was:', this.responseText);
+                    console.error('Error parsing JSON:', e); // Log de erro se a análise falhar
+                    console.error('Response was:', this.responseText); // Exibe a resposta para depuração
                 }
             }
         };
-        xhr.send();
+        xhr.send(); // Envia a requisição
     } else {
+        // Se o campo estiver vazio, limpa os resultados da busca
         document.getElementById('resultados_busca').innerHTML = '';
     }
 }
+
 function buscarMensalidades(idUsuario, nomeUsuario) {
-    console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`);
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `?id_usuario=${idUsuario}`, true);
+    console.log(`Buscando mensalidades para o usuário: ${nomeUsuario} (ID: ${idUsuario})`); // Log para depuração
+    const xhr = new XMLHttpRequest(); // Cria um novo objeto XMLHttpRequest
+    xhr.open('GET', `?id_usuario=${idUsuario}`, true); // Prepara a requisição GET para buscar mensalidades
     xhr.onload = function () {
-        if (this.status === 200) {
+        if (this.status === 200) { // Verifica se a requisição foi bem-sucedida
             try {
-                const mensalidades = JSON.parse(this.responseText);
-                let content = `<h3>Mensalidades de ${nomeUsuario}</h3>`;
+                const mensalidades = JSON.parse(this.responseText); // Tenta analisar a resposta JSON
+                let content = `<h3>Mensalidades de ${nomeUsuario}</h3>`; // Inicia o conteúdo para o SweetAlert
                 if (mensalidades.length > 0) {
+                    // Se houver mensalidades, cria uma tabela para exibi-las
                     content += "<table><tr><th>Mês</th><th>Status</th><th>Comprovante</th></tr>";
                     mensalidades.forEach(function (mensalidade) {
                         const comprovanteLink = mensalidade.comprovante ? 
-                            `download_comprovante.php?id=${mensalidade.id}` : '#';
-                        const status = mensalidade.pago == 1 ? 'Pago' : 'Não Pago';
+                            `download_comprovante.php?id=${mensalidade.id}` : '#'; // Define o link do comprovante
+                        const status = mensalidade.pago == 1 ? 'Pago' : 'Não Pago'; // Define o status da mensalidade
 
-                        // Se não estiver pago, desativar o link de download
+                        // Se não estiver pago, desativa o link de download
                         const downloadLink = mensalidade.pago == 1 && mensalidade.comprovante ? 
                             `<a href="${comprovanteLink}" class="download">Download</a>` : 
                             '<span class="download disabled">Download indisponível</span>';
                         
                         content += `<tr>
-                            <td>${mensalidade.mes}</td>
-                            <td>${status}</td>
-                            <td>${downloadLink}</td>
+                            <td>${mensalidade.mes}</td> // Exibe o mês da mensalidade
+                            <td>${status}</td> // Exibe o status da mensalidade
+                            <td>${downloadLink}</td> // Exibe o link de download
                         </tr>`;
                     });
-                    content += "</table>";
+                    content += "</table>"; // Fecha a tabela
                 } else {
-                    content += "<p>Não há pendências.</p>";
+                    content += "<p>Não há pendências.</p>"; // Mensagem caso não haja mensalidades
                 }
-                abrirSweetAlert(content);
+                abrirSweetAlert(content); // Abre o SweetAlert com o conteúdo gerado
             } catch (e) {
-                console.error('Error parsing JSON:', e);
-                console.error('Response was:', this.responseText);
+                console.error('Error parsing JSON:', e); // Log de erro se a análise falhar
+                console.error('Response was:', this.responseText); // Exibe a resposta para depuração
             }
         }
     };
-    xhr.send();
+    xhr.send(); // Envia a requisição
 }
 
-
-
 function abrirSweetAlert(content) {
+    // Configura e exibe o SweetAlert com o conteúdo fornecido
     Swal.fire({
         title: 'Detalhes das Mensalidades',
         html: content,
         icon: 'info',
-        showCloseButton: true
+        showCloseButton: true // Exibe um botão para fechar
     });
 }
 
+// Adiciona um listener para cliques no documento
 document.addEventListener('click', function(event) {
-    if (event.target.matches('.download')) {
-        event.preventDefault();
-        const link = event.target.getAttribute('href');
-        if (link !== '#') {
+    if (event.target.matches('.download')) { // Verifica se o elemento clicado tem a classe 'download'
+        event.preventDefault(); // Previne o comportamento padrão do link
+        const link = event.target.getAttribute('href'); // Obtém o link do atributo href
+        if (link !== '#') { // Verifica se o link não é '#'
             window.location.href = link; // Redireciona para o link de download
         } else {
+            // Se não houver link de download, exibe um alerta
             Swal.fire({
                 title: 'Aviso',
                 text: 'Nenhum comprovante disponível para download.',
                 icon: 'warning',
-                confirmButtonText: 'Ok'
+                confirmButtonText: 'Ok' // Texto do botão de confirmação
             });
         }
     }
