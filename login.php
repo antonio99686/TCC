@@ -4,7 +4,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <title>Redirecionamento</title>
 </head>
 <body>
@@ -33,7 +33,6 @@ if ($dados) {
         $_SESSION['genero'] = $dados['genero'];
 
         // Inclua o SweetAlert2 no início
-        echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
         switch ($dados['statuss']) {
             case '1':
