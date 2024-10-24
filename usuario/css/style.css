@@ -241,7 +241,7 @@ aside .sidebar a:hover {
 }
 
 aside .sidebar a:hover span {
-    margin-left: 0.6rem;        /* Margem à esquerda ao passar o mouse */
+    margin-left: 0.5rem;        /* Margem à esquerda ao passar o mouse */
 }
 
 aside .sidebar .message-count {
