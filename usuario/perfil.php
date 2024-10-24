@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
     <link rel="shortcut icon" href="../img/img/icon.png">
     <link rel="stylesheet" href="css/perfil.css">
     <title>Sentinela da fronteira</title>
-   </head>
+</head>
 
 <body>
     <div class="container">
@@ -154,13 +154,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                 <br>
                 <div class="user2"><em><b>E-mail:</b></em> <?php echo $dados['email'] ?></div>
                 <br>
-                <div class="user3"><em><b>Senha:</b></em> <?php echo $dados['senha'] ?></div>
-                <br>
                 <div class="user4"><em><b>CPF:</b></em> <?php echo $dados['CPF'] ?></div>
                 <br>
                 <div class="user5"><em><b>Idade:</b></em> <?php echo $dados['idade'] ?></div>
-                <br>
-                <div class="user6"><em><b>Matrícula:</b></em> <?php echo $dados['matricula'] ?></div>
                 <br>
                 <div class="user7"><em><b>Data de Nascimento:</b></em> <?php echo date('d/m/Y', strtotime($dados['datas'])) ?></div>
                 <br>
@@ -207,13 +203,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
             </div>
 
             <div class="box-perfil" style="margin-top: 20px;">
-                <h2 style="top: -10px ; position: relative;" >Alterar Foto de Perfil</h2>
-                 <form method="post" enctype="multipart/form-data">
-                    <label for="avatar-image" class="custom-file-button" >Selecionar Foto de Perfil</label>
+                <h2 style="top: -10px ; position: relative;">Alterar Foto de Perfil</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <label for="avatar-image" class="custom-file-button">Selecionar Foto de Perfil</label>
                     <input type="file" name="file" class="file" id="avatar-image" aria-describedby="file-help">
-                    <p id="file-help" style="top: 40px; position: relative;" >Escolha uma imagem para a foto de perfil.</p>
+                    <p id="file-help" style="top: 40px; position: relative;">Escolha uma imagem para a foto de perfil.</p>
                     <img class="box-perfil-img" id="preview-image" src="#" alt="Pré-visualização da Imagem">
-                    <button type="submit" class="form-control" style="margin-top: 10px;">Salvar Foto</button>   
+                    <button type="submit" class="form-control" style="margin-top: 10px;">Salvar Foto</button>
             </div>
         </div>
     </div>
@@ -221,46 +217,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    const avatarImage = document.querySelector('#avatar-image');
-    const previewImage = document.querySelector('#preview-image');
-    const profilePicture = document.querySelector('#profile-picture');
+        const avatarImage = document.querySelector('#avatar-image');
+        const previewImage = document.querySelector('#preview-image');
+        const profilePicture = document.querySelector('#profile-picture');
 
-    // Listener para o evento de mudança no input de arquivo
-    avatarImage.addEventListener('change', event => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
+        // Listener para o evento de mudança no input de arquivo
+        avatarImage.addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
 
-            reader.onload = function(event) {
-                // Define a imagem de pré-visualização e a exibe
-                previewImage.src = event.target.result;
-                previewImage.style.display = 'block';
-                // Atualiza a imagem do perfil na interface
-                profilePicture.src = event.target.result;
+                reader.onload = function(event) {
+                    // Define a imagem de pré-visualização e a exibe
+                    previewImage.src = event.target.result;
+                    previewImage.style.display = 'block';
+                    // Atualiza a imagem do perfil na interface
+                    profilePicture.src = event.target.result;
+                }
+
+                reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+            } else {
+                previewImage.src = '#';
+                previewImage.style.display = 'none'; // Esconde a imagem de pré-visualização se nenhum arquivo for selecionado
             }
-
-            reader.readAsDataURL(file); // Lê o arquivo como URL de dados
-        } else {
-            previewImage.src = '#';
-            previewImage.style.display = 'none'; // Esconde a imagem de pré-visualização se nenhum arquivo for selecionado
-        }
-    });
-
-    // Verifica se há mensagem na sessão e exibe um alerta utilizando SweetAlert2 se houver
-    <?php if (isset($_SESSION['mensagem'])): ?>
-        Swal.fire({
-            title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
-            text: "<?php echo $_SESSION['mensagem']; ?>",
-            icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
         });
-        <?php
-        // Limpa as variáveis de sessão após exibir o alerta
-        unset($_SESSION['mensagem']);
-        unset($_SESSION['tipo_mensagem']);
-        unset($_SESSION['titulo_mensagem']);
-        ?>
-    <?php endif; ?>
-</script>
+
+        // Verifica se há mensagem na sessão e exibe um alerta utilizando SweetAlert2 se houver
+        <?php if (isset($_SESSION['mensagem'])): ?>
+            Swal.fire({
+                title: "<?php echo $_SESSION['titulo_mensagem']; ?>",
+                text: "<?php echo $_SESSION['mensagem']; ?>",
+                icon: "<?php echo $_SESSION['tipo_mensagem']; ?>"
+            });
+            <?php
+            // Limpa as variáveis de sessão após exibir o alerta
+            unset($_SESSION['mensagem']);
+            unset($_SESSION['tipo_mensagem']);
+            unset($_SESSION['titulo_mensagem']);
+            ?>
+        <?php endif; ?>
+    </script>
 
 </body>
+
 </html>
