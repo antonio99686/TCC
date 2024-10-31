@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                     <label for="senha" class="form-label">Repita</label>
-                    <input type="password"  name="senha" class="form-input" placeholder="Repite a senha" required>
+                    <input type="password" name="senha" class="form-input" placeholder="Repite a senha" required>
                     <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
 
@@ -99,65 +99,66 @@
                 </div>
 
                 <div class="form-grupo">
-                <label for="RG" class="form-label">RG</label>
-                <input type="text" name="RG" class="form-input" placeholder="00000000000" required />
-                <span class="validation-message"></span>
-            </div>
+                    <label for="RG" class="form-label">RG</label>
+                    <input type="text" name="RG" class="form-input" placeholder="00000000000" required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="Categoria" class="form-label">Nível</label>
-                <input type="text" name="categoria" class="form-input" placeholder="adulto, juvenil, mirim" required />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="Categoria" class="form-label">Nível</label>
+                    <input type="text" name="categoria" class="form-input" placeholder="adulto, juvenil, mirim" required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="Telefone" class="form-label">Telefone</label>
-                <input type="text" name="telefone" class="form-input" placeholder="(00) 0000-0000" required />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="Telefone" class="form-label">Telefone</label>
+                    <input type="text" name="telefone" class="form-input" placeholder="(00) 0000-0000" required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="endereco" class="form-label">Endereço</label>
-                <input type="text" name="endereco" class="form-input" placeholder="Rua..." required />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input type="text" name="endereco" class="form-input" placeholder="Rua..." required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="responsavel" class="form-label">Responsável</label>
-                <input type="text" name="responsavel" class="form-input" placeholder="Nome" />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="responsavel" class="form-label">Responsável</label>
+                    <input type="text" name="responsavel" class="form-input" placeholder="Nome" />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="data_entrada" class="form-label">Data de Entrada</label>
-                <input type="date" name="data_entrada" class="form-input" required />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="data_entrada" class="form-label">Data de Entrada</label>
+                    <input type="date" name="data_entrada" class="form-input" required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="tele_respon" class="form-label">Telefone do Responsável</label>
-                <input type="text" name="tele_respon" class="form-input" placeholder="(00) 0000-0000" />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="tele_respon" class="form-label">Telefone do Responsável</label>
+                    <input type="text" name="tele_respon" class="form-input" placeholder="(00) 0000-0000" />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="idade" class="form-label">Idade</label>
-                <input type="text" name="idade" class="form-input" required />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="idade" class="form-label">Idade</label>
+                    <input type="text" name="idade" class="form-input" required />
+                    <span class="validation-message"></span>
+                </div>
 
-            <div class="form-grupo">
-                <label for="nom_dan" class="form-label">Nome do Dançarino</label>
-                <input type="text" name="nom_dan" class="form-input" />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="nom_dan" class="form-label">Nome do Dançarino</label>
+                    <input type="text" name="nom_dan" class="form-input" />
+                    <span class="validation-message"></span>
+                </div>
 
 
-            <div class="form-grupo">
-                <label for="arquivo" class="form-label">Imagem</label>
-                <input type="file" name="arquivo" class="form-input" />
-                <span class="validation-message"></span>
-            </div>
+                <div class="form-grupo">
+                    <label for="avatar-image" class="custom-file-button">Selecionar Foto de Perfil</label>
+                    <p id="file-help" style="top: -65px; position: relative;">Escolha uma imagem </p>
+                    <input type="file"  name="file" class="file" aria-describedby="file-help" >
+
+                </div>
                 <button type="submit">Enviar</button>
             </form>
         </div>
@@ -249,22 +250,21 @@
         }
         //Validação de senha com 8 digitos
         document.addEventListener("DOMContentLoaded", function() {
-    var senhaInput = document.getElementById('senhass');
-    
-    senhaInput.addEventListener("input", function(e) {
-        var value = e.target.value;
-        
-        // Verifica se a senha tem pelo menos 8 caracteres
-        if (value.length < 8) {
-            // Exibe a mensagem de erro
-            e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
-        } else {
-            // Limpa a mensagem de erro se a senha for válida
-            e.target.nextElementSibling.textContent = "";
-        }
-    });
-});
+            var senhaInput = document.getElementById('senhass');
 
+            senhaInput.addEventListener("input", function(e) {
+                var value = e.target.value;
+
+                // Verifica se a senha tem pelo menos 8 caracteres
+                if (value.length < 8) {
+                    // Exibe a mensagem de erro
+                    e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
+                } else {
+                    // Limpa a mensagem de erro se a senha for válida
+                    e.target.nextElementSibling.textContent = "";
+                }
+            });
+        });
     </script>
     <script>
         var senha = $('#senha');
