@@ -92,6 +92,12 @@
                     <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
 
+                <div class="form-group">
+                    <label for="CPF" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-input" placeholder="Email" required>
+                    <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
+                </div>
+
                 <div class="form-grupo">
                 <label for="RG" class="form-label">RG</label>
                 <input type="text" name="RG" class="form-input" placeholder="00000000000" required />

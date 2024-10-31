@@ -32,110 +32,51 @@ if ($dados) {
         $_SESSION['statuss'] = $dados['statuss'];
         $_SESSION['genero'] = $dados['genero'];
 
-        // Inclua o SweetAlert2 no início
-
+      
         switch ($dados['statuss']) {
             case '1':
-                if ($dados['primeiro_login'] == 1) {
-                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
-                    mysqli_query($conexao, $updateSql);
+                echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
 
-                    // Aqui adicionamos um setTimeout para garantir o redirecionamento
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Primeiro login!',
-                            text: 'Você será redirecionado para o formulário de edição.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
-                        }, 1600);
-                    </script>";
-                } else {
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'usuario/dashboard.php';
-                        }, 1600);
-                    </script>";
-                }
+                    setTimeout(() => {
+                        window.location.href = 'usuario/dashboard.php';
+                    }, 1600);
+                </script>";
                 break;
 
             case '2':
-                if ($dados['primeiro_login'] == 0) {
-                    $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
-                    mysqli_query($conexao, $updateSql);
+                echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
 
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Primeiro login!',
-                            text: 'Você será redirecionado para o formulário de edição.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
-                        }, 1600);
-                    </script>";
-                } else {
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'coordenador/dashboard.php';
-                        }, 1600);
-                    </script>";
-                }
+                    setTimeout(() => {
+                        window.location.href = 'coordenador/dashboard.php';
+                    }, 1600);
+                </script>";
                 break;
 
             case '3':
-                if ($dados['primeiro_login'] == 1) {
-                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
-                    mysqli_query($conexao, $updateSql);
+                echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Seja bem-vindo, " . $dados['nome'] . "',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
 
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Primeiro login!',
-                            text: 'Você será redirecionado para o formulário de edição.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'login/formEdit.php?id_usuario={$dados['id_usuario']}&genero={$dados['genero']}';
-                        }, 1600);
-                    </script>";
-                } else {
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Seja bem-vindo, " . $dados['nome'] . "',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-
-                        setTimeout(() => {
-                            window.location.href = 'usuario/dashboard.php';
-                        }, 1600);
-                    </script>";
-                }
+                    setTimeout(() => {
+                        window.location.href = 'usuario/dashboard.php';
+                    }, 1600);
+                </script>";
                 break;
 
             default:
@@ -178,5 +119,4 @@ if ($dados) {
         }, 1600);
     </script>";
 }
-//Jesus101sa
 ?>

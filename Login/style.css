@@ -102,7 +102,16 @@ button:hover {
     width: 100%; /* Ajusta a largura do formulário */
 }
 
-/* Estilos para inputs e selects dentro do contêiner */
+
+.form-container {
+    width: 100%;
+    max-width: 400px; /* Adjusts the max width of the form */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
 .container input, .container select {
     background-color: #eee;
     border: none;
@@ -111,14 +120,15 @@ button:hover {
     font-size: 13px;
     border-radius: 8px;
     outline: none;
-    position: relative;
-    left: 0;
+    width: 100%; /* Makes the inputs full width */
+    box-sizing: border-box;
 }
-label{
+
+label {
     position: relative;
-    margin: 5px;
+    margin: 5px 0;
     display: block;
-   
+    text-align: left;
 }
 
 /* Estilos para contêineres de formulário */
