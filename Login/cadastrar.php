@@ -31,7 +31,7 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'], $
     $hash = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     // Caminho da imagem de perfil padrão
-    $img = '../img/img/perfil.jpg';
+    $img = 'perfil.jpg';
 
     // Comando SQL para inserção
     $sql = "INSERT INTO usuario (nome, statuss, senha, CPF, imagem, genero) 
