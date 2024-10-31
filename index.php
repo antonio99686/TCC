@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="shortcut icon" href="img/img/icon.png">
     <link rel="stylesheet" href="login/style.css">
+    <link rel="stylesheet" href="login/css/inscricao.css">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>LOGIN</title>
@@ -91,7 +92,66 @@
                     <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
 
+                <div class="form-grupo">
+                <label for="RG" class="form-label">RG</label>
+                <input type="text" name="RG" class="form-input" placeholder="00000000000" required />
+                <span class="validation-message"></span>
+            </div>
 
+            <div class="form-grupo">
+                <label for="Categoria" class="form-label">Nível</label>
+                <input type="text" name="categoria" class="form-input" placeholder="adulto, juvenil, mirim" required />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="Telefone" class="form-label">Telefone</label>
+                <input type="text" name="telefone" class="form-input" placeholder="(00) 0000-0000" required />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="endereco" class="form-label">Endereço</label>
+                <input type="text" name="endereco" class="form-input" placeholder="Rua..." required />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="responsavel" class="form-label">Responsável</label>
+                <input type="text" name="responsavel" class="form-input" placeholder="Nome" />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="data_entrada" class="form-label">Data de Entrada</label>
+                <input type="date" name="data_entrada" class="form-input" required />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="tele_respon" class="form-label">Telefone do Responsável</label>
+                <input type="text" name="tele_respon" class="form-input" placeholder="(00) 0000-0000" />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="idade" class="form-label">Idade</label>
+                <input type="text" name="idade" class="form-input" required />
+                <span class="validation-message"></span>
+            </div>
+
+            <div class="form-grupo">
+                <label for="nom_dan" class="form-label">Nome do Dançarino</label>
+                <input type="text" name="nom_dan" class="form-input" />
+                <span class="validation-message"></span>
+            </div>
+
+
+            <div class="form-grupo">
+                <label for="arquivo" class="form-label">Imagem</label>
+                <input type="file" name="arquivo" class="form-input" />
+                <span class="validation-message"></span>
+            </div>
                 <button type="submit">Enviar</button>
             </form>
         </div>

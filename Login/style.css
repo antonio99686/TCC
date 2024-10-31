@@ -110,8 +110,15 @@ button:hover {
     padding: 10px 15px;
     font-size: 13px;
     border-radius: 8px;
-    width: calc(100% - 30px); /* Ajusta a largura dos inputs */
     outline: none;
+    position: relative;
+    left: 0;
+}
+label{
+    position: relative;
+    margin: 5px;
+    display: block;
+   
 }
 
 /* Estilos para contêineres de formulário */
