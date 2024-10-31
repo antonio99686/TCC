@@ -36,8 +36,8 @@ if ($dados) {
 
         switch ($dados['statuss']) {
             case '1':
-                if ($dados['primeiro_login'] == 0) {
-                    $updateSql = "UPDATE usuario SET primeiro_login = 1 WHERE id_usuario = {$dados['id_usuario']}";
+                if ($dados['primeiro_login'] == 1) {
+                    $updateSql = "UPDATE usuario SET primeiro_login = 0 WHERE id_usuario = {$dados['id_usuario']}";
                     mysqli_query($conexao, $updateSql);
 
                     // Aqui adicionamos um setTimeout para garantir o redirecionamento
