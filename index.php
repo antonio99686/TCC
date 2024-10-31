@@ -135,6 +135,12 @@
                 </div>
 
                 <div class="form-grupo">
+                    <label for="data_entrada" class="form-label">Data de Nascimento</label>
+                    <input type="date" name="datas" class="form-input" required />
+                    <span class="validation-message"></span>
+                </div>
+
+                <div class="form-grupo">
                     <label for="tele_respon" class="form-label">Telefone do Responsável</label>
                     <input type="text" name="tele_respon" class="form-input" placeholder="(00) 0000-0000" />
                     <span class="validation-message"></span>

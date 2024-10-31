@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/gmail.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Salavar senha</title>
+    <title>Salvar senha</title>
 </head>
 <body>
     
@@ -16,7 +16,7 @@ $email = $_POST['email'];
 $token = $_POST['token'];
 $senha = $_POST['senha'];
 $repetirSenha = $_POST['repetirSenha'];
-
+$hash = password_hash($senha, PASSWORD_DEFAULT);
 require_once "conexao.php";
 $conexao = conectar();
 
@@ -25,7 +25,6 @@ $resultado = executarSQL($conexao, $sql);
 $recuperar = mysqli_fetch_assoc($resultado);
 
 if ($recuperar == null) {
-    // SweetAlert2 para email ou token incorreto
     echo "<script>
         Swal.fire({
             icon: 'error',
@@ -35,8 +34,6 @@ if ($recuperar == null) {
     </script>";
     die();
 } else {
-    // verificar a validade do pedido (data_criacao)
-    // verificar se o link já foi usado
     date_default_timezone_set('America/Sao_Paulo');
     $agora = new DateTime('now');
     $data_criacao = DateTime::createFromFormat('Y-m-d H:i:s', $recuperar['data_criacao']);
@@ -44,7 +41,6 @@ if ($recuperar == null) {
     $dataExpiracao = date_add($data_criacao, $umDia);
 
     if ($agora > $dataExpiracao) {
-        // SweetAlert2 para link expirado
         echo "<script>
             Swal.fire({
                 icon: 'error',
@@ -56,7 +52,6 @@ if ($recuperar == null) {
     }
 
     if ($recuperar['usado'] == 1) {
-        // SweetAlert2 para link já utilizado
         echo "<script>
             Swal.fire({
                 icon: 'error',
@@ -68,7 +63,6 @@ if ($recuperar == null) {
     }
 
     if ($senha != $repetirSenha) {
-        // SweetAlert2 para senhas diferentes
         echo "<script>
             Swal.fire({
                 icon: 'warning',
@@ -79,13 +73,12 @@ if ($recuperar == null) {
         die();
     }
 
-    // Atualiza a senha e marca o token como usado
-    $sql2 = "UPDATE usuario SET senha='$senha' WHERE email='$email'";
+    // Atualiza a senha com hash e marca o token como usado
+    $sql2 = "UPDATE usuario SET senha='$hash' WHERE email='$email'";
     executarSQL($conexao, $sql2);
     $sql3 = "UPDATE `recuperar_senha` SET usado=1 WHERE email='$email' AND token='$token'";
     executarSQL($conexao, $sql3);
 
-    // SweetAlert2 para sucesso na redefinição de senha
     echo "<script>
         Swal.fire({
             icon: 'success',

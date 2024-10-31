@@ -37,14 +37,15 @@ if (isset($_POST['usuario'], $_POST['senha'], $_POST['status'], $_POST['CPF'], $
     $telefone = $_POST['telefone']; 
     $categoria = $_POST['categoria']; 
     $nom_dan = $_POST['nom_dan']; 
+    $datas = $_POST['datas']; 
     $img = 'perfil.jpg'; 
 
     // Criptografia (password_hash)
     $hash = password_hash($senha, PASSWORD_DEFAULT);
 
     // Comando SQL para inserção
-    $sql = "INSERT INTO usuario (nome, statuss, senha, CPF, imagem, genero, idade, endereco, data_entrada, responsavel, tele_respon, nom_dan,RG,email,telefone,categoria) 
-            VALUES ('$nome', '$status', '$hash', '$CPF', '$img', '$genero', '$idade', '$endereco', '$data_entrada', '$responsavel', '$tele_respon', '$nom_dan','$RG','$email','$telefone','$categoria')";
+    $sql = "INSERT INTO usuario (nome, statuss, senha, CPF, imagem, genero, idade, endereco, data_entrada, responsavel, tele_respon, nom_dan,RG,email,telefone,categoria,datas) 
+            VALUES ('$nome', '$status', '$hash', '$CPF', '$img', '$genero', '$idade', '$endereco', '$data_entrada', '$responsavel', '$tele_respon', '$nom_dan','$RG','$email','$telefone','$categoria','$datas')";
 
     // Executa o comando SQL
     if (mysqli_query($conexao, $sql)) {
