@@ -1,26 +1,25 @@
 <?php
-session_start(); // Inicia a sessão para permitir o uso de variáveis de sessão
-require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
-$conexao = conectar(); // Estabelece a conexão com o banco de dados
-sleep(1); // Pausa a execução por 1 segundo (pode ser usado para simular latência)
+session_start(); 
+require_once "../../conexao.php"; 
+$conexao = conectar();
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
-    exit(); // Encerra a execução do script após o redirecionamento
+    header("Location: ../login.php");
+    exit(); 
 }
 
 // Obtém os dados do usuário logado
-$sql = "SELECT * FROM usuario WHERE id_usuario = ?"; // Consulta SQL para obter dados do usuário
-$stmt = mysqli_prepare($conexao, $sql); // Prepara a consulta SQL
-mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); // Associa o parâmetro à consulta
-mysqli_stmt_execute($stmt); // Executa a consulta preparada
-$resultado = mysqli_stmt_get_result($stmt); // Obtém o resultado da consulta
-$dados = mysqli_fetch_assoc($resultado); // Obtém os dados do usuário logado
+$sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+$stmt = mysqli_prepare($conexao, $sql); 
+mysqli_stmt_bind_param($stmt, "i", $_SESSION['id_usuario']); 
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt); 
+$dados = mysqli_fetch_assoc($resultado);
 
 // Verifica se foi feita uma requisição de busca de usuários
 if (isset($_GET['nome_usuario'])) {
-    $nome_usuario = $_GET['nome_usuario']; // Obtém o nome do usuário a ser buscado
+    $nome_usuario = $_GET['nome_usuario']; 
     // Prepara a consulta SQL para buscar usuários com base no nome
     $stmt = mysqli_prepare($conexao, "SELECT id_usuario, nome FROM usuario WHERE nome LIKE CONCAT('%', ?, '%') AND statuss = 1 ORDER BY nome ASC");
     mysqli_stmt_bind_param($stmt, "s", $nome_usuario); // Associa o parâmetro à consulta de busca

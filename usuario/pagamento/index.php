@@ -1,13 +1,13 @@
 <?php
-session_start(); // Inicia a sessão para armazenar e acessar dados entre páginas
-include ("conexao.php"); // Inclui o arquivo de conexão com o banco de dados
+session_start(); 
+include ("conexao.php"); 
 
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
 
 // Consulta SQL para obter os dados do usuário logado
 $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
-$resultado = mysqli_query($conexao, $sql); // Executa a consulta SQL
+$resultado = mysqli_query($conexao, $sql);
 
 // Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
@@ -15,12 +15,12 @@ if (!$resultado) {
     $_SESSION['titulo_mensagem'] = 'Erro';
     $_SESSION['mensagem'] = 'Erro ao consultar o banco de dados: ' . mysqli_error($conexao);
     $_SESSION['tipo_mensagem'] = 'error';
-    header("Location: ../pagamento"); // Redireciona para a página de pagamento
+    header("Location: ../pagamento"); 
     exit(); // Encerra a execução do script
 }
 
 // Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado); // Converte os resultados da consulta para um array associativo
+$dados = mysqli_fetch_assoc($resultado); 
 
 // Obtém a data atual
 $dataAtual = new DateTime(); // Cria um objeto de data com a data e hora atuais

@@ -158,8 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                 <br>
                 <div class="user2"><em><b>E-mail:</b></em> <?php echo $dados['email'] ?></div>
                 <br>
-                <div class="user3"><em><b>Senha:</b></em> <?php echo $dados['senha'] ?></div>
-                <br>
                 <div class="user4"><em><b>CPF:</b></em> <?php echo $dados['CPF'] ?></div>
                 <br>
                 <div class="user5"><em><b>Idade:</b></em> <?php echo $dados['idade'] ?></div>
@@ -174,11 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['file']) && $_FILES['f
                 <br>
                 <div class="user11"><em><b>Endereço:</b></em> <?php echo $dados['endereco'] ?></div>
                 <br>
-                <div class="user12"><em><b>Responsável:</b></em> <?php echo $dados['responsavel'] ?></div>
-                <br>
                 <div class="user13"><em><b>Data de Entrada:</b></em> <?php echo date('d/m/Y', strtotime($dados['data_entrada'])) ?></div>
                 <br>
-                <div class="user14"><em><b>Telefone Responsável:</b></em> <?php echo $dados['tele_respon'] ?></div>
             </div>
         </main>
 

@@ -3,9 +3,6 @@ session_start();
 require_once "../conexao.php";
 $conexao = conectar();
 
-// Aguarda 1 segundos antes de redirecionar o usuário
-sleep(1);
-
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
