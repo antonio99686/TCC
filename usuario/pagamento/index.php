@@ -139,6 +139,8 @@ if ($resultadoMeses) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <link rel="shortcut icon" href="../../img/img/icon.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
@@ -330,7 +332,8 @@ if ($resultadoMeses) {
                                 <option value="<?php echo $mesPendente; ?>"><?php echo strtoupper($mesPendente); ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf"
+
+                        <input type="file" name="comprovante" id="comprovante-file"  accept=".png, .jpg, .jpeg, .pdf"
                             required>
                         <div class="preview-container">
                             <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview"

@@ -47,7 +47,7 @@ if (isset($_GET['email'])) {
     require_once 'PHPMailer/src/PHPMailer.php';
     require_once 'PHPMailer/src/SMTP.php';
     require_once 'PHPMailer/src/Exception.php';
-    include 'config.php';  // Configurações de email, como credenciais
+    include 'config_.php';  // Configurações de email, como credenciais
 
     $mail = new PHPMailer(true);
     try {
