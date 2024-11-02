@@ -159,12 +159,6 @@
                 </div>
 
 
-                <div class="form-grupo">
-                    <label for="avatar-image" class="custom-file-button">Selecionar Foto de Perfil</label>
-                    <p id="file-help" style="top: -65px; position: relative;">Escolha uma imagem </p>
-                    <input type="file"  name="file" class="file" aria-describedby="file-help" >
-
-                </div>
                 <button type="submit">Enviar</button>
             </form>
         </div>
