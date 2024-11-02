@@ -317,4 +317,34 @@ input[type="file"] {
   .custom-file-button:hover {
     background-color: #d1d1d1;
   }
-  
+  /* Responsividade para dispositivos menores que 768px */
+@media (max-width: 768px) {
+
+    /* Ajusta o estilo do ícone de senha */
+    #olho, #olho2 {
+        left: 58%;
+        top: -32px;
+        margin-top: 0;
+    }
+}
+
+/* Responsividade para dispositivos menores que 480px */
+@media (max-width: 480px) {
+    /* Ajuste adicional para dispositivos muito pequenos */
+    .container {
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    /* Ajusta tamanho da fonte nos parágrafos e spans */
+    .container p, .container span {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    /* Ajusta tamanho dos botões para dispositivos muito pequenos */
+    .container button {
+        padding: 8px 15px;
+        font-size: 10px;
+    }
+}
