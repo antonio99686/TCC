@@ -1,60 +1,57 @@
 <?php
-session_start(); 
-include ("conexao.php"); 
+session_start();
+include("conexao.php");
 
 // Obtém o ID do usuário da sessão
 $id_usuario = $_SESSION['id_usuario'];
+
+// Obtém a data atual
+$dataAtual = new DateTime();
+$diaAtual = $dataAtual->format('d');
+$mesAtual = $dataAtual->format('Y-m');
+
+// Verifica se é o primeiro dia do mês e se ainda não existe uma mensalidade registrada para o mês atual
+if ($diaAtual == 1) {
+    $sqlCheckMensalidade = "SELECT 1 FROM mensalidades WHERE usuario_id = $id_usuario AND mes = '$mesAtual'";
+    $resultadoCheck = mysqli_query($conexao, $sqlCheckMensalidade);
+
+    // Insere uma nova mensalidade se não houver registro para o mês atual
+    if (mysqli_num_rows($resultadoCheck) == 0) {
+        $sqlInsertMensalidade = "INSERT INTO mensalidades (usuario_id, mes, pago) 
+                                 VALUES ($id_usuario, '$mesAtual', 0)";
+        mysqli_query($conexao, $sqlInsertMensalidade);
+    }
+}
 
 // Consulta SQL para obter os dados do usuário logado
 $sql = "SELECT * FROM usuario WHERE id_usuario = $id_usuario";
 $resultado = mysqli_query($conexao, $sql);
 
-// Verifica se a consulta foi bem-sucedida
 if (!$resultado) {
-    // Define mensagens de erro na sessão caso a consulta falhe
     $_SESSION['titulo_mensagem'] = 'Erro';
     $_SESSION['mensagem'] = 'Erro ao consultar o banco de dados: ' . mysqli_error($conexao);
     $_SESSION['tipo_mensagem'] = 'error';
-    header("Location: ../pagamento"); 
-    exit(); // Encerra a execução do script
+    header("Location: ../pagamento");
+    exit();
 }
 
-// Obtém os dados do usuário
-$dados = mysqli_fetch_assoc($resultado); 
-
-// Obtém a data atual
-$dataAtual = new DateTime(); // Cria um objeto de data com a data e hora atuais
-$diaAtual = $dataAtual->format('d'); // Extrai o dia atual
-$mesAtual = $dataAtual->format('Y-m'); // Extrai o ano e mês atuais no formato 'YYYY-MM'
-
-// Disponibiliza o mês atual para pagamento se não estiver disponível
-if ($diaAtual == 1) { // Se for o primeiro dia do mês
-    // Insere um novo registro de mensalidade para o mês atual se ainda não existir
-    $sqlUpdateDisponibiliza = "INSERT INTO mensalidades (usuario_id, mes, pago) 
-                                SELECT $id_usuario, DATE_FORMAT(NOW(), '%Y-%m'), 0
-                                WHERE NOT EXISTS (SELECT 1 FROM mensalidades WHERE usuario_id = $id_usuario AND mes = DATE_FORMAT(NOW(), '%Y-%m'))";
-    mysqli_query($conexao, $sqlUpdateDisponibiliza); // Executa a inserção
-}
+$dados = mysqli_fetch_assoc($resultado);
 
 // Verifica se um arquivo foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
-    // Obtém o mês selecionado pelo usuário
     $mes_pendente = $_POST['mes_pendente'];
-    $usuario_id = $_SESSION['id_usuario']; // Garante que o ID do usuário está correto
+    $usuario_id = $_SESSION['id_usuario'];
 
-    $arquivoTmp = $_FILES['comprovante']['tmp_name']; // Pega o arquivo temporário enviado
-    $nomeArquivo = $_FILES['comprovante']['name']; // Obtém o nome original do arquivo
-    $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION)); // Pega a extensão do arquivo
-    $nomeNovoArquivo = uniqid() . '.' . $extensao; // Gera um novo nome único para o arquivo
-    $diretorioDestino = "../../coordenador/pagamentos/img/" . $nomeNovoArquivo; // Define o caminho de destino do arquivo
+    $arquivoTmp = $_FILES['comprovante']['tmp_name'];
+    $nomeArquivo = $_FILES['comprovante']['name'];
+    $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION));
+    $nomeNovoArquivo = uniqid() . '.' . $extensao;
+    $diretorioDestino = "../../coordenador/pagamentos/img/" . $nomeNovoArquivo;
 
-    // Move o arquivo para o diretório de destino
     if (move_uploaded_file($arquivoTmp, $diretorioDestino)) {
-        // Atualiza o banco de dados com as informações do comprovante
         $sqlUpdate = "UPDATE mensalidades SET comprovante = '$nomeNovoArquivo', pago = 1 WHERE usuario_id = $usuario_id AND mes = '$mes_pendente'";
-        $resultadoUpdate = mysqli_query($conexao, $sqlUpdate); // Executa a atualização
+        $resultadoUpdate = mysqli_query($conexao, $sqlUpdate);
 
-        // Verifica se a atualização foi bem-sucedida e define a mensagem de sucesso ou erro
         if ($resultadoUpdate) {
             $_SESSION['titulo_mensagem'] = 'Sucesso!';
             $_SESSION['mensagem'] = 'Comprovante enviado com sucesso!';
@@ -65,67 +62,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
             $_SESSION['tipo_mensagem'] = 'error';
         }
     } else {
-        // Caso haja erro no upload do arquivo, define a mensagem de erro
         $_SESSION['titulo_mensagem'] = 'Erro!';
         $_SESSION['mensagem'] = 'Ocorreu um erro ao enviar o arquivo. Por favor, tente novamente.';
         $_SESSION['tipo_mensagem'] = 'error';
     }
 
-    // Atualiza as mensalidades pendentes se não foram pagas até o dia 10
-    if ($diaAtual > 10) {
-        $sqlMesesPendentes = "SELECT mes FROM mensalidades WHERE usuario_id = $id_usuario AND pago = 0";
-        $resultadoMesesPendentes = mysqli_query($conexao, $sqlMesesPendentes); // Executa a consulta para buscar meses pendentes
+    // Atualiza todos os meses pendentes
+    $sqlMesesPendentes = "SELECT mes FROM mensalidades WHERE usuario_id = $id_usuario AND pago = 0";
+    $resultadoMesesPendentes = mysqli_query($conexao, $sqlMesesPendentes);
 
-        // Se a consulta dos meses pendentes for bem-sucedida, percorre os resultados
-        if ($resultadoMesesPendentes) {
-            while ($row = mysqli_fetch_assoc($resultadoMesesPendentes)) {
-                $mesPendente = $row['mes']; // Obtém o mês pendente
-                $mesPendenteData = new DateTime($mesPendente); // Converte o mês pendente em objeto DateTime
+    if ($resultadoMesesPendentes) {
+        while ($row = mysqli_fetch_assoc($resultadoMesesPendentes)) {
+            $mesPendente = $row['mes'];
+            $sqlUpdate = "UPDATE mensalidades SET pago = 1 WHERE usuario_id = $id_usuario AND mes = '$mesPendente'";
+            $resultadoUpdate = mysqli_query($conexao, $sqlUpdate);
 
-                // Verifica se o mês pendente é anterior ao mês atual
-                if ($mesPendenteData < $dataAtual) {
-                    // Atualiza o banco de dados para marcar o mês como pago
-                    $sqlUpdate = "UPDATE mensalidades SET pago = 1 WHERE usuario_id = $id_usuario AND mes = '$mesPendente'";
-                    $resultadoUpdate = mysqli_query($conexao, $sqlUpdate);
-
-                    // Define uma mensagem de erro se a atualização falhar
-                    if (!$resultadoUpdate) {
-                        $_SESSION['titulo_mensagem'] = 'Erro';
-                        $_SESSION['mensagem'] = 'Erro ao atualizar o mês pendente: ' . mysqli_error($conexao);
-                        $_SESSION['tipo_mensagem'] = 'error';
-                    }
-                }
+            if (!$resultadoUpdate) {
+                $_SESSION['titulo_mensagem'] = 'Erro';
+                $_SESSION['mensagem'] = 'Erro ao atualizar o mês pendente: ' . mysqli_error($conexao);
+                $_SESSION['tipo_mensagem'] = 'error';
             }
-        } else {
-            // Define mensagem de erro se a consulta de meses pendentes falhar
-            $_SESSION['titulo_mensagem'] = 'Erro';
-            $_SESSION['mensagem'] = 'Erro ao consultar os meses pendentes: ' . mysqli_error($conexao);
-            $_SESSION['tipo_mensagem'] = 'error';
         }
     } else {
-        // Informa o usuário que o sistema só atualiza meses pendentes após o dia 10
-        $_SESSION['titulo_mensagem'] = 'Informação';
-        $_SESSION['mensagem'] = 'O sistema só atualiza os meses pendentes após o dia 10.';
-        $_SESSION['tipo_mensagem'] = 'info';
+        $_SESSION['titulo_mensagem'] = 'Erro';
+        $_SESSION['mensagem'] = 'Erro ao consultar os meses pendentes: ' . mysqli_error($conexao);
+        $_SESSION['tipo_mensagem'] = 'error';
     }
 
-    // Redireciona o usuário de volta para a página inicial
     header("Location: index.php");
-    exit(); // Encerra a execução do script
+    exit();
 }
 
 // Consulta SQL para obter os meses pendentes de pagamento do usuário
 $sqlMeses = "SELECT mes FROM mensalidades WHERE usuario_id = $id_usuario AND pago = 0";
-$resultadoMeses = mysqli_query($conexao, $sqlMeses); // Executa a consulta para buscar os meses pendentes
+$resultadoMeses = mysqli_query($conexao, $sqlMeses);
 
-// Se a consulta for bem-sucedida, armazena os meses pendentes em um array
 if ($resultadoMeses) {
     $meses = [];
     while ($row = mysqli_fetch_assoc($resultadoMeses)) {
-        $meses[] = $row['mes']; // Adiciona os meses pendentes ao array
+        $meses[] = $row['mes'];
     }
 } else {
-    // Define mensagem de erro caso a consulta falhe
     $_SESSION['titulo_mensagem'] = 'Erro';
     $_SESSION['mensagem'] = 'Erro ao consultar os meses pendentes: ' . mysqli_error($conexao);
     $_SESSION['tipo_mensagem'] = 'error';

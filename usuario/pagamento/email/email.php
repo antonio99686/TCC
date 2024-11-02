@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <?php
     require_once "conexao.php";
     $conexao = conectar();
@@ -32,12 +31,32 @@
     require_once 'PHPMailer/src/SMTP.php';
     include "config.php";
 
+    // Função para converter número do mês em nome
+    function getNomeMes($mesNumero)
+    {
+        $meses = [
+            '01' => 'Janeiro',
+            '02' => 'Fevereiro',
+            '03' => 'Março',
+            '04' => 'Abril',
+            '05' => 'Maio',
+            '06' => 'Junho',
+            '07' => 'Julho',
+            '08' => 'Agosto',
+            '09' => 'Setembro',
+            '10' => 'Outubro',
+            '11' => 'Novembro',
+            '12' => 'Dezembro'
+        ];
+        return $meses[$mesNumero];
+    }
+
     // Função para enviar e-mails
     function enviarEmail($email_usuario, $nome_usuario, $assunto, $corpo)
     {
         global $config;
         $mail = new PHPMailer(true); // Habilita exceções
-    
+
         try {
             // Configuração do servidor SMTP
             $mail->CharSet = 'UTF-8';
@@ -51,7 +70,7 @@
             $mail->Password = $config['senha_email'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;           // Porta padrão para SMTP
-    
+
             $mail->setFrom($config['email'], "Sentinela da Fronteira");
             $mail->addAddress($email_usuario, $nome_usuario);
             $mail->addReplyTo($config['email'], "Sentinela da Fronteira");
@@ -72,13 +91,12 @@
                 window.location.href = '../../../email/index.php';
             });
         </script>";
-
         } catch (Exception $e) {
             echo "<script>
             Swal.fire({
                 icon: 'error',
                 title: 'Erro!',
-                text: 'Não foi possível enviar o email para . Erro: {$mail->ErrorInfo}',
+                text: 'Não foi possível enviar o email. Erro: {$mail->ErrorInfo}',
                 showConfirmButton: false,
                 timer: 2000
             }).then(() => {
@@ -90,8 +108,8 @@
 
     // Verificação da data
     $dia_atual = date('d'); // Obtém o dia atual
-    
-    if ($dia_atual > 10) {
+
+    if ($dia_atual >= 2) {
         // Consulta SQL para selecionar usuários com mensalidades pendentes
         $sql = "SELECT u.nome, u.email, m.mes
             FROM usuario u
@@ -110,6 +128,11 @@
                 $email_usuario = $row['email'];
                 $mes_pendente = $row['mes'];
 
+                // Converte o valor do mês para o nome do mês
+                $anoMes = explode('-', $mes_pendente); // Supondo que o formato seja "YYYY-MM"
+                $ano = $anoMes[0];
+                $mesNome = getNomeMes($anoMes[1]); // Converte o mês para o nome
+
                 // Agrupa meses pendentes por usuário
                 if (!isset($usuarios[$email_usuario])) {
                     $usuarios[$email_usuario] = [
@@ -118,7 +141,7 @@
                     ];
                 }
 
-                $usuarios[$email_usuario]['meses'][] = $mes_pendente;
+                $usuarios[$email_usuario]['meses'][] = "$mesNome de $ano";
             }
 
             // Envia um e-mail para cada usuário com os meses pendentes
@@ -129,10 +152,10 @@
                 // Conteúdo do e-mail
                 $assunto = 'Aviso de Mensalidade Pendente';
                 $corpo = "Olá $nome_usuario,<br>
-            Identificamos que você possui as seguintes mensalidades pendentes: <h2>$meses_pendentes</h2>.<br>
-            Por favor, regularize sua situação o quanto antes.<br>
-            Atenciosamente,<br>
-            <em><b> Grupo de dança Sentinela da Fronteira </b></em>";
+                Identificamos que você possui as seguintes mensalidades pendentes: <h2>$meses_pendentes</h2>.<br>
+                Por favor, regularize sua situação o quanto antes.<br>
+                Atenciosamente,<br>
+                <em><b> Grupo de dança Sentinela da Fronteira </b></em>";
 
                 // Envia o e-mail
                 enviarEmail($email_usuario, $nome_usuario, $assunto, $corpo);

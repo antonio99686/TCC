@@ -17,23 +17,23 @@ $id_usuario = $_SESSION['id_usuario'];
 
 // Prepara uma consulta SQL para obter os dados do usuário logado, com proteção contra SQL Injection
 $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
-$stmt = $conexao->prepare($sql); // Prepara a consulta SQL
-$stmt->bind_param('i', $id_usuario); // Vincula o parâmetro (id do usuário)
-$stmt->execute(); // Executa a consulta
-$resultado = $stmt->get_result(); // Obtém o resultado da consulta
-$dados = $resultado->fetch_assoc(); // Obtém os dados do usuário como um array associativo
+$stmt = $conexao->prepare($sql); 
+$stmt->bind_param('i', $id_usuario); 
+$stmt->execute(); 
+$resultado = $stmt->get_result(); 
+$dados = $resultado->fetch_assoc(); 
 
 // Verifica se foi feita uma requisição de busca de usuários (via método GET)
 if (isset($_GET['nome_usuario'])) {
-    $nome_usuario = $_GET['nome_usuario']; // Obtém o nome do usuário da requisição
+    $nome_usuario = $_GET['nome_usuario']; 
 
     // Prepara uma consulta SQL para buscar usuários que correspondam ao nome, protegendo contra SQL Injection
     $sql = "SELECT id_usuario, nome FROM usuario WHERE nome LIKE ? AND statuss = 1 ORDER BY nome ASC";
-    $stmt = $conexao->prepare($sql); // Prepara a consulta SQL
-    $search_term = '%' . $nome_usuario . '%'; // Define o termo de busca (usando LIKE)
-    $stmt->bind_param('s', $search_term); // Vincula o parâmetro (termo de busca)
-    $stmt->execute(); // Executa a consulta
-    $resultado = $stmt->get_result(); // Obtém o resultado da consulta
+    $stmt = $conexao->prepare($sql); 
+    $search_term = '%' . $nome_usuario . '%'; 
+    $stmt->bind_param('s', $search_term); 
+    $stmt->execute(); 
+    $resultado = $stmt->get_result(); 
 
     // Monta um array com os resultados dos usuários encontrados
     $usuarios = [];
@@ -51,25 +51,21 @@ if (isset($_GET['id_usuario'])) {
 
     // Prepara uma consulta SQL para buscar as mensalidades do usuário, com proteção contra SQL Injection
     $sql = "SELECT id, mes, pago, comprovante FROM mensalidades WHERE usuario_id = ?";
-    $stmt = $conexao->prepare($sql); // Prepara a consulta SQL
-    $stmt->bind_param('i', $id_usuario); // Vincula o parâmetro (id do usuário)
-    $stmt->execute(); // Executa a consulta
-    $resultado = $stmt->get_result(); // Obtém o resultado da consulta
+    $stmt = $conexao->prepare($sql); 
+    $stmt->bind_param('i', $id_usuario); 
+    $stmt->execute(); 
+    $resultado = $stmt->get_result(); 
 
     // Monta um array com os resultados das mensalidades encontradas
     $mensalidades = [];
     while ($mensalidade = $resultado->fetch_assoc()) {
-        $mensalidades[] = $mensalidade; // Adiciona cada mensalidade ao array
+        $mensalidades[] = $mensalidade; 
     }
 
-    echo json_encode($mensalidades); // Retorna as mensalidades encontradas em formato JSON
+    echo json_encode($mensalidades); 
     exit(); // Finaliza o script
 }
 
-// Consulta para obter o total de usuários ativos (statuss = 1)
-$sql_total_usuarios = "SELECT COUNT(*) as total FROM usuario WHERE statuss = 1";
-$result_total_usuarios = mysqli_query($conexao, $sql_total_usuarios); // Executa a consulta
-$rows = mysqli_fetch_assoc($result_total_usuarios); // Obtém o total de usuários
 ?>
 
 <!DOCTYPE html>
@@ -195,7 +191,7 @@ $rows = mysqli_fetch_assoc($result_total_usuarios); // Obtém o total de usuári
                             <h1></h1>
                         </div>
                         <div class="progresss">
-                           >
+                           
                             <div class="percentage">
                                 <p></p>
                             </div>
@@ -305,9 +301,9 @@ function buscarMensalidades(idUsuario, nomeUsuario) {
                             '<span class="download disabled">Download indisponível</span>';
                         
                         content += `<tr>
-                            <td>${mensalidade.mes}</td> // Exibe o mês da mensalidade
-                            <td>${status}</td> // Exibe o status da mensalidade
-                            <td>${downloadLink}</td> // Exibe o link de download
+                            <td>${mensalidade.mes}</td> 
+                            <td>${status}</td> 
+                            <td>${downloadLink}</td> 
                         </tr>`;
                     });
                     content += "</table>"; // Fecha a tabela

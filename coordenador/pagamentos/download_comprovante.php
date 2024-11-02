@@ -1,28 +1,28 @@
 <?php
-session_start(); // Inicia a sessão
-require_once "../../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
-$conexao = conectar(); // Conecta ao banco de dados
+session_start(); 
+require_once "../../conexao.php"; 
+$conexao = conectar(); 
 
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../login.php"); // Redireciona para a página de login se o usuário não estiver autenticado
+    header("Location: ../login.php"); 
     exit();
 }
 
 // Obtém o ID do comprovante da URL
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0; // Verifica se o parâmetro 'id' foi passado e o converte para inteiro
 
-if ($id > 0) { // Verifica se o ID é válido (maior que 0)
+if ($id > 0) { 
     // Prepara a consulta SQL para obter o caminho do arquivo comprovante da tabela 'mensalidades'
     $sql = "SELECT comprovante FROM mensalidades WHERE id = ?";
-    $stmt = $conexao->prepare($sql); // Prepara a consulta SQL
-    $stmt->bind_param('i', $id); // Substitui o '?' pelo valor do ID
-    $stmt->execute(); // Executa a consulta
-    $resultado = $stmt->get_result(); // Obtém o resultado da consulta
-    $mensalidade = $resultado->fetch_assoc(); // Obtém os dados da mensalidade
+    $stmt = $conexao->prepare($sql); 
+    $stmt->bind_param('i', $id); 
+    $stmt->execute(); 
+    $resultado = $stmt->get_result(); 
+    $mensalidade = $resultado->fetch_assoc(); 
 
-    if ($mensalidade && $mensalidade['comprovante']) { // Verifica se existe um comprovante para o ID fornecido
-        $filePath = 'img/' . $mensalidade['comprovante']; // Define o caminho completo do arquivo (a partir da pasta 'img')
+    if ($mensalidade && $mensalidade['comprovante']) { 
+        $filePath = 'img/' . $mensalidade['comprovante']; 
 
         if (file_exists($filePath)) { // Verifica se o arquivo realmente existe no servidor
             // Força o download do arquivo configurando os headers HTTP
