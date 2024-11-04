@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 10-Out-2024 às 14:16
+-- Tempo de geração: 04-Nov-2024 às 12:45
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -38,14 +38,6 @@ CREATE TABLE IF NOT EXISTS `mensalidades` (
   KEY `usuario_id` (`usuario_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Extraindo dados da tabela `mensalidades`
---
-
-INSERT INTO `mensalidades` (`id`, `usuario_id`, `mes`, `pago`, `comprovante`) VALUES
-(55, 38, 'July', 0, '66a42e98c42f6.jpg'),
-(58, 25, 'July', 1, '669f936d98848.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -76,7 +68,10 @@ INSERT INTO `recuperar_senha` (`email`, `data_criacao`, `token`, `usado`) VALUES
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 12:44:49', '0f3795216e8099a2e495a42065d7fe37364a3f6f7d51d89fea022390128736cc645ce75dda87c448fc2378d8112f36ee8ced', 1),
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 12:49:29', '9c8b383d938873b00afbfd79634c7bd3198712be761be07f962ac642e9276085dd7c794bcaecd76d025e365df48c6216717c', 0),
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 12:56:21', 'fe1dd5e3414fd4825b1c52d467eb24392aa222a59b42e197cd0a59111994cdeb3d465a4220932e6a8c6e934cce1a622f0863', 0),
-('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 13:12:29', '256d274bf3548c454ab7f6af2abed5dc4f633b4c49d9c4123f1d231f4791523a14598f26e865bc97cb4a4d5fab0efd20476e', 1);
+('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 13:12:29', '256d274bf3548c454ab7f6af2abed5dc4f633b4c49d9c4123f1d231f4791523a14598f26e865bc97cb4a4d5fab0efd20476e', 1),
+('antonio.2022324018@aluno.iffar.edu.br', '2024-10-10 11:20:06', '657af950284d1557d3b77357e5a2b65e1b2b49361a51e520fa2d4deef5dc38033c3d149c675f20c1a1841cbda34c645157eb', 0),
+('antonio.2022324018@aluno.iffar.edu.br', '2024-10-31 15:53:53', 'e3dec29d3e8b377553e872c13fb24001692db191c0260c2b355f4ee947cd2cfa9ccc942ce31376c03185be4576988eecf209', 1),
+('antonio.2022324018@aluno.iffar.edu.br', '2024-10-31 15:59:46', 'd34dfa81bba8d1473bbf004f0a0ad6c5ef0919074a693bc4401d76f49abcf14c7e3c8a3485f03ac3ebe15357d5389b76d918', 1);
 
 -- --------------------------------------------------------
 
@@ -92,32 +87,33 @@ CREATE TABLE IF NOT EXISTS `roupas` (
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `roupas`
 --
 
 INSERT INTO `roupas` (`id`, `nome`, `status_devolucao`, `id_usuario`) VALUES
-(80, 'Bombacha', 0, 38),
-(81, 'espora', 0, 38),
-(82, 'flor', 1, 25),
-(83, 'vestido ', 1, 25),
-(84, 'lenço', 1, 38),
-(85, 'vestido ', 1, 28),
-(86, 'chapeu', 1, 38),
-(87, 'camisa', 1, 38),
-(88, 'lenço de mão ', 0, 38),
-(89, 'faixa', 0, 38),
-(90, 'colete', 0, 38),
-(138, 'Bombacha', 0, 68),
-(139, 'Espora', 0, 68),
-(140, 'Lenço', 0, 68),
-(141, 'Chapéu', 0, 68),
-(142, 'Camisa', 0, 68),
-(143, 'Lenço de mão', 0, 68),
-(144, 'Faixa', 0, 68),
-(145, 'Colete', 0, 68);
+(170, 'Bombacha', 0, 73),
+(171, 'Espora', 0, 73),
+(172, 'Lenço', 0, 73),
+(173, 'Chapéu', 0, 73),
+(174, 'Camisa', 0, 73),
+(175, 'Lenço de mão', 0, 73),
+(176, 'Faixa', 0, 73),
+(177, 'Colete', 0, 73),
+(182, 'Flor', 0, 75),
+(183, 'Lenço', 0, 75),
+(184, 'Vestido', 0, 75),
+(185, 'Brinco', 0, 75),
+(246, 'Bombacha', 0, 84),
+(247, 'Espora', 0, 84),
+(248, 'Lenço', 0, 84),
+(249, 'Chapéu', 0, 84),
+(250, 'Camisa', 0, 84),
+(251, 'Lenço de mão', 0, 84),
+(252, 'Faixa', 0, 84),
+(253, 'Colete', 0, 84);
 
 -- --------------------------------------------------------
 
@@ -137,7 +133,6 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `categoria` varchar(255) NOT NULL,
   `senha` varchar(255) DEFAULT NULL,
   `telefone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `matricula` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `imagem` varchar(255) NOT NULL,
   `genero` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
@@ -148,24 +143,18 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `nom_dan` varchar(255) NOT NULL,
   `identidade_frente` varchar(255) NOT NULL,
   `identidade_verso` varchar(255) NOT NULL,
-  `primeiro_login` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id_usuario`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `matricula`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`, `identidade_frente`, `identidade_verso`, `primeiro_login`) VALUES
-(2, 3, 'Raquel Mattes Mongelo', 'Raquelmattes88@gmail.com', '1975-09-12', '806.104.200-20', '1234567890', 'adulto', '123', '55999982163', '2024324058', 'raquel.jpg', 'F', 'cohab 2', 'proprio', '2034-04-12', '', '48', 'Luce Terezinha Mattes Mongelo', '', '', 0),
-(3, 2, 'Jean Anderson Godoy de Souza', 'jean@gmail.com', '1974-05-31', '123.456.789-00', '1234567980', 'adulto', '123', '5596441634', '2024325874', '3.png', 'M', 'cohab 2', 'proprio', '2022-10-05', '', '50', '', '', '', 0),
-(25, 1, 'Luce Terezinha Mattes Mongelo', 'lucemattes2@gmail.com', '2009-12-21', '055.008.660-95', '1234567890', 'juvenil', '123', '55999302422', '2024397380', 'luce.jpg', 'F', 'COHAB II Q19 CASA 302', 'Raquel mattes mongelo ', '2021-10-06', '55999982163', '14', 'Luce TerezinhaMattes Mongelo', '', '', 0),
-(27, 1, 'Vitória da Silva Flores ', 'vitoriadasilvaflores2014@gmail.com', '2006-09-15', '048.797.760-25', '1112212053', 'adulto', 'Vitoria15', '55991898282', '2024885754', 'vih.jpg', 'F', 'santo inácio rua antônio mascia 936', ' andréia regiane santos da silva', '2023-06-26', '51 98151-30', '17', '', '', '', 0),
-(28, 1, 'Larissa da Silva Alves', 'alveszlari@gmail.com', '2006-05-25', '043.242.640-07', '00000000000', 'adulto', 'Jesus101sa', '55996797629', '2024195451', 'lari.jpg', 'F', 'Emílio Brand Q7 n°133', 'Rita de Cascia da Silva Alves ', '2021-10-06', '55 99605518', '17', '', '', '', 0),
-(29, 1, 'Lucas da Silva Alves  ', 'lucazalvessilva012@gmail.com', '2006-05-25', '043.242.590-03', '00000000000', 'adulto', '25052006', '55 99004987', '2024587151', 'lucas.jpg', 'M', ' cohab 2, quadra sete casa 133', 'Rita de Cascia da Silva Alves ', '2021-10-06', '55 99605518', '17', '', '', '', 0),
-(38, 1, 'Antonio Carlos Mattes Mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '055.008.400-29', '2108268794', 'adulto', '', '55996860344', '2024843701', '38.gif', 'M', 'Emílio Brand Q19 n°302', 'Raquel mattes mongelo ', '2021-10-06', '55999982163', '17', '', 'frente.jpg', 'verso.jpg', 0),
-(68, 1, 'vitor murilo colcete de lima ', 'murilocolcete@gmail.com', '2004-06-03', '041.665.640-48', '00000000000', 'adulto', 'gremista26', '55991237560', '2024893269', '68.jpg', 'M', 'Rua tarumã 20 profilurb ', 'Isa Marina colcete de lima ', '2021-10-06', '55999558803', '20', '', '', '', 0);
+INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`, `identidade_frente`, `identidade_verso`) VALUES
+(73, 2, 'Jean Anderson Godoy de Souza', 'jeananderson@gmail.com', '1974-05-31', '123.456.789-09', '1234567890', 'adulto', '$2y$10$eRxQeOVpY/4IVccCAo04qOMigmDYr0tQDSRFGgd2ijsOrgJq9V2Ha', '55991237560', '73.png', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '50', '', '', ''),
+(75, 1, 'Larissa da Silva Alves', 'larissa@gmail.com', '2006-05-25', '043.242.640-07', '1234567890', 'adulto', '$2y$10$1MQohXS/2APGct6.BrMvZuSv9Q1XOiNrZ/Kue5Xqu4sRo3/DV9w4K', '55996507010', '75.jpg', 'F', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', ''),
+(84, 1, 'antonio carlos mattes mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '055.008.400-29', '1234567890', 'adulto', '$2y$10$lZzkSQXHXK7BV54H.tIJFeTDIOg1i2arzcRH1wPt8THq/atb9JB0a', '55996860344', '84.gif', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', '');
 
 --
 -- Restrições para despejos de tabelas
@@ -175,7 +164,7 @@ INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`,
 -- Limitadores para a tabela `mensalidades`
 --
 ALTER TABLE `mensalidades`
-  ADD CONSTRAINT `mensalidades_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `mensalidades_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE;
 
 --
 -- Limitadores para a tabela `roupas`
