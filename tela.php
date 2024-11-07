@@ -77,5 +77,4 @@
         <div class="spinner"></div>
         <div class="loading-text">Carregando...</div>
     </div>
-</body>
 </html>
