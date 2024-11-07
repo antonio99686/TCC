@@ -370,7 +370,11 @@ main .recent-orders table:hover {
 main table tbody td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
-    color: var(--color-dark-variant);
+    color: rgb(148, 148, 148);
+    font-size: 16px;
+}
+main table tbody td:hover{
+    color: #171717;
 }
 
 main table tbody tr:last-child td {
@@ -812,23 +816,21 @@ thead th {
     padding: 10px;
     border-bottom: 1px solid #171717;
     text-align: center;
-
 }
 
 tbody tr:nth-child(even) {
-    background-color: rgba(132, 139, 200, 0.18);
+    background-color: rgba(132, 139, 199, 0.18);
 
 }
 
 tbody tr:hover {
-    background-color: #484d50;
+    background-color: #c7c7c7;
 
 }
 
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-
 }
 
 .button {

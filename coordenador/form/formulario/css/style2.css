@@ -352,6 +352,19 @@ main .recent-orders {
 main .recent-orders h2 {
     margin-bottom: 0.8rem;
 }
+main table tbody td {
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: rgb(148, 148, 148);
+
+}
+main table tbody td:hover{
+    color: #171717;
+}
+
+main table tbody tr:last-child td {
+    border: none;
+}
 
 
 main .recent-orders a {
@@ -731,7 +744,7 @@ table {
     border-collapse: collapse;
     margin: 20px 0;
     position: relative;
-    right: 10%;
+    right: 90px;
 }
 
 thead th {
@@ -739,24 +752,23 @@ thead th {
     padding: 10px;
     border-bottom: 1px solid #171717;
     text-align: center;
-
 }
 
 tbody tr:nth-child(even) {
-    background-color: rgba(132, 139, 200, 0.18);
+    background-color: rgba(132, 139, 199, 0.18);
 
 }
 
 tbody tr:hover {
-    background-color: #484d50;
+    background-color: #c7c7c7;
 
 }
 
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-
 }
+
 .btn-delete {
     background: transparent;
     border: none;
