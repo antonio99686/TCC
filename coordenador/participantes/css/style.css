@@ -370,19 +370,27 @@ main .recent-orders table:hover {
 }
 
 
+/* Table cell styling */
 main table tbody td {
     height: 2.8rem;
+    padding: 10px;
     border-bottom: 1px solid var(--color-light);
     color: rgb(148, 148, 148);
-
+    text-align: center; /* Center text alignment */
+    transition: color 0.3s, background-color 0.3s; /* Smooth transition for hover effects */
 }
-main table tbody td:hover{
+
+/* Hover effect for cells */
+main table tbody td:hover {
     color: #171717;
+    background-color: rgba(200, 200, 200, 0.2); /* Light background color on hover */
 }
 
+/* Remove bottom border from the last row */
 main table tbody tr:last-child td {
     border: none;
 }
+
 main .recent-orders a {
     text-align: center;
     display: block;
@@ -595,19 +603,29 @@ main .recent-orders a {
     }
 
     main .recent-orders table {
-        width: 83vw;
+        width: 100%;
+        padding: var(--card-padding);
+        text-align: center;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--card-border-radius);
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        overflow-x: auto; /* Adiciona rolagem horizontal quando necessário */
+            position: relative;
+        left: 50px;
+        
     }
-
-    main table thead tr th:last-child,
-    main table thead tr th:first-child {
-        display: none;
+    
+    main .recent-orders table thead, main .recent-orders table tbody {
+        display: block;position: relative;
+        left: 50px;
     }
-
-    main table tbody tr td:last-child,
-    main table tbody tr td:first-child {
-        display: none;
+    
+    main .recent-orders table tbody {
+        max-height: 400px;
+        overflow-y: auto; /* Permite rolagem vertical */
     }
-
+    
 }
 
 .box {
@@ -776,39 +794,58 @@ label {
     padding: 10px;
 }
 
-
-
-
-
 table {
-    width: 100%;
+  
+    max-width: 800px; 
+    margin: 20px auto; 
     border-collapse: collapse;
-    margin: 20px 0;
+    right:  150px;
     position: relative;
-    right: 150px;
 }
+
 
 thead th {
     background-color: rgba(132, 139, 200, 0.18);
     padding: 10px;
     border-bottom: 1px solid #171717;
     text-align: center;
+    font-weight: bold;
 }
+
 
 tbody tr:nth-child(even) {
     background-color: rgba(132, 139, 199, 0.18);
-
 }
 
 tbody tr:hover {
     background-color: #c7c7c7;
-
 }
+
 
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    text-align: center;
 }
+
+
+td:nth-child(1) { 
+    width: 40%;
+    text-align: left;
+}
+
+td:nth-child(2) { 
+    width: 25%;
+}
+
+td:nth-child(3) {
+    width: 20%;
+}
+
+td:nth-child(4) {
+    width: 5%;
+}
+
 
 .btn-delete {
     background: transparent;
