@@ -595,36 +595,54 @@ main .recent-orders a {
     }
 
     main .recent-orders {
-        width: 94%;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 2rem 0 0 0.8rem;
-    }
-
-    main .recent-orders table {
-        width: 100%;
-        padding: var(--card-padding);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1.3rem;
         text-align: center;
-        box-shadow: var(--box-shadow);
-        border-radius: var(--card-border-radius);
-        transition: all 0.3s ease;
-        margin-top: 1rem;
-        overflow-x: auto; /* Adiciona rolagem horizontal quando necessário */
-            position: relative;
-        left: 50px;
+    }
+    
+    main .recent-orders table {
+        margin: 0 auto; /* Centraliza a tabela horizontalmente */
+        width: 80%; /* Ajusta a largura para evitar overflow */
+        border-collapse: collapse; /* Remove espaçamento entre bordas */
+    }
+    
+    main .recent-orders table thead {
+        display: table; /* Corrige a exibição do cabeçalho */
+        width: 100%; /* Ocupa toda a largura da tabela */
         
     }
     
-    main .recent-orders table thead, main .recent-orders table tbody {
-        display: block;position: relative;
-        left: 50px;
+    main .recent-orders table tbody {
+        display: block; /* Permite rolagem no corpo */
+        max-height: 400px; /* Define altura máxima para rolagem */
+        overflow-y: auto; /* Ativa a rolagem vertical */
+        
     }
     
-    main .recent-orders table tbody {
-        max-height: 400px;
-        overflow-y: auto; /* Permite rolagem vertical */
+    main .recent-orders table tbody tr {
+        display: table; /* Mantém a estrutura das linhas */
+        width: 100%; /* Ocupa toda a largura da tabela */
+        
     }
+    
+    main .recent-orders table th,
+    main .recent-orders table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        
+    }
+    
+    main .recent-orders table thead th {
+        position: sticky; /* Fixa o cabeçalho durante a rolagem */
+        top: 0;
+        background-color: #f2f2f2;
+        z-index: 1;
+        
+    }
+  
     
 }
 
@@ -641,11 +659,6 @@ main .recent-orders a {
 }
 
 
-.formato {
-    position: relative;
-    left: 15%;
-
-}
 
 @media screen and (max-width: 768px) {
     .container {
@@ -764,11 +777,6 @@ main .recent-orders a {
 }
 
 
-label {
-    font-weight: bold;
-    margin-bottom: 10px;
-    display: block;
-}
 
 .form-control {
     width: 80%;
@@ -785,24 +793,12 @@ label {
 
 }
 
-.form-control:focus {
-    border-color: #000000;
-    outline: none;
-}
-
-.form-control option {
-    padding: 10px;
-}
 
 table {
-  
-    max-width: 800px; 
-    margin: 20px auto; 
-    border-collapse: collapse;
-    right:  150px;
-    position: relative;
+    max-width: 800px; /* Define a largura máxima da tabela */
+    margin: 20px auto; /* Centraliza a tabela horizontalmente */
+    border-collapse: collapse; /* Remove espaçamento entre bordas */
 }
-
 
 thead th {
     background-color: rgba(132, 139, 200, 0.18);
@@ -812,7 +808,6 @@ thead th {
     font-weight: bold;
 }
 
-
 tbody tr:nth-child(even) {
     background-color: rgba(132, 139, 199, 0.18);
 }
@@ -821,14 +816,13 @@ tbody tr:hover {
     background-color: #c7c7c7;
 }
 
-
 td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
 
-
+/* Largura específica para as colunas */
 td:nth-child(1) { 
     width: 40%;
     text-align: left;
@@ -843,17 +837,6 @@ td:nth-child(3) {
 }
 
 td:nth-child(4) {
-    width: 5%;
+    width: 4%;
 }
 
-
-.btn-delete {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-.btn-delete .material-icons-sharp {
-    color: #f00; /* Cor do ícone de deletar */
-    font-size: 24px;
-}
