@@ -830,10 +830,12 @@ main .recent-orders a {
     color: #000;
     box-shadow: 1px 1px black;
     margin: 0 auto 1%;
+    cursor: pointer;
 }
 
 .form-control:hover {
     background-color: var(--color-dark);
     transition-duration: 0.4s;
     color: var(--color-white);
+    cursor: pointer;
 }
