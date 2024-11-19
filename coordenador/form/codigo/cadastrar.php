@@ -1,178 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" type="text/css" href="formulario/css/style.css">
-    <title>cadastro</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <title>Cadastrar</title>
 </head>
 
 <body>
+    <?php
+    // Conecta ao banco de dados
+    require_once "../../../conexao.php";
+    $conexao = conectar();
 
-</body>
+    // Verifica se os dados do formulário foram recebidos corretamente
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset(
+        $_POST['nome'],
+        $_POST['senha'],
+        $_POST['email'],
+        $_POST['CPF'],
+        $_POST['datas'],
+        $_POST['statuss'],
+        $_POST['RG'],
+        $_POST['categoria'],
+        $_POST['telefone'],
+        $_POST['endereco'],
+        $_POST['responsavel'],
+        $_POST['data_entrada'],
+        $_POST['tele_respon'],
+        $_POST['idade'],
+        $_POST['nom_dan'],
+        $_POST['genero']
+    )) {
+        // Recebe os dados do formulário
+        $nome = $_POST['nome'];
+        $senha = $_POST['senha'];  // A senha informada
+        $email = $_POST['email'];
+        $CPF = $_POST['CPF'];
+        $datas = $_POST['datas'];
+        $statuss = $_POST['statuss'];
+        $RG = $_POST['RG'];
+        $categoria = $_POST['categoria'];
+        $telefone = $_POST['telefone'];
+        $endereco = $_POST['endereco'];
+        $responsavel = $_POST['responsavel'];
+        $data_entrada = $_POST['data_entrada'];
+        $tele_respon = $_POST['tele_respon'];
+        $idade = $_POST['idade'];
+        $nom_dan = $_POST['nom_dan'];
+        $genero = $_POST['genero'];
 
-</html>
-<?php
-// Conecta ao banco de dados
-require_once "../../../conexao.php";
-$conexao = conectar();
+        // Gera o hash da senha
+        $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
 
-// Verifica se os dados do formulário foram recebidos corretamente
-if (
-    isset(
-    $_POST['usuario'],
-    $_POST['senha'],
-    $_POST['email'],
-    $_POST['CPF'],
-    $_POST['datas'],
-    $_POST['status'],
-    $_POST['RG'],
-    $_POST['categoria'],
-    $_POST['telefone'],
-    $_POST['endereco'],
-    $_POST['responsavel'],
-    $_POST['data_entrada'],
-    $_POST['tele_respon'],
-    $_POST['idade'],
-    $_POST['nom_dan'],
-    $_POST['genero']
-)
-) {
+        // Comando SQL para inserir o novo usuário
+        $sql = "INSERT INTO usuario (
+                    nome, statuss, email, datas, CPF, RG, categoria, senha, telefone, 
+                    endereco, responsavel, data_entrada, tele_respon, idade, nom_dan, genero
+                ) VALUES (
+                    '$nome', '$statuss', '$email', '$datas', '$CPF', '$RG', '$categoria', 
+                    '$senha_hash', '$telefone', '$endereco', '$responsavel', '$data_entrada', '$tele_respon', 
+                    '$idade', '$nom_dan', '$genero'
+                )";
 
-    // Dados do formulário
-    $nome = $_POST['usuario'];
-    $senha = $_POST['senha'];
-    $email = $_POST['email'];
-    $CPF = $_POST['CPF'];
-    $datas = $_POST['datas'];
-    $statuss = $_POST['status'];
-    $RG = $_POST['RG'];
-    $categoria = $_POST['categoria'];
-    $telefone = $_POST['telefone'];
-    $endereco = $_POST['endereco'];
-    $responsavel = $_POST['responsavel'];
-    $data_entrada = $_POST['data_entrada'];
-    $tele_respon = $_POST['tele_respon'];
-    $idade = $_POST['idade'];
-    $nom_dan = $_POST['nom_dan'];
-    $genero = $_POST['genero'];
-
-    // Gera um número de matrícula único
-    $numero = rand(2024, 999999);
-    $matricula = date('Y') . $numero;
-
-    // Verifica se um arquivo foi enviado
-    if (isset($_FILES['arquivo'])) {
-        // Verifica se houve erro no upload
-        if ($_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
-            // Define o nome do arquivo
-            $imagem = $_FILES['arquivo']['name'];
-
-            // Define a pasta para onde enviaremos o arquivo
-            $diretorio = "../../../img/";
-
-            // Faz o upload, movendo o arquivo para a pasta especificada
-            if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio . $imagem)) {
-                // Comando SQL para inserção
-                $sql = "INSERT INTO usuario (
-                          statuss, nome,
-                          email, datas, 
-                          CPF, RG, 
-                          categoria, senha,
-                          telefone, matricula, 
-                          imagem, genero,
-                          endereco, responsavel,
-                          data_entrada, tele_respon,
-                          idade, nom_dan
-                        ) VALUES (
-                          '$statuss','$nome',
-                          '$email','$datas','$CPF',
-                          '$RG','$categoria',
-                          '$senha','$telefone',
-                          '$matricula','$imagem',
-                          '$genero','$endereco',
-                          '$responsavel','$data_entrada',
-                          '$tele_respon','$idade',
-                          '$nom_dan'
-                        )";
-
-                // Executa o comando SQL
-                if (mysqli_query($conexao, $sql)) {
-                    // SweetAlert2 para sucesso
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sucesso!',
-                            text: 'Pessoa cadastrada com sucesso!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(() => {
-                            window.location.href = '../../dashboard.php';
-                        });
-                    </script>";
-                    exit();
-                } else {
-                    // SweetAlert2 para falha na inserção
-                    echo "<script>
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erro!',
-                            text: 'Falha ao cadastrar pessoa.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    </script>";
-                }
-            } else {
-                // SweetAlert2 para erro ao mover arquivo
-                echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erro!',
-                        text: 'Erro ao mover o arquivo.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                </script>";
-            }
+        // Executa o comando SQL
+        if (mysqli_query($conexao, $sql)) {
+            // Usuário cadastrado com sucesso
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Usuário cadastrado com sucesso!',
+                    timer: 3000, // 3 segundos
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = '../lista.php'; // Redireciona para a lista de usuários
+                });
+            </script>";
+            exit();
         } else {
-            // SweetAlert2 para erro no upload
+            // Falha ao cadastrar o usuário
             echo "<script>
                 Swal.fire({
                     icon: 'error',
-                    title: 'Erro!',
-                    text: 'Erro durante o upload do arquivo.',
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: 'Oops...',
+                    text: 'Falha ao cadastrar o usuário. Por favor, tente novamente.',
+                    timer: 3000, // 3 segundos
+                    timerProgressBar: true,
+                    showConfirmButton: false
                 });
             </script>";
         }
     } else {
-        // SweetAlert2 para nenhum arquivo enviado
+        // Dados do formulário incompletos
         echo "<script>
             Swal.fire({
-                icon: 'warning',
-                title: 'Atenção!',
-                text: 'Nenhum arquivo enviado.',
-                showConfirmButton: false,
-                timer: 1500
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Dados do formulário incompletos.',
+                timer: 3000, // 3 segundos
+                timerProgressBar: true,
+                showConfirmButton: false
             });
         </script>";
     }
-} else {
-    // SweetAlert2 para dados incompletos
-    echo "<script>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Atenção!',
-            text: 'Dados do formulário incompletos.',
-            showConfirmButton: false,
-            timer: 1500
-        });
-    </script>";
-}
+    ?>
+</body>
 
-?>
+</html>
