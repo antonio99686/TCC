@@ -3,6 +3,8 @@ session_start();
 require_once "conexao.php";
 $conexao = conectar();
 sleep(1);
+$sql = "SELECT * FROM avisos ORDER BY data_criacao DESC";
+$result = $conexao->query($sql);  // Faz a consulta diretamente
 // Verifica se a sessão está iniciada e se o usuário está logado
 if (!isset($_SESSION['id_usuario']) || empty($_SESSION['id_usuario'])) {
     // Redireciona para a página de login se não estiver logado
@@ -103,9 +105,22 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div>
                 <div class="visits">
                     <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
+                    <div class="info">
+                            <h2>Avisos</h2>
+
+                            <?php if ($result->num_rows > 0): ?>
+                                <ul class="collection">
+                                    <?php while ($aviso = $result->fetch_assoc()): ?>
+                                        <li class="collection-item">
+                                            <span class="title"><?= htmlspecialchars($aviso['titulo']); ?></span>
+                                            <p><?= nl2br(htmlspecialchars($aviso['mensagem'])); ?></p>
+                                            <p><small>Publicado em: <?= date('d/m/Y H:i', strtotime($aviso['data_criacao'])); ?></small></p>
+                                        </li>
+                                    <?php endwhile; ?>
+                                </ul>
+                            <?php else: ?>
+                                <p>Não há avisos disponíveis.</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -161,6 +176,8 @@ $dados = mysqli_fetch_assoc($resultado);
                     <h2>Sentinela da Fronteira</h2>
                 </div>
             </div>
+
+           
         </div>
     </div>
 
