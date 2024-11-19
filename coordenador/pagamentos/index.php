@@ -238,8 +238,12 @@ if (isset($_GET['id_usuario'])) {
 
             <div class="user-profile">
                 <div class="logo text-center">
-                    <h2>Gerar Relatório do Mês</h2>
-                    <button type="button" class="form-control" id="openModal">Clique aqui</button>
+                    <h1>Gerar Relatório de Mensalidades</h1>
+                    <form id="relatorioForm" action="PDF/index.php" method="GET">
+                        <label for="mes_selecionado">Selecione o mês:</label>
+                        <input type="month" class="form-control" id="mes_selecionado" name="mes_selecionado" required>
+                        <button type="button" class="btn_relatorio" id="gerarRelatorio">Gerar Relatório</button>
+                    </form>
                 </div>
             </div>
 
@@ -247,38 +251,38 @@ if (isset($_GET['id_usuario'])) {
     </div>
     <script src="../JavaScript/index.js"></script>
     <script>
-    document.getElementById('openModal').addEventListener('click', function () {
-        Swal.fire({
-            title: 'Gerar Relatório do Mês',
-            html: `
-                <form id="relatorioForm">
-                    <div class="mb-3">
-                        <label for="mesRelatorio" class="form-label">Escolha o mês:</label>
-                        <input type="month" id="mesRelatorio" class="swal2-input">
-                    </div>
-                </form>
-            `,
-            confirmButtonText: 'Gerar',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            preConfirm: () => {
-                const mes = document.getElementById('mesRelatorio').value;
-                if (!mes) {
-                    Swal.showValidationMessage('Por favor, selecione um mês');
+        document.getElementById('gerarRelatorio').addEventListener('click', function () {
+            // Obtém o valor do campo de seleção do mês
+            const mesSelecionado = document.getElementById('mes_selecionado').value;
+
+            if (!mesSelecionado) {
+                // Exibe um alerta caso o mês não tenha sido selecionado
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'Por favor, selecione um mês antes de gerar o relatório.'
+                });
+                return;
+            }
+
+            // Exibe o modal de confirmação
+            Swal.fire({
+                title: 'Gerar Relatório',
+                text: `Deseja gerar o relatório para o mês ${mesSelecionado}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, gerar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Envia o formulário se o usuário confirmar
+                    document.getElementById('relatorioForm').submit();
                 }
-                return mes;
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const mesSelecionado = result.value;
-
-                // Redireciona para o PHP que gera o PDF
-                window.location.href = `PDF/index.php?mes=${mesSelecionado}`;
-            }
+            });
         });
-    });
-</script>
-
+    </script>
     <script>
         function buscarUsuarios() {
             // Obtém o valor do campo de entrada com id 'nome_usuario'

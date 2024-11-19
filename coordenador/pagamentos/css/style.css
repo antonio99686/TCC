@@ -764,6 +764,29 @@ main .recent-orders a {
 }
 
 .form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control:focus {
+    border-color: #000000;
+    outline: none;
+}
+
+.form-control option {
+    padding: 10px;
+}
+.btn_relatorio{
     background-color: #4CAF50; /* Cor de fundo */
     color: white; /* Cor do texto */
     padding: 10px 20px; /* Espaçamento interno */
@@ -773,13 +796,7 @@ main .recent-orders a {
     font-size: 16px; /* Tamanho da fonte */
     transition: background-color 0.3s ease; /* Transição ao passar o mouse */
 }
-
-.form-control:focus {
-    border-color: #000000;
-    outline: none;
-}
-.form-control:hover {
+.btn_relatorio:hover{
     background-color: #45a049;
 }
-
 
