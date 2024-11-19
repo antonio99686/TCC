@@ -239,7 +239,7 @@ if (isset($_GET['id_usuario'])) {
             <div class="user-profile">
                 <div class="logo text-center">
                     <h2>Gerar Relatório do Mês</h2>
-                    <button type="button" class="btn btn-primary" id="openModal">Clique aqui</button>
+                    <button type="button" class="form-control" id="openModal">Clique aqui</button>
                 </div>
             </div>
 
@@ -247,10 +247,10 @@ if (isset($_GET['id_usuario'])) {
     </div>
     <script src="../JavaScript/index.js"></script>
     <script>
-        document.getElementById('openModal').addEventListener('click', function() {
-            Swal.fire({
-                title: 'Gerar Relatório do Mês',
-                html: `
+    document.getElementById('openModal').addEventListener('click', function () {
+        Swal.fire({
+            title: 'Gerar Relatório do Mês',
+            html: `
                 <form id="relatorioForm">
                     <div class="mb-3">
                         <label for="mesRelatorio" class="form-label">Escolha o mês:</label>
@@ -258,24 +258,26 @@ if (isset($_GET['id_usuario'])) {
                     </div>
                 </form>
             `,
-                confirmButtonText: 'Gerar',
-                showCancelButton: true,
-                cancelButtonText: 'Cancelar',
-                preConfirm: () => {
-                    const mes = document.getElementById('mesRelatorio').value;
-                    if (!mes) {
-                        Swal.showValidationMessage('Por favor, selecione um mês');
-                    }
-                    return mes;
+            confirmButtonText: 'Gerar',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                const mes = document.getElementById('mesRelatorio').value;
+                if (!mes) {
+                    Swal.showValidationMessage('Por favor, selecione um mês');
                 }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const mesSelecionado = result.value;
-                    Swal.fire('Relatório Gerado!', `Relatório do mês ${mesSelecionado} gerado com sucesso.`, 'success');
-                }
-            });
+                return mes;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const mesSelecionado = result.value;
+
+                // Redireciona para o PHP que gera o PDF
+                window.location.href = `PDF/index.php?mes=${mesSelecionado}`;
+            }
         });
-    </script>
+    });
+</script>
 
     <script>
         function buscarUsuarios() {
