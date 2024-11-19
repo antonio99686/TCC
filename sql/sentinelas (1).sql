@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 04-Nov-2024 às 12:45
+-- Tempo de geração: 19-Nov-2024 às 19:11
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `mensalidades` (
   `comprovante` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `mensalidades`
+--
+
+INSERT INTO `mensalidades` (`id`, `usuario_id`, `mes`, `pago`, `comprovante`) VALUES
+(60, 75, '2024-11', 0, '');
 
 -- --------------------------------------------------------
 
@@ -71,7 +78,8 @@ INSERT INTO `recuperar_senha` (`email`, `data_criacao`, `token`, `usado`) VALUES
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-07 13:12:29', '256d274bf3548c454ab7f6af2abed5dc4f633b4c49d9c4123f1d231f4791523a14598f26e865bc97cb4a4d5fab0efd20476e', 1),
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-10 11:20:06', '657af950284d1557d3b77357e5a2b65e1b2b49361a51e520fa2d4deef5dc38033c3d149c675f20c1a1841cbda34c645157eb', 0),
 ('antonio.2022324018@aluno.iffar.edu.br', '2024-10-31 15:53:53', 'e3dec29d3e8b377553e872c13fb24001692db191c0260c2b355f4ee947cd2cfa9ccc942ce31376c03185be4576988eecf209', 1),
-('antonio.2022324018@aluno.iffar.edu.br', '2024-10-31 15:59:46', 'd34dfa81bba8d1473bbf004f0a0ad6c5ef0919074a693bc4401d76f49abcf14c7e3c8a3485f03ac3ebe15357d5389b76d918', 1);
+('antonio.2022324018@aluno.iffar.edu.br', '2024-10-31 15:59:46', 'd34dfa81bba8d1473bbf004f0a0ad6c5ef0919074a693bc4401d76f49abcf14c7e3c8a3485f03ac3ebe15357d5389b76d918', 1),
+('antonio.2022324018@aluno.iffar.edu.br', '2024-11-07 16:17:24', '6bd9b875fa1dbfa677a660eb60cb317d3082322f9eec29b3a88cebd0a8280c70c9f826de4c1b3b2a4221a1047daa95887291', 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `roupas` (
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `roupas`
@@ -106,14 +114,14 @@ INSERT INTO `roupas` (`id`, `nome`, `status_devolucao`, `id_usuario`) VALUES
 (183, 'Lenço', 0, 75),
 (184, 'Vestido', 0, 75),
 (185, 'Brinco', 0, 75),
-(246, 'Bombacha', 0, 84),
-(247, 'Espora', 0, 84),
-(248, 'Lenço', 0, 84),
-(249, 'Chapéu', 0, 84),
-(250, 'Camisa', 0, 84),
-(251, 'Lenço de mão', 0, 84),
-(252, 'Faixa', 0, 84),
-(253, 'Colete', 0, 84);
+(262, 'Bombacha', 0, 86),
+(263, 'Espora', 0, 86),
+(264, 'Lenço', 1, 86),
+(265, 'Chapéu', 1, 86),
+(266, 'Camisa', 1, 86),
+(267, 'Lenço de mão', 0, 86),
+(268, 'Faixa', 0, 86),
+(269, 'Colete', 0, 86);
 
 -- --------------------------------------------------------
 
@@ -145,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `identidade_verso` varchar(255) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
@@ -153,8 +161,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`, `identidade_frente`, `identidade_verso`) VALUES
 (73, 2, 'Jean Anderson Godoy de Souza', 'jeananderson@gmail.com', '1974-05-31', '123.456.789-09', '1234567890', 'adulto', '$2y$10$eRxQeOVpY/4IVccCAo04qOMigmDYr0tQDSRFGgd2ijsOrgJq9V2Ha', '55991237560', '73.png', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '50', '', '', ''),
-(75, 1, 'Larissa da Silva Alves', 'larissa@gmail.com', '2006-05-25', '043.242.640-07', '1234567890', 'adulto', '$2y$10$1MQohXS/2APGct6.BrMvZuSv9Q1XOiNrZ/Kue5Xqu4sRo3/DV9w4K', '55996507010', '75.jpg', 'F', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', ''),
-(84, 1, 'antonio carlos mattes mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '055.008.400-29', '1234567890', 'adulto', '$2y$10$lZzkSQXHXK7BV54H.tIJFeTDIOg1i2arzcRH1wPt8THq/atb9JB0a', '55996860344', '84.gif', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', '');
+(75, 1, 'Larissa da Silva ALves', 'larissa@gmail.com', '2006-05-25', '043.242.640-07', '1234567890', 'adulto', '$2y$10$1MQohXS/2APGct6.BrMvZuSv9Q1XOiNrZ/Kue5Xqu4sRo3/DV9w4K', '55996507010', '75.jpg', 'F', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', ''),
+(86, 1, 'Antonio Carlos Mattes Mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '055.008.400-29', '1234567890', 'adulto', '$2y$10$oeLd2WWpvyQd2J0cdqeFle1SNUZeYCcuQSnunpRivC043N4WkvAuq', '55996860344', '86.jpg', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', '');
 
 --
 -- Restrições para despejos de tabelas

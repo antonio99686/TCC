@@ -131,7 +131,8 @@
 
             <div class="form_grupo">
                 <label for="email" class="form_label">Senha</label>
-                <input type="password" name="senha" class="form_input" required>
+                <input type="password" name="senha" id="senhass" class="form_input" required>
+                <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
             </div>
 
             <div class="form_grupo">
@@ -151,7 +152,8 @@
 
             <div class="form_grupo">
                 <label for="genero" class="form_label">Gênero</label>
-                <input type="text" name="genero" class="form_input" required>
+                <input type="text" name="genero"  id="genero" maxlength="1" class="form_input" required>
+                <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
             </div>
 
             <div class="form_grupo">
@@ -209,6 +211,99 @@
             </div>
         </form>
     </div>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var cpfInputs = document.querySelectorAll('input[name="CPF"]');
+            cpfInputs.forEach(function(input) {
+                input.addEventListener("input", function(e) {
+                    var value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+                    if (value.length > 11) value = value.slice(0, 11); // Limita o CPF a 11 dígitos
+                    var formattedValue = value;
 
+                    // Formata o CPF conforme o número de dígitos
+                    if (value.length > 9) {
+                        formattedValue = value.slice(0, 3) + '.' + value.slice(3, 6) + '.' + value.slice(6, 9) + '-' + value.slice(9, 11);
+                    } else if (value.length > 6) {
+                        formattedValue = value.slice(0, 3) + '.' + value.slice(3, 6) + '.' + value.slice(6);
+                    } else if (value.length > 3) {
+                        formattedValue = value.slice(0, 3) + '.' + value.slice(3);
+                    }
+
+                    e.target.value = formattedValue;
+
+                    // Valida o CPF
+                    if (value.length === 11 && !validarCPF(value)) {
+                        // Exibe a mensagem de erro
+                        e.target.nextElementSibling.textContent = "CPF inválido";
+                    } else {
+                        // Limpa a mensagem de erro se o CPF for válido
+                        e.target.nextElementSibling.textContent = "";
+                    }
+                });
+            });
+        });
+
+        // Função para validar o CPF
+        function validarCPF(cpf) {
+            // Elimina CPFs com todos os números iguais (ex: 111.111.111-11)
+            if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+            var soma = 0;
+            var resto;
+
+            // Validação do primeiro dígito verificador
+            for (var i = 1; i <= 9; i++) {
+                soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+            }
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(9))) return false;
+
+            soma = 0;
+
+            // Validação do segundo dígito verificador
+            for (var i = 1; i <= 10; i++) {
+                soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+            }
+            resto = (soma * 10) % 11;
+            if (resto === 10 || resto === 11) resto = 0;
+            if (resto !== parseInt(cpf.charAt(10))) return false;
+
+            return true;
+        }
+        //Validação de senha com 8 digitos
+        document.addEventListener("DOMContentLoaded", function() {
+            var senhaInput = document.getElementById('senhass');
+
+            senhaInput.addEventListener("input", function(e) {
+                var value = e.target.value;
+
+                // Verifica se a senha tem pelo menos 8 caracteres
+                if (value.length < 8) {
+                    // Exibe a mensagem de erro
+                    e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
+                } else {
+                    // Limpa a mensagem de erro se a senha for válida
+                    e.target.nextElementSibling.textContent = "";
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+    var generoInput = document.getElementById('genero');
+
+    generoInput.addEventListener("input", function(e) {
+        var value = e.target.value;
+
+        // Verifica se o valor é 'M' ou 'F' e exibe uma mensagem de erro se não for
+        if (value !== "M" && value !== "F") {
+            e.target.nextElementSibling.textContent = "Somente a Letra M ou F Maiúsculas  são permitidos";
+        } else {
+            e.target.nextElementSibling.textContent = ""; // Limpa a mensagem de erro
+        }
+    });
+});
+
+    </script>
+</body>
 </html>
