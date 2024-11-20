@@ -1,21 +1,15 @@
 <?php
-include('db.php');
-
+require_once "conexao.php"; // Inclui o arquivo de conexão
+$conexao = conectar(); // Chama a função conectar() para obter a conexão
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo = $_POST['titulo'];
     $mensagem = $_POST['mensagem'];
 
-    $sql = "INSERT INTO avisos (titulo, mensagem) VALUES (:titulo, :mensagem)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':titulo', $titulo);
-    $stmt->bindParam(':mensagem', $mensagem);
-    
-    if ($stmt->execute()) {
-        echo "Aviso adicionado com sucesso!";
-    } else {
-        echo "Erro ao adicionar o aviso.";
-    }
+    $sql = "INSERT INTO avisos (titulo, mensagem) VALUES ('$titulo', '$mensagem')";
+
+   $result = mysqli_query($conexao, $sql);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -24,25 +18,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Aviso</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+      
+
+        .caixa {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .men {
+            margin-bottom: 15px;
+        }
+
+        .men label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .men input,
+        .men textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .men textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-
-    <div class="container">
+    <div class="caixa">
         <h2>Adicionar Aviso</h2>
         <form method="POST">
-            <div class="input-field">
-                <input type="text" id="titulo" name="titulo" required>
+            <div class="men">
                 <label for="titulo">Título</label>
+                <input type="text" id="titulo" name="titulo" required>
             </div>
-            <div class="input-field">
-                <textarea id="mensagem" name="mensagem" class="materialize-textarea" required></textarea>
+            <div class="men">
                 <label for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="mensagem" required></textarea>
             </div>
             <button type="submit" class="btn">Adicionar Aviso</button>
         </form>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

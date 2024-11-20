@@ -3,6 +3,19 @@ session_start(); // Inicia a sessão para permitir o uso de variáveis de sessã
 require_once "../conexao.php"; // Inclui o arquivo de conexão com o banco de dados
 $conexao = conectar(); // Estabelece a conexão com o banco de dados
 sleep(1);
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $titulo = $_POST['titulo'];
+    $mensagem = $_POST['mensagem'];
+
+    $sql = "INSERT INTO avisos (titulo, mensagem) VALUES ('$titulo', '$mensagem')";
+
+   $result = mysqli_query($conexao, $sql);
+}
+
+
 // Verifica se o usuário está logado
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php"); // Redireciona para a página de login se não estiver logado
@@ -122,6 +135,7 @@ if (isset($_GET['nome_usuario'])) {
                         </div>
                     </a>
                 </div>
+                
                 
             </div>
             <div class="box">
