@@ -11,7 +11,7 @@ $diaAtual = $dataAtual->format('d');
 $mesAtual = $dataAtual->format('Y-m');
 
 // Verifica se é o primeiro dia do mês e se ainda não existe uma mensalidade registrada para o mês atual
-if ($diaAtual == 19) {
+if ($diaAtual == 1) {
     $sqlCheckMensalidade = "SELECT 1 FROM mensalidades WHERE usuario_id = $id_usuario AND mes = '$mesAtual'";
     $resultadoCheck = mysqli_query($conexao, $sqlCheckMensalidade);
 
