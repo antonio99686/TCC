@@ -273,15 +273,10 @@ label {
 #olho{
     position: relative;
     left:40%;
-    margin-top: -12%;
+    margin-top: -11%;
     cursor: pointer;
 }
-#olho2{
-    position: relative;
-    left:55%;
-    top: 54%;
-    cursor: pointer;
-}
+
 /* Ocultar o input file original */
 input[type="file"] {
     display: none;
@@ -320,11 +315,34 @@ input[type="file"] {
   /* Responsividade para dispositivos menores que 768px */
 @media (max-width: 768px) {
 
-    /* Ajusta o estilo do ícone de senha */
-    #olho, #olho2 {
-        left: 58%;
-        top: -32px;
-        margin-top: 0;
+    /* Esconde o ícone de senha */
+    #olho {
+        display: none;
+    }
+
+    /* Ajusta o contêiner */
+    .container {
+        width: 100%; /* Usa quase toda a largura disponível */
+        height: 70%; /* Ajusta a altura dinamicamente */
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    /* Ajusta o formulário */
+    .container form {
+        padding: 15px;
+    }
+
+    /* Ajusta as fontes */
+    .container p, .container span {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    /* Ajusta os botões */
+    .container button {
+        padding: 10px 20px;
+        font-size: 12px;
     }
 }
 
@@ -333,18 +351,23 @@ input[type="file"] {
     /* Ajuste adicional para dispositivos muito pequenos */
     .container {
         padding: 10px;
-        border-radius: 15px;
+        border-radius: 10px;
     }
 
-    /* Ajusta tamanho da fonte nos parágrafos e spans */
+    /* Ajusta fontes menores */
     .container p, .container span {
         font-size: 12px;
         line-height: 18px;
     }
 
-    /* Ajusta tamanho dos botões para dispositivos muito pequenos */
+    /* Ajusta tamanho dos botões */
     .container button {
         padding: 8px 15px;
         font-size: 10px;
     }
+}
+
+/* Adiciona rolagem horizontal para evitar que elementos fiquem cortados */
+body {
+    overflow-x: hidden;
 }
