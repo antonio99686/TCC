@@ -824,18 +824,18 @@ main .recent-orders a {
     padding: 10px;
     display: block;
     border-radius: 4px;
-    background-color: var(--color-primary);
+    background-color: #5bc0de; /* Azul pastel */
     text-align: center;
     text-decoration: none;
-    color: #000;
+    color: #fff; /* Texto branco */
     box-shadow: 1px 1px black;
     margin: 0 auto 1%;
     cursor: pointer;
+    color: black;
 }
 
 .form-control:hover {
-    background-color: var(--color-dark);
-    transition-duration: 0.4s;
-    color: var(--color-white);
+    background-color: #0275d8; /* Azul escuro */      transition-duration: 0.4s;
+    color: #fff; /* Texto continua branco */
     cursor: pointer;
 }

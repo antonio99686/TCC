@@ -614,11 +614,11 @@ main .recent-orders a {
     padding: 10px;
     display: block;
     border-radius: 4px;
-    background-color: var(--color-primary);
+    background-color: #5bc0de; /* Azul pastel */
     text-align: center;
     text-decoration: none;
     color: #000;
-    box-shadow: 1px 1px black;
+    
     margin: 0 auto 1%;
     cursor: pointer;
     top: 40px;
@@ -627,7 +627,7 @@ main .recent-orders a {
 }
 
 .form-control:hover {
-    background-color: var(--color-dark);
+  background-color: #0275d8; /* Azul escuro */
     transition-duration: 0.4s;
     color: var(--color-white);
 }

@@ -105,21 +105,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 <div class="visits">
                     <div class="status">
                     <div class="info">
-                            <h2>Avisos</h2>
-
-                            <?php if ($result->num_rows > 0): ?>
-                                <ul class="collection">
-                                    <?php while ($aviso = $result->fetch_assoc()): ?>
-                                        <li class="collection-item">
-                                            <span class="title"><?= htmlspecialchars($aviso['titulo']); ?></span>
-                                            <p><?= nl2br(htmlspecialchars($aviso['mensagem'])); ?></p>
-                                            <p><small>Publicado em: <?= date('d/m/Y H:i', strtotime($aviso['data_criacao'])); ?></small></p>
-                                        </li>
-                                    <?php endwhile; ?>
-                                </ul>
-                            <?php else: ?>
-                                <p>Não há avisos disponíveis.</p>
-                            <?php endif; ?>
+                           
                         </div>
                     </div>
                 </div>
