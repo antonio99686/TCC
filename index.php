@@ -81,7 +81,6 @@
                     <select name="status" class="dropdown" required>
                         <option selected disabled class="form-select-option" value="">Selecione</option>
                         <option value="1" class="form-select-option">Dançarino</option>
-                        <option value="2" class="form-select-option">Coordenador</option>
                         <option value="3" class="form-select-option">Responsável</option>
                     </select>
                     <span class="validation-message"></span>
