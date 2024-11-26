@@ -208,24 +208,7 @@ if ($resultadoMeses) {
         <main>
             <h1>Pagamentos</h1>
             <!-- Analyses -->
-            <div class="analyse">
-                <div class="sales">
-                    <div class="status">
-
-                    </div>
-                </div>
-                <div class="visits">
-                    <div class="status">
-
-                    </div>
-                </div>
-                <div class="searches">
-                    <div class="status">
-
-                    </div>
-                </div>
-            </div>
-            <!-- End of Analyses -->
+           
 
             <!-- New Users Section -->
             <div class="new-users">

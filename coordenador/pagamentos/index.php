@@ -164,41 +164,7 @@ if (isset($_GET['id_usuario'])) {
 
         <main>
             <h1>Pagamentos</h1>
-            <div class="analyse">
-                <div class="sales">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                        <div class="progresss"></div>
-                    </div>
-                </div>
-                <div class="visits">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                        <div class="progresss"></div>
-                    </div>
-                </div>
-                <div class="searches">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-
-                            <h1></h1>
-                        </div>
-                        <div class="progresss">
-
-                            <div class="percentage">
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
 
             <div class="box">
                 <div class="form-group">

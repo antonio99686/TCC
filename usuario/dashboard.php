@@ -93,32 +93,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <main>
             <h1>Sentinela da Fronteira</h1>
             <!-- Análises -->
-            <section class="analyse" aria-label="Análises">
-                <div class="sales">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="visits">
-                    <div class="status">
-                    <div class="info">
-                           
-                        </div>
-                    </div>
-                </div>
-                <div class="searches">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Fim das análises -->
+           
 
             <!-- Dados do Usuário -->
             <section class="box" aria-labelledby="dados-usuario">

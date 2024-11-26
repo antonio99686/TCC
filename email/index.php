@@ -97,32 +97,7 @@ $dados = mysqli_fetch_assoc($resultado);
         <main>
             <h1>Sentinela da Fronteira</h1>
             <!-- Análises -->
-            <div class="analyse">
-                <div class="sales">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="visits">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="searches">
-                    <div class="status">
-                        <div class="info">
-                            <h3></h3>
-                            <h1></h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
             <!-- Fim das análises -->
 
             <!-- Dados do Usuário -->
@@ -167,12 +142,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </div>
             </div>
 
-            <div class="user-profile">
-                <div class="logo">
-                   
-                </div>
-            </div>
-
+           
 
 
 

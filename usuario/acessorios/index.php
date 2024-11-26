@@ -179,13 +179,6 @@ $dados = mysqli_fetch_assoc($resultado);
             </div>
             <!-- Fim da navegação -->
 
-            <div class="user-profile">
-                <div class="logo">
-               
-                    <h2></h2>
-
-                </div>
-            </div>
 
 
 
