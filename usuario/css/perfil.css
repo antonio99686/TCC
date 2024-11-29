@@ -618,11 +618,10 @@ main .recent-orders a {
     text-align: center;
     text-decoration: none;
     color: #000;
-    
     margin: 0 auto 1%;
     cursor: pointer;
     top: 40px;
-    left: 10px;
+    left: 0px;
     position: relative;
 }
 
