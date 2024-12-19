@@ -38,7 +38,7 @@ $dados = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/user.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
 </head>

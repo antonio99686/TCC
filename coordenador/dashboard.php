@@ -60,7 +60,7 @@ if (isset($_GET['nome_usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="shortcut icon" href="../img/img/icon.png">
+    <link rel="shortcut icon" href="../img/img/admin.png">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Sentinela da Fronteira</title>

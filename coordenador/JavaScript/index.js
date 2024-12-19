@@ -39,29 +39,5 @@ darkMode.addEventListener("click", () => {
   localStorage.setItem("darkMode", isDarkModeEnabled ? "true" : "false");
 });
 
-// Função para adicionar linhas de pedidos à tabela
-function addOrderRows() {
-  const tbody = document.querySelector("table tbody");
 
-  Orders.forEach((order) => {
-    const tr = document.createElement("tr");
-    const trContent = `
-            <td>${order.productName}</td>
-            <td>${order.productNumber}</td>
-            <td>${order.paymentStatus}</td>
-            <td class="${
-              order.status === "Declined"
-                ? "danger"
-                : order.status === "Pending"
-                ? "warning"
-                : "primary"
-            }">${order.status}</td>
-            <td class="primary">Details</td>
-        `;
-    tr.innerHTML = trContent;
-    tbody.appendChild(tr);
-  });
-}
 
-// Adiciona linhas de pedidos à tabela quando o DOM estiver pronto
-document.addEventListener("DOMContentLoaded", addOrderRows);

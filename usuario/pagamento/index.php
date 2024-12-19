@@ -118,7 +118,7 @@ if ($resultadoMeses) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <link rel="shortcut icon" href="../../img/img/icon.png">
+    <link rel="shortcut icon" href="../../img/img/user.png">
     <link rel="stylesheet" href="css/style.css">
     <title>Sentinela da Fronteira</title>
     <style>
