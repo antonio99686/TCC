@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 19-Nov-2024 às 19:11
+-- Tempo de geração: 19-Dez-2024 às 17:08
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `roupas` (
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=278 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `roupas`
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `identidade_verso` varchar(255) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `id_usuario` (`id_usuario`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `usuario`
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id_usuario`, `statuss`, `nome`, `email`, `datas`, `CPF`, `RG`, `categoria`, `senha`, `telefone`, `imagem`, `genero`, `endereco`, `responsavel`, `data_entrada`, `tele_respon`, `idade`, `nom_dan`, `identidade_frente`, `identidade_verso`) VALUES
 (73, 2, 'Jean Anderson Godoy de Souza', 'jeananderson@gmail.com', '1974-05-31', '123.456.789-09', '1234567890', 'adulto', '$2y$10$eRxQeOVpY/4IVccCAo04qOMigmDYr0tQDSRFGgd2ijsOrgJq9V2Ha', '55991237560', '73.png', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '50', '', '', ''),
-(75, 1, 'Larissa da Silva ALves', 'larissa@gmail.com', '2006-05-25', '043.242.640-07', '1234567890', 'adulto', '$2y$10$1MQohXS/2APGct6.BrMvZuSv9Q1XOiNrZ/Kue5Xqu4sRo3/DV9w4K', '55996507010', '75.jpg', 'F', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', ''),
+(75, 1, 'Larissa da Silva Alves', 'larissa@gmail.com', '2006-05-25', '043.242.640-07', '1234567890', 'adulto', '$2y$10$1MQohXS/2APGct6.BrMvZuSv9Q1XOiNrZ/Kue5Xqu4sRo3/DV9w4K', '55996507010', '75.jpg', 'F', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', ''),
 (86, 1, 'Antonio Carlos Mattes Mongelo', 'antonio.2022324018@aluno.iffar.edu.br', '2006-08-10', '055.008.400-29', '1234567890', 'adulto', '$2y$10$oeLd2WWpvyQd2J0cdqeFle1SNUZeYCcuQSnunpRivC043N4WkvAuq', '55996860344', '86.jpg', 'M', 'Quadra Dezenove, 302', 'proprio', '2022-10-06', '', '18', '', '', '');
 
 --
