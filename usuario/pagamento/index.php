@@ -127,6 +127,7 @@ if ($resultadoMeses) {
             align-items: center;
             margin-top: 10px;
         }
+
         .preview-container img,
         .preview-container .pdf-icon {
             max-width: 100%;
@@ -208,7 +209,7 @@ if ($resultadoMeses) {
         <main>
             <h1>Pagamentos</h1>
             <!-- Analyses -->
-           
+
 
             <!-- New Users Section -->
             <div class="new-users">
@@ -292,17 +293,22 @@ if ($resultadoMeses) {
                             <?php endforeach; ?>
                         </select>
 
-                        <input type="file" name="comprovante" id="comprovante-file"  accept=".png, .jpg, .jpeg, .pdf"
-                            required>
+                        <div class="custom-file-upload">
+                            <label for="comprovante-file" class="custom-label">Escolher arquivo</label>
+                            <input type="file" name="comprovante" id="comprovante-file" accept=".png, .jpg, .jpeg, .pdf" required>
+                            <span id="file-chosen">Nenhum arquivo escolhido</span>
+                        </div>
+
                         <div class="preview-container">
-                            <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview"
-                                style="display:none;">
+                            <img class="box-comprovante-img" id="preview-comprovante" src="#" alt="Preview" style="display:none;">
                             <span class="pdf-icon material-icons-sharp" style="display:none;">picture_as_pdf</span>
                         </div>
+
                         <button type="submit" class="form-control" style="margin-top: 10px;">Enviar Comprovante</button>
                     </form>
                 </div>
             </div>
+
             <!-- End of User Profile Section -->
         </div>
     </div>
@@ -312,60 +318,87 @@ if ($resultadoMeses) {
     <script src="JavaScript/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-       document.addEventListener('DOMContentLoaded', function () { // Executa o código após o DOM ser totalmente carregado
-    const comprovanteFile = document.querySelector('#comprovante-file'); // Seleciona o elemento de input para o comprovante
-    const previewComprovante = document.querySelector('#preview-comprovante'); // Seleciona a imagem de pré-visualização
-    const pdfIcon = document.querySelector('.pdf-icon'); // Seleciona o ícone de PDF que será exibido no lugar da pré-visualização
+        document.addEventListener('DOMContentLoaded', function() { // Executa o código após o DOM ser totalmente carregado
+            const comprovanteFile = document.querySelector('#comprovante-file'); // Seleciona o elemento de input para o comprovante
+            const previewComprovante = document.querySelector('#preview-comprovante'); // Seleciona a imagem de pré-visualização
+            const pdfIcon = document.querySelector('.pdf-icon'); // Seleciona o ícone de PDF que será exibido no lugar da pré-visualização
 
-    // Adiciona um listener para o evento de mudança no input de arquivo
-    comprovanteFile.addEventListener('change', event => {
-        const file = event.target.files[0]; // Obtém o primeiro arquivo selecionado
-        if (file) {
-            const fileType = file.type; // Obtém o tipo MIME do arquivo (ex.: image/png ou application/pdf)
-            
-            // Verifica se o arquivo é um PDF
-            if (fileType === 'application/pdf') {
-                previewComprovante.style.display = 'none'; // Esconde a pré-visualização da imagem
-                pdfIcon.style.display = 'block'; // Exibe o ícone de PDF
-            } else {
-                const reader = new FileReader(); // Cria um novo objeto FileReader para ler o arquivo
-                reader.onload = function (event) { // Define o que acontece quando o arquivo for lido
-                    if (fileType.startsWith('image/')) { // Verifica se o arquivo é uma imagem (começa com 'image/')
-                        previewComprovante.src = event.target.result; // Define o source da pré-visualização da imagem com o conteúdo do arquivo
-                        previewComprovante.style.display = 'block'; // Exibe a pré-visualização da imagem
-                        pdfIcon.style.display = 'none'; // Esconde o ícone de PDF
+            // Adiciona um listener para o evento de mudança no input de arquivo
+            comprovanteFile.addEventListener('change', event => {
+                const file = event.target.files[0]; // Obtém o primeiro arquivo selecionado
+                if (file) {
+                    const fileType = file.type; // Obtém o tipo MIME do arquivo (ex.: image/png ou application/pdf)
+
+                    // Verifica se o arquivo é um PDF
+                    if (fileType === 'application/pdf') {
+                        previewComprovante.style.display = 'none'; // Esconde a pré-visualização da imagem
+                        pdfIcon.style.display = 'block'; // Exibe o ícone de PDF
                     } else {
-                        // Caso o arquivo não seja uma imagem, esconde a pré-visualização e o ícone de PDF
-                        previewComprovante.style.display = 'none';
-                        pdfIcon.style.display = 'none';
+                        const reader = new FileReader(); // Cria um novo objeto FileReader para ler o arquivo
+                        reader.onload = function(event) { // Define o que acontece quando o arquivo for lido
+                            if (fileType.startsWith('image/')) { // Verifica se o arquivo é uma imagem (começa com 'image/')
+                                previewComprovante.src = event.target.result; // Define o source da pré-visualização da imagem com o conteúdo do arquivo
+                                previewComprovante.style.display = 'block'; // Exibe a pré-visualização da imagem
+                                pdfIcon.style.display = 'none'; // Esconde o ícone de PDF
+                            } else {
+                                // Caso o arquivo não seja uma imagem, esconde a pré-visualização e o ícone de PDF
+                                previewComprovante.style.display = 'none';
+                                pdfIcon.style.display = 'none';
+                            }
+                        }
+                        reader.readAsDataURL(file); // Lê o arquivo como URL de dados (necessário para exibir imagens)
                     }
+                } else {
+                    // Se nenhum arquivo for selecionado, reseta a pré-visualização e esconde o ícone de PDF
+                    previewComprovante.src = '#'; // Reseta a imagem de pré-visualização
+                    previewComprovante.style.display = 'none'; // Esconde a pré-visualização da imagem
+                    pdfIcon.style.display = 'none'; // Esconde o ícone de PDF
                 }
-                reader.readAsDataURL(file); // Lê o arquivo como URL de dados (necessário para exibir imagens)
-            }
-        } else {
-            // Se nenhum arquivo for selecionado, reseta a pré-visualização e esconde o ícone de PDF
-            previewComprovante.src = '#'; // Reseta a imagem de pré-visualização
-            previewComprovante.style.display = 'none'; // Esconde a pré-visualização da imagem
-            pdfIcon.style.display = 'none'; // Esconde o ícone de PDF
-        }
-    });
+            });
 
-    // Exibe uma mensagem SweetAlert2 se houver uma mensagem na sessão PHP
-    <?php if (isset($_SESSION['mensagem'])): ?>
-        Swal.fire({
-            title: "<?php echo $_SESSION['titulo_mensagem']; ?>", // Define o título da mensagem
-            text: "<?php echo $_SESSION['mensagem']; ?>", // Define o texto da mensagem
-            icon: "<?php echo $_SESSION['tipo_mensagem']; ?>" // Define o ícone da mensagem (success, error, info, etc.)
-        }).then(() => { // Após fechar o SweetAlert2, remove as variáveis da sessão
-            <?php
-            unset($_SESSION['mensagem']);
-            unset($_SESSION['tipo_mensagem']);
-            unset($_SESSION['titulo_mensagem']);
-            ?>
+            // Exibe uma mensagem SweetAlert2 se houver uma mensagem na sessão PHP
+            <?php if (isset($_SESSION['mensagem'])): ?>
+                Swal.fire({
+                    title: "<?php echo $_SESSION['titulo_mensagem']; ?>", // Define o título da mensagem
+                    text: "<?php echo $_SESSION['mensagem']; ?>", // Define o texto da mensagem
+                    icon: "<?php echo $_SESSION['tipo_mensagem']; ?>" // Define o ícone da mensagem (success, error, info, etc.)
+                }).then(() => { // Após fechar o SweetAlert2, remove as variáveis da sessão
+                    <?php
+                    unset($_SESSION['mensagem']);
+                    unset($_SESSION['tipo_mensagem']);
+                    unset($_SESSION['titulo_mensagem']);
+                    ?>
+                });
+            <?php endif; ?>
         });
-    <?php endif; ?>
-});
 
+        const fileInput = document.getElementById('comprovante-file');
+        const fileChosen = document.getElementById('file-chosen');
+        const imgPreview = document.getElementById('preview-comprovante');
+        const pdfIcon = document.querySelector('.pdf-icon');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            fileChosen.textContent = file ? file.name : 'Nenhum arquivo escolhido';
+
+            if (file) {
+                const fileType = file.type;
+
+                if (fileType.startsWith('image/')) {
+                    imgPreview.style.display = 'block';
+                    pdfIcon.style.display = 'none';
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                } else if (fileType === 'application/pdf') {
+                    imgPreview.style.display = 'none';
+                    pdfIcon.style.display = 'block';
+                }
+            }
+        });
     </script>
 
     <script src="../JavaScript/index.js"></script>
