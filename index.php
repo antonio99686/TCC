@@ -16,6 +16,8 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in">
+
+        <!-- login -->
             <form action="login.php" method="POST">
                 <div class="social-icons">
                     <img src="img/icno.jpg" alt="login form" height="160px" width="120px">
@@ -27,6 +29,9 @@
                 <p style="color: #333; position: relative; margin-top: 20px; cursor: pointer;" onclick="showContactCoordinator()">Esqueceu sua senha?</p>
                 <button type="submit">Entrar</button>
             </form>
+<!-- finaliza login -->
+
+
         </div>
         <div class="toggle-container">
             <div class="toggle">
@@ -43,6 +48,7 @@
             </div>
         </div>
         <div class="form-container sign-up">
+            <!-- formulario de casdatro -->
             <form id="registrationForm" novalidate action="login/cadastrar.php" method="POST"
                 enctype="multipart/form-data">
                 <div class="social-icons">
@@ -61,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label for="senha" class="form-label">Repita</label>
-                    <input type="password" name="senha" class="form-input" placeholder="Repite a senha" required>
+                    <input type="password" name="senha" id="repitaSenha" class="form-input" placeholder="Repite a senha" required>
                     <span class="validation-message" style="color: red;"></span> <!-- Mensagem de erro -->
                 </div>
 
@@ -161,13 +167,14 @@
 
                 <button type="submit">Enviar</button>
             </form>
+            <!-- termina o formulario -->
         </div>
     </div>
 
     <script src="login/script.js"></script>
 
     <script>
-        // Função para mostrar a mensagem de contato com o coordenador
+        // Função para mostrar a mensagem de recuperação de SENHA
         async function showContactCoordinator() {
             const {
                 value: email
@@ -251,23 +258,44 @@
 
 
 
-        //Validação de senha com 8 digitos
         document.addEventListener("DOMContentLoaded", function() {
-            var senhaInput = document.getElementById('senhass');
+    var senhaInput = document.getElementById('senhass');
+    var repitaSenhaInput = document.getElementById('repitaSenha');
 
-            senhaInput.addEventListener("input", function(e) {
-                var value = e.target.value;
+    senhaInput.addEventListener("input", function(e) {
+        var value = e.target.value;
 
-                // Verifica se a senha tem pelo menos 8 caracteres
-                if (value.length < 8) {
-                    // Exibe a mensagem de erro
-                    e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
-                } else {
-                    // Limpa a mensagem de erro se a senha for válida
-                    e.target.nextElementSibling.textContent = "";
-                }
-            });
-        });
+        // Verifica se a senha tem pelo menos 8 caracteres
+        if (value.length < 8) {
+            // Exibe a mensagem de erro
+            e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
+        } else {
+            // Limpa a mensagem de erro se a senha for válida
+            e.target.nextElementSibling.textContent = "";
+        }
+
+        // Verifica se a repetição da senha coincide
+        verificarSenhas();
+    });
+
+    repitaSenhaInput.addEventListener("input", function(e) {
+        verificarSenhas();
+    });
+
+    function verificarSenhas() {
+        var senha = senhaInput.value;
+        var repitaSenha = repitaSenhaInput.value;
+
+        if (senha !== repitaSenha) {
+            // Exibe a mensagem de erro se as senhas não coincidirem
+            repitaSenhaInput.nextElementSibling.textContent = "As senhas não coincidem.";
+        } else {
+            // Limpa a mensagem de erro se as senhas coincidirem
+            repitaSenhaInput.nextElementSibling.textContent = "";
+        }
+    }
+});
+
     </script>
     <script>
         //vizualizador de senha (olho)
