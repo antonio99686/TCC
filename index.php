@@ -111,7 +111,7 @@
 
                 <div class="form-grupo">
                     <label for="Telefone" class="form-label">Telefone</label>
-                    <input type="text" name="telefone" class="form-input" placeholder="(00) 0000-0000" required />
+                    <input type="text" name="telefone" id="numero" placeholder="(XX) XXXXX-XXXX" oninput="formatarNumeroCelular(this)">
                     <span class="validation-message"></span>
                 </div>
 
@@ -141,7 +141,8 @@
 
                 <div class="form-grupo">
                     <label for="tele_respon" class="form-label">Telefone do Responsável</label>
-                    <input type="text" name="tele_respon" class="form-input" placeholder="(00) 0000-0000" />
+                    <input type="text" name="tele_respon" id="numero" placeholder="(XX) XXXXX-XXXX" oninput="formatarNumeroCelular(this)">
+
                     <span class="validation-message"></span>
                 </div>
 
@@ -247,6 +248,9 @@
 
             return true;
         }
+
+
+
         //Validação de senha com 8 digitos
         document.addEventListener("DOMContentLoaded", function() {
             var senhaInput = document.getElementById('senhass');
@@ -266,6 +270,7 @@
         });
     </script>
     <script>
+        //vizualizador de senha (olho)
         var senha = $('#senha');
         var olho = $("#olho");
 
@@ -281,6 +286,25 @@
         $("#olho").mouseout(function() {
             $("#senha").attr("type", "password");
         });
+    </script>
+
+<script>
+    //formatador de telefone
+        function formatarNumeroCelular(input) {
+            // Remove qualquer caractere que não seja número
+            let numero = input.value.replace(/\D/g, '');
+
+            // Formata para (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+            if (numero.length > 10) {
+                input.value = numero.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (numero.length > 6) {
+                input.value = numero.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (numero.length > 2) {
+                input.value = numero.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+            } else {
+                input.value = numero;
+            }
+        }
     </script>
 
 
