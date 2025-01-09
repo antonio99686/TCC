@@ -63,7 +63,7 @@ $dados = mysqli_fetch_assoc($resultado);
                 </a>
                 <a href="participantes">
                     <span class="material-icons-sharp" aria-hidden="true">groups</span>
-                    <h3>Users</h3>
+                    <h3>Usuário</h3>
                 </a>
                 <a href="perfil.php">
                     <span class="material-icons-sharp" aria-hidden="true">person_outline</span>

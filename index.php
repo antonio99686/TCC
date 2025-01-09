@@ -17,7 +17,7 @@
     <div class="container" id="container">
         <div class="form-container sign-in">
 
-        <!-- login -->
+            <!-- login -->
             <form action="login.php" method="POST">
                 <div class="social-icons">
                     <img src="img/icno.jpg" alt="login form" height="160px" width="120px">
@@ -29,7 +29,7 @@
                 <p style="color: #333; position: relative; margin-top: 20px; cursor: pointer;" onclick="showContactCoordinator()">Esqueceu sua senha?</p>
                 <button type="submit">Entrar</button>
             </form>
-<!-- finaliza login -->
+            <!-- finaliza login -->
 
 
         </div>
@@ -257,45 +257,44 @@
         }
 
 
-
+        //verifica se a senha tem pelo menos 8 caracteres
         document.addEventListener("DOMContentLoaded", function() {
-    var senhaInput = document.getElementById('senhass');
-    var repitaSenhaInput = document.getElementById('repitaSenha');
+            var senhaInput = document.getElementById('senhass');
+            var repitaSenhaInput = document.getElementById('repitaSenha');
 
-    senhaInput.addEventListener("input", function(e) {
-        var value = e.target.value;
+            senhaInput.addEventListener("input", function(e) {
+                var value = e.target.value;
 
-        // Verifica se a senha tem pelo menos 8 caracteres
-        if (value.length < 8) {
-            // Exibe a mensagem de erro
-            e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
-        } else {
-            // Limpa a mensagem de erro se a senha for válida
-            e.target.nextElementSibling.textContent = "";
-        }
+                // Verifica se a senha tem pelo menos 8 caracteres
+                if (value.length < 8) {
+                    // Exibe a mensagem de erro
+                    e.target.nextElementSibling.textContent = "A senha deve ter pelo menos 8 caracteres.";
+                } else {
+                    // Limpa a mensagem de erro se a senha for válida
+                    e.target.nextElementSibling.textContent = "";
+                }
 
-        // Verifica se a repetição da senha coincide
-        verificarSenhas();
-    });
+                // Verifica se a repetição da senha coincide
+                verificarSenhas();
+            });
 
-    repitaSenhaInput.addEventListener("input", function(e) {
-        verificarSenhas();
-    });
+            repitaSenhaInput.addEventListener("input", function(e) {
+                verificarSenhas();
+            });
+            //verifica a repitição 8 caracteres
+            function verificarSenhas() {
+                var senha = senhaInput.value;
+                var repitaSenha = repitaSenhaInput.value;
 
-    function verificarSenhas() {
-        var senha = senhaInput.value;
-        var repitaSenha = repitaSenhaInput.value;
-
-        if (senha !== repitaSenha) {
-            // Exibe a mensagem de erro se as senhas não coincidirem
-            repitaSenhaInput.nextElementSibling.textContent = "As senhas não coincidem.";
-        } else {
-            // Limpa a mensagem de erro se as senhas coincidirem
-            repitaSenhaInput.nextElementSibling.textContent = "";
-        }
-    }
-});
-
+                if (senha !== repitaSenha) {
+                    // Exibe a mensagem de erro se as senhas não coincidirem
+                    repitaSenhaInput.nextElementSibling.textContent = "As senhas não coincidem.";
+                } else {
+                    // Limpa a mensagem de erro se as senhas coincidirem
+                    repitaSenhaInput.nextElementSibling.textContent = "";
+                }
+            }
+        });
     </script>
     <script>
         //vizualizador de senha (olho)
@@ -316,8 +315,8 @@
         });
     </script>
 
-<script>
-    //formatador de telefone
+    <script>
+        //formatador de telefone
         function formatarNumeroCelular(input) {
             // Remove qualquer caractere que não seja número
             let numero = input.value.replace(/\D/g, '');

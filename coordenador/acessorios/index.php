@@ -132,7 +132,7 @@ if ($_POST) { // Verifica se o formulário foi submetido
                     <span class="material-icons-sharp">
                         groups
                     </span>
-                    <h3>Users</h3>
+                    <h3>Usuário</h3>
                 </a>
                 <a href="../perfil.php">
                     <span class="material-icons-sharp">

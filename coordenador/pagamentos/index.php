@@ -123,7 +123,7 @@ if (isset($_GET['id_usuario'])) {
                     <span class="material-icons-sharp">
                         groups
                     </span>
-                    <h3>Users</h3>
+                    <h3>Usuário</h3>
                 </a>
                 <a href="../perfil.php">
                     <span class="material-icons-sharp">

@@ -84,7 +84,7 @@ if (isset($_GET['nome_usuario'])) {
                 </a>
                 <a href="participantes">
                     <span class="material-icons-sharp">groups</span>
-                    <h3>Users</h3>
+                    <h3>Usuário</h3>
                 </a>
                 <a href="perfil.php">
                     <span class="material-icons-sharp">person_outline</span>
