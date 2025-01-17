@@ -2,6 +2,8 @@
 require_once "../../conexao.php";
 $conexao = conectar();
 
+$updateStatus = ""; // Variável para armazenar o status da atualização
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Coletar dados do formulário
     $id_usuario = $_POST['id_usuario'];
@@ -29,14 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             WHERE id_usuario = $id_usuario";
 
     if ($conexao->query($sql) === TRUE) {
-        echo "<script>
-            alert('Dados atualizados com sucesso!');
-            window.location.href = 'lista.php';
-        </script>";
+        $updateStatus = "success";
     } else {
-        echo "<script>
-            alert('Erro ao atualizar os dados: " . $conexao->error . "');
-        </script>";
+        $updateStatus = "error";
+        $errorMessage = $conexao->error; // Captura o erro para exibição
     }
 }
 
@@ -49,7 +47,6 @@ if (isset($_GET['id_usuario'])) {
     $result = $conexao->query($sql);
 
     if ($result->num_rows > 0) {
-        // Loop pelos resultados e atribui às variáveis PHP
         $row = $result->fetch_assoc();
         $nome = $row['nome'];
         $email = $row['email'];
@@ -67,7 +64,12 @@ if (isset($_GET['id_usuario'])) {
         $genero = $row['genero'];
     } else {
         echo "<script>
-            alert('Nenhum resultado encontrado para o ID especificado.');
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Nenhum resultado encontrado para o ID especificado.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         </script>";
     }
 
@@ -75,10 +77,16 @@ if (isset($_GET['id_usuario'])) {
     $conexao->close();
 } else {
     echo "<script>
-        alert('ID de usuário não especificado.');
+        Swal.fire({
+            title: 'Erro!',
+            text: 'ID de usuário não especificado.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     </script>";
 }
 ?>
+
 
 <!-- Outros campos do formulário para edição do usuário -->
 <!DOCTYPE html>
