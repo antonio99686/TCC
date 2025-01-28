@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="form-grupo">
-                    <label for="genero" class="form-label"> Genero </label>
+                    <label for="genero" class="form-label"> Gênero </label>
                     <select name="genero" required>
                         <option selected disabled class="form-select-option" value="">
                             Selecione
