@@ -111,7 +111,12 @@
 
                 <div class="form-grupo">
                     <label for="Categoria" class="form-label">Nível</label>
-                    <input type="text" name="categoria" class="form-input" placeholder="adulto, juvenil, mirim" required />
+                    <select name="categoria" class="dropdown" required>
+                        <option selected disabled class="form-select-option" value="">Selecione</option>
+                        <option value="Adulto" class="form-select-option">Adulto</option>
+                        <option value="Juvenil" class="form-select-option">Juvenil</option>
+                        <option value="Mirim" class="form-select-option">Mirim</option>
+                    </select>
                     <span class="validation-message"></span>
                 </div>
 
@@ -334,7 +339,30 @@
         }
     </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const nivelSelect = document.querySelector('select[name="categoria"]');
+        const responsavelInput = document.querySelector('input[name="responsavel"]');
+        const telefoneResponsavelInput = document.querySelector('input[name="tele_respon"]');
+        const nomeInput = document.querySelector('input[name="usuario"]');
 
+        nivelSelect.addEventListener("change", function() {
+            if (this.value === "Adulto") {
+                // Preenche o campo "Responsável" com o nome do usuário
+                responsavelInput.value = nomeInput.value;
+                responsavelInput.readOnly = true; // Torna o campo somente leitura
+
+                // Desabilita o campo "Telefone do Responsável"
+                telefoneResponsavelInput.disabled = true;
+                telefoneResponsavelInput.value = ""; // Limpa o valor do campo
+            } else {
+                // Se não for "Adulto", reativa os campos
+                responsavelInput.readOnly = false;
+                telefoneResponsavelInput.disabled = false;
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
