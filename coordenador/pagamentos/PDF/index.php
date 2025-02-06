@@ -62,6 +62,7 @@ if ($result->num_rows > 0) {
                     <th>Mês</th>
                     <th>Pago</th>
                     <th>Comprovante</th>
+                    <th>Valor</th>
                 </tr>
             </thead>
             <tbody>";
@@ -78,6 +79,7 @@ if ($result->num_rows > 0) {
                 <td>{$mes}</td>
                 <td>{$pago}</td>
                 <td>{$comprovante}</td>
+                <td>R$ 30,00</td>
             </tr>";
     }
 
