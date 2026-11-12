@@ -1,55 +1,52 @@
-# Título do TCC
+# Sentinela da Fronteira — TCC • edição profissional
 
-## Sobre o Projeto
+Sistema renovado em **PHP 8.1+ / MySQL 8+ / HTML, CSS e JavaScript** para gerir a invernada do PTG Sentinela da Fronteira. Não depende de Node.js.
 
-Este projeto visa desenvolver um sistema de gerenciamento de invernada para PTG (Piquete de Tradições Gaúchas) Sentinela da Fronteira. O objetivo principal é proporcionar aos usuários uma plataforma onde possam gerenciar as atividades da invernada, incluindo agendamento de ensaios, inscrição em eventos, facilitando a organização e o desempenho das atividades tradicionalistas. O problema que está sendo resolvido é a dificuldade de gerenciar as diversas atividades da invernada de forma coordenada e eficiente, especialmente em PTGs com grande número de integrantes e eventos. Este estudo é importante porque promove a preservação e a valorização da cultura gaúcha, além de fortalecer os laços comunitários e incentivar a participação ativa dos membros nas atividades do PTG.
+## O que já funciona
 
-## Sumário
+- Login por CPF com `password_hash` / `password_verify`, sessões protegidas e limitação básica de tentativas por sessão.
+- Coordenação e integrantes com permissões distintas.
+- Painel de indicadores e próximos compromissos.
+- Calendário mensal responsivo, usando eventos no MySQL (os dois perfis veem a mesma agenda).
+- Cadastro e cancelamento de ensaios, eventos e reuniões (coordenação).
+- Mural de comunicados (coordenação publica, todos leem).
+- Cadastro e pesquisa de integrantes (coordenação).
+- Mensalidades por competência e registro manual de quitação (coordenação).
+- Empréstimos de figurinos e devoluções (coordenação).
+- Perfil próprio, alteração de contato e senha.
+- Interface responsiva e navegável por teclado em desktop, tablet e mobile.
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Requisitos](#requisitos)
-- [Instalação](#instalação)
-- [Uso](#uso)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
-- [Contato](#contato)
+## Instalar com WampServer
 
-## Requisitos
+1. Extraia esta pasta em `C:\wamp64\www\sentinela` (ou diretório equivalente do Apache).
+2. No phpMyAdmin, importe `sql/01_schema.sql`. Esse script **cria o banco `sentinela_pro`** vazio, sem pessoas reais.
+3. Copie `config.example.php` para `config.php`; ajuste usuário, senha, host e nome do banco.
+4. Pelo CMD, dentro da pasta do projeto, execute:
+   ```cmd
+   php tools/create_admin.php "Coordenador PTG" 00000000000 "UmaSenhaMuitoForte#2026"
+   ```
+   Use um CPF real autorizado e escolha uma senha própria — o comando acima é somente exemplo. O comando completo pode ficar registrado no histórico do terminal; em produção, prefira provisionamento de contas por método protegido.
+5. Abra `http://localhost/sentinela/index.php` e entre com CPF e senha cadastrados.
 
-- Node.js
-- Banco de dados (ex: MySQL, MongoDB)
-- Navegador da Web
+## Cuidados e limitações
 
-## Instalação
+- **Não importamos dados pessoais** do dump original. Este é um banco limpo; para migrar integrantes antigos, requer mapeamento, backup e revisão de consentimento/privacidade.
+- Integrações PIX/cartão e e-mail foram **deliberadamente desativadas** nesta nova base: exigir credenciais seguras, webhooks verificados e fluxos testados antes de ativar recebimentos reais.
+- A tabela `auditoria` foi preparada para histórico, mas ainda não tem registros automáticos.
+- Não inclui recuperação de senha por e-mail nem upload de documentos; faça isso antes de uso público caso seja indispensável.
+- A lista de integrantes e lançamentos está limitada a 150/200 resultados; antes de uso em escala, acrescente paginação.
+- Proteções básicas não substituem testes de invasão, revisão LGPD, verificações de acessibilidade e homologação.
+- Executar em HTTPS em hospedagem; configure credenciais fora da pasta pública no deploy.
+- Remova `tools/` e arquivos SQL do diretório público em produção ou negue acesso no servidor.
 
-1. Clone este repositório.
-2. Instale as dependências utilizando o comando `npm install`.
-3. Configure o arquivo `.env` com as variáveis de ambiente necessárias.
-4. Inicie o servidor utilizando o comando `npm start`.
+## Estrutura
 
-## Uso
+`app/bootstrap.php` — conexão PDO, autenticação, CSRF, cabeçalho e helpers.
+`pages/` — páginas funcionais (sem dependências de componentes antigos).
+`assets/` — CSS responsivo e menu mobile.
+`sql/` — schema normalizado e vazio.
+`tools/` — provisionamento CLI do primeiro coordenador.
 
-Após a instalação, siga estas instruções:
+## Proposta para o texto acadêmico
 
-1. Inicie o servidor utilizando `npm start`.
-2. Abra o navegador da web e acesse `http://localhost:8080`.
-3. Faça login ou crie uma conta.
-4. Explore as funcionalidades disponíveis para gerenciamento da invernada.
-
-## Contribuição
-
-Contribuições são bem-vindas! Por favor, siga estas diretrizes:
-
-1. Faça um fork deste repositório.
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
-3. Faça commit de suas alterações (`git commit -am 'Adiciona nova feature'`).
-4. Faça push para a branch (`git push origin feature/nova-feature`).
-5. Crie um novo Pull Request.
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
-## Contato
-
-Para mais informações, entre em contato com Antonio.2022324018@aluno.iffar.edu.br .
+Tema: desenvolvimento e avaliação de um sistema web responsivo para gestão de invernada artística. Aplicar testes de usabilidade com participantes e coordenação, avaliar tempo de tarefas, satisfação e acessibilidade. Descrever problemas do legado, modelo de dados, controle de acesso, tecnologias, implementação, testes e limitações.

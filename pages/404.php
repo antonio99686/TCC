@@ -1,0 +1,1 @@
+<?php render_header('Página não encontrada');?><section class="panel"><h1>Página não encontrada</h1><p>O endereço solicitado não existe.</p><a class="btn btn-primary" href="<?=url()?>">Voltar ao painel</a></section><?php render_footer();
