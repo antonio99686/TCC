@@ -50,3 +50,23 @@ Sistema renovado em **PHP 8.1+ / MySQL 8+ / HTML, CSS e JavaScript** para gerir 
 ## Proposta para o texto acadêmico
 
 Tema: desenvolvimento e avaliação de um sistema web responsivo para gestão de invernada artística. Aplicar testes de usabilidade com participantes e coordenação, avaliar tempo de tarefas, satisfação e acessibilidade. Descrever problemas do legado, modelo de dados, controle de acesso, tecnologias, implementação, testes e limitações.
+
+
+## Cadastro do primeiro administrador pelo navegador (sem terminal)
+
+1. Importe `sql/01_schema.sql` no phpMyAdmin. O banco criado e `sentinela_pro`.
+2. Copie `config.example.php` para `config.php` e confira as credenciais MySQL.
+3. Acesse `http://localhost/TCC/index.php?page=install` (substitua `TCC` pelo nome da sua pasta no WampServer).
+4. Cadastre nome, CPF, e-mail opcional e uma senha de no minimo 12 caracteres.
+5. Entre em `index.php?page=login` com CPF e senha.
+
+A instalacao inicial funciona **apenas se a tabela `usuarios` estiver vazia**. A pagina bloqueia automaticamente o segundo cadastro, inclusive acessos simultaneos. Para criar outros coordenadores apos isso, acesse **Integrantes** com uma conta de coordenador e escolha a permissao **Coordenador**. Nao publique um banco vazio na internet antes de cadastrar seu primeiro administrador em ambiente protegido.
+
+Se ja existir um usuario e voce nao souber a senha, **nao limpe o banco**: recupere o acesso usando um procedimento administrativo autorizado.
+
+
+## Identidade visual
+A logo oficial enviada pelo usuário foi integrada à barra lateral, login, primeiro acesso e painel principal.
+O arquivo está em `assets/logo-sentinela.png`; o favicon está em `assets/favicon.png`.
+Não é necessário alterar nem reimportar o banco de dados para esta atualização visual.
+Após substituir os arquivos, recarregue o navegador com Ctrl+F5 para limpar o CSS antigo.

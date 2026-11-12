@@ -1,31 +1,9 @@
 <?php
-$month = (string)($_GET['mes'] ?? date('Y-m'));
-if (!valid_month($month)) $month = date('Y-m');
-$first = new DateTimeImmutable($month . '-01');
-$start = $first->modify('first day of this month')->modify('last sunday');
-$end = $first->modify('last day of this month')->modify('next saturday');
-$events = q('SELECT id,titulo,tipo,inicio,fim,local FROM eventos WHERE inicio>=? AND inicio<? AND cancelado=0 ORDER BY inicio', [$start->format('Y-m-d 00:00:00'), $end->modify('+1 day')->format('Y-m-d 00:00:00')])->fetchAll();
-$byDay = [];
-foreach ($events as $e) {
-    $byDay[substr($e['inicio'], 0, 10)][] = $e;
-}
-$months = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-$prev = $first->modify('-1 month')->format('Y-m');
-$next = $first->modify('+1 month')->format('Y-m');
-render_header('Calendário'); ?>
-<div class="page-head">
-    <div>
-        <div class="eyebrow">AGENDA COMPARTILHADA</div>
-        <h1>Calendário da invernada</h1>
-        <p>Organize ensaios, reuniões, apresentações e eventos.</p>
-    </div><?php if (admin()): ?><a class="btn btn-primary" href="<?= url('eventos') ?>#novo">+ Novo evento</a><?php endif; ?>
-</div>
-<section class="panel">
-    <div class="calendar-toolbar">
-        <h2><?= ucfirst($months[(int)$first->format('n') - 1]) ?> de <?= $first->format('Y') ?></h2>
-        <div class="button-row"><a class="btn btn-ghost" href="<?= url('calendario') ?>&mes=<?= $prev ?>" aria-label="Mês anterior">‹</a><a class="btn btn-ghost" href="<?= url('calendario') ?>">Hoje</a><a class="btn btn-ghost" href="<?= url('calendario') ?>&mes=<?= $next ?>" aria-label="Próximo mês">›</a></div>
-    </div>
-    <div class="calendar-grid calendar-days"><?php foreach (['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'] as $d): ?><div><?= $d ?></div><?php endforeach; ?></div>
-    <div class="calendar-grid calendar-cells"><?php for ($day = $start; $day <= $end; $day = $day->modify('+1 day')): $key = $day->format('Y-m-d'); ?><div class="cal-cell <?= ($day->format('m') !== $first->format('m') ? 'other' : '') ?> <?= ($key === date('Y-m-d') ? 'today' : '') ?>"><span class="cal-number"><?= $day->format('j') ?></span><?php foreach (array_slice($byDay[$key] ?? [], 0, 3) as $e): ?><a class="event-chip" href="<?= url('eventos') ?>#evento-<?= $e['id'] ?>" title="<?= h($e['titulo']) ?>"><?= h(date('H:i', strtotime($e['inicio'])) . ' ' . $e['titulo']) ?></a><?php endforeach; ?><?php if (count($byDay[$key] ?? []) > 3): ?><small>+ mais</small><?php endif; ?></div><?php endfor; ?></div>
-</section>
+$month=(string)($_GET['mes']??date('Y-m'));if(!valid_month($month))$month=date('Y-m');
+$first=new DateTimeImmutable($month.'-01');$start=$first->modify('first day of this month')->modify('last sunday');$end=$first->modify('last day of this month')->modify('next saturday');
+$events=q('SELECT id,titulo,tipo,inicio,fim,local FROM eventos WHERE inicio>=? AND inicio<? AND cancelado=0 ORDER BY inicio',[ $start->format('Y-m-d 00:00:00'),$end->modify('+1 day')->format('Y-m-d 00:00:00')])->fetchAll();$byDay=[];foreach($events as $e){$byDay[substr($e['inicio'],0,10)][]=$e;}
+$months=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+$prev=$first->modify('-1 month')->format('Y-m');$next=$first->modify('+1 month')->format('Y-m');render_header('Calendário');?>
+<div class="page-head"><div><div class="eyebrow">AGENDA COMPARTILHADA</div><h1>Calendário da invernada</h1><p>Organize ensaios, reuniões, apresentações e eventos.</p></div><?php if(admin()):?><a class="btn btn-primary" href="<?=url('eventos')?>#novo">+ Novo evento</a><?php endif;?></div>
+<section class="panel"><div class="calendar-toolbar"><h2><?=ucfirst($months[(int)$first->format('n')-1])?> de <?=$first->format('Y')?></h2><div class="button-row"><a class="btn btn-ghost" href="<?=url('calendario')?>&mes=<?=$prev?>" aria-label="Mês anterior">‹</a><a class="btn btn-ghost" href="<?=url('calendario')?>">Hoje</a><a class="btn btn-ghost" href="<?=url('calendario')?>&mes=<?=$next?>" aria-label="Próximo mês">›</a></div></div><div class="calendar-grid calendar-days"><?php foreach(['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'] as $d):?><div><?=$d?></div><?php endforeach;?></div><div class="calendar-grid calendar-cells"><?php for($day=$start;$day<=$end;$day=$day->modify('+1 day')):$key=$day->format('Y-m-d');?><div class="cal-cell <?=($day->format('m')!==$first->format('m')?'other':'')?> <?=($key===date('Y-m-d')?'today':'')?>"><span class="cal-number"><?=$day->format('j')?></span><?php foreach(array_slice($byDay[$key]??[],0,3) as $e):?><a class="event-chip" href="<?=url('eventos')?>#evento-<?=$e['id']?>" title="<?=h($e['titulo'])?>"><?=h(date('H:i',strtotime($e['inicio'])).' '.$e['titulo'])?></a><?php endforeach;?><?php if(count($byDay[$key]??[])>3):?><small>+ mais</small><?php endif;?></div><?php endfor;?></div></section>
 <?php render_footer();

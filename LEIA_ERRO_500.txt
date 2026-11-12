@@ -1,0 +1,10 @@
+ERRO HTTP 500 — DIAGNÓSTICO SEGURO
+
+1. NÃO apague seu banco e NÃO importe novamente o SQL.
+2. Faça backup do diretório C:\wamp64\www\TCC e preserve seu config.php.
+3. Copie apenas diagnostico_local.php deste pacote para C:\wamp64\www\TCC.
+4. Abra http://localhost/TCC/diagnostico_local.php e veja os itens marcados como Ausente/Falhou.
+5. Se a própria página de diagnóstico retornar erro 500, renomeie TEMPORARIAMENTE .htaccess para .htaccess.bak, recarregue e confira os logs pelo ícone WampServer > Apache > Apache error log.
+6. Remova diagnostico_local.php assim que terminar.
+
+O diagnóstico só funciona a partir do próprio PC, não exibe senhas e não altera o banco. Se o localhost tiver um proxy, pode ser necessário acessar pela própria máquina diretamente.

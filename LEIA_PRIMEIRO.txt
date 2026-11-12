@@ -1,0 +1,11 @@
+SENTINELA — Correção pontual (sem apagar banco)
+
+1) Faça backup de C:\wamp64\www\TCC\app\bootstrap.php
+2) Copie app/bootstrap.php deste pacote para C:\wamp64\www\TCC\app\bootstrap.php
+3) Mantenha o seu config.php original (banco sentinelas, usuário root).
+4) Copie diagnostico_dashboard.php para C:\wamp64\www\TCC e acesse http://localhost/TCC/diagnostico_dashboard.php
+5) Se o diagnóstico mostrar tabela mensalidades ausente (SQLSTATE 42S02), selecione banco sentinelas no phpMyAdmin e execute sql/03_mensalidades_se_ausente.sql. Não execute sobre outro banco.
+6) Acesse http://localhost/TCC/index.php?page=dashboard
+7) Apague diagnostico_dashboard.php após os testes.
+
+Motivo: o diagnóstico anterior incluía bootstrap dentro de uma função, dando falso erro de conexão com usuário vazio devido ao escopo de $config. Esta correção torna o carregamento explícito e evita esse erro. A falta da tabela mensalidades ainda pode causar erro 500.

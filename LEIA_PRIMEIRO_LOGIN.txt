@@ -1,0 +1,13 @@
+CORRECAO DA TELA DE LOGIN — PTG SENTINELA
+
+1. Faca um backup da pasta TCC atual.
+2. Substitua os arquivos com os deste ZIP, mantendo seu config.php.
+3. Se aparecer bloqueio de tentativas, aguarde 10 minutos desde a ultima serie de tentativas.
+4. Para saber se o usuario administrador existe, abra phpMyAdmin > sentinela_pro > SQL
+   e execute o conteudo de sql/02_verificar_admin.sql.
+5. Papel deve ser coordenador, ativo deve ser 1; o CPF mostrado deve ser o cadastrado.
+6. Se a consulta voltar vazia, use index.php?page=install para criar o primeiro administrador.
+7. Se o administrador existir mas a senha for desconhecida, recupere-a por procedimento
+   administrativo autorizado. Nao apague as tabelas nem use SQL com senha em texto puro.
+
+O bloqueio de 10 minutos foi mantido por seguranca. A pagina agora explica o tempo restante.
