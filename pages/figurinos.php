@@ -1,4 +1,54 @@
 <?php
-if($_SERVER['REQUEST_METHOD']==='POST'){require_admin();csrf_check();$act=(string)($_POST['action']??'add');if($act==='return'){q('UPDATE figurinos SET devolvido=1,devolvido_em=NOW() WHERE id=?',[(int)($_POST['id']??0)]);flash('Devolução registrada.');go('figurinos');}
-$name=trim((string)($_POST['nome']??''));$u=(int)($_POST['usuario_id']??0);if($name===''||mb_strlen($name)>160||$u<1){flash('Informe item e integrante.','error');go('figurinos');}q('INSERT INTO figurinos(nome,usuario_id) VALUES(?,?)',[$name,$u]);flash('Empréstimo cadastrado.');go('figurinos');}
-$rows=admin()?q('SELECT f.*,u.nome integrante FROM figurinos f JOIN usuarios u ON u.id=f.usuario_id ORDER BY f.devolvido ASC,f.id DESC LIMIT 200')->fetchAll():q('SELECT f.*,u.nome integrante FROM figurinos f JOIN usuarios u ON u.id=f.usuario_id WHERE f.usuario_id=? ORDER BY f.devolvido ASC,f.id DESC LIMIT 100',[me()['id']])->fetchAll();$users=admin()?q('SELECT id,nome FROM usuarios WHERE ativo=1 ORDER BY nome')->fetchAll():[];render_header('Figurinos');?><div class="page-head"><div><div class="eyebrow">ACERVO</div><h1>Figurinos e acessórios</h1><p>Controle de empréstimos e devoluções de peças da invernada.</p></div></div><div class="<?=admin()?'two-col':'one-col'?>"><section class="panel"><h2>Itens cadastrados</h2><div class="table-scroll"><table><thead><tr><th>Item</th><th>Integrante</th><th>Situação</th><?php if(admin()):?><th>Ação</th><?php endif;?></tr></thead><tbody><?php foreach($rows as $r):?><tr><td><?=h($r['nome'])?></td><td><?=h($r['integrante'])?></td><td><span class="pill <?=$r['devolvido']?'green':'orange'?>"><?=$r['devolvido']?'Devolvido':'Emprestado'?></span></td><?php if(admin()):?><td><?php if(!$r['devolvido']):?><form method="post"><?=csrf_field()?><input type="hidden" name="action" value="return"><input type="hidden" name="id" value="<?=$r['id']?>"><button class="btn btn-ghost">Registrar devolução</button></form><?php endif;?></td><?php endif;?></tr><?php endforeach;?></tbody></table></div><?php if(!$rows):?><p class="empty">Nenhum item cadastrado.</p><?php endif;?></section><?php if(admin()):?><section class="panel"><div class="eyebrow">COORDENAÇÃO</div><h2>Novo empréstimo</h2><form method="post" class="stack"><?=csrf_field()?><label>Peça ou acessório<input name="nome" maxlength="160" placeholder="Ex.: Bombacha" required></label><label>Integrante<select name="usuario_id" required><?php foreach($users as $u):?><option value="<?=$u['id']?>"><?=h($u['nome'])?></option><?php endforeach;?></select></label><button class="btn btn-primary">Registrar empréstimo</button></form></section><?php endif;?></div><?php render_footer();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    require_admin();
+    csrf_check();
+    $act = (string)($_POST['action'] ?? 'add');
+    if ($act === 'return') {
+        q('UPDATE figurinos SET devolvido=1,devolvido_em=NOW() WHERE id=?', [(int)($_POST['id'] ?? 0)]);
+        flash('Devolução registrada.');
+        go('figurinos');
+    }
+    $name = trim((string)($_POST['nome'] ?? ''));
+    $u = (int)($_POST['usuario_id'] ?? 0);
+    if ($name === '' || mb_strlen($name) > 160 || $u < 1) {
+        flash('Informe item e integrante.', 'error');
+        go('figurinos');
+    }
+    q('INSERT INTO figurinos(nome,usuario_id) VALUES(?,?)', [$name, $u]);
+    flash('Empréstimo cadastrado.');
+    go('figurinos');
+}
+$rows = admin() ? q('SELECT f.*,u.nome integrante FROM figurinos f JOIN usuarios u ON u.id=f.usuario_id ORDER BY f.devolvido ASC,f.id DESC LIMIT 200')->fetchAll() : q('SELECT f.*,u.nome integrante FROM figurinos f JOIN usuarios u ON u.id=f.usuario_id WHERE f.usuario_id=? ORDER BY f.devolvido ASC,f.id DESC LIMIT 100', [me()['id']])->fetchAll();
+$users = admin() ? q('SELECT id,nome FROM usuarios WHERE ativo=1 ORDER BY nome')->fetchAll() : [];
+render_header('Figurinos'); ?><div class="page-head">
+    <div>
+        <div class="eyebrow">ACERVO</div>
+        <h1>Figurinos e acessórios</h1>
+        <p>Controle de empréstimos e devoluções de peças da invernada.</p>
+    </div>
+</div>
+<div class="<?= admin() ? 'two-col' : 'one-col' ?>">
+    <section class="panel">
+        <h2>Itens cadastrados</h2>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Integrante</th>
+                        <th>Situação</th><?php if (admin()): ?><th>Ação</th><?php endif; ?>
+                    </tr>
+                </thead>
+                <tbody><?php foreach ($rows as $r): ?><tr>
+                            <td><?= h($r['nome']) ?></td>
+                            <td><?= h($r['integrante']) ?></td>
+                            <td><span class="pill <?= $r['devolvido'] ? 'green' : 'orange' ?>"><?= $r['devolvido'] ? 'Devolvido' : 'Emprestado' ?></span></td><?php if (admin()): ?><td><?php if (!$r['devolvido']): ?><form method="post"><?= csrf_field() ?><input type="hidden" name="action" value="return"><input type="hidden" name="id" value="<?= $r['id'] ?>"><button class="btn btn-ghost">Registrar devolução</button></form><?php endif; ?></td><?php endif; ?>
+                        </tr><?php endforeach; ?></tbody>
+            </table>
+        </div><?php if (!$rows): ?><p class="empty">Nenhum item cadastrado.</p><?php endif; ?>
+    </section><?php if (admin()): ?><section class="panel">
+            <div class="eyebrow">COORDENAÇÃO</div>
+            <h2>Novo empréstimo</h2>
+            <form method="post" class="stack"><?= csrf_field() ?><label>Peça ou acessório<input name="nome" maxlength="160" placeholder="Ex.: Bombacha" required></label><label>Integrante<select name="usuario_id" required><?php foreach ($users as $u): ?><option value="<?= $u['id'] ?>"><?= h($u['nome']) ?></option><?php endforeach; ?></select></label><button class="btn btn-primary">Registrar empréstimo</button></form>
+        </section><?php endif; ?>
+</div><?php render_footer();
